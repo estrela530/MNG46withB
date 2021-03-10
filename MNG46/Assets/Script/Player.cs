@@ -67,6 +67,11 @@ public class Player : MonoBehaviour
         //Debug.Log("ねじレベル" + neziLevel);
     }
 
+    private void Move()
+    {
+        
+    }
+
     /// <summary>
     /// ねじチェンジ
     /// </summary>
