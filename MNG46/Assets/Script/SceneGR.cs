@@ -25,7 +25,6 @@ public class SceneGR : MonoBehaviour
             SceneManager.LoadScene("Result");
         }
 
-
     }
 
 }

@@ -8,7 +8,7 @@ public class SceneSG : MonoBehaviour
    
     public void OnClickStartButton()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) )
+        if(Input.GetKeyDown(KeyCode.JoystickButton0))
         {
             SceneManager.LoadScene("Game");
         }
