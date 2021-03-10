@@ -903,6 +903,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 92429119}
     m_Modifications:
+    - target: {fileID: 5719049302425877083, guid: 79ee2e71a1fdb0743ab961152aee757e,
+        type: 3}
+      propertyPath: m_Name
+      value: 'GameEscape '
+      objectReference: {fileID: 0}
     - target: {fileID: 5719049302425877085, guid: 79ee2e71a1fdb0743ab961152aee757e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -952,6 +957,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5719049303237122131, guid: 79ee2e71a1fdb0743ab961152aee757e,
+        type: 3}
+      propertyPath: m_Text
+      value: 'GameEscape
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 5719049303497572278, guid: 79ee2e71a1fdb0743ab961152aee757e,
         type: 3}
@@ -1072,6 +1084,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5719049302605400093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d723777f76d749458089cdb3c2aac61, type: 3}
+  m_Script: {fileID: 11500000, guid: 3adcaaae465f99942ab9612fbf08351b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
