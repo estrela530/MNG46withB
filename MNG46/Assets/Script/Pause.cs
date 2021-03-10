@@ -6,25 +6,42 @@ public class Pause : MonoBehaviour
 {
     [SerializeField]
     //　ポーズした時に表示するUIのプレハブ
-    private GameObject pauseUIPrefab;
+    private GameObject PauseUIPrefab;
     //　ポーズUIのインスタンス
     private GameObject pauseUIInstance;
+
+    public bool isPause = false;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Time.timeScale = 1f;
+        PauseUIPrefab.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.JoystickButton7))
         {
-            if (pauseUIInstance == null)
+            if (!isPause)
             {
-                pauseUIInstance = GameObject.Instantiate(pauseUIPrefab) as GameObject;
+                PauseUIPrefab.SetActive(true);
                 Time.timeScale = 0f;
+                isPause = true;
             }
             else
             {
-                Destroy(pauseUIInstance);
+                PauseUIPrefab.SetActive(false);
                 Time.timeScale = 1f;
+                isPause = false;
             }
         }
     }
+
+    public bool GetPause()
+    {
+        return isPause;
+    }
 }
+
