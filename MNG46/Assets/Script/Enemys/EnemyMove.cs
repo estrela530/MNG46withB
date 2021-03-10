@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 //using UnityStandardAssets.Characters.ThirdPerson;
 //[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
+[RequireComponent(typeof(Collider))]
 
 public class EnemyMove : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class EnemyMove : MonoBehaviour
     private float dis;//プレイヤーとの距離
     public float area;//この数値以下になったら追う
 
+    public int enemyHP;
 
     private float workeAria1=1;//
     private float workeAria2=1;//
@@ -101,5 +103,18 @@ public class EnemyMove : MonoBehaviour
 
         }
 
+    }
+    //(仮)指定されたtagに当たると消える
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            enemyHP = enemyHP - 1;
+
+            if(enemyHP == 0)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 }
