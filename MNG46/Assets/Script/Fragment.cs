@@ -17,7 +17,8 @@ public class Fragment : MonoBehaviour
     public void Initialize(float angle, Vector3 position)
     {
         this.angle = angle;
-        this.parentPosition = position;
+        //位置をちょっと高くする
+        this.parentPosition = new Vector3(position.x, position.y + 0.5f, position.z);
 
         //位置初期化
         transform.position = this.parentPosition;
@@ -36,7 +37,6 @@ public class Fragment : MonoBehaviour
         if (deleteTimer > (60 * deleteCount))
         {
             ResetPosition();
-            deleteTimer = 0;
         }
     }
 
@@ -60,6 +60,7 @@ public class Fragment : MonoBehaviour
     private void ResetPosition()
     {
         gameObject.SetActive(false);
+        deleteTimer = 0;
         transform.localPosition = parentPosition;//位置も戻す
     }
 
@@ -85,5 +86,14 @@ public class Fragment : MonoBehaviour
         direction.z = Mathf.Sin(DegreeToRadian(angle));
 
         return direction;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //テスト↓ : 壁に当たったら削除(タグも仮置き)
+        if (other.gameObject.tag == "Respawn")
+        {
+            ResetPosition();
+        }
     }
 }
