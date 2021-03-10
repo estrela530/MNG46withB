@@ -7,7 +7,9 @@ public class ResB : MonoBehaviour
 {
     public void OnClickStartButton()
     {
-        SceneManager.LoadScene("Game");
+        if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        {
+            SceneManager.LoadScene("Game");
+        }
     }
-
 }
