@@ -8,6 +8,7 @@ public class EnemyDeath : MonoBehaviour
 {
     //public bool enemyDeath;
     //string Death = "Player";
+   
 
     //public GameObject enemay;
     void Start()
