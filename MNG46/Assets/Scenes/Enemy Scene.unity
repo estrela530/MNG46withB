@@ -529,7 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b3b5a9125c7de439e4e3d87ec284df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  area: 7
+  area: 10
   speed: 2
   MoveFlag: 0
 --- !u!54 &1364381000
@@ -888,7 +888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1850374622
 Transform:
   m_ObjectHideFlags: 0
@@ -916,4 +916,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 6763542820849497715, guid: 7a965dff6e3027e40b956c5c1bb4f706, type: 3}
+  Move: {fileID: 1364380998}
   shotTime: 1
