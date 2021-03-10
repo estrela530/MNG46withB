@@ -11,20 +11,12 @@ public class EnemyMove : MonoBehaviour
    private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
     public float area;//この数値以下になったら追う
-
-    private Vector3 posP;
-    private Vector3 posE;
-
-
+    
 
     public float speed;
-    //public float Rspeed;
     private GameObject Enemy;
 
     public bool MoveFlag;
-
-    //Rigidbody rigid;
-   
 
     void Start()
     {

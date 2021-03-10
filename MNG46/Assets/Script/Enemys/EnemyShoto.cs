@@ -6,24 +6,21 @@ public class EnemyShoto : MonoBehaviour
 {
     
     public GameObject Bullet;
-
-    GameObject gg;
-
-    EnemyMove enemyMove;
+    
+    public GameObject Move;
 
     private int intarval;
 
     public float shotTime;
     private float ss;
-
-   // public GameObject Smp;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         ss = 1;
         //gg = GameObject.Find("EnemyMove");
-        enemyMove = GetComponent<EnemyMove>();
+        Move.GetComponent<EnemyMove>();
     }
 
     // Update is called once per frame
@@ -42,9 +39,13 @@ public class EnemyShoto : MonoBehaviour
 
     void Shot()
     {
+        if (Move.GetComponent<EnemyMove>().MoveFlag == true)
+        {
+
             GameObject shot = Instantiate(Bullet, transform.position, transform.rotation);
             Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
             rigidbody.AddForce(transform.forward * shotTime);
+        }
 
     }
 }
