@@ -261,6 +261,7 @@ public class Player : MonoBehaviour
             if (myScale.y <= 1.0f)
             {
                 myScale.y = 1.0f;
+                Initialize();    //ここで一回初期化
             }
         }
 
@@ -325,6 +326,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedRelease()
     {
+        isTwisted = false;
+
         //常に行われる処理
         //ねじレベルによる色と球数の変化
         switch (neziLevel)
@@ -347,8 +350,6 @@ public class Player : MonoBehaviour
             default:
                 break;
         }
-
-        Initialize();
     }
 
     /// <summary>
