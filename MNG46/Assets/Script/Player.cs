@@ -6,6 +6,9 @@
 [RequireComponent(typeof(FragmentPool))]//自動的にFragmentPoolを追加
 public class Player : MonoBehaviour
 {
+    [SerializeField, Header("ボタンのバージョン切り替え")]
+    private bool bottunVersion = false;//(false = Version1 : true = Version2)
+
     [SerializeField, Header("移動速度")]
     private float moveSpeed = 5.0f;
     [SerializeField, Header("伸びる速さ")]
@@ -215,12 +218,12 @@ public class Player : MonoBehaviour
     void TwistedChange()
     {
         //ボタンを押している間ねじねじする
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 5"))
         {
             TwistedAccumulate();//ねじねじ
 
         }
-        else if (Input.GetKeyUp(KeyCode.Space))//離したら解放する
+        else if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5"))//離したら解放する
         {
             TwistedRelease();//解放
         }
@@ -310,7 +313,7 @@ public class Player : MonoBehaviour
         isTwisted = true;
         //neziCount++;//ねじねじしてる間カウントを増やす
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4"))
         {
             isReset = true;
             Initialize();
