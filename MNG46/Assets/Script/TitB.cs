@@ -7,6 +7,9 @@ public class TitB : MonoBehaviour
 {
     public void OnClickStartButton()
     {
-        SceneManager.LoadScene("Title");
+        if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        {
+            SceneManager.LoadScene("Title");
+        }
     }
 }
