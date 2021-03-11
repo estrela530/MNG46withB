@@ -7,7 +7,7 @@ public class EnemyBullet : MonoBehaviour
    
     private GameObject Bullet;
     public float bullteSpeed;
-    public float desth;
+    public float desthTime;//消えるまでの時間
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,7 @@ public class EnemyBullet : MonoBehaviour
     void Update()
     {
         transform.position += transform.forward * bullteSpeed * Time.deltaTime;
-       
+        Destroy(this.gameObject,desthTime);
     }
 
 }
