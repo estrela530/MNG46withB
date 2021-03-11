@@ -221,6 +221,9 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedChange()
     {
+        //解放中なら処理しない
+        if (isRelease) return;
+
         //ボタンを押している間ねじねじする
         if (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 5"))
         {
@@ -315,8 +318,6 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedAccumulate()
     {
-        //解放中なら処理しない
-        if (isRelease) return;
 
         isTwisted = true;
 
