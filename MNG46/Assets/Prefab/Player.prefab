@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb896073a282be84da0b3c3c46c413b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  twistedSpeed: 10
-  releaseSpeed: 100
+  twistedSpeed: 3.6
+  releaseSpeed: 25
   maxTwistedCount: 720
 --- !u!1 &7218287161412445507
 GameObject:
@@ -183,12 +183,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bottunVersion: 0
   moveSpeed: 5
-  extendSpeed: 0.05
-  shrinkSpeed: 0.5
-  maxNobiLength: 4.5
+  extendSpeed: 0.02
+  shrinkSpeed: 0.1
+  maxNobiLength: 5
   neziCount: 0
-  levelCount: 1e0000003200000046000000
+  levelCount: b40000005a0000002d000000
   fragmentPrefab: {fileID: 5343818580403124431, guid: a7d28856afc8afb4a9fad14e098058f2,
     type: 3}
   fragmentCount: 5a0000002d0000001e0000000f000000
-  firstCreateFragment: 45
+  firstCreateFragment: 20

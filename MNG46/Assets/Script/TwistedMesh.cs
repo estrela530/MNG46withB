@@ -6,9 +6,9 @@
 public class TwistedMesh : MonoBehaviour
 {
     [SerializeField, Header("ねじれる速度")]
-    private float twistedSpeed = 10.0f;
+    private float twistedSpeed = 3.6f;
     [SerializeField, Header("ねじれがもどる速度")]
-    private float releaseSpeed = 50.0f;
+    private float releaseSpeed = 25.0f;
     [SerializeField, Header("ねじれる量の上限")]
     private float maxTwistedCount = 720.0f;
 
