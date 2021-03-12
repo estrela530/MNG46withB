@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 //using UnityStandardAssets.Characters.ThirdPerson;
 //[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
@@ -11,13 +12,17 @@ using UnityEngine.SceneManagement;
 public class EnemyMove : MonoBehaviour
 {
 
+    
+
     // Start is called before the first frame update
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
     public float area;//この数値以下になったら追う
     public float social;//この数値まで進む
 
-    public int enemyHP;
+    private float enemyHP =5;
+    
+        
 
     private float workeAria1=1;//
     private float workeAria2=1;//
@@ -55,6 +60,7 @@ public class EnemyMove : MonoBehaviour
         //x = Vector3.Cross(Vector3.up, z).normalized;
         //y = Vector3.Cross(z, x).normalized;
         
+
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
@@ -125,6 +131,13 @@ public class EnemyMove : MonoBehaviour
         }
 
     }
+    
+    public float HpGet()
+    {
+        return enemyHP;
+    }
+
+
     //(仮)指定されたtagに当たると消える
     private void OnTriggerEnter(Collider other)
     {
