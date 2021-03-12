@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// ねじねじをまとめたクラス
@@ -6,26 +7,38 @@
 [RequireComponent(typeof(FragmentPool))]//自動的にFragmentPoolを追加
 public class Player : MonoBehaviour
 {
+    //↓テスト : ボタンの種類をインスペクタで変えられるようにする。
+    //[SerializeField, Header("ボタンのバージョン切り替え")]
+    //private bool bottunVersion = false;//(false = Version1 : true = Version2)
+
     [SerializeField, Header("移動速度")]
     private float moveSpeed = 5.0f;
     [SerializeField, Header("伸びる速さ")]
-    private float extendSpeed = 0.05f;
+    private float extendSpeed = 0.02f;
     [SerializeField, Header("縮む速さ")]
-    private float shrinkSpeed = 0.5f;
+    private float shrinkSpeed = 0.1f;
     [SerializeField, Header("伸びる長さ")]
     private float maxNobiLength = 5.0f;
     [SerializeField/*, ReadOnly*/]
     public int neziCount;//どれくらいねじねじしているか
     [SerializeField, Header("レベルアップに必要なねじカウント")]
-    private int[] levelCount = new int[3];//(20,50,70
+    private int[] levelCount = new int[3];//(50,110,180
 
     [SerializeField, Header("プレイヤーの欠片")]
     private GameObject fragmentPrefab;
     [SerializeField, Header("レベルによる飛ばす球数")]
-    private int[] fragmentCount = new int[4];//(360で割れる数が好ましい
+    private int[] fragmentCount = new int[4];//(180,90,45
 
     [SerializeField]
-    private int firstCreateFragment = 45;
+    private Slider redSlider;
+    [SerializeField]
+    private Slider greenSlider;
+    [SerializeField]
+    private int maxHp = 10;
+    private float saveValue;
+
+    [SerializeField]
+    private int firstCreateFragment = 20;
     /// <summary>
     /// リセットしたかどうか(メッシュ側で取得&代入を行う)
     /// </summary>
@@ -36,6 +49,7 @@ public class Player : MonoBehaviour
     Vector3 myScale = Vector3.one;//自身の大きさ
 
     private bool isTwisted;//ねじれているかどうか
+    private bool isRelease;//解放中かどうか
     private int neziLevel; //ねじレベル
 
     private Vector3 position;//位置
@@ -52,7 +66,8 @@ public class Player : MonoBehaviour
         TOP_LEFT,  //左上
         DOWN_RIGHT,//右下
         DOWN_LEFT  //左下
-    }Direction direction = Direction.DOWN;
+    }
+    Direction direction = Direction.DOWN;
 
     void Start()
     {
@@ -69,28 +84,37 @@ public class Player : MonoBehaviour
         //位置を反映
         this.transform.position = position;
 
+        transform.localScale = Vector3.one;
+
+
+        redSlider.maxValue = greenSlider.maxValue = saveValue = maxHp;
+
+
         Initialize();
     }
 
     void Initialize()
     {
         isTwisted = false;
+        isRelease = false;
         neziCount = 0;
         neziLevel = 0;
         transform.localScale = Vector3.one;
+
+
+
+        redSlider.value = greenSlider.value;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        Move();         //動く
         Extend();       //伸びる
         ChangeLevel();  //レベル変更
         TwistedChange();//ねじチェンジ
-
-        if(!isTwisted)
-        {
-            Move();
-        }
 
         //Debug.Log("ねじレベル" + neziLevel);
     }
@@ -100,6 +124,9 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        //ねじっているor解放中なら動けない
+        if (isTwisted || isRelease) return;
+
         velocity = Vector3.zero;
 
         Vector3 inputVelocity = Vector3.zero;
@@ -214,13 +241,16 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedChange()
     {
+        //解放中なら処理しない
+        if (isRelease) return;
+
         //ボタンを押している間ねじねじする
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 5"))
         {
             TwistedAccumulate();//ねじねじ
 
         }
-        else if (Input.GetKeyUp(KeyCode.Space))//離したら解放する
+        else if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5"))//離したら解放する
         {
             TwistedRelease();//解放
         }
@@ -243,6 +273,15 @@ public class Player : MonoBehaviour
             //ねじねじしてる間カウントを増やす
             neziCount++;
 
+            greenSlider.value -= 0.01f;
+            saveValue = greenSlider.value;
+            if (greenSlider.value <= 1)
+            {
+                greenSlider.value = 1;
+            }
+
+
+
             if (myScale.y > maxNobiLength)
             {
                 myScale.y = maxNobiLength;
@@ -255,11 +294,24 @@ public class Player : MonoBehaviour
 
             myScale += new Vector3(0, -shrinkSpeed, 0);
 
+
+
+            redSlider.value -= 0.5f;
+            if (redSlider.value <= saveValue)
+            {
+                redSlider.value = saveValue;
+            }
+
+
+
+
             if (myScale.y <= 1.0f)
             {
                 myScale.y = 1.0f;
+                Initialize();    //元の大きさに戻ったら初期化
             }
         }
+
 
         transform.localScale = myScale;
     }
@@ -307,12 +359,26 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedAccumulate()
     {
-        isTwisted = true;
-        //neziCount++;//ねじねじしてる間カウントを増やす
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        isTwisted = true;
+
+        TwistedCancel();
+    }
+
+    /// <summary>
+    /// ねじキャンセル
+    /// </summary>
+    void TwistedCancel()
+    {
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4"))
         {
             isReset = true;
+
+
+            greenSlider.value = redSlider.value;
+
+
+
             Initialize();
         }
     }
@@ -322,7 +388,9 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedRelease()
     {
-        //常に行われる処理
+        isRelease = true; //解放中にする
+        isTwisted = false;//ねじっていない
+
         //ねじレベルによる色と球数の変化
         switch (neziLevel)
         {
@@ -344,8 +412,6 @@ public class Player : MonoBehaviour
             default:
                 break;
         }
-
-        Initialize();
     }
 
     /// <summary>
