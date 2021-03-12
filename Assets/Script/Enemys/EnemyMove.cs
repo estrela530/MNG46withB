@@ -20,7 +20,7 @@ public class EnemyMove : MonoBehaviour
     public float area;//この数値以下になったら追う
     public float social;//この数値まで進む
 
-    private float enemyHP =5;
+    [SerializeField] float enemyHP = 5;
     
         
 
