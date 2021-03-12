@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+
 //using UnityStandardAssets.Characters.ThirdPerson;
 //[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 [RequireComponent(typeof(Collider))]
@@ -13,6 +15,7 @@ public class EnemyMove : MonoBehaviour
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
     public float area;//この数値以下になったら追う
+    public float social;//この数値まで進む
 
     public int enemyHP;
 
@@ -52,14 +55,16 @@ public class EnemyMove : MonoBehaviour
         //x = Vector3.Cross(Vector3.up, z).normalized;
         //y = Vector3.Cross(z, x).normalized;
         
-        if (enemyHP < 0)
+        if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
+            //SceneManager.LoadScene("Result");
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-        ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算して一定以下になれば追尾
-        ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算して一定以下になれば追尾
+
+        ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
+        ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
 
         if (dis < area)
         {
@@ -75,19 +80,13 @@ public class EnemyMove : MonoBehaviour
 
         if (MoveFlag)
         {
-            //var aim = this.Target.transform.position - this.transform.position;
-            //var look = Quaternion.LookRotation(aim);
-            //this.transform.localRotation = look;
-            //Target.transform.rotation();
-            //Vector3 look = Target.transform.position - transform.position;
-            //look.Normalize();
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation,)
-            //Target.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            
 
            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-
-            //this.transform.eulerAngles = new Vector3(0, transform.rotation.y,0);
-            transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+            if(dis>=social)
+            {
+               transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+            }
 
             
         }
@@ -129,7 +128,7 @@ public class EnemyMove : MonoBehaviour
     //(仮)指定されたtagに当たると消える
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
         }
