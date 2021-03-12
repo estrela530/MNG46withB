@@ -78,11 +78,11 @@ public class Player : MonoBehaviour
         //最初の生成を行う
         objectPool.CreatePool(fragmentPrefab, firstCreateFragment);
 
-        position = this.transform.position;
-        //初期位置
-        position = Vector3.zero;
-        //位置を反映
-        this.transform.position = position;
+        //position = this.transform.position;
+        ////初期位置
+        //position = Vector3.zero;
+        ////位置を反映
+        //this.transform.position = position;
 
         transform.localScale = Vector3.one;
 

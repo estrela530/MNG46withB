@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4925349527163906564}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.057841, y: 5.6540365, z: -4.285576}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
   m_LocalScale: {x: 1.5428, y: 0.8783315, z: 0.1862451}
   m_Children: []
   m_Father: {fileID: 5705549012128505915}
@@ -120,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7023758839764902573}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.090841, y: 4.964037, z: -4.295574}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.78926, z: 0.1}
   m_Children: []
   m_Father: {fileID: 5705549012128505915}
@@ -196,6 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5705549012128505915}
   - component: {fileID: 5756991244555186285}
+  - component: {fileID: 1477925405368392183}
   m_Layer: 0
   m_Name: kanban
   m_TagString: kanban
@@ -233,3 +234,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kanbanPrefab: {fileID: 0}
   kanbanHit: 0
+--- !u!135 &1477925405368392183
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8906442900042422142}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0.5, z: 0}

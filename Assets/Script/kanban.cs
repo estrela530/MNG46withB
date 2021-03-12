@@ -20,15 +20,6 @@ public class kanban : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton1) && kanbanHit == false)
-        {
-            kanbanHit = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.JoystickButton1) && kanbanHit == true)
-        {
-            kanbanHit = false;
-        }
-
 
         if (kanbanHit == true)
         {
@@ -42,16 +33,20 @@ public class kanban : MonoBehaviour
     }
 
     //Playerが当たると説明表示
-    public void OnTriggerEnter(Collider other)
+    public void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             kanbanHit = true;
         }
-        else
+    }
+
+    public void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
         {
             kanbanHit = false;
         }
-    }
 
+    }
 }

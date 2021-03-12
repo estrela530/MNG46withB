@@ -32,12 +32,12 @@ public class Fragment : MonoBehaviour
     {
         Move();
 
-        deleteTimer++;
-        //1時間になったらリセットする
-        if (deleteTimer > (60 * deleteCount))
-        {
-            ResetPosition();
-        }
+        //deleteTimer++;
+        ////1時間になったらリセットする
+        //if (deleteTimer > (60 * deleteCount))
+        //{
+        //    ResetPosition();
+        //}
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ public class Fragment : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //テスト↓ : 壁に当たったら削除(タグも仮置き)
-        if (other.gameObject.tag == "Respawn")
+        if (other.gameObject.tag == "Wall")
         {
             ResetPosition();
         }
