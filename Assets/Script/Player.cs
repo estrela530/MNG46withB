@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
     private Rigidbody rigid;
 
     private float currentHp = 10;
+    private float saveValue = 10;
 
 
     enum Direction
@@ -126,7 +127,7 @@ public class Player : MonoBehaviour
         TwistedChange();//ねじチェンジ
 
 
-        if(currentHp < 1)
+        if(currentHp < 0.5f)
         {
             SceneManager.LoadScene("Result");
         }
@@ -161,6 +162,7 @@ public class Player : MonoBehaviour
             velocity.x = -1.0f;
             direction = Direction.LEFT;
         }
+
         //上
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || inputVelocity.z > 0)
         {
@@ -192,20 +194,20 @@ public class Player : MonoBehaviour
                 direction = Direction.DOWN_LEFT;
             }
         }
-        else
-        {
-            //動いてないとき
-            rigid.constraints = RigidbodyConstraints.FreezePosition;
+        //else
+        //{
+        //    //動いてないとき
+        //    rigid.constraints = RigidbodyConstraints.FreezePosition;
 
-        }
+        //}
 
         //正規化
-        velocity.Normalize();
+        velocity = velocity.normalized;
 
         //移動処理
-        position += velocity * moveSpeed * Time.deltaTime;
+        position = velocity * moveSpeed * Time.deltaTime;
 
-        transform.position = position;
+        transform.position += position;
 
         ChangeDirection();
     }
@@ -254,8 +256,8 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //動いていないとき
-            rigid.constraints = RigidbodyConstraints.FreezeRotation;
+            rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
         }
     }
 
@@ -320,7 +322,7 @@ public class Player : MonoBehaviour
 
             myScale += new Vector3(0, -shrinkSpeed, 0);
 
-
+            saveValue = currentHp;
 
             //redSlider.value -= 0.5f;
             //if (redSlider.value <= saveValue)
@@ -403,7 +405,7 @@ public class Player : MonoBehaviour
 
 
             //greenSlider.value = redSlider.value;
-
+            currentHp = saveValue;
 
 
             Initialize();
@@ -473,7 +475,7 @@ public class Player : MonoBehaviour
         if(other.gameObject.CompareTag("HealBall"))
         {
             //test = other.gameObject.GetComponent<TestHealBall>().GetLevel();
-            currentHp += 0.5f;
+            currentHp += 0.2f;
             Destroy(other.gameObject);
         }
         if(other.gameObject.CompareTag("Enemy"))
@@ -482,8 +484,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            rigid.velocity = Vector3.zero;
+            //rigid.angularVelocity = Vector3.zero;
+        }
+    }
+
     public float GetHp()
     {
         return currentHp;
+    }
+
+    public float GetSavevalue()
+    {
+        return saveValue;
     }
 }
