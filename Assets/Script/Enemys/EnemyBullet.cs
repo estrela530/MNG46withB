@@ -22,4 +22,12 @@ public class EnemyBullet : MonoBehaviour
         Destroy(this.gameObject,desthTime);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
 }

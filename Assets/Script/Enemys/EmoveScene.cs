@@ -17,7 +17,7 @@ public class EmoveScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Enemy1.GetComponent<EnemyMove>().enemyHP <=0 && Enemy2.GetComponent<EnemyMove>().enemyHP<=0)
+        if (Enemy1.GetComponent<EnemyMove>().HpGet() <=0 && Enemy2.GetComponent<EnemyMove>().HpGet()<=0)
         {
             //gameObject.SetActive(false);//非表示
             SceneManager.LoadScene("Result");
