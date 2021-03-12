@@ -91,7 +91,7 @@ public class Fragment : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //テスト↓ : 壁に当たったら削除(タグも仮置き)
-        if (other.gameObject.tag == "Respawn")
+        if (other.gameObject.CompareTag("Respawn"))
         {
             ResetPosition();
         }
