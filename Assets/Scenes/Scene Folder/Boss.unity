@@ -782,6 +782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 6763542820849497715, guid: 7a965dff6e3027e40b956c5c1bb4f706, type: 3}
   Move: {fileID: 1127288894}
+  intarval: 0
   min: -100
   max: 100
   shotTime: 1
@@ -1966,6 +1967,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 6763542820849497715, guid: 7a965dff6e3027e40b956c5c1bb4f706, type: 3}
   Move: {fileID: 1127288894}
+  intarval: 3
   shotTime: 1
 --- !u!1001 &2029668691
 PrefabInstance:
@@ -2063,6 +2065,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1202612210625027585, guid: 39a4e6735c1203f4285467c0135db97d,
+        type: 3}
+      propertyPath: max
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202612210625027585, guid: 39a4e6735c1203f4285467c0135db97d,
+        type: 3}
+      propertyPath: min
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202612210625027585, guid: 39a4e6735c1203f4285467c0135db97d,
+        type: 3}
+      propertyPath: intarval
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1202612211773239764, guid: 39a4e6735c1203f4285467c0135db97d,
         type: 3}
       propertyPath: m_RootOrder
