@@ -14,9 +14,9 @@ public class Fragment : MonoBehaviour
     [SerializeField]
     private GameObject healBall;
 
-    //[SerializeField, Header("仮)消えるまでの時間")]
-    //private int deleteCount = 1;
-    //private int deleteTimer = 0;//カウント用
+    [SerializeField, Header("仮)消えるまでの時間")]
+    private int deleteCount = 1;
+    private int deleteTimer = 0;//カウント用
 
     public void Initialize(float angle, Vector3 position)
     {
@@ -36,12 +36,12 @@ public class Fragment : MonoBehaviour
     {
         Move();
 
-        //deleteTimer++;
-        ////1時間になったらリセットする
-        //if (deleteTimer > (60 * deleteCount))
-        //{
-        //    ResetPosition();
-        //}
+        deleteTimer++;
+        //1時間になったらリセットする
+        if (deleteTimer > (60 * deleteCount))
+        {
+            ResetPosition();
+        }
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class Fragment : MonoBehaviour
     private void ResetPosition()
     {
         gameObject.SetActive(false);
-        //deleteTimer = 0;
+        deleteTimer = 0;
         transform.localPosition = parentPosition;//位置も戻す
     }
 
@@ -95,11 +95,18 @@ public class Fragment : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //テスト↓ : 壁に当たったら削除(タグも仮置き)
-        if (other.gameObject.tag == "Wall")
+        if (other.gameObject.CompareTag("Wall"))
         {
             Vector3 pos = this.transform.position;
 
             Instantiate(healBall,pos,Quaternion.identity);
+            ResetPosition();
+        }
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Vector3 pos = this.transform.position;
+
+            //Instantiate(healBall, pos, Quaternion.identity);
             ResetPosition();
         }
     }
