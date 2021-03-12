@@ -26,7 +26,7 @@ public class Escape : MonoBehaviour
 
     public void OnClick()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

@@ -21,7 +21,7 @@ public class SceneTS: MonoBehaviour
     void SceneChange()
     {
         //if (Input.GetKeyDown(KeyCode.Space))
-        if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
             SceneManager.LoadScene("StageSelect");
         }
