@@ -9,7 +9,7 @@ public class EnemyShoto : MonoBehaviour
     
     public GameObject Move;
 
-    private int intarval;
+    public int intarval;
 
     public float shotTime;
     private float ss;
@@ -28,7 +28,7 @@ public class EnemyShoto : MonoBehaviour
     {
         ss += Time.deltaTime;
 
-        if (ss >= 2)
+        if (ss >= intarval)
         {
             Shot();
             ss = 0;

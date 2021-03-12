@@ -8,7 +8,7 @@ public class EnemyShot2 : MonoBehaviour
 
     public GameObject Move;
 
-    private int intarval;
+    public int intarval;
     public float min = -100;
     public float max = 100;
 
@@ -36,7 +36,7 @@ public class EnemyShot2 : MonoBehaviour
        Random.Range(min, max);
         
 
-        if (ss >= 2)
+        if (ss >= intarval)
         {
             Shot();
             ss = 0;
