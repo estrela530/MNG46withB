@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// ねじねじをまとめたクラス
@@ -29,7 +30,15 @@ public class Player : MonoBehaviour
     private int[] fragmentCount = new int[4];//(180,90,45
 
     [SerializeField]
-    private int firstCreateFragment = 45;
+    private Slider redSlider;
+    [SerializeField]
+    private Slider greenSlider;
+    [SerializeField]
+    private int maxHp = 10;
+    private float saveValue;
+
+    [SerializeField]
+    private int firstCreateFragment = 20;
     /// <summary>
     /// リセットしたかどうか(メッシュ側で取得&代入を行う)
     /// </summary>
@@ -76,6 +85,10 @@ public class Player : MonoBehaviour
 
         transform.localScale = Vector3.one;
 
+
+        redSlider.maxValue = greenSlider.maxValue = saveValue = maxHp;
+
+
         Initialize();
     }
 
@@ -86,6 +99,12 @@ public class Player : MonoBehaviour
         neziCount = 0;
         neziLevel = 0;
         transform.localScale = Vector3.one;
+
+
+
+        redSlider.value = greenSlider.value;
+
+
     }
 
     // Update is called once per frame
@@ -253,6 +272,17 @@ public class Player : MonoBehaviour
             //ねじねじしてる間カウントを増やす
             neziCount++;
 
+
+
+            greenSlider.value -= 0.05f;
+            saveValue = greenSlider.value;
+            if (greenSlider.value <= 1)
+            {
+                greenSlider.value = 1;
+            }
+
+
+
             if (myScale.y > maxNobiLength)
             {
                 myScale.y = maxNobiLength;
@@ -265,12 +295,24 @@ public class Player : MonoBehaviour
 
             myScale += new Vector3(0, -shrinkSpeed, 0);
 
+
+
+            redSlider.value -= 0.5f;
+            if (redSlider.value <= saveValue)
+            {
+                redSlider.value = saveValue;
+            }
+
+
+
+
             if (myScale.y <= 1.0f)
             {
                 myScale.y = 1.0f;
                 Initialize();    //元の大きさに戻ったら初期化
             }
         }
+
 
         transform.localScale = myScale;
     }
@@ -332,6 +374,12 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4"))
         {
             isReset = true;
+
+
+            greenSlider.value = redSlider.value;
+
+
+
             Initialize();
         }
     }
@@ -344,7 +392,6 @@ public class Player : MonoBehaviour
         isRelease = true; //解放中にする
         isTwisted = false;//ねじっていない
 
-        //常に行われる処理
         //ねじレベルによる色と球数の変化
         switch (neziLevel)
         {
