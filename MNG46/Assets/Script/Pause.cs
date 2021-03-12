@@ -39,6 +39,25 @@ public class Pause : MonoBehaviour
         }
     }
 
+    public void OnClickStartButton()
+    {
+        if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        {
+            if (!isPause)
+            {
+                PauseUIPrefab.SetActive(true);
+                Time.timeScale = 0f;
+                isPause = true;
+            }
+            else
+            {
+                PauseUIPrefab.SetActive(false);
+                Time.timeScale = 1f;
+                isPause = false;
+            }
+        }
+    }
+
     public bool GetPause()
     {
         return isPause;

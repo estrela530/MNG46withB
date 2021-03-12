@@ -6,19 +6,24 @@ using UnityEngine.SceneManagement;
 public class SceneSG : MonoBehaviour
 {
    
-    public void OnClickStartButton()
+    public void OnClickButton()
     {
-        if(Input.GetKeyDown(KeyCode.JoystickButton0))
+        if (Input.GetKeyDown("joystick button 0"))
         {
             SceneManager.LoadScene("Game");
         }
+
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    SceneManager.LoadScene("Game");
+        //}
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene("Game");
-        }
+        //if(Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    SceneManager.LoadScene("Game");
+        //}
     }
 }
