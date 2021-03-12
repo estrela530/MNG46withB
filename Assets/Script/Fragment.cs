@@ -10,9 +10,13 @@ public class Fragment : MonoBehaviour
     private float angle;     //飛ばす角度
     Vector3 parentPosition;  //親の位置を取得
 
-    [SerializeField, Header("仮)消えるまでの時間")]
-    private int deleteCount = 1;
-    private int deleteTimer = 0;//カウント用
+
+    [SerializeField]
+    private GameObject healBall;
+
+    //[SerializeField, Header("仮)消えるまでの時間")]
+    //private int deleteCount = 1;
+    //private int deleteTimer = 0;//カウント用
 
     public void Initialize(float angle, Vector3 position)
     {
@@ -60,7 +64,7 @@ public class Fragment : MonoBehaviour
     private void ResetPosition()
     {
         gameObject.SetActive(false);
-        deleteTimer = 0;
+        //deleteTimer = 0;
         transform.localPosition = parentPosition;//位置も戻す
     }
 
@@ -93,6 +97,9 @@ public class Fragment : MonoBehaviour
         //テスト↓ : 壁に当たったら削除(タグも仮置き)
         if (other.gameObject.tag == "Wall")
         {
+            Vector3 pos = this.transform.position;
+
+            Instantiate(healBall,pos,Quaternion.identity);
             ResetPosition();
         }
     }

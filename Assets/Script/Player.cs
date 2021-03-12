@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ねじねじをまとめたクラス
@@ -29,13 +29,13 @@ public class Player : MonoBehaviour
     [SerializeField, Header("レベルによる飛ばす球数")]
     private int[] fragmentCount = new int[4];//(180,90,45
 
-    [SerializeField]
-    private Slider redSlider;
-    [SerializeField]
-    private Slider greenSlider;
-    [SerializeField]
-    private int maxHp = 10;
-    private float saveValue;
+    //[SerializeField]
+    //private Slider redSlider;
+    //[SerializeField]
+    //private Slider greenSlider;
+    //[SerializeField]
+    //private int maxHp = 10;
+    //private float saveValue;
 
     [SerializeField]
     private int firstCreateFragment = 20;
@@ -54,6 +54,12 @@ public class Player : MonoBehaviour
 
     private Vector3 position;//位置
     private Vector3 velocity;//移動量
+
+
+    private Rigidbody rigid;
+
+    private float currentHp = 10;
+
 
     enum Direction
     {
@@ -87,7 +93,10 @@ public class Player : MonoBehaviour
         transform.localScale = Vector3.one;
 
 
-        redSlider.maxValue = greenSlider.maxValue = saveValue = maxHp;
+
+        rigid = GetComponent<Rigidbody>();
+
+        //redSlider.maxValue = greenSlider.maxValue = saveValue = maxHp;
 
 
         Initialize();
@@ -103,9 +112,9 @@ public class Player : MonoBehaviour
 
 
 
-        redSlider.value = greenSlider.value;
+        //redSlider.value = greenSlider.value;
 
-
+        //Hp = maxHp;
     }
 
     // Update is called once per frame
@@ -115,6 +124,13 @@ public class Player : MonoBehaviour
         Extend();       //伸びる
         ChangeLevel();  //レベル変更
         TwistedChange();//ねじチェンジ
+
+
+        if(currentHp < 1)
+        {
+            SceneManager.LoadScene("Result");
+        }
+
 
         //Debug.Log("ねじレベル" + neziLevel);
     }
@@ -176,6 +192,12 @@ public class Player : MonoBehaviour
                 direction = Direction.DOWN_LEFT;
             }
         }
+        else
+        {
+            //動いてないとき
+            rigid.constraints = RigidbodyConstraints.FreezePosition;
+
+        }
 
         //正規化
         velocity.Normalize();
@@ -233,6 +255,7 @@ public class Player : MonoBehaviour
         else
         {
             //動いていないとき
+            rigid.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
 
@@ -273,12 +296,15 @@ public class Player : MonoBehaviour
             //ねじねじしてる間カウントを増やす
             neziCount++;
 
-            greenSlider.value -= 0.01f;
-            saveValue = greenSlider.value;
-            if (greenSlider.value <= 1)
-            {
-                greenSlider.value = 1;
-            }
+            //greenSlider.value -= 0.01f;
+
+            currentHp -= 0.01f;
+
+            //saveValue = greenSlider.value;
+            //if (greenSlider.value <= 1)
+            //{
+            //    greenSlider.value = 1;
+            //}
 
 
 
@@ -296,11 +322,11 @@ public class Player : MonoBehaviour
 
 
 
-            redSlider.value -= 0.5f;
-            if (redSlider.value <= saveValue)
-            {
-                redSlider.value = saveValue;
-            }
+            //redSlider.value -= 0.5f;
+            //if (redSlider.value <= saveValue)
+            //{
+            //    redSlider.value = saveValue;
+            //}
 
 
 
@@ -361,7 +387,8 @@ public class Player : MonoBehaviour
     {
 
         isTwisted = true;
-
+        rigid.constraints = RigidbodyConstraints.FreezePosition;
+        rigid.constraints = RigidbodyConstraints.FreezeRotation;
         TwistedCancel();
     }
 
@@ -375,7 +402,7 @@ public class Player : MonoBehaviour
             isReset = true;
 
 
-            greenSlider.value = redSlider.value;
+            //greenSlider.value = redSlider.value;
 
 
 
@@ -439,5 +466,24 @@ public class Player : MonoBehaviour
     public bool GetTwisted()
     {
         return isTwisted;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("HealBall"))
+        {
+            //test = other.gameObject.GetComponent<TestHealBall>().GetLevel();
+            currentHp += 0.5f;
+            Destroy(other.gameObject);
+        }
+        if(other.gameObject.CompareTag("Enemy"))
+        {
+            currentHp -= 1.0f;
+        }
+    }
+
+    public float GetHp()
+    {
+        return currentHp;
     }
 }
