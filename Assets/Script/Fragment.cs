@@ -15,7 +15,7 @@ public class Fragment : MonoBehaviour
     private GameObject healBall;
 
     [SerializeField, Header("仮)消えるまでの時間")]
-    private int deleteCount = 1;
+    private float deleteCount = 1;
     private int deleteTimer = 0;//カウント用
 
     public void Initialize(float angle, Vector3 position)
