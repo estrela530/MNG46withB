@@ -24,9 +24,9 @@ public class Player : MonoBehaviour
     [SerializeField, Header("レベルアップに必要なねじカウント")]
     private int[] levelCount = new int[3];//(50,110,180
 
-    [SerializeField, Header("プレイヤーの欠片")]
+    [SerializeField, Header("プレイヤーの欠片プレファブ")]
     private GameObject fragmentPrefab;
-    [SerializeField, Header("レベルによる飛ばす球数")]
+    [SerializeField, Tooltip("レベルによる飛ばす球数")]
     private int[] fragmentCount = new int[4];//(180,90,45
 
     //[SerializeField]
@@ -456,6 +456,7 @@ public class Player : MonoBehaviour
 
             if (fragment != null)
             {
+                //この実装は、UpdateでGetComponentしているので良くない
                 fragment.GetComponent<Fragment>().Initialize(angle, transform.position);
             }
         }

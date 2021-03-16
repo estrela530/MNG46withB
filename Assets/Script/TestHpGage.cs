@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// プレイヤーからHPを受け取り、ゲージに反映する。
+/// </summary>
 public class TestHpGage : MonoBehaviour
 {
-    Slider redSlider;
-    Slider greenSlider;
-    float saveValue;
-    int maxHp = 10; //これはプレイヤーから持ってくる。
-    float currentHp;//これもプレイヤーから持ってくる
+    Slider redSlider;  //赤ゲージ
+    Slider greenSlider;//緑ゲージ
+    float saveValue;   //一次保存用体力
+    int maxHp = 10;    //これはプレイヤーから持ってくる。
+    float currentHp;   //これもプレイヤーから持ってくる
 
     Player player;
 
