@@ -58,8 +58,10 @@ public class Player : MonoBehaviour
 
     private Rigidbody rigid;
 
-    private float currentHp = 10;
-    private float saveValue = 10;
+    public float currentHp = 10; //現在の体力
+    private float saveValue = 10;//最大体力を入れておかないと
+
+    public float decreaseHp = 0.01f;//体力の減少量
 
 
     enum Direction
@@ -111,7 +113,7 @@ public class Player : MonoBehaviour
         neziLevel = 0;
         transform.localScale = Vector3.one;
 
-
+            saveValue = currentHp;
 
         //redSlider.value = greenSlider.value;
 
@@ -298,17 +300,13 @@ public class Player : MonoBehaviour
             //ねじねじしてる間カウントを増やす
             neziCount++;
 
-            //greenSlider.value -= 0.01f;
-
-            currentHp -= 0.01f;
-
-            //saveValue = greenSlider.value;
-            //if (greenSlider.value <= 1)
-            //{
-            //    greenSlider.value = 1;
-            //}
-
-
+            //体力を滑らかに減らす
+            currentHp -= decreaseHp;
+            if(currentHp <= 1)
+            {
+                //ねじりすぎて死なないようにする。
+                currentHp = 1.0f;
+            }
 
             if (myScale.y > maxNobiLength)
             {
@@ -322,16 +320,8 @@ public class Player : MonoBehaviour
 
             myScale += new Vector3(0, -shrinkSpeed, 0);
 
-            saveValue = currentHp;
-
-            //redSlider.value -= 0.5f;
-            //if (redSlider.value <= saveValue)
-            //{
-            //    redSlider.value = saveValue;
-            //}
-
-
-
+            //赤ゲージをなめらかに現在の体力値まで減らす。
+            saveValue -= 0.1f;
 
             if (myScale.y <= 1.0f)
             {
@@ -339,7 +329,6 @@ public class Player : MonoBehaviour
                 Initialize();    //元の大きさに戻ったら初期化
             }
         }
-
 
         transform.localScale = myScale;
     }
@@ -387,7 +376,6 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedAccumulate()
     {
-
         isTwisted = true;
         rigid.constraints = RigidbodyConstraints.FreezePosition;
         rigid.constraints = RigidbodyConstraints.FreezeRotation;
@@ -423,19 +411,13 @@ public class Player : MonoBehaviour
         //ねじレベルによる色と球数の変化
         switch (neziLevel)
         {
-            case 0://レベル0
-                renderer.material.color = Color.white;
-                break;
             case 1:
-                renderer.material.color = Color.magenta;
                 TestNeziShoot(fragmentCount[1]);
                 break;
             case 2:
-                renderer.material.color = Color.yellow;
                 TestNeziShoot(fragmentCount[2]);
                 break;
             case 3:
-                renderer.material.color = Color.red;
                 TestNeziShoot(fragmentCount[3]);
                 break;
             default:
@@ -477,11 +459,13 @@ public class Player : MonoBehaviour
         {
             //test = other.gameObject.GetComponent<TestHealBall>().GetLevel();
             currentHp += 0.2f;
+            saveValue += 0.2f;
             Destroy(other.gameObject);
         }
         if(other.gameObject.CompareTag("Enemy"))
         {
             currentHp -= 1.0f;
+            saveValue -= 1.0f;
         }
     }
 
@@ -499,6 +483,10 @@ public class Player : MonoBehaviour
         return currentHp;
     }
 
+    /// <summary>
+    /// 保存した値を取得
+    /// </summary>
+    /// <returns></returns>
     public float GetSavevalue()
     {
         return saveValue;
