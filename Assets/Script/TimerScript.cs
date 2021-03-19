@@ -20,6 +20,7 @@ public class TimerScript : MonoBehaviour
         seconds = 0f;
         oldSeconds = 0f;
         timerText = GetComponentInChildren<Text>();
+
     }
 
     void Update()
@@ -36,5 +37,7 @@ public class TimerScript : MonoBehaviour
             timerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
         }
         oldSeconds = seconds;
+
     }
+
 }
