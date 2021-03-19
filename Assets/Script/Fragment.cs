@@ -1,8 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-/// <summary>
-/// プレイヤーの飛ばした欠片
-/// </summary>
 public class Fragment : MonoBehaviour
 {
     [SerializeField]
@@ -17,6 +15,21 @@ public class Fragment : MonoBehaviour
     [SerializeField, Header("仮)消えるまでの時間")]
     private float deleteCount = 1;
     private int deleteTimer = 0;//カウント用
+
+    private List<GameObject> children;//子オブジェクトリスト
+
+    //private void Start()
+    //{
+    //    children = new List<GameObject>();//リストを生成
+    //    //最初に二つ作っておく
+    //    for (int i = 0; i < 3; i++)
+    //    {
+    //        GameObject obj = CreateChildren();//オブジェクト生成
+    //        obj.SetActive(false);             //生成時は非表示にする
+    //        children.Add(obj);                //リストに入れる
+    //    }
+    //}
+
 
     public void Initialize(float angle, Vector3 position)
     {
@@ -99,15 +112,64 @@ public class Fragment : MonoBehaviour
         {
             Vector3 pos = this.transform.position;
 
-            Instantiate(healBall,pos,Quaternion.identity);
+            GameObject pre = Instantiate(healBall, pos, Quaternion.identity) as GameObject;
+
+            //GameObject test = GetObject(); ;//先に作っておく
+
+            //if(test != null)
+            //{
+            //    test.GetComponent<TestHealBall>().Initialize(pos);
+            //}
+
+
             ResetPosition();
         }
         if (other.gameObject.CompareTag("Enemy"))
         {
             Vector3 pos = this.transform.position;
-
-            //Instantiate(healBall, pos, Quaternion.identity);
+            
             ResetPosition();
         }
+    }
+
+    /// <summary>
+    /// 新しく生成し、子オブジェクトに設定して返す
+    /// </summary>
+    /// <returns></returns>
+    private GameObject CreateChildren()
+    {
+        GameObject obj = Instantiate(healBall);
+        obj.transform.parent = this.transform;
+
+        return obj;
+    }
+
+    private GameObject GetObject()
+    {
+        ////使用中でないものを探す
+        //foreach (var child in children)
+        //{
+        //    if (child.activeSelf == false)
+        //    {
+        //        child.SetActive(true);//使用中にして返す
+        //        return child;
+        //    }
+        //}
+
+        //使用中でないものを探す
+        foreach (Transform child in this.transform)
+        {
+            if (child.gameObject.activeSelf == false)
+            {
+                child.gameObject.SetActive(true);//使用中にして返す
+                return child.gameObject;
+            }
+        }
+
+        GameObject obj = CreateChildren();
+        obj.transform.parent = this.transform;
+        obj.SetActive(true);
+        children.Add(obj);
+        return obj;
     }
 }

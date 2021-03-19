@@ -58,11 +58,11 @@ public class Player : MonoBehaviour
 
     private Rigidbody rigid;
 
+    public float maxHp = 10;
     public float currentHp = 10; //現在の体力
     private float saveValue = 10;//最大体力を入れておかないと
 
     public float decreaseHp = 0.01f;//体力の減少量
-
 
     enum Direction
     {
@@ -83,24 +83,12 @@ public class Player : MonoBehaviour
         //ねじれてる本体の色情報を取得
         renderer = transform.GetChild(0).GetComponent<Renderer>();
 
+        //プールの生成と、初期オブジェクトの追加
         objectPool = GetComponent<FragmentPool>();
-        //最初の生成を行う
         objectPool.CreatePool(fragmentPrefab, firstCreateFragment);
 
-        //position = this.transform.position;
-        ////初期位置
-        //position = Vector3.zero;
-        ////位置を反映
-        //this.transform.position = position;
-
-        transform.localScale = Vector3.one;
-
-
-
+        //移動量を消すために必要だった
         rigid = GetComponent<Rigidbody>();
-
-        //redSlider.maxValue = greenSlider.maxValue = saveValue = maxHp;
-
 
         Initialize();
     }
@@ -112,12 +100,7 @@ public class Player : MonoBehaviour
         neziCount = 0;
         neziLevel = 0;
         transform.localScale = Vector3.one;
-
-            saveValue = currentHp;
-
-        //redSlider.value = greenSlider.value;
-
-        //Hp = maxHp;
+        saveValue = currentHp;//赤ゲージを緑に合わせる。
     }
 
     // Update is called once per frame
@@ -128,14 +111,10 @@ public class Player : MonoBehaviour
         ChangeLevel();  //レベル変更
         TwistedChange();//ねじチェンジ
 
-
         if(currentHp < 0.5f)
         {
             SceneManager.LoadScene("Result");
         }
-
-
-        //Debug.Log("ねじレベル" + neziLevel);
     }
 
     /// <summary>
@@ -377,8 +356,8 @@ public class Player : MonoBehaviour
     void TwistedAccumulate()
     {
         isTwisted = true;
-        rigid.constraints = RigidbodyConstraints.FreezePosition;
-        rigid.constraints = RigidbodyConstraints.FreezeRotation;
+        rigid.constraints = RigidbodyConstraints.FreezePosition;//移動を固定
+        rigid.constraints = RigidbodyConstraints.FreezeRotation;//移動を固定
         TwistedCancel();
     }
 
@@ -390,12 +369,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4"))
         {
             isReset = true;
-
-
-            //greenSlider.value = redSlider.value;
             currentHp = saveValue;
-
-
             Initialize();
         }
     }
@@ -421,12 +395,13 @@ public class Player : MonoBehaviour
                 TestNeziShoot(fragmentCount[3]);
                 break;
             default:
+                Debug.Log("存在しないレベルで解放しようとしています。");
                 break;
         }
     }
 
     /// <summary>
-    /// 欠片を飛ばす
+    /// 欠片を飛ばす(向きを指定できるようにしないといけない)
     /// </summary>
     /// <param name="count">360で割った個数分出てくる</param>
     void TestNeziShoot(int count)
@@ -445,6 +420,63 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 回復
+    /// </summary>
+    /// <param name="healBall">オブジェクトのスクリプトを取得</param>
+    private void Heal(GameObject healBall)
+    {
+        int healAmounst = healBall.GetComponent<TestHealBall>().GetLevel();
+
+        switch (healAmounst)
+        {
+            case 1:
+                currentHp += 0.2f;
+                saveValue += 0.2f;
+                break;
+            case 2:
+                currentHp += 0.5f;
+                saveValue += 0.5f;
+                break;
+            case 3:
+                currentHp += 1.0f;
+                saveValue += 1.0f;
+                break;
+            default:
+                Debug.Log("存在しないレベルでの回復が行われようとしています");
+                break;
+        }
+
+        //最大体力以上にはならない。
+        if(currentHp >= maxHp)
+        {
+            currentHp = maxHp;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("HealBall"))
+        {
+            Heal(other.gameObject);   //回復
+            Destroy(other.gameObject);//回復玉を消す
+        }
+        if(other.gameObject.CompareTag("Enemy"))
+        {
+            currentHp -= 1.0f;//ダメージを受ける(あとで関数つくる)
+            saveValue -= 1.0f;//ダメージを受ける(あとで関数つくる)
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            //移動量を0にする。
+            rigid.velocity = Vector3.zero;
+        }
+    }
+
+    /// <summary>
     /// ねじねじしているか
     /// </summary>
     /// <returns></returns>
@@ -453,31 +485,10 @@ public class Player : MonoBehaviour
         return isTwisted;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("HealBall"))
-        {
-            //test = other.gameObject.GetComponent<TestHealBall>().GetLevel();
-            currentHp += 0.2f;
-            saveValue += 0.2f;
-            Destroy(other.gameObject);
-        }
-        if(other.gameObject.CompareTag("Enemy"))
-        {
-            currentHp -= 1.0f;
-            saveValue -= 1.0f;
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            rigid.velocity = Vector3.zero;
-            //rigid.angularVelocity = Vector3.zero;
-        }
-    }
-
+    /// <summary>
+    /// 現在の体力を取得
+    /// </summary>
+    /// <returns></returns>
     public float GetHp()
     {
         return currentHp;
