@@ -657,7 +657,7 @@ PrefabInstance:
     - target: {fileID: 1202612211773239790, guid: 39a4e6735c1203f4285467c0135db97d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1202612211773239790, guid: 39a4e6735c1203f4285467c0135db97d,
         type: 3}
@@ -682,12 +682,12 @@ PrefabInstance:
     - target: {fileID: 4378417300099620513, guid: 39a4e6735c1203f4285467c0135db97d,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4378417300099620513, guid: 39a4e6735c1203f4285467c0135db97d,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39a4e6735c1203f4285467c0135db97d, type: 3}
@@ -709,7 +709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &621624547
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1155,13 +1155,14 @@ GameObject:
   - component: {fileID: 1364381001}
   - component: {fileID: 1364381000}
   - component: {fileID: 1364380999}
+  - component: {fileID: 1364381005}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1364380999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,8 +1175,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b3b5a9125c7de439e4e3d87ec284df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  area: 10
-  social: 5
+  m_widthAngle: 0
+  m_heightAngle: 0
+  m_length: 0
+  searchAngle: 50
+  social: 3
+  enemyHP: 5
   workObj1: {fileID: 1781449548}
   workObj2: {fileID: 273848883}
   speed: 2
@@ -1207,7 +1212,7 @@ BoxCollider:
   m_GameObject: {fileID: 1364380998}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2.5, y: 1, z: 2.54}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1277,6 +1282,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1364381005
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364380998}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1461967344
 GameObject:
   m_ObjectHideFlags: 0
