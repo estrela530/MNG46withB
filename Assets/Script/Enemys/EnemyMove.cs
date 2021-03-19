@@ -13,9 +13,9 @@ using UnityEditor;
 public class EnemyMove : MonoBehaviour
 {
     private SpherecastCommand searchArea;//サーチ範囲
+    
 
-   
-    [SerializeField] public float searchAngle = 100f;
+    [SerializeField] public float searchAngle;
 
     // Start is called before the first frame update
     private GameObject Target;//追尾する相手
@@ -69,6 +69,8 @@ public class EnemyMove : MonoBehaviour
         {
             gameObject.SetActive(false);//非表示
             //SceneManager.LoadScene("Result");
+            SceneManager.LoadScene("GameClear");
+
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
@@ -172,19 +174,27 @@ public class EnemyMove : MonoBehaviour
                 workFlag = false;
                 Debug.Log("主人公発見: " + angle);
             }
-            //サーチする角度の範囲内だったら発見
-            else
-            {
-                Debug.Log("範囲外: " + angle);
-            }
+            ////サーチする角度の範囲内だったら発見
+            //else
+            //{
+            //    Debug.Log("範囲外: " + angle);
+            //}
 
         }
 
         if (!other.gameObject.CompareTag("Player"))
         {
-            MoveFlag = false;
-            workFlag = true;
-            Debug.Log("範囲外: " + angle);
+            //サーチする角度の範囲外だったら索敵
+            if (angle > searchAngle)
+            {
+                MoveFlag = false;
+                workFlag = true;
+                Debug.Log("外: " + angle);
+            }
+            //MoveFlag = false;
+            //workFlag = true;
+           
+            //Debug.Log("範囲外: " + angle);
         }
 
     }
@@ -203,7 +213,6 @@ public class EnemyMove : MonoBehaviour
             searchAngle, //扇の角度
             searchArea.radius//半径
             );
-
     }
 #endif
 
