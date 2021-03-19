@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEditor;
 
 //using UnityStandardAssets.Characters.ThirdPerson;
 //[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
@@ -11,13 +12,15 @@ using UnityEngine.UI;
 
 public class EnemyMove : MonoBehaviour
 {
+    private SpherecastCommand searchArea;//サーチ範囲
 
-    
+   
+    [SerializeField] public float searchAngle = 100f;
 
     // Start is called before the first frame update
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
-    public float area;//この数値以下になったら追う
+   // public float area;//この数値以下になったら追う
     public float social;//この数値まで進む
 
     [SerializeField] float enemyHP = 5;
@@ -59,6 +62,7 @@ public class EnemyMove : MonoBehaviour
         //z = (target - transform.position).normalized;
         //x = Vector3.Cross(Vector3.up, z).normalized;
         //y = Vector3.Cross(z, x).normalized;
+
         
 
         if (enemyHP <= 0)
@@ -72,17 +76,19 @@ public class EnemyMove : MonoBehaviour
         ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
         ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
 
-        if (dis < area)
-        {
-            MoveFlag = true;
-            workFlag = false;
-        }
-        else if(dis>area)
-        {
-            MoveFlag = false;
-            workFlag = true;
-        }
+        //if (dis < area)
+        //{
+        //    MoveFlag = true;
+        //    workFlag = false;
+        //}
+        //else if(dis>area)
+        //{
+        //    MoveFlag = false;
+        //    workFlag = true;
+        //}
+
         
+
 
         if (MoveFlag)
         {
@@ -145,5 +151,60 @@ public class EnemyMove : MonoBehaviour
         {
             enemyHP = enemyHP - 1;
         }
+
+        
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //プレイヤーの方向
+        var playerDire = other.transform.position - this.transform.position;
+
+        //自分の前方からプレイヤーの方向
+        var angle = Vector3.Angle(transform.forward, playerDire);
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            //サーチする角度の範囲内だったら発見
+            if(angle<=searchAngle)
+            {
+                MoveFlag = true;
+                workFlag = false;
+                Debug.Log("主人公発見: " + angle);
+            }
+            //サーチする角度の範囲内だったら発見
+            else
+            {
+                Debug.Log("範囲外: " + angle);
+            }
+
+        }
+
+        if (!other.gameObject.CompareTag("Player"))
+        {
+            MoveFlag = false;
+            workFlag = true;
+            Debug.Log("範囲外: " + angle);
+        }
+
+    }
+
+#if UNITY_EDITOR
+    //サーチ範囲を表示
+    private void OnDrawGizmos()
+    {
+        Handles.color = Color.red;
+        //Handles.DrawSolidDisc(transform.position, Vector3.up, 3.0f);
+        //Handles.DrawSolidArc(transform.position, Vector3.up, Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward, searchAngle * 5f, HandleUtility.GetHandleSize(Vector3.zero));
+        Handles.DrawSolidArc(
+            this.transform.position, //中心点
+            Vector3.up, //表示する表面の方向
+            Quaternion.Euler(0f, -searchAngle, 0f)*this.transform.forward, //扇の表示を開始する方向
+            searchAngle, //扇の角度
+            searchArea.radius//半径
+            );
+
+    }
+#endif
+
 }
