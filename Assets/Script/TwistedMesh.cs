@@ -46,19 +46,25 @@ public class TwistedMesh : MonoBehaviour
 
         Debug.Log("頂点数" + vertices.Length);
     }
-    
-    void Update()
+
+    private void FixedUpdate()
     {
         ChangeAngle();    //ねじれ角度を変える
         TwistedVertices();//ねじれを反映させる
     }
 
+    /// <summary>
+    /// ねじれを元に戻す
+    /// </summary>
     void ResetAngle()
     {
         twistedCount = 0;
         player.isReset = false;
     }
 
+    /// <summary>
+    /// ねじれる
+    /// </summary>
     void ChangeAngle()
     {
         //ねじれているか取得

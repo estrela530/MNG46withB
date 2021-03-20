@@ -3,39 +3,28 @@ using UnityEngine;
 
 public class Fragment : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 5f;//欠片の速度
-    private float angle;     //飛ばす角度
-    Vector3 parentPosition;  //親の位置を取得
+    [SerializeField,Tooltip("欠片の速度")]
+    private float speed = 5f; //欠片の速度
+    private float angle;      //飛ばす角度
+    private float deleteCount;//存在時間
+    private int deleteTimer;  //カウント用
+    Vector3 parentPosition;   //親の位置を取得
 
-
-    [SerializeField]
+    [SerializeField,Header("回復玉のプレファブを入れてね")]
     private GameObject healBall;
 
-    [SerializeField, Header("仮)消えるまでの時間")]
-    private float deleteCount = 1;
-    private int deleteTimer = 0;//カウント用
-
-    private List<GameObject> children;//子オブジェクトリスト
-
-    //private void Start()
-    //{
-    //    children = new List<GameObject>();//リストを生成
-    //    //最初に二つ作っておく
-    //    for (int i = 0; i < 3; i++)
-    //    {
-    //        GameObject obj = CreateChildren();//オブジェクト生成
-    //        obj.SetActive(false);             //生成時は非表示にする
-    //        children.Add(obj);                //リストに入れる
-    //    }
-    //}
-
-
-    public void Initialize(float angle, Vector3 position)
+    /// <summary>
+    /// 初期化&生成
+    /// </summary>
+    /// <param name="angle">発射角度</param>
+    /// <param name="position">生成位置</param>
+    /// <param name="deleteCount">存在時間</param>
+    public void Initialize(float angle, Vector3 position, float deleteCount)
     {
         this.angle = angle;
         //位置をちょっと高くする
-        this.parentPosition = new Vector3(position.x, position.y + 0.5f, position.z);
+        this.parentPosition = new Vector3(position.x, position.y + 0.3f, position.z);
+        this.deleteCount = deleteCount;
 
         //位置初期化
         transform.position = this.parentPosition;
@@ -44,11 +33,20 @@ public class Fragment : MonoBehaviour
         GetComponent<Renderer>().material.color = Color.red;
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// FPS固定のUpdate
+    /// </summary>
+    private void FixedUpdate()
     {
         Move();
+        ResetTimeMeasure();
+    }
 
+    /// <summary>
+    /// 時間を計測する
+    /// </summary>
+    void ResetTimeMeasure()
+    {
         deleteTimer++;
         //1時間になったらリセットする
         if (deleteTimer > (60 * deleteCount))
@@ -69,6 +67,25 @@ public class Fragment : MonoBehaviour
 
         //移動処理
         transform.position += velocity * Time.deltaTime * speed;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //テスト↓ : 壁に当たったら削除
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Vector3 pos = this.transform.position;
+
+            GameObject pre = Instantiate(healBall, pos, Quaternion.identity) as GameObject;
+
+            ResetPosition();
+        }
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Vector3 pos = this.transform.position;
+
+            ResetPosition();
+        }
     }
 
     /// <summary>
@@ -103,73 +120,5 @@ public class Fragment : MonoBehaviour
         direction.z = Mathf.Sin(DegreeToRadian(angle));
 
         return direction;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //テスト↓ : 壁に当たったら削除(タグも仮置き)
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            Vector3 pos = this.transform.position;
-
-            GameObject pre = Instantiate(healBall, pos, Quaternion.identity) as GameObject;
-
-            //GameObject test = GetObject(); ;//先に作っておく
-
-            //if(test != null)
-            //{
-            //    test.GetComponent<TestHealBall>().Initialize(pos);
-            //}
-
-
-            ResetPosition();
-        }
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Vector3 pos = this.transform.position;
-            
-            ResetPosition();
-        }
-    }
-
-    /// <summary>
-    /// 新しく生成し、子オブジェクトに設定して返す
-    /// </summary>
-    /// <returns></returns>
-    private GameObject CreateChildren()
-    {
-        GameObject obj = Instantiate(healBall);
-        obj.transform.parent = this.transform;
-
-        return obj;
-    }
-
-    private GameObject GetObject()
-    {
-        ////使用中でないものを探す
-        //foreach (var child in children)
-        //{
-        //    if (child.activeSelf == false)
-        //    {
-        //        child.SetActive(true);//使用中にして返す
-        //        return child;
-        //    }
-        //}
-
-        //使用中でないものを探す
-        foreach (Transform child in this.transform)
-        {
-            if (child.gameObject.activeSelf == false)
-            {
-                child.gameObject.SetActive(true);//使用中にして返す
-                return child.gameObject;
-            }
-        }
-
-        GameObject obj = CreateChildren();
-        obj.transform.parent = this.transform;
-        obj.SetActive(true);
-        children.Add(obj);
-        return obj;
     }
 }
