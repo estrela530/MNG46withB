@@ -19,32 +19,33 @@ public class Player : MonoBehaviour
     private float shrinkSpeed = 0.1f;
     [SerializeField, Header("伸びる長さ")]
     private float maxNobiLength = 5.0f;
-    [SerializeField/*, ReadOnly*/]
-    public int neziCount;//どれくらいねじねじしているか
     [SerializeField, Header("レベルアップに必要なねじカウント")]
     private int[] levelCount = new int[3];//(50,110,180
+    [SerializeField, Tooltip("どれくらいねじれているか(値を入れないでね!!!)")]
+    public int neziCount;
 
+    [SerializeField, Tooltip("最初に生成しておくオブジェクトの数")]
+    private int firstCreateFragment = 20;
     [SerializeField, Header("プレイヤーの欠片プレファブ")]
     private GameObject fragmentPrefab;
     [SerializeField, Tooltip("レベルによる飛ばす球数")]
-    private int[] fragmentCount = new int[4];//(180,90,45
+    private int[] fragmentCount = new int[3];//(180,90,45
+    [SerializeField, Header("レベルによる欠片の飛距離(時間)")]
+    private float[] deleteCount = new float[3];//(
 
-    //[SerializeField]
-    //private Slider redSlider;
-    //[SerializeField]
-    //private Slider greenSlider;
-    //[SerializeField]
-    //private int maxHp = 10;
-    //private float saveValue;
+    [SerializeField, Tooltip("最大体力")]
+    private float maxHp = 10;
+    [SerializeField, Tooltip("体力の減少量")]
+    private float decreaseHp = 0.01f;//体力の減少量
+    [SerializeField, Header("回復玉のレベルによる回復量")]
+    private float[] healValue = new float[3];//(
 
-    [SerializeField]
-    private int firstCreateFragment = 20;
     /// <summary>
     /// リセットしたかどうか(メッシュ側で取得&代入を行う)
     /// </summary>
     public bool isReset { get; set; } = false;
 
-    Renderer renderer;            //色変え用
+    MeshRenderer meshRenderer;            //色変え用
     FragmentPool objectPool;      //オブジェクトプール
     Vector3 myScale = Vector3.one;//自身の大きさ
 
@@ -54,16 +55,14 @@ public class Player : MonoBehaviour
 
     private Vector3 position;//位置
     private Vector3 velocity;//移動量
+    private Rigidbody rigid; //物理演算
 
+    private float currentHp = 10;//現在の体力
+    private float saveValue = 10;//体力一時保存用
 
-    private Rigidbody rigid;
-
-    public float maxHp = 10;
-    public float currentHp = 10; //現在の体力
-    private float saveValue = 10;//最大体力を入れておかないと
-
-    public float decreaseHp = 0.01f;//体力の減少量
-
+    /// <summary>
+    /// プレイヤーの向いてる方向
+    /// </summary>
     enum Direction
     {
         UP,   //上
@@ -81,18 +80,21 @@ public class Player : MonoBehaviour
     void Start()
     {
         //ねじれてる本体の色情報を取得
-        renderer = transform.GetChild(0).GetComponent<Renderer>();
-
+        meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         //プールの生成と、初期オブジェクトの追加
         objectPool = GetComponent<FragmentPool>();
         objectPool.CreatePool(fragmentPrefab, firstCreateFragment);
-
         //移動量を消すために必要だった
         rigid = GetComponent<Rigidbody>();
+
+        currentHp = saveValue = maxHp;
 
         Initialize();
     }
 
+    /// <summary>
+    /// 値の初期化
+    /// </summary>
     void Initialize()
     {
         isTwisted = false;
@@ -103,22 +105,36 @@ public class Player : MonoBehaviour
         saveValue = currentHp;//赤ゲージを緑に合わせる。
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// 毎フレーム呼び出される
+    /// 入力が必要な更新を行う。
+    /// </summary>
     void Update()
     {
         Move();         //動く
-        Extend();       //伸びる
-        ChangeLevel();  //レベル変更
         TwistedChange();//ねじチェンジ
+    }
 
-        if(currentHp < 0.5f)
+    /// <summary>
+    /// 一定秒数ごとに呼ばれる(現在は0.02秒)
+    /// 「Edit」→「ProjectSetting」→「Time」→「TimeManager」
+    /// </summary>
+    private void FixedUpdate()
+    {
+        //ここでは入力にラグが出てしまうため、入力以外の処理を行うといい。
+
+        TwistedExtend();//伸びる
+        ChangeLevel();  //レベル変更
+
+        if (currentHp < 0.5f)
         {
-            SceneManager.LoadScene("Result");
+            SceneManager.LoadScene("GameOver");
         }
     }
 
     /// <summary>
     /// プレイヤーの移動
+    /// ねじり中and解放中は動けない
     /// </summary>
     private void Move()
     {
@@ -175,12 +191,6 @@ public class Player : MonoBehaviour
                 direction = Direction.DOWN_LEFT;
             }
         }
-        //else
-        //{
-        //    //動いてないとき
-        //    rigid.constraints = RigidbodyConstraints.FreezePosition;
-
-        //}
 
         //正規化
         velocity = velocity.normalized;
@@ -230,6 +240,7 @@ public class Player : MonoBehaviour
                     dir = Quaternion.Euler(0, 225f, 0);
                     break;
                 default:
+                    Debug.Log("存在しない向きに回転しようとしています。");
                     break;
             }
 
@@ -244,6 +255,7 @@ public class Player : MonoBehaviour
 
     /// <summary>
     /// ねじチェンジ
+    /// キーの入力で処理を分岐させる。
     /// </summary>
     void TwistedChange()
     {
@@ -263,9 +275,83 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 伸びる
+    /// ねじチャージ 
+    /// ねじりフラグをTrueにする。
     /// </summary>
-    void Extend()
+    void TwistedAccumulate()
+    {
+        isTwisted = true;
+        rigid.constraints = RigidbodyConstraints.FreezePosition;//移動を固定
+        rigid.constraints = RigidbodyConstraints.FreezeRotation;//移動を固定
+        TwistedCancel();
+    }
+
+    /// <summary>
+    /// ねじキャンセル
+    /// Zキーを押したら初期化メソッドが呼ばれる。
+    /// </summary>
+    void TwistedCancel()
+    {
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4"))
+        {
+            isReset = true;
+            currentHp = saveValue;
+            Initialize();
+        }
+    }
+
+    /// <summary>
+    /// ねじリリース
+    /// レベルに応じて、弾発射のメソッドを呼び出す
+    /// </summary>
+    void TwistedRelease()
+    {
+        isRelease = true; //解放中にする
+        isTwisted = false;//ねじっていない
+
+        //ねじレベルによる色と球数の変化
+        switch (neziLevel)
+        {
+            case 1:
+                TestNeziShoot(fragmentCount[0], deleteCount[0]);
+                break;
+            case 2:
+                TestNeziShoot(fragmentCount[1], deleteCount[1]);
+                break;
+            case 3:
+                TestNeziShoot(fragmentCount[2], deleteCount[2]);
+                break;
+            default:
+                Debug.Log("存在しないレベルで解放しようとしています。");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 欠片を飛ばす(向きを指定できるようにしないといけない)
+    /// </summary>
+    /// <param name="count">360で割った個数分出てくる</param>
+    void TestNeziShoot(int count,float deleteCount)
+    {
+        //ここで解放する
+        for (int angle = 0; angle < 360; angle += count)//360で割った個数分出てくる
+        {
+            GameObject fragment = objectPool.GetObject();//生きているオブジェクトを代入
+
+            if (fragment != null)
+            {
+                //この実装は、UpdateでGetComponentしているので良くない
+                fragment.GetComponent<Fragment>().Initialize(angle, transform.position, deleteCount);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 伸びる&縮む
+    /// 体力も減らす
+    /// レベル用カウントを増やす
+    /// </summary>
+    void TwistedExtend()
     {
         myScale = transform.localScale;
 
@@ -334,122 +420,20 @@ public class Player : MonoBehaviour
         switch (neziLevel)
         {
             case 0://レベル0
-                renderer.material.color = Color.white;
+                meshRenderer.material.color = Color.white;
                 break;
             case 1:
-                renderer.material.color = Color.magenta;
+                meshRenderer.material.color = Color.magenta;
                 break;
             case 2:
-                renderer.material.color = Color.yellow;
+                meshRenderer.material.color = Color.yellow;
                 break;
             case 3:
-                renderer.material.color = Color.red;
+                meshRenderer.material.color = Color.red;
                 break;
             default:
+                Debug.Log("存在しないレベルで色変えが行われようとしています");
                 break;
-        }
-    }
-
-    /// <summary>
-    /// ねじチャージ (Accumulate = 溜める)
-    /// </summary>
-    void TwistedAccumulate()
-    {
-        isTwisted = true;
-        rigid.constraints = RigidbodyConstraints.FreezePosition;//移動を固定
-        rigid.constraints = RigidbodyConstraints.FreezeRotation;//移動を固定
-        TwistedCancel();
-    }
-
-    /// <summary>
-    /// ねじキャンセル
-    /// </summary>
-    void TwistedCancel()
-    {
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4"))
-        {
-            isReset = true;
-            currentHp = saveValue;
-            Initialize();
-        }
-    }
-
-    /// <summary>
-    /// ねじリリース
-    /// </summary>
-    void TwistedRelease()
-    {
-        isRelease = true; //解放中にする
-        isTwisted = false;//ねじっていない
-
-        //ねじレベルによる色と球数の変化
-        switch (neziLevel)
-        {
-            case 1:
-                TestNeziShoot(fragmentCount[1]);
-                break;
-            case 2:
-                TestNeziShoot(fragmentCount[2]);
-                break;
-            case 3:
-                TestNeziShoot(fragmentCount[3]);
-                break;
-            default:
-                Debug.Log("存在しないレベルで解放しようとしています。");
-                break;
-        }
-    }
-
-    /// <summary>
-    /// 欠片を飛ばす(向きを指定できるようにしないといけない)
-    /// </summary>
-    /// <param name="count">360で割った個数分出てくる</param>
-    void TestNeziShoot(int count)
-    {
-        //ここで解放する
-        for (int angle = 0; angle < 361; angle += count)//360で割った個数分出てくる
-        {
-            GameObject fragment = objectPool.GetObject();//生きているオブジェクトを代入
-
-            if (fragment != null)
-            {
-                //この実装は、UpdateでGetComponentしているので良くない
-                fragment.GetComponent<Fragment>().Initialize(angle, transform.position);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 回復
-    /// </summary>
-    /// <param name="healBall">オブジェクトのスクリプトを取得</param>
-    private void Heal(GameObject healBall)
-    {
-        int healAmounst = healBall.GetComponent<TestHealBall>().GetLevel();
-
-        switch (healAmounst)
-        {
-            case 1:
-                currentHp += 0.2f;
-                saveValue += 0.2f;
-                break;
-            case 2:
-                currentHp += 0.5f;
-                saveValue += 0.5f;
-                break;
-            case 3:
-                currentHp += 1.0f;
-                saveValue += 1.0f;
-                break;
-            default:
-                Debug.Log("存在しないレベルでの回復が行われようとしています");
-                break;
-        }
-
-        //最大体力以上にはならない。
-        if(currentHp >= maxHp)
-        {
-            currentHp = maxHp;
         }
     }
 
@@ -473,6 +457,40 @@ public class Player : MonoBehaviour
         {
             //移動量を0にする。
             rigid.velocity = Vector3.zero;
+        }
+    }
+
+    /// <summary>
+    /// 回復 
+    /// </summary>
+    /// <param name="healBall">オブジェクトのスクリプトを取得</param>
+    private void Heal(GameObject healBall)
+    {
+        int healAmounst = healBall.GetComponent<TestHealBall>().GetHealLevel();
+
+        switch (healAmounst)
+        {
+            case 1:
+                currentHp += healValue[0];
+                saveValue += healValue[0];
+                break;
+            case 2:
+                currentHp += healValue[1];
+                saveValue += healValue[1];
+                break;
+            case 3:
+                currentHp += healValue[2];
+                saveValue += healValue[2];
+                break;
+            default:
+                Debug.Log("存在しないレベルでの回復が行われようとしています");
+                break;
+        }
+
+        //最大体力以上にはならない。
+        if (currentHp >= maxHp)
+        {
+            currentHp = maxHp;
         }
     }
 

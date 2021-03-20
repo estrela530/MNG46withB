@@ -1,65 +1,126 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TestHealBall : MonoBehaviour
 {
-    int count = 0;
-    Vector3 parentPos;
-    int level = 1;
+    [SerializeField, Header("レベルアップに必要な時間(成長は2回,消えそう,消える)")]
+    private float[] levelUpTime = new float[4];
+
+    int count = 0;    //時間計測用
+    int healLevel = 1;//回復レベル
+
+    MeshRenderer meshRenderer;
+
+    /// <summary>
+    /// 状態
+    /// </summary>
+    private enum State
+    {
+        Level1,  //初期状態
+        Level2,  //1回成長
+        Level3,  //2回成長
+        Blinking,//点滅
+        Death    //死亡
+    }State state = State.Level1;
 
     // Start is called before the first frame update
     void Start()
     {
+        //60かけて秒にする。
+        for(int i = 0;i<levelUpTime.Length;i++)
+        {
+            levelUpTime[i] *= 60.0f;
+        }
+
         count = 0;
-        level = 0;
-        //テスト↓ : 色変え
-        GetComponent<Renderer>().material.color = Color.yellow;
+        healLevel = 0;
+
+        meshRenderer = GetComponent<MeshRenderer>();
+
+        ////テスト↓ : 色変え
+        //GetComponent<Renderer>().material.color = Color.yellow;
     }
 
-    public void Initialize(Vector3 position)
+    void FixedUpdate()
     {
-        //位置初期化
-        transform.position = position;
-        parentPos = position;
+        ChangeState();
+        SetAction();
     }
 
-    // Update is called once per frame
-    void Update()
+    void ChangeState()
     {
-        count++;
+        count++;//値を増やし続ける～
 
-        if(count >= 60)
+        if (count >= levelUpTime[0])
         {
-            if (count >= 180) level = 3;
-            else level = 2;
+            if (count >= levelUpTime[3]) state = State.Death;
+            else if (count >= levelUpTime[2]) state = State.Blinking;
+            else if (count >= levelUpTime[1]) state = State.Level3;
+            else state = State.Level2;
         }
-        else
-        {
-            level = 1;
-        }
+        else state = State.Level1;
+    }
 
-        switch (level)
+    void SetAction()
+    {
+        switch (state)
         {
-            case 1:
-                //テスト↓ : 色変え
-                GetComponent<Renderer>().material.color = Color.yellow;
+            case State.Level1:
+                healLevel = 1;
+                meshRenderer.material.color = Color.yellow;
+                transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                 break;
-            case 2:
-                //テスト↓ : 色変え
-                GetComponent<Renderer>().material.color = Color.green;
+            case State.Level2:
+                healLevel = 2;
+                meshRenderer.material.color = Color.green;
+                transform.localScale = new Vector3(1, 1, 1);
                 break;
-            case 3:
-                //テスト↓ : 色変え
-                GetComponent<Renderer>().material.color = Color.black;
+            case State.Level3:
+                healLevel = 3;
+                meshRenderer.material.color = Color.black;
+                transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                break;
+            case State.Blinking:
+                //点滅する
+                StartCoroutine("Blinking");
+                break;
+            case State.Death:
+                Destroy(this.gameObject);
                 break;
             default:
+                Debug.Log("存在しない状態に切り替わっています。");
                 break;
         }
     }
 
-    public int GetLevel()
+    IEnumerator Blinking()
     {
-        return level;
+        while(true)
+        {
+            meshRenderer.material.color = Color.red;
+            yield return new WaitForSeconds(2.0f);
+
+            //yield return new WaitForEndOfFrame();
+        }
+    }
+
+    /// <summary>
+    /// このオブジェクトがDestroyされたときに呼ばれる。
+    /// </summary>
+    private void OnDestroy()
+    {
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        DestroyImmediate(renderer.material);//マテリアルのメモリを削除
+        //System.GC.Collect();
+        //Resources.UnloadUnusedAssets();
+    }
+
+    /// <summary>
+    /// 回復レベルを取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetHealLevel()
+    {
+        return healLevel;
     }
 }

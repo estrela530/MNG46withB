@@ -664,7 +664,7 @@ PrefabInstance:
     - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
       propertyPath: decreaseHp
-      value: 0.01
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
@@ -688,6 +688,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
+      propertyPath: healValue.Array.data[0]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: healValue.Array.data[1]
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: healValue.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: fragmentCount.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
       propertyPath: levelCount.Array.data[0]
       value: 50
       objectReference: {fileID: 0}
@@ -703,18 +723,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
+      propertyPath: deleteCount.Array.data[0]
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: deleteCount.Array.data[1]
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: deleteCount.Array.data[2]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
       propertyPath: fragmentCount.Array.data[0]
-      value: 180
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
       propertyPath: fragmentCount.Array.data[1]
-      value: 180
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
       propertyPath: fragmentCount.Array.data[2]
-      value: 90
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
