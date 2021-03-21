@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// 回復玉クラス
+/// </summary>
 public class TestHealBall : MonoBehaviour
 {
     [SerializeField, Header("レベルアップに必要な時間(成長は2回,消えそう,消える)")]
@@ -9,7 +12,7 @@ public class TestHealBall : MonoBehaviour
     int count = 0;    //時間計測用
     int healLevel = 1;//回復レベル
 
-    MeshRenderer meshRenderer;
+    MeshRenderer meshRenderer;//色変え用
 
     /// <summary>
     /// 状態

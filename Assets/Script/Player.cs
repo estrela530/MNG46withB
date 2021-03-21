@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// ねじねじをまとめたクラス
+/// プレイヤーの操作クラス
 /// </summary>
 [RequireComponent(typeof(FragmentPool))]//自動的にFragmentPoolを追加
 public class Player : MonoBehaviour
@@ -31,14 +31,14 @@ public class Player : MonoBehaviour
     [SerializeField, Tooltip("レベルによる飛ばす球数")]
     private int[] fragmentCount = new int[3];//(180,90,45
     [SerializeField, Header("レベルによる欠片の飛距離(時間)")]
-    private float[] deleteCount = new float[3];//(
+    private float[] deleteCount = new float[3];//(0.5,1.5,10
 
     [SerializeField, Tooltip("最大体力")]
     private float maxHp = 10;
     [SerializeField, Tooltip("体力の減少量")]
     private float decreaseHp = 0.01f;//体力の減少量
     [SerializeField, Header("回復玉のレベルによる回復量")]
-    private float[] healValue = new float[3];//(
+    private float[] healValue = new float[3];//(0.2,0.5,1
 
     /// <summary>
     /// リセットしたかどうか(メッシュ側で取得&代入を行う)
@@ -59,6 +59,17 @@ public class Player : MonoBehaviour
 
     private float currentHp = 10;//現在の体力
     private float saveValue = 10;//体力一時保存用
+
+
+    float[] preTrigger = new float[2];
+    float[] nowTrigger = new float[2];
+
+    private enum  Keys
+    {
+        L_Trigger = 0,
+        R_Trigger = 1
+    }Keys key;
+
 
     /// <summary>
     /// プレイヤーの向いてる方向
@@ -111,8 +122,16 @@ public class Player : MonoBehaviour
     /// </summary>
     void Update()
     {
+        nowTrigger[0] = Input.GetAxisRaw("L_Trigger");
+        nowTrigger[1] = Input.GetAxisRaw("R_Trigger");
+
         Move();         //動く
         TwistedChange();//ねじチェンジ
+
+        for (int i = 0; i < nowTrigger.Length; i++)
+        {
+            preTrigger[i] = nowTrigger[i];
+        }      
     }
 
     /// <summary>
@@ -130,6 +149,7 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene("GameOver");
         }
+        //Debug.Log(preTrigger[0]);
     }
 
     /// <summary>
@@ -263,15 +283,58 @@ public class Player : MonoBehaviour
         if (isRelease) return;
 
         //ボタンを押している間ねじねじする
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 5"))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 5") || GetKey(Keys.R_Trigger)) 
         {
             TwistedAccumulate();//ねじねじ
 
         }
-        else if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5"))//離したら解放する
+        else if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5") || GetKeyUP(Keys.R_Trigger))//離したら解放する
         {
             TwistedRelease();//解放
         }
+    }
+
+    /// <summary>
+    /// 押してる間
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private bool GetKey(Keys key)
+    {
+        if (nowTrigger[(int)key] > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 入力された瞬間
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private bool GetKeyDown(Keys key)
+    {
+        if(preTrigger[(int)key] == 0 && nowTrigger[(int)key] > 0 )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 離した瞬間
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private bool GetKeyUP(Keys key)
+    {
+        if (preTrigger[(int)key] != 0 && nowTrigger[(int)key] == 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -292,7 +355,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedCancel()
     {
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4"))
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4") || GetKeyDown(Keys.L_Trigger))
         {
             isReset = true;
             currentHp = saveValue;
@@ -312,6 +375,9 @@ public class Player : MonoBehaviour
         //ねじレベルによる色と球数の変化
         switch (neziLevel)
         {
+            case 0:
+                //何もしないよ
+                break;
             case 1:
                 TestNeziShoot(fragmentCount[0], deleteCount[0]);
                 break;

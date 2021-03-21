@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7218287160116125079}
   - component: {fileID: 7218287160116125078}
   - component: {fileID: 7218287160116125077}
+  - component: {fileID: 5904865916324780270}
   m_Layer: 0
   m_Name: Nezinezi
   m_TagString: Untagged
@@ -124,6 +125,19 @@ MonoBehaviour:
   twistedSpeed: 3.6
   releaseSpeed: 25
   maxTwistedCount: 720
+--- !u!65 &5904865916324780270
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7218287160116125083}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000005, y: 1, z: 1.0000005}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7218287161412445507
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +150,6 @@ GameObject:
   - component: {fileID: 7218287161412445533}
   - component: {fileID: 7218287161412445532}
   - component: {fileID: 8980577220073085131}
-  - component: {fileID: 5126959445504068158}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -187,14 +200,22 @@ MonoBehaviour:
   extendSpeed: 0.02
   shrinkSpeed: 0.1
   maxNobiLength: 5
-  neziCount: 0
   levelCount: 320000006e000000b4000000
+  neziCount: 0
+  firstCreateFragment: 20
   fragmentPrefab: {fileID: 5343818580403124431, guid: a7d28856afc8afb4a9fad14e098058f2,
     type: 3}
-  fragmentCount: b40000005a0000003c0000001e000000
-  firstCreateFragment: 20
-  currentHp: 10
+  fragmentCount: 5a0000002d0000000f000000
+  deleteCount:
+  - 0.5
+  - 1.5
+  - 10
+  maxHp: 10
   decreaseHp: 0.01
+  healValue:
+  - 0.2
+  - 0.5
+  - 1
 --- !u!54 &8980577220073085131
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -211,16 +232,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!135 &5126959445504068158
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7218287161412445507}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.5, z: 0}

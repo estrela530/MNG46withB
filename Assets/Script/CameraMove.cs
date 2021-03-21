@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// カメラ追従クラス
+/// </summary>
 public class CameraMove : MonoBehaviour
 {
     [SerializeField,Tooltip("シーン内のプレイヤーをドラッグアンドドロップ")]

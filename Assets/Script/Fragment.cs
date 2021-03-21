@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーが飛ばす欠片クラス
+/// </summary>
 public class Fragment : MonoBehaviour
 {
     [SerializeField,Tooltip("欠片の速度")]
