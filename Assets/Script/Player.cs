@@ -13,15 +13,15 @@ public class Player : MonoBehaviour
     //private bool bottunVersion = false;//(false = Version1 : true = Version2)
 
     [SerializeField, Header("移動速度")]
-    private float moveSpeed = 5.0f;
+    private float moveSpeed = 8.0f;
     [SerializeField, Header("伸びる速さ")]
-    private float extendSpeed = 0.02f;
+    private float extendSpeed = 0.06f;
     [SerializeField, Header("縮む速さ")]
-    private float shrinkSpeed = 0.1f;
+    private float shrinkSpeed = 0.3f;
     [SerializeField, Header("伸びる長さ")]
     private float maxNobiLength = 5.0f;
     [SerializeField, Header("レベルアップに必要なねじカウント")]
-    private int[] levelCount = new int[3];//(50,110,180
+    private int[] levelCount = new int[3];//(20,40,60
     [SerializeField, Tooltip("どれくらいねじれているか(値を入れないでね!!!)")]
     public int neziCount;
 
