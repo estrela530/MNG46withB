@@ -197,10 +197,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 8
-  extendSpeed: 0.02
-  shrinkSpeed: 0.1
+  extendSpeed: 0.06
+  shrinkSpeed: 0.3
   maxNobiLength: 5
-  levelCount: 320000006e000000b4000000
+  levelCount: 14000000280000003c000000
   neziCount: 0
   firstCreateFragment: 20
   fragmentPrefab: {fileID: 5343818580403124431, guid: a7d28856afc8afb4a9fad14e098058f2,
@@ -216,6 +216,8 @@ MonoBehaviour:
   - 0.2
   - 0.5
   - 1
+  isDamage: 0
+  currentHp: 10
 --- !u!54 &8980577220073085131
 Rigidbody:
   m_ObjectHideFlags: 0
