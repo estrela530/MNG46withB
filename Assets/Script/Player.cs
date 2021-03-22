@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -51,13 +52,14 @@ public class Player : MonoBehaviour
 
     private bool isTwisted;//ねじれているかどうか
     private bool isRelease;//解放中かどうか
+    public bool isDamage; //ダメージを受けているかどうか
     private int neziLevel; //ねじレベル
 
     private Vector3 position;//位置
     private Vector3 velocity;//移動量
     private Rigidbody rigid; //物理演算
 
-    private float currentHp = 10;//現在の体力
+    public float currentHp = 10;//現在の体力
     private float saveValue = 10;//体力一時保存用
 
 
@@ -110,6 +112,7 @@ public class Player : MonoBehaviour
     {
         isTwisted = false;
         isRelease = false;
+        isDamage = false;
         neziCount = 0;
         neziLevel = 0;
         transform.localScale = Vector3.one;
@@ -144,12 +147,7 @@ public class Player : MonoBehaviour
 
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
-
-        if (currentHp < 0.5f)
-        {
-            SceneManager.LoadScene("GameOver");
-        }
-        //Debug.Log(preTrigger[0]);
+        InvincibleTime(1);//無敵時間
     }
 
     /// <summary>
@@ -503,29 +501,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("HealBall"))
-        {
-            Heal(other.gameObject);   //回復
-            Destroy(other.gameObject);//回復玉を消す
-        }
-        if(other.gameObject.CompareTag("Enemy"))
-        {
-            currentHp -= 1.0f;//ダメージを受ける(あとで関数つくる)
-            saveValue -= 1.0f;//ダメージを受ける(あとで関数つくる)
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            //移動量を0にする。
-            rigid.velocity = Vector3.zero;
-        }
-    }
-
     /// <summary>
     /// 回復 
     /// </summary>
@@ -557,6 +532,87 @@ public class Player : MonoBehaviour
         if (currentHp >= maxHp)
         {
             currentHp = maxHp;
+        }
+    }
+
+    /// <summary>
+    /// ダメージを受ける
+    /// </summary>
+    /// <param name="damage">ダメージ量</param>
+    private void Damage(int damage)
+    {
+        if (isDamage) return;
+
+        if (currentHp > 0)
+        {
+            currentHp -= damage;
+            saveValue -= damage;
+
+            isDamage = true;
+        }
+
+        if (currentHp < 1.0f)
+        {
+            SceneManager.LoadScene("GameOver");
+            Debug.Log("死んだよ");
+        }
+    }
+
+    float count = 0;
+    float alpha = 0;
+
+    /// <summary>
+    /// 無敵時間
+    /// </summary>
+    /// <param name="time">何秒無敵にするか</param>
+    private void InvincibleTime(float time)
+    {
+        if (!isDamage) return;
+
+        meshRenderer.material.color = Color.red;
+
+        alpha = Mathf.Sin(Time.time) / 2 + 0.5f;
+
+
+        //StartCoroutine("Coroutine");
+
+        count += Time.deltaTime;
+
+        if (time < count)
+        {
+            count = 0;
+            isDamage = false;
+        }
+    }
+
+    private IEnumerator Coroutine()
+    {
+        while(true)
+        {
+            meshRenderer.material.color = Color.red;
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("HealBall"))
+        {
+            Heal(other.gameObject);   //回復
+            Destroy(other.gameObject);//回復玉を消す
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Damage(1);
+        }
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            //移動量を0にする。
+            rigid.velocity = Vector3.zero;
         }
     }
 

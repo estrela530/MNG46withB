@@ -491,7 +491,7 @@ GameObject:
   m_Layer: 0
   m_Name: work1
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -551,7 +551,7 @@ GameObject:
   m_Layer: 0
   m_Name: work2
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3094,10 +3094,30 @@ PrefabInstance:
       propertyPath: intarval
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1202612211773239760, guid: 39a4e6735c1203f4285467c0135db97d,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 84
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202612211773239761, guid: 39a4e6735c1203f4285467c0135db97d,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202612211773239761, guid: 39a4e6735c1203f4285467c0135db97d,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202612211773239761, guid: 39a4e6735c1203f4285467c0135db97d,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1202612211773239761, guid: 39a4e6735c1203f4285467c0135db97d,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1202612211773239764, guid: 39a4e6735c1203f4285467c0135db97d,
         type: 3}
