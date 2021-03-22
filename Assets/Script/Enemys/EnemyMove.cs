@@ -12,10 +12,6 @@ using UnityEditor;
 
 public class EnemyMove : MonoBehaviour
 {
-    private SpherecastCommand searchArea;//サーチ範囲
-    
-
-    [SerializeField] public float searchAngle;
 
     // Start is called before the first frame update
     private GameObject Target;//追尾する相手
@@ -24,7 +20,7 @@ public class EnemyMove : MonoBehaviour
     public float social;//この数値まで進む
 
     [SerializeField] float enemyHP = 5;
-    
+    Rigidbody rigid;
         
 
     private float workeAria1=1;//
@@ -53,6 +49,7 @@ public class EnemyMove : MonoBehaviour
     void Start()
     {
         Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
+        rigid = GetComponent<Rigidbody>();
         //target = Target.transform.position;
     }
 
@@ -63,7 +60,8 @@ public class EnemyMove : MonoBehaviour
         //x = Vector3.Cross(Vector3.up, z).normalized;
         //y = Vector3.Cross(z, x).normalized;
 
-        
+        rigid.angularVelocity = Vector3.zero;
+        rigid.velocity = Vector3.zero;
 
         if (enemyHP <= 0)
         {
@@ -157,63 +155,12 @@ public class EnemyMove : MonoBehaviour
         
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnDestroy()
     {
-        //プレイヤーの方向
-        var playerDire = other.transform.position - this.transform.position;
-
-        //自分の前方からプレイヤーの方向
-        var angle = Vector3.Angle(transform.forward, playerDire);
-
-        if (other.gameObject.CompareTag("Player"))
-        {
-            //サーチする角度の範囲内だったら発見
-            if(angle<=searchAngle)
-            {
-                MoveFlag = true;
-                workFlag = false;
-                Debug.Log("主人公発見: " + angle);
-            }
-            ////サーチする角度の範囲内だったら発見
-            //else
-            //{
-            //    Debug.Log("範囲外: " + angle);
-            //}
-
-        }
-
-        if (!other.gameObject.CompareTag("Player"))
-        {
-            //サーチする角度の範囲外だったら索敵
-            if (angle > searchAngle)
-            {
-                MoveFlag = false;
-                workFlag = true;
-                Debug.Log("外: " + angle);
-            }
-            //MoveFlag = false;
-            //workFlag = true;
-           
-            //Debug.Log("範囲外: " + angle);
-        }
-
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        DestroyImmediate(renderer.material); //マテリアルのメモリーを消す
     }
 
-#if UNITY_EDITOR
-    //サーチ範囲を表示
-    private void OnDrawGizmos()
-    {
-        Handles.color = Color.red;
-        //Handles.DrawSolidDisc(transform.position, Vector3.up, 3.0f);
-        //Handles.DrawSolidArc(transform.position, Vector3.up, Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward, searchAngle * 5f, HandleUtility.GetHandleSize(Vector3.zero));
-        Handles.DrawSolidArc(
-            this.transform.position, //中心点
-            Vector3.up, //表示する表面の方向
-            Quaternion.Euler(0f, -searchAngle, 0f)*this.transform.forward, //扇の表示を開始する方向
-            searchAngle, //扇の角度
-            searchArea.radius//半径
-            );
-    }
-#endif
+
 
 }
