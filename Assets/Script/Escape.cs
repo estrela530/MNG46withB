@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Escape : MonoBehaviour
 {
@@ -13,6 +14,12 @@ public class Escape : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
 #if UNITY_EDITOR
