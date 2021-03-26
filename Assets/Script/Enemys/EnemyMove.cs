@@ -12,7 +12,7 @@ using UnityEditor;
 
 public class EnemyMove : MonoBehaviour
 {
-
+   
     // Start is called before the first frame update
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
@@ -33,12 +33,7 @@ public class EnemyMove : MonoBehaviour
     public GameObject workObj1;
     public GameObject workObj2;
     int workNumber = 1;
-
-    //Vector3 x;
-    //Vector3 y;
-    //Vector3 z;
-    //Vector3 target;
-
+    
     public float speed;
     public float speedLoc;
     private GameObject Enemy;
@@ -48,7 +43,8 @@ public class EnemyMove : MonoBehaviour
 
     void Start()
     {
-        Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
+        //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
+        Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         //target = Target.transform.position;
     }
@@ -56,10 +52,7 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //z = (target - transform.position).normalized;
-        //x = Vector3.Cross(Vector3.up, z).normalized;
-        //y = Vector3.Cross(z, x).normalized;
-
+       
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
@@ -86,20 +79,14 @@ public class EnemyMove : MonoBehaviour
         //    MoveFlag = false;
         //    workFlag = true;
         //}
-
         
-
-
         if (MoveFlag)
         {
-            
-
            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
             if(dis>=social)
             {
                transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
             }
-
             
         }
 
@@ -151,8 +138,6 @@ public class EnemyMove : MonoBehaviour
         {
             enemyHP = enemyHP - 1;
         }
-
-        
     }
 
     private void OnDestroy()
@@ -161,6 +146,5 @@ public class EnemyMove : MonoBehaviour
         DestroyImmediate(renderer.material); //マテリアルのメモリーを消す
     }
 
-
-
+    
 }
