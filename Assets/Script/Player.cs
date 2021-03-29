@@ -59,8 +59,8 @@ public class Player : MonoBehaviour
     private Vector3 velocity;//移動量
     private Rigidbody rigid; //物理演算
 
-    public float currentHp = 10;//現在の体力
-    private float saveValue = 10;//体力一時保存用
+    public float currentHp; //現在の体力
+    private float saveValue;//体力一時保存用
 
 
     float[] preTrigger = new float[2];
@@ -507,7 +507,7 @@ public class Player : MonoBehaviour
     /// <param name="healBall">オブジェクトのスクリプトを取得</param>
     private void Heal(GameObject healBall)
     {
-        int healAmounst = healBall.GetComponent<TestHealBall>().GetHealLevel();
+        int healAmounst = healBall.GetComponent<HealBall>().GetHealLevel();
 
         switch (healAmounst)
         {
@@ -531,7 +531,7 @@ public class Player : MonoBehaviour
         //最大体力以上にはならない。
         if (currentHp >= maxHp)
         {
-            currentHp = maxHp;
+            currentHp = saveValue = maxHp;
         }
     }
 
@@ -553,8 +553,8 @@ public class Player : MonoBehaviour
 
         if (currentHp < 1.0f)
         {
-            SceneManager.LoadScene("GameOver");
             Debug.Log("死んだよ");
+            SceneManager.LoadScene("GameOver");
         }
     }
 
@@ -641,5 +641,14 @@ public class Player : MonoBehaviour
     public float GetSavevalue()
     {
         return saveValue;
+    }
+
+    /// <summary>
+    /// 現在の位置を取得
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetPosition()
+    {
+        return transform.position;
     }
 }

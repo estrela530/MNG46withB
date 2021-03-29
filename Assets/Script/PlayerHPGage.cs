@@ -26,8 +26,7 @@ public class PlayerHPGage : MonoBehaviour
         if (!NullCheck()) return;
 
         maxHp = player.GetHp();
-        redSlider.maxValue = greenSlider.maxValue = saveValue = maxHp;
-        currentHp = player.GetHp();
+        redSlider.maxValue = greenSlider.maxValue = saveValue = currentHp = maxHp;
     }
 
     // Update is called once per frame
