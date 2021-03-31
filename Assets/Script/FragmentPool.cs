@@ -32,7 +32,7 @@ public class FragmentPool : MonoBehaviour
     /// 使用可能なオブジェクトを探す
     /// </summary>
     /// <returns>待機状態のオブジェクトを返す</returns>
-    public GameObject GetObject()
+    public GameObject GetActiveObject()
     {
         //使用中でないものを探す
         foreach (var pFList in poolFragmentList)

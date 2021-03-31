@@ -8,13 +8,16 @@ public class Fragment : MonoBehaviour
 {
     [SerializeField,Tooltip("欠片の速度")]
     private float speed = 5f; //欠片の速度
-    private float angle;      //飛ばす角度
+    private float floatAngle; //飛ばす角度
+    Vector3 vectorAngle;      //飛ばす角度
     private float deleteCount;//存在時間
     private int deleteTimer;  //カウント用
     Vector3 parentPosition;   //親の位置を取得
 
     [SerializeField,Header("回復玉のプレファブを入れてね")]
     private GameObject healBall;
+    
+    
 
     /// <summary>
     /// 初期化&生成
@@ -24,7 +27,27 @@ public class Fragment : MonoBehaviour
     /// <param name="deleteCount">存在時間</param>
     public void Initialize(float angle, Vector3 position, float deleteCount)
     {
-        this.angle = angle;
+        this.floatAngle = angle;
+        //位置をちょっと高くする
+        this.parentPosition = new Vector3(position.x, position.y + 0.3f, position.z);
+        this.deleteCount = deleteCount;
+
+        //位置初期化
+        transform.position = this.parentPosition;
+
+        //テスト↓ : 色変え
+        GetComponent<Renderer>().material.color = Color.red;
+    }
+
+    /// <summary>
+    /// 初期化&生成
+    /// </summary>
+    /// <param name="angle">発射角度</param>
+    /// <param name="position">発射位置</param>
+    /// <param name="deleteCount">生存時間</param>
+    public void Initialize(Vector3 angle, Vector3 position, float deleteCount)
+    {
+        this.vectorAngle = angle;
         //位置をちょっと高くする
         this.parentPosition = new Vector3(position.x, position.y + 0.3f, position.z);
         this.deleteCount = deleteCount;
@@ -66,10 +89,14 @@ public class Fragment : MonoBehaviour
         Vector3 velocity = Vector3.zero;
 
         //角度を計算して移動量に変換する
-        velocity = GetDirection(angle);
+        //velocity = GetDirection(angle);
+
+        velocity = vectorAngle;
+
+        transform.position += vectorAngle * Time.deltaTime * speed;
 
         //移動処理
-        transform.position += velocity * Time.deltaTime * speed;
+        //transform.position += velocity * Time.deltaTime * speed;
     }
 
     private void OnTriggerEnter(Collider other)

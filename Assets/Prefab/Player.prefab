@@ -148,6 +148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7218287161412445534}
   - component: {fileID: 7218287161412445533}
+  - component: {fileID: 8298856961905267167}
   - component: {fileID: 7218287161412445532}
   - component: {fileID: 8980577220073085131}
   - component: {fileID: 5058311262198828748}
@@ -185,6 +186,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e11854099441c224099203454585367f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8298856961905267167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7218287161412445507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6acd7408a023d97499c9653886e9a4da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7218287161412445532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,8 +230,14 @@ MonoBehaviour:
   - 0.2
   - 0.5
   - 1
+  iziranaide: 0
+  releaseSE: {fileID: 8300000, guid: de745f625b7fae54ab691334822aeae6, type: 3}
+  twistedSE: {fileID: 8300000, guid: 51c9a98d32962e64e8d59838ae955d75, type: 3}
+  healSE: {fileID: 8300000, guid: 18f72a4c766fe6b40807c03d6ecb407b, type: 3}
+  cancelSE: {fileID: 8300000, guid: 51e297d95e40dbc4c9e5aa8c55382f4e, type: 3}
   isDamage: 0
   currentHp: 10
+  testPrefab: {fileID: 0}
 --- !u!54 &8980577220073085131
 Rigidbody:
   m_ObjectHideFlags: 0

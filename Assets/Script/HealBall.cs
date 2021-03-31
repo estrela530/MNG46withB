@@ -26,7 +26,7 @@ public class HealBall : MonoBehaviour
     int count = 0;    //時間計測用
     int healLevel = 1;//回復レベル
 
-    ParticleSystem particleSystem;
+    //ParticleSystem particleSystem;
 
     /// <summary>
     /// 状態
@@ -72,11 +72,11 @@ public class HealBall : MonoBehaviour
         SetAction();  //行動変化
     }
 
-    IEnumerator ParticleWorks()
-    {
-        yield return new WaitWhile(() => particleSystem.IsAlive(true));
-        particleSystem.gameObject.SetActive(false);
-    }
+    //IEnumerator ParticleWorks()
+    //{
+    //    yield return new WaitWhile(() => particleSystem.IsAlive(true));
+    //    particleSystem.gameObject.SetActive(false);
+    //}
 
     /// <summary>
     /// プレイヤーがねじっているとき移動する。

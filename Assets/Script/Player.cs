@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 /// プレイヤーの操作クラス
 /// </summary>
 [RequireComponent(typeof(FragmentPool))]//自動的にFragmentPoolを追加
+[RequireComponent(typeof(PredictionLinePool))]
 public class Player : MonoBehaviour
 {
     //↓テスト : ボタンの種類をインスペクタで変えられるようにする。
@@ -41,13 +42,22 @@ public class Player : MonoBehaviour
     [SerializeField, Header("回復玉のレベルによる回復量")]
     private float[] healValue = new float[3];//(0.2,0.5,1
 
+    [SerializeField, Header("ここから下音声------------------------------------------------------------------------------------------------------------")]
+    private int iziranaide;
+    private AudioSource audioSource;
+    public AudioClip releaseSE;//解放した瞬間
+    public AudioClip twistedSE; //ねじっているとき
+    public AudioClip healSE;    //回復した瞬間
+    public AudioClip cancelSE;    //キャンセルした瞬間
+
     /// <summary>
     /// リセットしたかどうか(メッシュ側で取得&代入を行う)
     /// </summary>
     public bool isReset { get; set; } = false;
 
     MeshRenderer meshRenderer;            //色変え用
-    FragmentPool objectPool;      //オブジェクトプール
+    FragmentPool fragmentPool;      //オブジェクトプール
+    PredictionLinePool predictionPool;
     Vector3 myScale = Vector3.one;//自身の大きさ
 
     private bool isTwisted;//ねじれているかどうか
@@ -61,16 +71,25 @@ public class Player : MonoBehaviour
 
     public float currentHp; //現在の体力
     private float saveValue;//体力一時保存用
+    private float moveCount = 0.5f;//移動SEの鳴らす間隔
 
 
-    float[] preTrigger = new float[2];
-    float[] nowTrigger = new float[2];
+    float[] preTrigger = new float[2];//LT,RTトリガーの保存用キー
+    float[] nowTrigger = new float[2];//LT,RTトリガーの取得用キー
 
-    private enum  Keys
+    
+    
+
+
+
+    public GameObject testPrefab;
+
+    private enum Keys
     {
         L_Trigger = 0,
         R_Trigger = 1
-    }Keys key;
+    }
+    Keys key;
 
 
     /// <summary>
@@ -95,10 +114,18 @@ public class Player : MonoBehaviour
         //ねじれてる本体の色情報を取得
         meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         //プールの生成と、初期オブジェクトの追加
-        objectPool = GetComponent<FragmentPool>();
-        objectPool.CreatePool(fragmentPrefab, firstCreateFragment);
+        fragmentPool = GetComponent<FragmentPool>();
+        fragmentPool.CreatePool(fragmentPrefab, firstCreateFragment);
+
+        //プールの生成と、初期オブジェクトの追加
+        predictionPool = GetComponent<PredictionLinePool>();
+        predictionPool.CreatePredictionLinePool(testPrefab, fragmentCount[2]);
+
         //移動量を消すために必要だった
         rigid = GetComponent<Rigidbody>();
+
+        //オーディオソースを取得
+        audioSource = GetComponent<AudioSource>();
 
         currentHp = saveValue = maxHp;
 
@@ -117,6 +144,9 @@ public class Player : MonoBehaviour
         neziLevel = 0;
         transform.localScale = Vector3.one;
         saveValue = currentHp;//赤ゲージを緑に合わせる。
+
+        //音を止めたい
+        audioSource.Stop();
     }
 
     /// <summary>
@@ -131,10 +161,11 @@ public class Player : MonoBehaviour
         Move();         //動く
         TwistedChange();//ねじチェンジ
 
+        //入力を使う処理が終わってからキーをコピーしないと動かなかった
         for (int i = 0; i < nowTrigger.Length; i++)
         {
             preTrigger[i] = nowTrigger[i];
-        }      
+        }
     }
 
     /// <summary>
@@ -262,6 +293,15 @@ public class Player : MonoBehaviour
                     break;
             }
 
+            //移動中音を鳴らす
+            moveCount += Time.deltaTime;
+
+            if (moveCount > 0.5f)
+            {
+                audioSource.PlayOneShot(releaseSE, 0.2f);
+                moveCount = 0f;
+            }
+
             transform.rotation = dir;//回転角度を反映
         }
         else
@@ -280,8 +320,15 @@ public class Player : MonoBehaviour
         //解放中なら処理しない
         if (isRelease) return;
 
+        //if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 5") || GetKeyDown(Keys.R_Trigger))
+        //{
+        //    //ねじってる音を鳴らす
+        //    audioSource.PlayOneShot(twistedSE, 1f);
+        //}
+
+
         //ボタンを押している間ねじねじする
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 5") || GetKey(Keys.R_Trigger)) 
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 5") || GetKey(Keys.R_Trigger))
         {
             TwistedAccumulate();//ねじねじ
 
@@ -314,7 +361,7 @@ public class Player : MonoBehaviour
     /// <returns></returns>
     private bool GetKeyDown(Keys key)
     {
-        if(preTrigger[(int)key] == 0 && nowTrigger[(int)key] > 0 )
+        if (preTrigger[(int)key] == 0 && nowTrigger[(int)key] > 0)
         {
             return true;
         }
@@ -341,6 +388,9 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedAccumulate()
     {
+        ////ねじってる音を鳴らす
+        //audioSource.PlayOneShot(twistedSE, 0.5f);
+
         isTwisted = true;
         rigid.constraints = RigidbodyConstraints.FreezePosition;//移動を固定
         rigid.constraints = RigidbodyConstraints.FreezeRotation;//移動を固定
@@ -357,7 +407,11 @@ public class Player : MonoBehaviour
         {
             isReset = true;
             currentHp = saveValue;
+            //isRelease = false;//これが無いとInitializeがよばれないバグが起きて、動けなくなる。
             Initialize();
+
+            //キャンセルした音
+            audioSource.PlayOneShot(cancelSE);
         }
     }
 
@@ -377,13 +431,13 @@ public class Player : MonoBehaviour
                 //何もしないよ
                 break;
             case 1:
-                TestNeziShoot(fragmentCount[0], deleteCount[0]);
+                InitFragment(fragmentCount[0], deleteCount[0]);
                 break;
             case 2:
-                TestNeziShoot(fragmentCount[1], deleteCount[1]);
+                InitFragment(fragmentCount[1], deleteCount[1]);
                 break;
             case 3:
-                TestNeziShoot(fragmentCount[2], deleteCount[2]);
+                InitFragment(fragmentCount[2], deleteCount[2]);
                 break;
             default:
                 Debug.Log("存在しないレベルで解放しようとしています。");
@@ -392,22 +446,49 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 欠片を飛ばす(向きを指定できるようにしないといけない)
+    /// 欠片を飛ばす
     /// </summary>
-    /// <param name="count">360で割った個数分出てくる</param>
-    void TestNeziShoot(int count,float deleteCount)
+    /// <param name="bulletNum">球数</param>
+    void InitFragment(int bulletNum, float deleteCount)
     {
-        //ここで解放する
-        for (int angle = 0; angle < 360; angle += count)//360で割った個数分出てくる
-        {
-            GameObject fragment = objectPool.GetObject();//生きているオブジェクトを代入
+        //-----------------------旧弾解放の処理--------------------------------------------------------
+        ////ここで解放する
+        //for (int angle = 0; angle < 360; angle += count)//360で割った個数分出てくる
+        //{
+        //    GameObject fragment = fragmentPool.GetObject();//生きているオブジェクトを代入
 
+        //    if (fragment != null)
+        //    {
+        //        //この実装は、UpdateでGetComponentしているので良くない
+        //        fragment.GetComponent<Fragment>().Initialize(angle, transform.position, deleteCount);
+        //    }
+        //}
+        //---------------------------------------------------------------------------------------------
+
+        
+        for (int i = 0; i < bulletNum; i++)
+        {
+            //①現在の向き(軸)を取得し、値を正規化して0～1の値にする。
+            //②360を球数で割って、角度(i)をかけることで、発射角度を計算することができる。
+            //Quaternion.Eulerは引数にVector3を使用し、その軸を何度回転させるかという関数
+            //→Quaternion.Euler(0,90,0) = Y軸を90度回転させる。
+            //③角度に、軸をかけることで、軸を基準にした角度(Vector3型)がもとまる。
+            //→(0,1,0)の軸に90°回転をかけると、Y軸が90°回転する(0,90,0)
+
+            Vector3 axis = transform.forward;
+            axis.Normalize();
+            axis = Quaternion.Euler(0, (360 / bulletNum) * i, 0) * axis;
+
+            GameObject fragment = fragmentPool.GetActiveObject();//生きているオブジェクトを代入
             if (fragment != null)
             {
                 //この実装は、UpdateでGetComponentしているので良くない
-                fragment.GetComponent<Fragment>().Initialize(angle, transform.position, deleteCount);
+                fragment.GetComponent<Fragment>().Initialize(axis, transform.position, deleteCount);
             }
         }
+
+        //解放した音
+        audioSource.PlayOneShot(releaseSE, 2.0f);
     }
 
     /// <summary>
@@ -431,7 +512,7 @@ public class Player : MonoBehaviour
 
             //体力を滑らかに減らす
             currentHp -= decreaseHp;
-            if(currentHp <= 1)
+            if (currentHp <= 1)
             {
                 //ねじりすぎて死なないようにする。
                 currentHp = 1.0f;
@@ -455,7 +536,7 @@ public class Player : MonoBehaviour
             if (myScale.y <= 1.0f)
             {
                 myScale.y = 1.0f;
-                Initialize();    //元の大きさに戻ったら初期化
+                Initialize();//元の大きさに戻ったら初期化
             }
         }
 
@@ -467,20 +548,54 @@ public class Player : MonoBehaviour
     /// </summary>
     void ChangeLevel()
     {
+        if (neziCount > levelCount[2]) return;//これ以上は処理しない
+
         //ねじカウントの値によるレベルの変化
         if (neziCount >= levelCount[0])
         {
-            if (neziCount >= levelCount[2]) neziLevel = 3;
-            else if (neziCount >= levelCount[1]) neziLevel = 2;
-            else neziLevel = 1;
+            //memo : 現状なんか納得いかない感じの書き方になってしまっている。
+            //レベルが上がった瞬間に1度だけ呼び出せるようにしたい。
+
+            if (neziCount == levelCount[2])
+            {
+                neziLevel = 3;
+                InitPredictionLine(fragmentCount[2]);
+            }
+            else if (neziCount == levelCount[1])
+            {
+                neziLevel = 2;
+                InitPredictionLine(fragmentCount[1]);
+            }
+            else if (neziCount == levelCount[0])
+            {
+                neziLevel = 1;
+                InitPredictionLine(fragmentCount[0]);
+            }
+
+            //--------旧レベルの変更処理----------
+            //if (neziCount >= levelCount[2])
+            //{
+            //    neziLevel = 3;
+            //}
+            //else if (neziCount >= levelCount[1])
+            //{
+            //    neziLevel = 2;
+            //}
+            //else
+            //{
+            //    neziLevel = 1;
+            //}
+            //------------------------------------
         }
         else
         {
             neziLevel = 0;
+            //予測線リストの全てのオブジェクトを非アクティブにする。
+            predictionPool.ResetActive();
         }
 
-        //常に行われる処理
         //ねじレベルによる色の変化
+        //memo : これも1度呼ぶだけでいいんだよね
         switch (neziLevel)
         {
             case 0://レベル0
@@ -502,12 +617,40 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 予測線の生成
+    /// </summary>
+    /// <param name="count">生成個数</param>
+    void InitPredictionLine(int count)
+    {
+        //https://gamelab.hatenablog.com/entry/AimForPlayer
+
+        //予測線リストの全てのオブジェクトを非アクティブにする。
+        predictionPool.ResetActive();
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 angle = transform.forward;
+            angle.Normalize();
+            angle = Quaternion.Euler(0, (360 / count) * i, 0) * angle;
+
+            GameObject predictionLine = predictionPool.GetActiveObject();//生きているオブジェクトを代入
+            if (predictionLine != null)
+            {
+                predictionLine.GetComponent<PredictionLine>().Initialize(angle, transform.position);
+            }
+        }
+    }
+
+    /// <summary>
     /// 回復 
     /// </summary>
     /// <param name="healBall">オブジェクトのスクリプトを取得</param>
     private void Heal(GameObject healBall)
     {
         int healAmounst = healBall.GetComponent<HealBall>().GetHealLevel();
+
+        //回復の音
+        audioSource.PlayOneShot(healSE);
 
         switch (healAmounst)
         {
@@ -573,9 +716,6 @@ public class Player : MonoBehaviour
 
         alpha = Mathf.Sin(Time.time) / 2 + 0.5f;
 
-
-        //StartCoroutine("Coroutine");
-
         count += Time.deltaTime;
 
         if (time < count)
@@ -585,21 +725,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator Coroutine()
-    {
-        while(true)
-        {
-            meshRenderer.material.color = Color.red;
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("HealBall"))
+        if (other.gameObject.CompareTag("HealBall"))
         {
             Heal(other.gameObject);   //回復
             Destroy(other.gameObject);//回復玉を消す
+        }
+        else if(other.gameObject.CompareTag("PoisonBall"))
+        {
+            Damage(1);                //ダメージ
+            Destroy(other.gameObject);//毒玉を消す
         }
     }
 
