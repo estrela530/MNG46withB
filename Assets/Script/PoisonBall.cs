@@ -15,12 +15,22 @@ public class PoisonBall : MonoBehaviour
 
     void Start()
     {
+        //色変更
         GetComponent<Renderer>().material.color = new Color(1, 0, 1, 0);
 
+        //プレイヤーを取得
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
     
     void Update()
+    {
+        Suction();
+    }
+
+    /// <summary>
+    /// 吸収
+    /// </summary>
+    void Suction()
     {
         //プレイヤーがねじっているかを取得
         isTwisted = player.GetTwisted();

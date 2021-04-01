@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class PredictionLine : MonoBehaviour
 {
+    [SerializeField, Header("予測線の色")]
+    Color predictionColor;
+
     Vector3 angle;         //回転角度
     Vector3 position;      //生成位置
     GameObject child;      //子オブジェクト
@@ -26,7 +29,7 @@ public class PredictionLine : MonoBehaviour
         {
             //色は1度しか変更しない
             child = transform.GetChild(0).gameObject;
-            child.GetComponent<Renderer>().material.color = new Color(1, 0, 0, 0.5f);
+            child.GetComponent<Renderer>().material.color = predictionColor;
             colorFlag = true;
         }
 
