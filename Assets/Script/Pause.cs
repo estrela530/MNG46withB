@@ -45,6 +45,14 @@ public class Pause : MonoBehaviour
                 isPause = false;
             }
         }
+
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        {
+            PauseUIPrefab.SetActive(false);
+            Time.timeScale = 1f;
+            audioSource.PlayOneShot(buttonSE);
+            isPause = false;
+        }
     }
 
     public bool GetPause()
