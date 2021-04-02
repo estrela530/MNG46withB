@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\ActivateButton.cs" />
      <Compile Include="Assets\Script\ButtonSE.cs" />
      <Compile Include="Assets\Script\CameraMove.cs" />
      <Compile Include="Assets\Script\Enemys\EmoveScene.cs" />
@@ -74,7 +75,9 @@
      <Compile Include="Assets\Script\FPS.cs" />
      <Compile Include="Assets\Script\Fragment.cs" />
      <Compile Include="Assets\Script\FragmentPool.cs" />
+     <Compile Include="Assets\Script\HealBall.cs" />
      <Compile Include="Assets\Script\Pause.cs" />
+     <Compile Include="Assets\Script\PauseAudioButton.cs" />
      <Compile Include="Assets\Script\Player.cs" />
      <Compile Include="Assets\Script\PlayerHPGage.cs" />
      <Compile Include="Assets\Script\ResB.cs" />
@@ -83,12 +86,16 @@
      <Compile Include="Assets\Script\SceneTS.cs" />
      <Compile Include="Assets\Script\SelectButton.cs" />
      <Compile Include="Assets\Script\StageMove.cs" />
-     <Compile Include="Assets\Script\TestHealBall.cs" />
+     <Compile Include="Assets\Script\TestManager.cs" />
      <Compile Include="Assets\Script\TimerScript.cs" />
      <Compile Include="Assets\Script\TitB.cs" />
+     <Compile Include="Assets\Script\Transition.cs" />
      <Compile Include="Assets\Script\TwistedMesh.cs" />
      <Compile Include="Assets\Script\kanban.cs" />
+     <Compile Include="Assets\VloumeSlider.cs" />
      <None Include="Assets\Deform\LICENSE.txt" />
+     <None Include="Assets\Shader\transition.shader" />
+     <None Include="Assets\Shader\transition2.shader" />
      <None Include="Assets\Deform\EditorResources\Textures\External\MaterialDesign\LICENSE.txt" />
      <None Include="Assets\Deform\README.txt" />
  <Reference Include="UnityEngine">
