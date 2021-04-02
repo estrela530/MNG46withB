@@ -80,7 +80,7 @@ public class KraberEnemy : MonoBehaviour
             this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
             if (dis <= keep)
             {
-                transform.position -= transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+                transform.position -= transform.forward * speedLoc * Time.deltaTime;//後進(スピードが変わる)
             }
             if (dis <= social)
             {
