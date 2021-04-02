@@ -1,30 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEditor;
 
-//using UnityStandardAssets.Characters.ThirdPerson;
-//[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
-[RequireComponent(typeof(BoxCollider))]
-
-public class EnemyMove : MonoBehaviour
+public class KraberEnemy : MonoBehaviour
 {
-   
     // Start is called before the first frame update
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
-   // public float area;//この数値以下になったら追う
-   
 
-    [SerializeField,Header("体力")] float enemyHP = 5;
+    [SerializeField, Header("体力")] float enemyHP = 5;
 
     Rigidbody rigid;
-        
-    private float workeAria1=1;//
-    private float workeAria2=1;//
+
+    private float workeAria1 = 1;//
+    private float workeAria2 = 1;//
 
     private float Rspeed;
 
@@ -44,7 +38,9 @@ public class EnemyMove : MonoBehaviour
     [Header("発見時のスピード")]
     public float speedLoc;
 
-    [Header("この数値まで進む")] public float social;//この数値まで進む
+    [Header("この数値まで進む")]
+    public float social;//この数値まで進む
+    public float keep;//この数値まで離れない
     private GameObject Enemy;
 
     [Header("追う時と索敵のフラグ")]
@@ -63,7 +59,7 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
@@ -72,39 +68,31 @@ public class EnemyMove : MonoBehaviour
             gameObject.SetActive(false);//非表示
             //SceneManager.LoadScene("Result");
             SceneManager.LoadScene("GameClear");
-
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
         ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
         ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
-
-        //if (dis < area)
-        //{
-        //    MoveFlag = true;
-        //    workFlag = false;
-        //}
-        //else if(dis>area)
-        //{
-        //    MoveFlag = false;
-        //    workFlag = true;
-        //}
         
         if (MoveFlag)
         {
-           this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-            if(dis>=social)
+            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+            if (dis <= keep)
             {
-               transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+                transform.position -= transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
             }
-            
+            if (dis <= social)
+            {
+                transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+            }
+
         }
 
         //徘徊
         if (workFlag)
         {
-            if(ww<workeAria1)
+            if (ww < workeAria1)
             {
                 workNumber = 2;
             }
@@ -135,7 +123,7 @@ public class EnemyMove : MonoBehaviour
         }
 
     }
-    
+
     public float HpGet()
     {
         return enemyHP;
@@ -148,33 +136,14 @@ public class EnemyMove : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
-            color.g = 160;
         }
-        
+
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("Fragment"))
-    //    {
-    //        enemyHP = enemyHP - 1;
-    //        color = Color.green;
-    //    }
-
-    //    if (other.gameObject.CompareTag("Player"))
-    //    {
-    //        enemyHP = enemyHP - 1;
-    //        color = Color.green;
-    //    }
-    //}
-    //private void OnTriggerStay(Collider other)
-    //{
-
-    //}
     private void OnDestroy()
     {
         Renderer renderer = gameObject.GetComponent<Renderer>();
         DestroyImmediate(renderer.material); //マテリアルのメモリーを消す
     }
 
-    
+
 }
