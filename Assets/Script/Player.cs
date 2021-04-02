@@ -147,8 +147,8 @@ public class Player : MonoBehaviour
         transform.localScale = Vector3.one;
         saveValue = currentHp;//赤ゲージを緑に合わせる。
 
-        //音を止めたい
-        audioSource.Stop();
+        ////音を止めたい
+        //audioSource.Stop();
     }
 
     /// <summary>
@@ -181,11 +181,6 @@ public class Player : MonoBehaviour
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
         InvincibleTime(invincibleTime);//無敵時間
-
-
-        //test = Mathf.Sin(Time.time) / 2 + 0.5f;
-        //meshRenderer.material.color = new Color(test, 0, 0, 1);
-        //Debug.Log(test);
     }
 
     /// <summary>
@@ -427,6 +422,8 @@ public class Player : MonoBehaviour
     {
         isRelease = true; //解放中にする
         isTwisted = false;//ねじっていない
+        //解放した音
+        audioSource.PlayOneShot(releaseSE, 2.0f);
 
         //ねじレベルによる色と球数の変化
         switch (neziLevel)
@@ -490,9 +487,6 @@ public class Player : MonoBehaviour
                 fragment.GetComponent<Fragment>().Initialize(axis, transform.position, deleteCount);
             }
         }
-
-        //解放した音
-        audioSource.PlayOneShot(releaseSE, 2.0f);
     }
 
     /// <summary>
