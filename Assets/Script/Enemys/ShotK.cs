@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShot2 : MonoBehaviour
+public class ShotK : MonoBehaviour
 {
     public GameObject Bullet;
 
@@ -23,8 +23,8 @@ public class EnemyShot2 : MonoBehaviour
     {
         ss = 1;
         Target = GameObject.FindGameObjectWithTag("Player");//追尾させたいオブジェクトを書く
-        Move.GetComponent<EnemyMove>();
-        
+        Move.GetComponent<KraberEnemy>();
+
     }
 
     // Update is called once per frame
@@ -33,8 +33,8 @@ public class EnemyShot2 : MonoBehaviour
         ss += Time.deltaTime;
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
-       Random.Range(min, max);
-        
+        Random.Range(min, max);
+
 
         if (ss >= intarval)
         {
@@ -45,9 +45,9 @@ public class EnemyShot2 : MonoBehaviour
 
     void Shot()
     {
-        if (Move.GetComponent<EnemyMove>().MoveFlag == true)
+        if (Move.GetComponent<KraberEnemy>().MoveFlag == true)
         {
-            Vector3 ff = new Vector3(dis+Random.Range(min, max), 0, dis);
+            Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
             GameObject shot = Instantiate(Bullet, transform.position, transform.rotation);
             Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
             //rigidbody.AddForce(transform.forward * shotTime);
