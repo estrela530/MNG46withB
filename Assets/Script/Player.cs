@@ -42,6 +42,9 @@ public class Player : MonoBehaviour
     [SerializeField, Header("回復玉のレベルによる回復量")]
     private float[] healValue = new float[3];//(0.2,0.5,1
 
+    [SerializeField, Tooltip("無敵時間")]
+    private float invincibleTime = 2.0f;
+
     [SerializeField, Header("ここから下音声------------------------------------------------------------------------------------------------------------")]
     private int iziranaide;
     private AudioSource audioSource;
@@ -73,16 +76,15 @@ public class Player : MonoBehaviour
     private float saveValue;//体力一時保存用
     private float moveCount = 0.5f;//移動SEの鳴らす間隔
 
-
     float[] preTrigger = new float[2];//LT,RTトリガーの保存用キー
     float[] nowTrigger = new float[2];//LT,RTトリガーの取得用キー
 
-    
-    
+    public GameObject predictionLine;//予測線オブジェクト
 
 
-
-    public GameObject testPrefab;
+    private float alphaTimer = 0;//点滅時間加算用
+    private int alphaCount = 0;//点滅用カウント
+    float test = 0;
 
     private enum Keys
     {
@@ -119,7 +121,7 @@ public class Player : MonoBehaviour
 
         //プールの生成と、初期オブジェクトの追加
         predictionPool = GetComponent<PredictionLinePool>();
-        predictionPool.CreatePredictionLinePool(testPrefab, fragmentCount[2]);
+        predictionPool.CreatePredictionLinePool(predictionLine, fragmentCount[2]);
 
         //移動量を消すために必要だった
         rigid = GetComponent<Rigidbody>();
@@ -178,7 +180,12 @@ public class Player : MonoBehaviour
 
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
-        InvincibleTime(1);//無敵時間
+        InvincibleTime(invincibleTime);//無敵時間
+
+
+        //test = Mathf.Sin(Time.time) / 2 + 0.5f;
+        //meshRenderer.material.color = new Color(test, 0, 0, 1);
+        //Debug.Log(test);
     }
 
     /// <summary>
@@ -388,9 +395,6 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedAccumulate()
     {
-        ////ねじってる音を鳴らす
-        //audioSource.PlayOneShot(twistedSE, 0.5f);
-
         isTwisted = true;
         rigid.constraints = RigidbodyConstraints.FreezePosition;//移動を固定
         rigid.constraints = RigidbodyConstraints.FreezeRotation;//移動を固定
@@ -701,9 +705,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    float count = 0;
-    float alpha = 0;
-
     /// <summary>
     /// 無敵時間
     /// </summary>
@@ -712,15 +713,26 @@ public class Player : MonoBehaviour
     {
         if (!isDamage) return;
 
-        meshRenderer.material.color = Color.red;
+        alphaCount++;
 
-        alpha = Mathf.Sin(Time.time) / 2 + 0.5f;
-
-        count += Time.deltaTime;
-
-        if (time < count)
+        if (alphaCount > 0)
         {
-            count = 0;
+            meshRenderer.material.color = Color.red;
+        }
+        if(alphaCount > 4)
+        {
+            meshRenderer.material.color = Color.white;
+        }
+        if(alphaCount > 8)
+        {
+            alphaCount = 0;
+        }
+
+        alphaTimer += Time.deltaTime;
+
+        if (time < alphaTimer)
+        {
+            alphaTimer = 0;
             isDamage = false;
         }
     }
