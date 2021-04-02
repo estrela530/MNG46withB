@@ -44,7 +44,7 @@ public class TwistMeshTest : MonoBehaviour
         }
         else isTwisted = false;
 
-        if(isTwisted)
+        if (isTwisted)
         {
             if (twistedCount >= maxTwistedCount) return;
 
@@ -82,7 +82,15 @@ public class TwistMeshTest : MonoBehaviour
         //配列[].Length = その配列の要素数を取得
         for (int i = 0; i < newVertices.Length; i++)
         {
-            newVertices[i] = Quaternion.Euler(axis * twistedCount * vertices[i].y) * vertices[i];
+            if (Mathf.Abs(vertices[i].y) < 0.3)
+            {
+                newVertices[i] = Quaternion.Euler(axis * twistedCount * vertices[i].y) * vertices[i];
+            }
+
+            //if (vertices[i].y > 0)
+            //{
+            //    vertices[i] = Quaternion.Euler(45, 0, 0) * vertices[i];
+            //}
 
             //メッシュのねじる範囲を決めたい
             //全部をねじるんじゃなくて、ここからここまでみたいなの
