@@ -152,8 +152,12 @@ public class HealBall : MonoBehaviour
                 transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
                 break;
             case State.Blinking:
-                //点滅する
-                StartCoroutine("Blinking");
+                ////点滅する
+                //StartCoroutine("Blinking");
+
+                float alpha = Mathf.Sin(Time.time * 10.0f) / 2 + 0.5f;
+                meshRenderer.material.color = new Color(1, 1, 1, alpha);
+
                 break;
             case State.Death:
                 Destroy(this.gameObject);

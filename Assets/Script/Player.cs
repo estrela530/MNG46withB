@@ -146,9 +146,6 @@ public class Player : MonoBehaviour
         neziLevel = 0;
         transform.localScale = Vector3.one;
         saveValue = currentHp;//赤ゲージを緑に合わせる。
-
-        ////音を止めたい
-        //audioSource.Stop();
     }
 
     /// <summary>
@@ -181,6 +178,9 @@ public class Player : MonoBehaviour
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
         InvincibleTime(invincibleTime);//無敵時間
+
+        Debug.Log("解放中フラグ" + isRelease);
+        Debug.Log("ねじり中フラグ" + isTwisted);
     }
 
     /// <summary>
@@ -322,66 +322,16 @@ public class Player : MonoBehaviour
         //解放中なら処理しない
         if (isRelease) return;
 
-        //if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 5") || GetKeyDown(Keys.R_Trigger))
-        //{
-        //    //ねじってる音を鳴らす
-        //    audioSource.PlayOneShot(twistedSE, 1f);
-        //}
-
-
-        //ボタンを押している間ねじねじする
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 5") || GetKey(Keys.R_Trigger))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 5") || GetKeyDown(Keys.R_Trigger))
         {
+            //ねじってる音を鳴らす
+            audioSource.PlayOneShot(twistedSE, 1f);
             TwistedAccumulate();//ねじねじ
-
         }
-        else if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5") || GetKeyUP(Keys.R_Trigger))//離したら解放する
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5") || GetKeyUP(Keys.R_Trigger))//離したら解放する
         {
             TwistedRelease();//解放
         }
-    }
-
-    /// <summary>
-    /// 押してる間
-    /// </summary>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    private bool GetKey(Keys key)
-    {
-        if (nowTrigger[(int)key] > 0)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// 入力された瞬間
-    /// </summary>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    private bool GetKeyDown(Keys key)
-    {
-        if (preTrigger[(int)key] == 0 && nowTrigger[(int)key] > 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// 離した瞬間
-    /// </summary>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    private bool GetKeyUP(Keys key)
-    {
-        if (preTrigger[(int)key] != 0 && nowTrigger[(int)key] == 0)
-        {
-            return true;
-        }
-        return false;
     }
 
     /// <summary>
@@ -391,9 +341,6 @@ public class Player : MonoBehaviour
     void TwistedAccumulate()
     {
         isTwisted = true;
-        rigid.constraints = RigidbodyConstraints.FreezePosition;//移動を固定
-        rigid.constraints = RigidbodyConstraints.FreezeRotation;//移動を固定
-        TwistedCancel();
     }
 
     /// <summary>
@@ -404,9 +351,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4") || GetKeyDown(Keys.L_Trigger))
         {
+            //リセットする前に一旦流れている音を止める
+            audioSource.Stop();
+
             isReset = true;
             currentHp = saveValue;
-            //isRelease = false;//これが無いとInitializeがよばれないバグが起きて、動けなくなる。
             Initialize();
 
             //キャンセルした音
@@ -420,10 +369,13 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedRelease()
     {
+        if (!isTwisted) return;//ねじり中じゃなかったら解放しない
+
+        //解放する前に一旦流れている音を止める
+        audioSource.Stop();
+
         isRelease = true; //解放中にする
         isTwisted = false;//ねじっていない
-        //解放した音
-        audioSource.PlayOneShot(releaseSE, 2.0f);
 
         //ねじレベルによる色と球数の変化
         switch (neziLevel)
@@ -466,7 +418,9 @@ public class Player : MonoBehaviour
         //}
         //---------------------------------------------------------------------------------------------
 
-        
+        //解放した音
+        audioSource.PlayOneShot(releaseSE, 2.0f);
+
         for (int i = 0; i < bulletNum; i++)
         {
             //①現在の向き(軸)を取得し、値を正規化して0～1の値にする。
@@ -500,6 +454,8 @@ public class Player : MonoBehaviour
 
         if (isTwisted)
         {
+            TwistedCancel();//いつでもキャンセルできるように
+
             //1回maxNobiLengthより大きくなったらこれ以上処理しないね
             if (myScale.y >= maxNobiLength) return;
 
@@ -519,6 +475,8 @@ public class Player : MonoBehaviour
             if (myScale.y > maxNobiLength)
             {
                 myScale.y = maxNobiLength;
+                //音を止めたい
+                audioSource.Stop();
             }
         }
         else
@@ -538,6 +496,7 @@ public class Player : MonoBehaviour
             }
         }
 
+        //大きさを反映
         transform.localScale = myScale;
     }
 
@@ -707,6 +666,8 @@ public class Player : MonoBehaviour
     {
         if (!isDamage) return;
 
+
+        //memo : 点滅の処理をもっとわかりやすく直す
         alphaCount++;
 
         if (alphaCount > 0)
@@ -731,6 +692,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 各ボールに触れたときの処理
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("HealBall"))
@@ -745,6 +710,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 当たっている間の処理
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -756,6 +725,49 @@ public class Player : MonoBehaviour
             //移動量を0にする。
             rigid.velocity = Vector3.zero;
         }
+    }
+
+    /// <summary>
+    /// 押してる間
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private bool GetKey(Keys key)
+    {
+        if (nowTrigger[(int)key] > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 入力された瞬間
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private bool GetKeyDown(Keys key)
+    {
+        if (preTrigger[(int)key] == 0 && nowTrigger[(int)key] > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 離した瞬間
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private bool GetKeyUP(Keys key)
+    {
+        if (preTrigger[(int)key] != 0 && nowTrigger[(int)key] == 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>

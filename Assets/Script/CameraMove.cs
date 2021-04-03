@@ -12,19 +12,23 @@ public class CameraMove : MonoBehaviour
     [SerializeField,Tooltip("角度のオフセット")]
     private Vector3 offsetRot = new Vector3(60, -30, 0);
 
+    [SerializeField,Header("壁のマテリアルを入れる")]
+    Material wallMaterial;
+
     Vector3 position;//位置の保存用
 
     private Ray ray;
     RaycastHit raycastHit;
 
     MeshRenderer targetRender;
-    MeshRenderer alphaMaterial;
 
+    Color alphaColor;
 
     // Start is called before the first frame update
     void Start()
     {
         position = transform.position;
+        alphaColor = new Color(1, 0.9f, 0.8f, 0.2f);
     }
 
     // Update is called once per frame
@@ -43,18 +47,19 @@ public class CameraMove : MonoBehaviour
             {
                 targetRender = raycastHit.collider.gameObject.GetComponent<MeshRenderer>();
 
-                if(targetRender.material.color == Color.white)
+                if(targetRender.material.color != alphaColor)
                 {
-                    targetRender.material.color = new Color(1, 0, 1, 0.2f);
+                    targetRender.material.color = alphaColor;
                 }
 
 
             }
             else
             {
-                if(targetRender != null)
+                if(targetRender != null && targetRender.material != wallMaterial)
                 {
-                    targetRender.material.color = new Color(1, 1, 1, 1);
+                    
+                    targetRender.material = wallMaterial;
                 }
                 
             }
