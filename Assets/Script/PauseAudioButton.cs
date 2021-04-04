@@ -25,6 +25,7 @@ public class PauseAudioButton : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
+        isPauseAudio = false;
         //コンポーネントゲッツ！
         audioSource = GetComponent<AudioSource>();
         PauseAudioUIPrefab.SetActive(false);

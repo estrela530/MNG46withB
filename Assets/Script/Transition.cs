@@ -45,7 +45,7 @@ public class Transition : MonoBehaviour
     {
         GetComponent<Image>().material = material;
         float current = 0;
-        Debug.Log();
+        
         while (current < time)
         {
             material.SetFloat("_Alpha", current / time);
