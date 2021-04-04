@@ -178,9 +178,6 @@ public class Player : MonoBehaviour
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
         InvincibleTime(invincibleTime);//無敵時間
-
-        Debug.Log("解放中フラグ" + isRelease);
-        Debug.Log("ねじり中フラグ" + isTwisted);
     }
 
     /// <summary>
