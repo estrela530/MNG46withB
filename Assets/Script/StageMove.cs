@@ -25,12 +25,17 @@ public class StageMove : MonoBehaviour
     [SerializeField, Header("ステージ3のゴールポジション")]
     GameObject stage3GoalPosition;
 
+    [SerializeField, Header("シーン切り替え時エフェクトPrefab")]
+    GameObject fadeManager;
+
     // Start is called before the first frame update
     void Start()
     {
         bool stage1Clear = false;
         bool stage2Clear = false;
         bool stage3Clear = false;
+
+        fadeManager.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,9 +47,11 @@ public class StageMove : MonoBehaviour
             stage1Clear = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        //Aボタンを押したらシーン切り替え（デバッグ用）
+        if (Input.GetKeyDown(KeyCode.N))
         {
             stage1Clear = true;
+            fadeManager.SetActive(true);
         }
 
         //プレイヤーのポジションをStage2のスタートポジションにする
@@ -59,5 +66,11 @@ public class StageMove : MonoBehaviour
             GameObject.FindGameObjectWithTag("Player").transform.position = stage3StartPosition.transform.position;
             stage2Clear = false;
         }
+
+        ////シーン切り替えのflagがtrueになったらfadeManagerのsetActiveをtrueにする
+        //if(stage1Clear ||stage2Clear||stage3Clear)
+        //{
+        //    fadeManager.SetActive(true);
+        //}
     }
 }
