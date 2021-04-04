@@ -806,6 +806,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &987891554 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3480742152045312357, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
+    type: 3}
+  m_PrefabInstance: {fileID: 3480742152826004914}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1051316440 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5868990052148984411, guid: 314a2c5f519b1d04f955197ddf89c93d,
@@ -1293,6 +1299,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3301432656656993950, guid: 0c89b037ea857ca4890b31ffc448725d,
         type: 3}
+      propertyPath: fadeManager
+      value: 
+      objectReference: {fileID: 987891554}
+    - target: {fileID: 3301432656656993950, guid: 0c89b037ea857ca4890b31ffc448725d,
+        type: 3}
       propertyPath: stage1GoalPosition
       value: 
       objectReference: {fileID: 1928616699}
@@ -1343,7 +1354,7 @@ PrefabInstance:
     - target: {fileID: 3480742152045312357, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3480742152045312362, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
         type: 3}
@@ -1404,12 +1415,27 @@ PrefabInstance:
         type: 3}
       propertyPath: OnTransition.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1310156378}
+      objectReference: {fileID: 0}
     - target: {fileID: 3480742152128056331, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
         type: 3}
       propertyPath: OnTransition.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1310156378}
+      objectReference: {fileID: 0}
+    - target: {fileID: 3480742152128056331, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
+        type: 3}
+      propertyPath: OnTransition.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3480742152128056331, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
+        type: 3}
+      propertyPath: OnTransition.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3480742153409580604, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29aa3b7f2d1a869468c49cfc69bb5010, type: 3}
 --- !u!1001 &4641660893223915686
