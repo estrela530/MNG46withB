@@ -11,6 +11,7 @@ public class StageMove : MonoBehaviour
     [SerializeField]
     bool stage3Clear;
 
+    int fadeCount;
 
     [SerializeField, Header("ステージ1のスタートポジション")]
     GameObject stage1StartPosition;
@@ -35,7 +36,7 @@ public class StageMove : MonoBehaviour
         bool stage2Clear = false;
         bool stage3Clear = false;
 
-        fadeManager.SetActive(false);
+        fadeCount = 0;
     }
 
     // Update is called once per frame
@@ -51,14 +52,18 @@ public class StageMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             stage1Clear = true;
-            fadeManager.SetActive(true);
         }
 
         //プレイヤーのポジションをStage2のスタートポジションにする
         if (stage1Clear == true)
         {
-            GameObject.FindGameObjectWithTag("Player").transform.position = stage2StartPosition.transform.position;
-            stage1Clear = false;
+            fadeCount++;
+            if (fadeCount >= 360)
+            {
+                GameObject.FindGameObjectWithTag("Player").transform.position = stage2StartPosition.transform.position;
+                stage1Clear = false;
+            }
+            fadeManager.SetActive(true);
         }
 
         if (stage2Clear == true)

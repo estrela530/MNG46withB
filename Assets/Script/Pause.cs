@@ -48,10 +48,10 @@ public class Pause : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
         {
-            PauseUIPrefab.SetActive(false);
             Time.timeScale = 1f;
             audioSource.PlayOneShot(buttonSE);
             isPause = false;
+            PauseUIPrefab.SetActive(false);
         }
     }
 
@@ -73,10 +73,10 @@ public class Pause : MonoBehaviour
             }
             else
             {
-                PauseUIPrefab.SetActive(false);
                 Time.timeScale = 1f;
                 audioSource.PlayOneShot(buttonSE);
                 isPause = false;
+                PauseUIPrefab.SetActive(false);
             }
         }
 

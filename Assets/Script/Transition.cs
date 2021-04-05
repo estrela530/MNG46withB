@@ -16,10 +16,9 @@ public class Transition : MonoBehaviour
     [SerializeField]
     private UnityEvent OnComplete;
 
-
     void Start()
     {
-        StartCoroutine(BeginTransition());        
+        StartCoroutine(BeginTransition());
     }
 
     void Update()
@@ -28,7 +27,7 @@ public class Transition : MonoBehaviour
 
     IEnumerator BeginTransition()
     {
-        yield return Animate(_transitionIn, 1);
+        yield return Animate(_transitionIn, 2);
         if (OnTransition != null) { OnTransition.Invoke(); }
         yield return new WaitForEndOfFrame();
 
@@ -45,7 +44,6 @@ public class Transition : MonoBehaviour
     {
         GetComponent<Image>().material = material;
         float current = 0;
-        
         while (current < time)
         {
             material.SetFloat("_Alpha", current / time);

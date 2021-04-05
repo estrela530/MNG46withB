@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseAudioButton : MonoBehaviour
+public class RAudioButton : MonoBehaviour
 {
     [SerializeField]
     //　ポーズした時に表示するUIのプレハブ
@@ -15,7 +15,7 @@ public class PauseAudioButton : MonoBehaviour
     private GameObject PauseAudioUIPrefab;
 
     Pause pause;
-    public bool isPauseAudio;
+    public bool isPauseAudio = false;
 
     //音関連
     public AudioClip buttonSE;
@@ -27,7 +27,7 @@ public class PauseAudioButton : MonoBehaviour
         Time.timeScale = 1f;
         //コンポーネントゲッツ！
         audioSource = GetComponent<AudioSource>();
-        //PauseAudioUIPrefab.SetActive(false);
+        PauseAudioUIPrefab.SetActive(false);
         pause = PauseUIPrefab.GetComponent<Pause>();
     }
 
@@ -35,25 +35,14 @@ public class PauseAudioButton : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
-            if (!isPauseAudio)
-            {
-                Time.timeScale = 0f;
-                audioSource.PlayOneShot(buttonSE);
-                PauseUIPrefab.SetActive(false);
-                PauseAudioUIPrefab.SetActive(true);
-                isPauseAudio = true;
-                Debug.Log("aaaaaaaaa");
 
-            }
-            else if(isPauseAudio == true)
-            {
-                Time.timeScale = 1f;
-                audioSource.PlayOneShot(buttonSE);
-                Debug.Log("bbbbbbbb");
-                PauseUIPrefab.SetActive(true);
-                PauseAudioUIPrefab.SetActive(false);
-                isPauseAudio = false;
-            }
+            Time.timeScale = 1f;
+            audioSource.PlayOneShot(buttonSE);
+            Debug.Log("bbbbbbbb");
+            PauseUIPrefab.SetActive(true);
+            PauseAudioUIPrefab.SetActive(false);
+            isPauseAudio = false;
+
         }
 
     }
