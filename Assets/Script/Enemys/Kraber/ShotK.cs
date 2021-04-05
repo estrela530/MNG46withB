@@ -53,6 +53,14 @@ public class ShotK : MonoBehaviour
             //rigidbody.AddForce(transform.forward * shotTime);
             rigidbody.AddForce(ff * shotTime);
         }
+        if (Move.GetComponent<KraberEnemy>().powerFlag == true)
+        {
+            Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
+            GameObject shot = Instantiate(Bullet, transform.position, transform.rotation);
+            Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
+            //rigidbody.AddForce(transform.forward * shotTime);
+            rigidbody.AddForce(ff * shotTime);
+        }
 
     }
 }
