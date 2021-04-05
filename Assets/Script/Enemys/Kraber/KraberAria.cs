@@ -3,26 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class EnemyArea : MonoBehaviour
+public class KraberAria : MonoBehaviour
 {
-
     [SerializeField] private SpherecastCommand searchArea;//サーチ範囲
     [SerializeField] public float searchAngle;
-    public GameObject Move;
+    public GameObject Kraber;
+    [SerializeField]
+    float radius;
 
-
+    Rigidbody rigid;
     // Start is called before the first frame update
     void Start()
     {
-        Move.GetComponent<EnemyMove>();
-
+        Kraber.GetComponent<KraberEnemy>();
+        rigid = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        rigid.angularVelocity = Vector3.zero;
+        rigid.velocity = Vector3.zero;
     }
+
     public void OnTriggerStay(Collider other)
     {
         //プレイヤーの方向
@@ -37,32 +40,33 @@ public class EnemyArea : MonoBehaviour
             //サーチする角度の範囲内だったら発見
             if (angle <= searchAngle)
             {
-                Move.GetComponent<EnemyMove>().MoveFlag = true;
-                Move.GetComponent<EnemyMove>().workFlag = false;
+                Kraber.GetComponent<KraberEnemy>().MoveFlag = true;
+                Kraber.GetComponent<KraberEnemy>().workFlag = false;
+                
                 //MoveFlag = true;
                 //workFlag = false;
-               // Debug.Log("主人公発見: " + angle);
+                // Debug.Log("主人公発見: " + angle);
             }
-           
+
             //サーチする角度の範囲外だったら索敵
             if (searchAngle <= angle)
             {
-                Move.GetComponent<EnemyMove>().MoveFlag = false;
-                Move.GetComponent<EnemyMove>().workFlag = true;
+                Kraber.GetComponent<KraberEnemy>().MoveFlag = false;
+                Kraber.GetComponent<KraberEnemy>().workFlag = true;
                 //Debug.Log("外: " + angle);
             }
 
-
         }
         
+
     }
     public void OnTriggerEnter(Collider other)
     {
         //サーチする角度の範囲外だったら索敵
         if (!other.gameObject.CompareTag("Player"))
         {
-            Move.GetComponent<EnemyMove>().MoveFlag = false;
-            Move.GetComponent<EnemyMove>().workFlag = true;
+            Kraber.GetComponent<KraberEnemy>().MoveFlag = false;
+            Kraber.GetComponent<KraberEnemy>().workFlag = true;
         }
     }
 
@@ -71,15 +75,12 @@ public class EnemyArea : MonoBehaviour
     //サーチ範囲を表示
     private void OnDrawGizmos()
     {
-        Handles.color = Color.red;
+        Handles.color = Color.blue;
         Handles.DrawSolidArc(transform.position,
-            Vector3.up, 
+            Vector3.up,
             Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward
-            ,searchAngle * 2f,
-            5f);
+            , searchAngle * 2f,
+            radius);
     }
 #endif
-
-
-
 }

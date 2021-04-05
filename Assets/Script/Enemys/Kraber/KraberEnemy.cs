@@ -13,9 +13,15 @@ public class KraberEnemy : MonoBehaviour
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
 
+    [SerializeField, Header("弾オブジェクト")] GameObject bullet;
+
     [SerializeField, Header("体力")] float enemyHP = 5;
+    [SerializeField, Header("止まってる時間")] float freezTime;
+    [SerializeField, Header("いつまで止まるか")] float stopTime;
+    [SerializeField, Header("パワーアップした時の速度")] float upSpeed;
 
     Rigidbody rigid;
+    [SerializeField]
 
     private float workeAria1 = 1;//
     private float workeAria2 = 1;//
@@ -46,6 +52,7 @@ public class KraberEnemy : MonoBehaviour
     [Header("追う時と索敵のフラグ")]
     public bool MoveFlag = false;//追う
     public bool workFlag = true;//徘徊
+    public bool powerFlag = false;//
 
     void Start()
     {
@@ -53,13 +60,13 @@ public class KraberEnemy : MonoBehaviour
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         color = GetComponent<Renderer>().material.color;
+        bullet.GetComponent<KraberBallet>();
         //target = Target.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
@@ -92,6 +99,7 @@ public class KraberEnemy : MonoBehaviour
         //徘徊
         if (workFlag)
         {
+            powerFlag = false;
             if (ww < workeAria1)
             {
                 workNumber = 2;
@@ -118,10 +126,20 @@ public class KraberEnemy : MonoBehaviour
 
                     break;
             }
-
-
         }
 
+        if(powerFlag)
+        {
+            bullet.GetComponent<KraberBallet>().bullteSpeed = upSpeed;
+            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+            freezTime += Time.deltaTime;
+            if(freezTime>=stopTime)
+            {
+                workFlag = true;
+                freezTime = 0;
+            }
+
+        }
     }
 
     public float HpGet()
@@ -139,6 +157,15 @@ public class KraberEnemy : MonoBehaviour
         }
 
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            MoveFlag = false;
+            powerFlag = true;
+        }
+    }
+
     private void OnDestroy()
     {
         Renderer renderer = gameObject.GetComponent<Renderer>();
