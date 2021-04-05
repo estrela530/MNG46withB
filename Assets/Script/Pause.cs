@@ -34,14 +34,14 @@ public class Pause : MonoBehaviour
             {
                 PauseUIPrefab.SetActive(true);
                 Time.timeScale = 0f;
-                audioSource.PlayOneShot(buttonSE);
+                //audioSource.PlayOneShot(buttonSE);
                 isPause = true;
             }
             else
             {
                 PauseUIPrefab.SetActive(false);
                 Time.timeScale = 1f;
-                audioSource.PlayOneShot(buttonSE);
+                //audioSource.PlayOneShot(buttonSE);
                 isPause = false;
             }
         }
@@ -49,7 +49,7 @@ public class Pause : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
         {
             Time.timeScale = 1f;
-            audioSource.PlayOneShot(buttonSE);
+            //audioSource.PlayOneShot(buttonSE);
             isPause = false;
             PauseUIPrefab.SetActive(false);
         }
@@ -62,23 +62,23 @@ public class Pause : MonoBehaviour
 
     public void OnClick()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
-        {
+        //if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
+        //{
             if (!isPause)
             {
                 PauseUIPrefab.SetActive(true);
                 Time.timeScale = 0f;
-                audioSource.PlayOneShot(buttonSE);
+                //audioSource.PlayOneShot(buttonSE);
                 isPause = true;
             }
             else
             {
                 Time.timeScale = 1f;
-                audioSource.PlayOneShot(buttonSE);
+                //udioSource.PlayOneShot(buttonSE);
                 isPause = false;
                 PauseUIPrefab.SetActive(false);
             }
-        }
+        //}
 
     }
 }

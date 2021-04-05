@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageMove : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class StageMove : MonoBehaviour
     bool stage3Clear;
 
     int fadeCount;
+
+    [SerializeField, Header("BGMスライダー")]
+    public Slider bgmSlider;
+    float BGMmemo;
+    bool One;
 
     [SerializeField, Header("ステージ1のスタートポジション")]
     GameObject stage1StartPosition;
@@ -29,14 +35,17 @@ public class StageMove : MonoBehaviour
     [SerializeField, Header("シーン切り替え時エフェクトPrefab")]
     GameObject fadeManager;
 
+
     // Start is called before the first frame update
     void Start()
     {
         bool stage1Clear = false;
         bool stage2Clear = false;
         bool stage3Clear = false;
+        One = true;
 
         fadeCount = 0;
+        BGMmemo = 0f;
     }
 
     // Update is called once per frame
@@ -62,8 +71,9 @@ public class StageMove : MonoBehaviour
             {
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage2StartPosition.transform.position;
                 stage1Clear = false;
+                fadeCount = 0;
             }
-            fadeManager.SetActive(true);
+            //fadeManager.SetActive(true);
         }
 
         if (stage2Clear == true)
@@ -72,10 +82,16 @@ public class StageMove : MonoBehaviour
             stage2Clear = false;
         }
 
-        ////シーン切り替えのflagがtrueになったらfadeManagerのsetActiveをtrueにする
-        //if(stage1Clear ||stage2Clear||stage3Clear)
-        //{
-        //    fadeManager.SetActive(true);
-        //}
+        //シーン切り替えのflagがtrueになったらfadeManagerのsetActiveをtrueにする
+        if (stage1Clear || stage2Clear || stage3Clear)
+        {
+            fadeManager.SetActive(true);
+            //シーン切り替え時の音量調節処理
+            //bgmSlider.GetComponent<Slider>().normalizedValue = bgmSlider.GetComponent<Slider>().normalizedValue / 2;
+
+        }
+
+
+
     }
 }
