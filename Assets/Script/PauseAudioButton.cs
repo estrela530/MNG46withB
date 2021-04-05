@@ -21,6 +21,10 @@ public class PauseAudioButton : MonoBehaviour
     public AudioClip buttonSE;
     AudioSource audioSource;
 
+    public GameObject root;
+
+    public bool pABflag;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,44 +33,70 @@ public class PauseAudioButton : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         //PauseAudioUIPrefab.SetActive(false);
         pause = PauseUIPrefab.GetComponent<Pause>();
+
+        root = transform.root.gameObject;
+        pABflag = root.GetComponent<pauseManager>().pMflag;
     }
 
     public void OnClick()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
-        {
-            if (!isPauseAudio)
-            {
-                Time.timeScale = 0f;
-                audioSource.PlayOneShot(buttonSE);
-                PauseUIPrefab.SetActive(false);
-                PauseAudioUIPrefab.SetActive(true);
-                isPauseAudio = true;
-                Debug.Log("aaaaaaaaa");
+        Debug.Log("押された！");
 
-            }
-            else if(isPauseAudio == true)
-            {
-                Time.timeScale = 1f;
-                audioSource.PlayOneShot(buttonSE);
-                Debug.Log("bbbbbbbb");
-                PauseUIPrefab.SetActive(true);
-                PauseAudioUIPrefab.SetActive(false);
-                isPauseAudio = false;
-            }
+        //if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
+        //{
+
+        //0405
+        //if (!isPauseAudio)
+        //{
+        //    isPauseAudio = true;
+        //    Time.timeScale = 0f;
+        //    //audioSource.PlayOneShot(buttonSE);
+        //    PauseUIPrefab.SetActive(false);
+        //    PauseAudioUIPrefab.SetActive(true);
+        //    Debug.Log("2222" + isPauseAudio);
+        //}
+        //else if (isPauseAudio)
+        //{
+        //    //audioSource.PlayOneShot(buttonSE);
+        //    Debug.Log("bbbbbbbb");
+        //    PauseUIPrefab.SetActive(true);
+        //    PauseAudioUIPrefab.SetActive(false);
+        //    isPauseAudio = false;
+        //}]
+
+
+        pABflag = root.GetComponent<pauseManager>().pMflag;
+
+        if (!pABflag)
+        {
+            Time.timeScale = 0f;
+            //audioSource.PlayOneShot(buttonSE);
+            PauseUIPrefab.SetActive(false);
+            PauseAudioUIPrefab.SetActive(true);
+            Debug.Log("2222" + pABflag);
+            pABflag = true;
+        }
+        else if (pABflag)
+        {
+            //audioSource.PlayOneShot(buttonSE);
+            Debug.Log("bbbbbbbb");
+            PauseUIPrefab.SetActive(true);
+            PauseAudioUIPrefab.SetActive(false);
+            pABflag = false;
         }
 
+
+
     }
 
-    public bool GetPause()
-    {
-        return isPauseAudio;
-    }
+
 
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("見せなさい" + pABflag);
+
         //if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         //{
         //    if (!isPauseAudio)
@@ -91,13 +121,17 @@ public class PauseAudioButton : MonoBehaviour
         //    }
         //}
 
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
-        {
-            Time.timeScale = 1f;
-            audioSource.PlayOneShot(buttonSE);
-            isPauseAudio = false;
-            PauseUIPrefab.SetActive(false);
-            PauseAudioUIPrefab.SetActive(false);
-        }
+
+
+
+
+        //if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        //{
+        //    Time.timeScale = 1f;
+        //    //audioSource.PlayOneShot(buttonSE);
+        //    isPauseAudio = false;
+        //    PauseUIPrefab.SetActive(false);
+        //    PauseAudioUIPrefab.SetActive(false);
+        //}
     }
 }
