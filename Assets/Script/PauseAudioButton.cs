@@ -35,7 +35,6 @@ public class PauseAudioButton : MonoBehaviour
         pause = PauseUIPrefab.GetComponent<Pause>();
 
         root = transform.root.gameObject;
-        pABflag = root.GetComponent<pauseManager>().pMflag;
     }
 
     public void OnClick()
@@ -65,7 +64,7 @@ public class PauseAudioButton : MonoBehaviour
         //}]
 
 
-        pABflag = root.GetComponent<pauseManager>().pMflag;
+        //pABflag = root.GetComponent<pauseManager>().pMflag;
 
         if (!pABflag)
         {
