@@ -39,7 +39,7 @@ public class RAudioButton : MonoBehaviour
         isPauseAudio = true;
 
         root = transform.root.gameObject;
-        pRABflag = root.GetComponent<pauseManager>().pMflag;
+        //pRABflag = root.GetComponent<pauseManager>().pMflag;
 
     }
 
@@ -69,7 +69,7 @@ public class RAudioButton : MonoBehaviour
         //    isPauseAudio = false;
         //}
 
-        pRABflag = root.GetComponent<pauseManager>().pMflag;
+        //pRABflag = root.GetComponent<pauseManager>().pMflag;
 
         //if (!pRABflag)
         //{
