@@ -67,6 +67,10 @@ public class PredictionLine : MonoBehaviour
         lineRenderer.SetPosition(0, position);
         //描画距離と方向の乗算
         direction = -transform.forward * maxDistance;
+
+
+        //初期化
+        hitPosition = position + direction;
     }
 
     /// <summary>
@@ -110,16 +114,17 @@ public class PredictionLine : MonoBehaviour
 
         if (Physics.Raycast(lineRay, out hit, maxDistance))
         {
-            //回復玉なら反応しない
+            /*//回復玉なら反応しない
             if (hit.collider.gameObject.CompareTag("HealBall"))
             {
                 isDraw = false;
             }
-            else
+            else */if(hit.collider.gameObject.CompareTag("Wall"))
             {
                 //当たった位置を保存
                 hitPosition = hit.point;
-                isDraw = true;
+                lineRenderer.SetPosition(1, hitPosition);
+                //isDraw = true;
             }
         }
         else
@@ -135,7 +140,7 @@ public class PredictionLine : MonoBehaviour
         else
         {
             //終点の設定
-            lineRenderer.SetPosition(1, position + direction);
+            lineRenderer.SetPosition(1, hitPosition);
         }
         //Debug.DrawRay(lineRay.origin, lineRay.direction * maxDistance, Color.red, 0.1f);
     }

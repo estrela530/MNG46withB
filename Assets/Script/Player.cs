@@ -171,6 +171,12 @@ public class Player : MonoBehaviour
         TwistedChange();//ねじチェンジ
         //transform.rotation = startRotation * Quaternion.Euler(0f, 0f, Mathf.Sin((Time.time - startTime) * testSpeed) * testAngle);
 
+
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            Damage(1);
+        }
+
         //入力を使う処理が終わってからキーをコピーしないと動かなかった
         for (int i = 0; i < nowTrigger.Length; i++)
         {
@@ -655,6 +661,9 @@ public class Player : MonoBehaviour
         {
             currentHp -= damage;
             saveValue -= damage;
+
+            isReset = true;
+            Initialize();
 
             isDamage = true;
         }

@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class HealBall : MonoBehaviour
 {
-    [SerializeField, Header("レベルアップに必要な時間(成長は2回,消えそう,消える)")]
-    private float[] levelUpTime = new float[4];//(2,8,10,12
+    [SerializeField, Header("レベルアップに必要な時間(成長2回、最大になってから消えるまでの時間)")]
+    private float[] levelUpTime = new float[3];//(2,8,5
     [SerializeField, Tooltip("吸収時の移動速度")]
     private float[] inhaleSpeed = new float[3];
 
@@ -23,8 +23,9 @@ public class HealBall : MonoBehaviour
     bool isTwisted = false;//プレイヤーがねじっているか
     bool moveFlag = false; //false = ターゲット取得：true = 移動中
 
-    int count = 0;    //時間計測用
-    int healLevel = 1;//回復レベル
+    int levelCount; //レベルアップ用カウント
+    int deleteCount;//消滅用カウント
+    int healLevel;  //回復レベル
 
     private float speed;
 
@@ -51,7 +52,8 @@ public class HealBall : MonoBehaviour
             levelUpTime[i] *= 60.0f;
         }
 
-        count = 0;
+        levelCount = 0;
+        deleteCount = 0;
         healLevel = 0;
 
         meshRenderer = GetComponent<MeshRenderer>();
@@ -92,7 +94,7 @@ public class HealBall : MonoBehaviour
         {
             if (moveFlag == false)
             {
-                //ターゲットの位置を取得
+                //ターゲットの位置を1度だけ取得
                 playerPos = player.GetPosition();
                 moveFlag = true;
             }
@@ -115,20 +117,37 @@ public class HealBall : MonoBehaviour
     /// </summary>
     void ChangeState()
     {
-        if (isTwisted) return;
-
-        count++;//値を増やし続ける～
-
-        //particleSystem.gameObject.SetActive(true);
-
-        if (count >= levelUpTime[0])
+        //レベルが3以上になったら死へのカウントダウンを開始
+        if (healLevel == 3)
         {
-            if (count >= levelUpTime[3]) state = State.Death;
-            else if (count >= levelUpTime[2]) state = State.Blinking;
-            else if (count >= levelUpTime[1]) state = State.Level3;
+            deleteCount++;
+
+            //タイムアップで消滅
+            if (deleteCount >= levelUpTime[2])
+            {
+                state = State.Death;
+            }
+            //カウントダウンの半刻で体が消えかける
+            else if (deleteCount >= levelUpTime[2] * 0.5f)
+            {
+                state = State.Blinking;
+            }
+
+        }
+
+        //吸い込み中はレベルアップしないようにする。
+        if (isTwisted || levelCount > levelUpTime[1]) return;
+        
+        levelCount++;//値を増やし続ける～
+
+        if (levelCount >= levelUpTime[0])
+        {
+            if (levelCount >= levelUpTime[1]) state = State.Level3;
             else state = State.Level2;
         }
         else state = State.Level1;
+
+        //particleSystem.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -139,33 +158,19 @@ public class HealBall : MonoBehaviour
         switch (state)
         {
             case State.Level1:
-                healLevel = 1;
-                meshRenderer.material.color = Color.yellow;
-                transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                speed = inhaleSpeed[0];
+                Actions(1, Color.yellow, new Vector3(0.5f, 0.5f, 0.5f), inhaleSpeed[0]);
                 break;
             case State.Level2:
-                healLevel = 2;
-                meshRenderer.material.color = Color.green;
-                transform.localScale = new Vector3(1, 1, 1);
-                speed = inhaleSpeed[1];
+                Actions(2, Color.green, new Vector3(1, 1, 1), inhaleSpeed[1]);
                 break;
             case State.Level3:
-                healLevel = 3;
-                meshRenderer.material.color = Color.black;
-                transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-                speed = inhaleSpeed[2];
+                Actions(3, Color.black, new Vector3(1.5f, 1.5f, 1.5f), inhaleSpeed[2]);
                 break;
             case State.Blinking:
-                ////点滅する
-                //StartCoroutine("Blinking");
-
-                float alpha = Mathf.Sin(Time.time * 10.0f) / 2 + 0.5f;
-                meshRenderer.material.color = new Color(1, 1, 1, alpha);
-
+                Blinking(10.0f);//点滅
                 break;
             case State.Death:
-                Destroy(this.gameObject);
+                Destroy(this.gameObject);//削除
                 break;
             default:
                 Debug.Log("存在しない状態に切り替わっています。");
@@ -174,18 +179,34 @@ public class HealBall : MonoBehaviour
     }
 
     /// <summary>
-    /// 点滅用コルーチンのテスト
+    /// 各レベルごとの変化
     /// </summary>
-    /// <returns></returns>
-    IEnumerator Blinking()
+    /// <param name="level">回復レベル</param>
+    /// <param name="color">回復玉の色</param>
+    /// <param name="scale">大きさ</param>
+    /// <param name="speed">吸収速度</param>
+    void Actions(int level,Color color,Vector3 scale,float speed)
     {
-        while(true)
-        {
-            meshRenderer.material.color = Color.red;
-            yield return new WaitForSeconds(0.5f);
+        healLevel = level;
+        meshRenderer.material.color = color;
+        transform.localScale = scale;
+        this.speed = speed;
+        //---------------旧処理(各レベルごとに書く)------------
+        //healLevel = 1;
+        //meshRenderer.material.color = Color.yellow;
+        //transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        //speed = inhaleSpeed[0];
+        //-----------------------------------------------------
+    }
 
-            //yield return new WaitForEndOfFrame();
-        }
+    /// <summary>
+    /// 点滅
+    /// </summary>
+    /// <param name="time">点滅の速さ</param>
+    void Blinking(float time)
+    {
+        float alpha = Mathf.Sin(Time.time * time) / 2 + 0.5f;
+        meshRenderer.material.color = new Color(1, 1, 1, alpha);
     }
 
     /// <summary>
