@@ -81,10 +81,13 @@ public class Player : MonoBehaviour
 
     public GameObject predictionLine;//予測線オブジェクト
 
-
     private float alphaTimer = 0;//点滅時間加算用
-    private int alphaCount = 0;//点滅用カウント
-    float test = 0;
+    private int alphaCount = 0;  //点滅用カウント
+
+    float testSpeed = 5f;
+    float testAngle = 30f;
+    float startTime;
+    Quaternion startRotation;
 
     private enum Keys
     {
@@ -131,6 +134,13 @@ public class Player : MonoBehaviour
 
         currentHp = saveValue = maxHp;
 
+
+        //startTime = Time.time;
+        //startRotation = transform.rotation;
+
+
+
+
         Initialize();
     }
 
@@ -159,6 +169,7 @@ public class Player : MonoBehaviour
 
         Move();         //動く
         TwistedChange();//ねじチェンジ
+        //transform.rotation = startRotation * Quaternion.Euler(0f, 0f, Mathf.Sin((Time.time - startTime) * testSpeed) * testAngle);
 
         //入力を使う処理が終わってからキーをコピーしないと動かなかった
         for (int i = 0; i < nowTrigger.Length; i++)
@@ -177,7 +188,7 @@ public class Player : MonoBehaviour
 
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
-        InvincibleTime(invincibleTime);//無敵時間
+        InvincibleTime(invincibleTime);//無敵時間     
     }
 
     /// <summary>

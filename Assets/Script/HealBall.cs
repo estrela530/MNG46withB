@@ -10,7 +10,7 @@ public class HealBall : MonoBehaviour
     [SerializeField, Header("レベルアップに必要な時間(成長は2回,消えそう,消える)")]
     private float[] levelUpTime = new float[4];//(2,8,10,12
     [SerializeField, Tooltip("吸収時の移動速度")]
-    private float speed = 1.0f;
+    private float[] inhaleSpeed = new float[3];
 
     Player player;            //シーン上のプレイヤーを取得
     TestManager manager;      //回復玉管理リストを取得
@@ -25,6 +25,8 @@ public class HealBall : MonoBehaviour
 
     int count = 0;    //時間計測用
     int healLevel = 1;//回復レベル
+
+    private float speed;
 
     //ParticleSystem particleSystem;
 
@@ -140,16 +142,19 @@ public class HealBall : MonoBehaviour
                 healLevel = 1;
                 meshRenderer.material.color = Color.yellow;
                 transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                speed = inhaleSpeed[0];
                 break;
             case State.Level2:
                 healLevel = 2;
                 meshRenderer.material.color = Color.green;
                 transform.localScale = new Vector3(1, 1, 1);
+                speed = inhaleSpeed[1];
                 break;
             case State.Level3:
                 healLevel = 3;
                 meshRenderer.material.color = Color.black;
                 transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                speed = inhaleSpeed[2];
                 break;
             case State.Blinking:
                 ////点滅する
