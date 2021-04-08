@@ -64,7 +64,7 @@ public class PauseAudioButton : MonoBehaviour
         //}]
 
 
-        //pABflag = root.GetComponent<pauseManager>().pMflag;
+        pABflag = root.GetComponent<pauseManager>().pMflag;
 
         if (!pABflag)
         {

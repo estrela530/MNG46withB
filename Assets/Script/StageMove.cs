@@ -13,11 +13,14 @@ public class StageMove : MonoBehaviour
     bool stage3Clear;
 
     int fadeCount;
+    int koko;
 
     [SerializeField, Header("BGMスライダー")]
     public Slider bgmSlider;
     float BGMmemo;
     bool One;
+    bool currentFlag;
+    bool previousFlag;
 
     [SerializeField, Header("ステージ1のスタートポジション")]
     GameObject stage1StartPosition;
@@ -43,9 +46,13 @@ public class StageMove : MonoBehaviour
         bool stage2Clear = false;
         bool stage3Clear = false;
         One = true;
-
+        koko = 240;
         fadeCount = 0;
         BGMmemo = 0f;
+
+        currentFlag = false;
+        previousFlag = false;
+
     }
 
     // Update is called once per frame
@@ -55,12 +62,15 @@ public class StageMove : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("Player").transform.position == stage1GoalPosition.transform.position)
         {
             stage1Clear = true;
+            BGMmemo = bgmSlider.GetComponent<Slider>().normalizedValue;
+            previousFlag = true;
         }
 
         //Aボタンを押したらシーン切り替え（デバッグ用）
         if (Input.GetKeyDown(KeyCode.N))
         {
             stage1Clear = true;
+            BGMmemo = bgmSlider.GetComponent<Slider>().normalizedValue;
         }
 
         //プレイヤーのポジションをStage2のスタートポジションにする
@@ -70,8 +80,12 @@ public class StageMove : MonoBehaviour
             if (fadeCount >= 360)
             {
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage2StartPosition.transform.position;
-                stage1Clear = false;
-                fadeCount = 0;
+                if (fadeCount >= 480)
+                {
+                    //stage1Clear = false;
+                    //previousFlag = true;
+                    //fadeCount = 0;
+                }
             }
             //fadeManager.SetActive(true);
         }
@@ -82,16 +96,37 @@ public class StageMove : MonoBehaviour
             stage2Clear = false;
         }
 
+        currentFlag = previousFlag;
+
         //シーン切り替えのflagがtrueになったらfadeManagerのsetActiveをtrueにする
         if (stage1Clear || stage2Clear || stage3Clear)
         {
             fadeManager.SetActive(true);
-            //シーン切り替え時の音量調節処理
-            //bgmSlider.GetComponent<Slider>().normalizedValue = bgmSlider.GetComponent<Slider>().normalizedValue / 2;
+            ////シーン切り替え時の音量調節処理
+            //bgmSlider.GetComponent<Slider>().normalizedValue = BGMmemo / 4;
+        }
+
+        if (previousFlag == true)
+        {
+            bgmSlider.GetComponent<Slider>().normalizedValue = BGMmemo;
+
+            previousFlag = false;
 
         }
 
-
+        if (fadeCount >0&& fadeCount <= koko)
+        {
+            bgmSlider.GetComponent<Slider>().normalizedValue = bgmSlider.GetComponent<Slider>().normalizedValue / 1.01f;
+        }
+        else if (fadeCount > koko && fadeCount <= koko*2)
+        {
+            bgmSlider.GetComponent<Slider>().normalizedValue = bgmSlider.GetComponent<Slider>().normalizedValue * 1.01f;
+        }
+        else if(fadeCount >koko*2)
+        {
+            stage1Clear = false;
+            fadeCount = 0;
+        }
 
     }
 }
