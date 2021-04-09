@@ -13,8 +13,7 @@ public class StealEnemy : MonoBehaviour
 {
     [SerializeField] GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
-                      // public float area;//この数値以下になったら追う
-
+    // public float area;//この数値以下になったら追う
 
     [SerializeField, Header("体力")] float enemyHP = 5;
 
@@ -27,7 +26,7 @@ public class StealEnemy : MonoBehaviour
 
     private float ww;
     private float ww2;
-    
+
     [Header("索敵に向かう場所")]
     public GameObject workObj1;
     public GameObject workObj2;
@@ -45,6 +44,8 @@ public class StealEnemy : MonoBehaviour
     [Header("追う時と索敵のフラグ")]
     public bool MoveFlag = false;//追う
     public bool workFlag = true;//徘徊
+    
+    private Vector3 firstTage;
 
     void Start()
     {
@@ -52,12 +53,14 @@ public class StealEnemy : MonoBehaviour
         //Target = GameObject.FindGameObjectWithTag("Player");
         Target = GameObject.FindGameObjectWithTag("HealBall");
         rigid = GetComponent<Rigidbody>();
+        firstTage = new Vector3();
     }
+
 
     // Update is called once per frame
     void Update()
     {
-
+        Target = GameObject.FindGameObjectWithTag("HealBall");
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
@@ -72,16 +75,36 @@ public class StealEnemy : MonoBehaviour
 
         ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
         ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
-        
+
         if (MoveFlag)
         {
-            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+            if (firstTage == new Vector3())
+            {
+                firstTage = new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z);
+
+            }
+            else if(firstTage != new Vector3())
+            {
+
+               this.transform.LookAt(firstTage);//ターゲットにむく
+               transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+            }
+            //到着
+            if(this.transform.position == firstTage)
+            {
+                firstTage = new Vector3();
+                MoveFlag = false;
+                workFlag = true;
+            }
+
             //if (dis >= social)
             //{
             //    transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
             //}
 
         }
+
+        Debug.Log(firstTage);
 
         //徘徊
         if (workFlag)

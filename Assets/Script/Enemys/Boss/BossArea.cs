@@ -1,22 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using UnityEditor;
 
-public class OctaneAria : MonoBehaviour
+public class BossArea : MonoBehaviour
 {
     [SerializeField] private SpherecastCommand searchArea;//サーチ範囲
     [SerializeField] public float searchAngle;
-    public GameObject Octane;
+    public GameObject Boss;
+    [SerializeField]
+    float radius;
 
     Rigidbody rigid;
-
-    //public float stopTime;
-
     // Start is called before the first frame update
     void Start()
     {
-        Octane.GetComponent<OctaneEnemy>();
+        Boss.GetComponent<KraberEnemy>();
         rigid = GetComponent<Rigidbody>();
     }
 
@@ -26,6 +26,7 @@ public class OctaneAria : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
     }
+
     public void OnTriggerStay(Collider other)
     {
         //プレイヤーの方向
@@ -37,27 +38,27 @@ public class OctaneAria : MonoBehaviour
         //触れているとき
         if (other.gameObject.CompareTag("Player"))
         {
-                
             //サーチする角度の範囲内だったら発見
             if (angle <= searchAngle)
             {
-                Octane.GetComponent<OctaneEnemy>().MoveFlag = true;
-                Octane.GetComponent<OctaneEnemy>().workFlag = false;
+                Boss.GetComponent<KraberEnemy>().MoveFlag = true;
+                Boss.GetComponent<KraberEnemy>().workFlag = false;
+
                 //MoveFlag = true;
                 //workFlag = false;
                 // Debug.Log("主人公発見: " + angle);
             }
 
-            ////サーチする角度の範囲外だったら索敵
-            //if (searchAngle <= angle)
-            //{
-            //    Octane.GetComponent<OctaneEnemy>().MoveFlag = false;
-            //    Octane.GetComponent<OctaneEnemy>().workFlag = true;
-            //    //Debug.Log("外: " + angle);
-            //}
-
+            //サーチする角度の範囲外だったら索敵
+            if (searchAngle <= angle)
+            {
+                Boss.GetComponent<KraberEnemy>().MoveFlag = false;
+                Boss.GetComponent<KraberEnemy>().workFlag = true;
+                //Debug.Log("外: " + angle);
+            }
 
         }
+
 
     }
     public void OnTriggerEnter(Collider other)
@@ -65,8 +66,8 @@ public class OctaneAria : MonoBehaviour
         //サーチする角度の範囲外だったら索敵
         if (!other.gameObject.CompareTag("Player"))
         {
-            Octane.GetComponent<OctaneEnemy>().MoveFlag = false;
-            Octane.GetComponent<OctaneEnemy>().workFlag = true;
+            Boss.GetComponent<KraberEnemy>().MoveFlag = false;
+            Boss.GetComponent<KraberEnemy>().workFlag = true;
         }
     }
 
@@ -75,14 +76,12 @@ public class OctaneAria : MonoBehaviour
     //サーチ範囲を表示
     private void OnDrawGizmos()
     {
-        Handles.color = Color.green;
+        Handles.color = Color.blue;
         Handles.DrawSolidArc(transform.position,
             Vector3.up,
             Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward
             , searchAngle * 2f,
-            5f);
+            radius);
     }
 #endif
-
-
 }
