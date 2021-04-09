@@ -41,18 +41,15 @@ public class StealArea : MonoBehaviour
             {
                 Move.GetComponent<StealEnemy>().MoveFlag = true;
                 Move.GetComponent<StealEnemy>().workFlag = false;
-                //MoveFlag = true;
-                //workFlag = false;
-                // Debug.Log("主人公発見: " + angle);
             }
 
-            //サーチする角度の範囲外だったら索敵
-            if (searchAngle <= angle)
-            {
-                Move.GetComponent<StealEnemy>().MoveFlag = false;
-                Move.GetComponent<StealEnemy>().workFlag = true;
-                //Debug.Log("外: " + angle);
-            }
+            ////サーチする角度の範囲外だったら索敵
+            //if (searchAngle <= angle)
+            //{
+            //    Move.GetComponent<StealEnemy>().MoveFlag = false;
+            //    Move.GetComponent<StealEnemy>().workFlag = true;
+            //    //Debug.Log("外: " + angle);
+            //}
 
 
         }
@@ -60,12 +57,12 @@ public class StealArea : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        //サーチする角度の範囲外だったら索敵
-        if (!other.gameObject.CompareTag("HealBall"))
-        {
-            Move.GetComponent<StealEnemy>().MoveFlag = false;
-            Move.GetComponent<StealEnemy>().workFlag = true;
-        }
+        ////サーチする角度の範囲外だったら索敵
+        //if (!other.gameObject.CompareTag("HealBall"))
+        //{
+        //    Move.GetComponent<StealEnemy>().MoveFlag = false;
+        //    Move.GetComponent<StealEnemy>().workFlag = true;
+        //}
     }
 
 
