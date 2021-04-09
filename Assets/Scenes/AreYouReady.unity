@@ -208,10 +208,70 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: 08953e67e03de9d4589c923839dca719, type: 3}
+    - target: {fileID: 7218287160116125077, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: twistedSpeed
+      value: 5.4
+      objectReference: {fileID: 0}
     - target: {fileID: 7218287161412445507, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: decreaseHp
+      value: 0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: extendSpeed
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: invincibleTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: firstCreateFragment
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: healValue.Array.data[0]
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: healValue.Array.data[1]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: healValue.Array.data[2]
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: levelCount.Array.data[0]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: levelCount.Array.data[1]
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218287161412445532, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: levelCount.Array.data[2]
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 7218287161412445534, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
