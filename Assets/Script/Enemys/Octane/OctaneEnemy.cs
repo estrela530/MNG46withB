@@ -150,7 +150,8 @@ public class OctaneEnemy : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player")|| 
+            other.gameObject.CompareTag("Wall"))
         {
             workFlag = true;
             MoveFlag = false;

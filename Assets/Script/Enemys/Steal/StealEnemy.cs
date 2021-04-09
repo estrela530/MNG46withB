@@ -78,6 +78,13 @@ public class StealEnemy : MonoBehaviour
 
         if (MoveFlag)
         {
+            Ray ray;
+            RaycastHit rayHit;
+            //Vector3 origin(rayの開始地点), Vector3 direction(rayの向き),RaycastHit hitInfo(当たったオブジェクトの情報を格納), float distance(rayの発射距離), int layerMask(レイヤマスクの設定)
+            //if (Physics.Raycast(this.transform.position,this.transform.forward,Target,100,))
+            //{
+
+            //}
             if (firstTage == new Vector3())
             {
                 firstTage = new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z);
