@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
     float[] preTrigger = new float[2];//LT,RTトリガーの保存用キー
     float[] nowTrigger = new float[2];//LT,RTトリガーの取得用キー
 
-    
+
 
     private float alphaTimer = 0;//点滅時間加算用
     private int alphaCount = 0;  //点滅用カウント
@@ -183,9 +183,6 @@ public class Player : MonoBehaviour
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
         InvincibleTime(invincibleTime);//無敵時間     
-
-
-        Debug.Log(testVel);
     }
 
     /// <summary>
@@ -263,8 +260,6 @@ public class Player : MonoBehaviour
 
         ////transform.position += position;   
         #endregion
-
-        //ChangeDirection();
     }
 
     /// <summary>
@@ -273,51 +268,54 @@ public class Player : MonoBehaviour
     private void MoveDirection()
     {
         //移動していたら
-        if (testVel != Vector3.zero) 
+        if (testVel != Vector3.zero)
         {
-            ////右
-            //if (testVel.x > 0)
-            //{
-            //    direction = Direction.RIGHT;
-            //}
-            ////左
-            //else if (testVel.x < 0)
-            //{
-            //    direction = Direction.LEFT;
-            //}
+            //右向きにする
+            if (testVel.x > 0)
+            {
+                direction = Direction.RIGHT;
+            }
+            //左向きにする
+            else if (testVel.x < 0)
+            {
+                direction = Direction.LEFT;
+            }
 
-            ////上
-            //if (testVel.z > 0)
-            //{
-            //    direction = Direction.UP;
+            //上向きにする
+            if (testVel.z > 0)
+            {
+                direction = Direction.UP;
 
-            //    //右上
-            //    if (testVel.x > 0)
-            //    {
-            //        direction = Direction.TOP_RIGHT;
-            //    }
-            //    //左上
-            //    else if (testVel.x < 0)
-            //    {
-            //        direction = Direction.TOP_LEFT;
-            //    }
-            //}
-            ////下
-            //else if (testVel.z < 0)
-            //{
-            //    direction = Direction.DOWN;
+                //右上向きにする
+                if (testVel.x > 0)
+                {
+                    direction = Direction.TOP_RIGHT;
+                }
+                //左上向きにする
+                else if (testVel.x < 0)
+                {
+                    direction = Direction.TOP_LEFT;
+                }
+            }
+            //下向きにする
+            else if (testVel.z < 0)
+            {
+                direction = Direction.DOWN;
 
-            //    //右下
-            //    if (testVel.x > 0)
-            //    {
-            //        direction = Direction.DOWN_RIGHT;
-            //    }
-            //    //左下
-            //    else if (testVel.x < 0)
-            //    {
-            //        direction = Direction.DOWN_LEFT;
-            //    }
-            //}
+                //右下向きにする
+                if (testVel.x > 0)
+                {
+                    direction = Direction.DOWN_RIGHT;
+                }
+                //左下向きにする
+                else if (testVel.x < 0)
+                {
+                    direction = Direction.DOWN_LEFT;
+                }
+            }
+        
+            ChangeDirection(); //向きの反映
+            MoveSE(0.5f, 0.2f);//足音を鳴らす
 
             testVel.Normalize();
             rigid.velocity = testVel * moveSpeed;
@@ -330,62 +328,62 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 移動中のSEを鳴らす
+    /// </summary>
+    /// <param name="interval">間隔</param>
+    /// <param name="volume">音量</param>
+    private void MoveSE(float interval,float volume)
+    {
+        //移動中音を鳴らす
+        moveCount += Time.deltaTime;
+
+        if (moveCount > interval)
+        {
+            audioSource.PlayOneShot(releaseSE, volume);
+            moveCount = 0f;
+        }
+    }
+
+    /// <summary>
     /// プレイヤーの向き替え
     /// </summary>
     private void ChangeDirection()
     {
-        //移動しているとき、移動方向に回転させる
-        if (velocity != Vector3.zero)
+        Quaternion dir = Quaternion.identity;
+
+        //現在の向きに回転させる
+        switch (direction)
         {
-            Quaternion dir = Quaternion.identity;
-
-            switch (direction)
-            {
-                case Direction.UP:
-                    dir = Quaternion.Euler(0, 0, 0);
-                    break;
-                case Direction.DOWN:
-                    dir = Quaternion.Euler(0, 180f, 0);
-                    break;
-                case Direction.RIGHT:
-                    dir = Quaternion.Euler(0, 90f, 0);
-                    break;
-                case Direction.LEFT:
-                    dir = Quaternion.Euler(0, 270f, 0);
-                    break;
-                case Direction.TOP_RIGHT:
-                    dir = Quaternion.Euler(0, 45f, 0);
-                    break;
-                case Direction.TOP_LEFT:
-                    dir = Quaternion.Euler(0, 315f, 0);
-                    break;
-                case Direction.DOWN_RIGHT:
-                    dir = Quaternion.Euler(0, 135f, 0);
-                    break;
-                case Direction.DOWN_LEFT:
-                    dir = Quaternion.Euler(0, 225f, 0);
-                    break;
-                default:
-                    Debug.Log("存在しない向きに回転しようとしています。");
-                    break;
-            }
-
-            //移動中音を鳴らす
-            moveCount += Time.deltaTime;
-
-            if (moveCount > 0.5f)
-            {
-                audioSource.PlayOneShot(releaseSE, 0.2f);
-                moveCount = 0f;
-            }
-
-            transform.rotation = dir;//回転角度を反映
+            case Direction.UP:
+                dir = Quaternion.Euler(0, 0, 0);
+                break;
+            case Direction.DOWN:
+                dir = Quaternion.Euler(0, 180f, 0);
+                break;
+            case Direction.RIGHT:
+                dir = Quaternion.Euler(0, 90f, 0);
+                break;
+            case Direction.LEFT:
+                dir = Quaternion.Euler(0, 270f, 0);
+                break;
+            case Direction.TOP_RIGHT:
+                dir = Quaternion.Euler(0, 45f, 0);
+                break;
+            case Direction.TOP_LEFT:
+                dir = Quaternion.Euler(0, 315f, 0);
+                break;
+            case Direction.DOWN_RIGHT:
+                dir = Quaternion.Euler(0, 135f, 0);
+                break;
+            case Direction.DOWN_LEFT:
+                dir = Quaternion.Euler(0, 225f, 0);
+                break;
+            default:
+                Debug.Log("存在しない向きに回転しようとしています。");
+                break;
         }
-        else
-        {
-            rigid.velocity = Vector3.zero;
-            rigid.angularVelocity = Vector3.zero;
-        }
+
+        transform.rotation = dir;//回転角度を反映
     }
 
     /// <summary>
@@ -481,8 +479,7 @@ public class Player : MonoBehaviour
     /// <param name="bulletNum">球数</param>
     void InitFragment(int bulletNum, float deleteCount)
     {
-        //-----------------------旧弾解放の処理--------------------------------------------------------
-        ////ここで解放する
+        #region 旧弾解放の処理
         //for (int angle = 0; angle < 360; angle += count)//360で割った個数分出てくる
         //{
         //    GameObject fragment = fragmentPool.GetObject();//生きているオブジェクトを代入
@@ -493,20 +490,19 @@ public class Player : MonoBehaviour
         //        fragment.GetComponent<Fragment>().Initialize(angle, transform.position, deleteCount);
         //    }
         //}
-        //---------------------------------------------------------------------------------------------
+        #endregion
 
-        //解放した音
-        audioSource.PlayOneShot(releaseSE, 2.0f);
-
+        //周囲に弾を解放する
         for (int i = 0; i < bulletNum; i++)
         {
+            #region 弾解放Tips
             //①現在の向き(軸)を取得し、値を正規化して0～1の値にする。
             //②360を球数で割って、角度(i)をかけることで、発射角度を計算することができる。
             //Quaternion.Eulerは引数にVector3を使用し、その軸を何度回転させるかという関数
             //→Quaternion.Euler(0,90,0) = Y軸を90度回転させる。
             //③角度に、軸をかけることで、軸を基準にした角度(Vector3型)がもとまる。
             //→(0,1,0)の軸に90°回転をかけると、Y軸が90°回転する(0,90,0)
-
+            #endregion
             Vector3 axis = transform.forward;
             axis.Normalize();
             axis = Quaternion.Euler(0, (360 / bulletNum) * i, 0) * axis;
@@ -518,6 +514,9 @@ public class Player : MonoBehaviour
                 fragment.GetComponent<Fragment>().Initialize(axis, transform.position, deleteCount);
             }
         }
+
+        //解放した音を鳴らす
+        audioSource.PlayOneShot(releaseSE, 2.0f);
     }
 
     /// <summary>
@@ -606,7 +605,7 @@ public class Player : MonoBehaviour
                 InitPredictionLine(fragmentCount[0]);
             }
 
-            //--------旧レベルの変更処理----------
+            #region 旧レベルの変更処理
             //if (neziCount >= levelCount[2])
             //{
             //    neziLevel = 3;
@@ -619,7 +618,7 @@ public class Player : MonoBehaviour
             //{
             //    neziLevel = 1;
             //}
-            //------------------------------------
+            #endregion
         }
         else
         {
@@ -681,11 +680,13 @@ public class Player : MonoBehaviour
     /// <param name="healBall">オブジェクトのスクリプトを取得</param>
     private void Heal(GameObject healBall)
     {
+        //当たったオブジェクトのレベルを取得
         int healAmounst = healBall.GetComponent<HealBall>().GetHealLevel();
 
         //回復の音
         audioSource.PlayOneShot(healSE);
 
+        //受け取ったレベルによって回復量を変化させる。
         switch (healAmounst)
         {
             case 1:
@@ -705,6 +706,7 @@ public class Player : MonoBehaviour
                 break;
         }
 
+        //memo : 予期せぬエラーが起こる可能性あり
         //最大体力以上にはならない。
         if (currentHp >= maxHp || saveValue >= maxHp)
         {
@@ -746,7 +748,6 @@ public class Player : MonoBehaviour
     {
         if (!isDamage) return;
 
-
         //memo : 点滅の処理をもっとわかりやすく直す
         alphaCount++;
 
@@ -754,11 +755,11 @@ public class Player : MonoBehaviour
         {
             meshRenderer.material.color = Color.red;
         }
-        if(alphaCount > 4)
+        if (alphaCount > 4)
         {
             meshRenderer.material.color = Color.white;
         }
-        if(alphaCount > 8)
+        if (alphaCount > 8)
         {
             alphaCount = 0;
         }
@@ -783,7 +784,7 @@ public class Player : MonoBehaviour
             Heal(other.gameObject);   //回復
             Destroy(other.gameObject);//回復玉を消す
         }
-        else if(other.gameObject.CompareTag("PoisonBall"))
+        else if (other.gameObject.CompareTag("PoisonBall"))
         {
             Damage(1);                //ダメージ
             Destroy(other.gameObject);//毒玉を消す
