@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField, Tooltip("最大体力")]
     private float maxHp = 10;
     [SerializeField, Tooltip("体力の減少量")]
-    private float decreaseHp = 0.01f;//体力の減少量
+    private float decreaseHp = 0.01f;
     [SerializeField, Header("回復玉のレベルによる回復量")]
     private float[] healValue = new float[3];//(0.2,0.5,1
 
@@ -51,19 +51,19 @@ public class Player : MonoBehaviour
     private int iziranaide;
     private AudioSource audioSource;
     public AudioClip releaseSE;//解放した瞬間
-    public AudioClip twistedSE; //ねじっているとき
-    public AudioClip healSE;    //回復した瞬間
-    public AudioClip cancelSE;    //キャンセルした瞬間
+    public AudioClip twistedSE;//ねじっているとき
+    public AudioClip healSE;   //回復した瞬間
+    public AudioClip cancelSE; //キャンセルした瞬間
 
     /// <summary>
     /// リセットしたかどうか(メッシュ側で取得&代入を行う)
     /// </summary>
     public bool isReset { get; set; } = false;
 
-    MeshRenderer meshRenderer;            //色変え用
-    FragmentPool fragmentPool;      //オブジェクトプール
-    PredictionLinePool predictionPool;
-    Vector3 myScale = Vector3.one;//自身の大きさ
+    MeshRenderer meshRenderer;        //色変え用
+    FragmentPool fragmentPool;        //かけらプール
+    PredictionLinePool predictionPool;//予測線プール
+    Vector3 myScale = Vector3.one;    //自身の大きさ
 
     private bool isTwisted;//ねじれているかどうか
     private bool isRelease;//解放中かどうか
@@ -74,12 +74,13 @@ public class Player : MonoBehaviour
     private Vector3 velocity;//移動量
     private Rigidbody rigid; //物理演算
 
-    public float currentHp; //現在の体力
+    public float currentHp; //現在の体力(確認用にpublicにしてる)
     private float saveValue;//体力一時保存用
     private float moveCount = 0.5f;//移動SEの鳴らす間隔
 
     float[] preTrigger = new float[2];//LT,RTトリガーの保存用キー
     float[] nowTrigger = new float[2];//LT,RTトリガーの取得用キー
+
 
 
 
@@ -89,7 +90,9 @@ public class Player : MonoBehaviour
 
     Vector3 testVel;
 
-
+    /// <summary>
+    /// LT,RTトリガーの入力用
+    /// </summary>
     private enum Keys
     {
         L_Trigger = 0,
@@ -885,5 +888,14 @@ public class Player : MonoBehaviour
     public Vector3 GetPosition()
     {
         return transform.position;
+    }
+
+    /// <summary>
+    /// 現在のねじレベルを取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetNeziLevel()
+    {
+        return neziLevel;
     }
 }

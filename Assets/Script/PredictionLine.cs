@@ -57,24 +57,10 @@ public class PredictionLine : MonoBehaviour
         lineRenderer.SetPosition(0, position);
         //描画距離と方向の乗算
         direction = -transform.forward * maxDistance;
+        //表示位置は初期化しておこうね!
+        hitPosition = position + direction;
 
-        if (Physics.Raycast(lineRay, out hit, maxDistance))
-        {
-            if (hit.collider.gameObject.CompareTag("Wall"))
-            {
-                //当たった位置を保存
-                hitPosition = hit.point;
-
-            }
-            else
-            {
-                //初期化
-                hitPosition = position + direction;
-            }
-        }
-
-        //初めに描画する
-        lineRenderer.SetPosition(1, hitPosition);
+        DrawLine();
     }
 
     /// <summary>
@@ -102,56 +88,49 @@ public class PredictionLine : MonoBehaviour
 
     private void FixedUpdate()
     {
-        foreach (RaycastHit hit in Physics.RaycastAll(lineRay))
-        {
-            if (hit.collider.gameObject.CompareTag("Wall"))
-            {
-                //当たった位置を保存
-                hitPosition = hit.point;
-                lineRenderer.SetPosition(1, hitPosition);
-            }
-            else
-            {
-                lineRenderer.SetPosition(1, hitPosition);
-            }
-        }
+        DrawLine();
+    }
 
+    private void DrawLine()
+    {
 
-        //if (Physics.Raycast(lineRay, out hit, maxDistance))
+        #region 上手く動くけど長さを調節できない
+        //foreach (RaycastHit hit in Physics.RaycastAll(lineRay))
         //{
-        //    //回復玉なら反応しない
-        //    if (hit.collider.gameObject.CompareTag("HealBall"))
-        //    {
-        //        lineRenderer.SetPosition(1, hitPosition);
-        //        //isDraw = false;
-        //    }
-        //    else if (hit.collider.gameObject.CompareTag("Wall"))
+        //    if (hit.collider.gameObject.CompareTag("Wall") ||
+        //        hit.collider.gameObject.CompareTag("Enemy"))
         //    {
         //        //当たった位置を保存
         //        hitPosition = hit.point;
         //        lineRenderer.SetPosition(1, hitPosition);
-        //        //isDraw = true;
         //    }
         //    else
         //    {
-        //        lineRenderer.SetPosition(1, hitPosition);
+        //        lineRenderer.SetPosition(1, position + direction);
         //    }
         //}
-        //else
-        //{
-        //    lineRenderer.SetPosition(1, hitPosition);
-        //    //isDraw = false;
-        //}
-        //if (isDraw)
-        //{
-        //    //終点の設定
-        //    lineRenderer.SetPosition(1, hitPosition);
-        //}
-        //else
-        //{
-        //    //終点の設定
-        //    lineRenderer.SetPosition(1, hitPosition);
-        //}
+        #endregion
+
+        #region 長さ調節できるけど、手前に回復があると壁貫通する
+        if (Physics.Raycast(lineRay, out hit, maxDistance))
+        {
+            if (hit.collider.gameObject.CompareTag("Wall") ||
+                hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                //当たった位置を保存
+                hitPosition = hit.point;
+
+            }
+        }
+        else
+        {
+            //初期化
+            hitPosition = position + direction;
+        }
+        //描画する
+        lineRenderer.SetPosition(1, hitPosition);
+        #endregion
+
         //Debug.DrawRay(lineRay.origin, lineRay.direction * maxDistance, Color.red, 0.1f);
     }
 }
