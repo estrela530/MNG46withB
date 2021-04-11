@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// プレイヤーの操作クラス
 /// </summary>
-[RequireComponent(typeof(FragmentPool))]//自動的にFragmentPoolを追加
-[RequireComponent(typeof(PredictionLinePool))]
+[RequireComponent(typeof(FragmentPool))]      //自動的にFragmentPoolを追加
+[RequireComponent(typeof(PredictionLinePool))]//自動的にPredictionLinePoolを追加
 public class Player : MonoBehaviour
 {
     //↓テスト : ボタンの種類をインスペクタで変えられるようにする。
@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     private int firstCreateFragment = 20;
     [SerializeField, Header("プレイヤーの欠片プレファブ")]
     private GameObject fragmentPrefab;
+    [SerializeField, Header("予測線プレファブ")]
+    private GameObject predictionLine;
     [SerializeField, Tooltip("レベルによる飛ばす球数")]
     private int[] fragmentCount = new int[3];//(180,90,45
     [SerializeField, Header("レベルによる欠片の飛距離(時間)")]
@@ -79,15 +81,14 @@ public class Player : MonoBehaviour
     float[] preTrigger = new float[2];//LT,RTトリガーの保存用キー
     float[] nowTrigger = new float[2];//LT,RTトリガーの取得用キー
 
-    public GameObject predictionLine;//予測線オブジェクト
+    
 
     private float alphaTimer = 0;//点滅時間加算用
     private int alphaCount = 0;  //点滅用カウント
 
-    float testSpeed = 5f;
-    float testAngle = 30f;
-    float startTime;
-    Quaternion startRotation;
+
+    Vector3 testVel;
+
 
     private enum Keys
     {
@@ -116,7 +117,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //ねじれてる本体の色情報を取得
+        //ねじれてる本体(子ども)の色情報を取得
         meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         //プールの生成と、初期オブジェクトの追加
         fragmentPool = GetComponent<FragmentPool>();
@@ -133,13 +134,6 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         currentHp = saveValue = maxHp;
-
-
-        //startTime = Time.time;
-        //startRotation = transform.rotation;
-
-
-
 
         Initialize();
     }
@@ -167,15 +161,8 @@ public class Player : MonoBehaviour
         nowTrigger[0] = Input.GetAxisRaw("L_Trigger");
         nowTrigger[1] = Input.GetAxisRaw("R_Trigger");
 
-        Move();         //動く
+        InputVelocity();//移動用のキー入力を行う
         TwistedChange();//ねじチェンジ
-        //transform.rotation = startRotation * Quaternion.Euler(0f, 0f, Mathf.Sin((Time.time - startTime) * testSpeed) * testAngle);
-
-
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            Damage(1);
-        }
 
         //入力を使う処理が終わってからキーをコピーしないと動かなかった
         for (int i = 0; i < nowTrigger.Length; i++)
@@ -192,80 +179,154 @@ public class Player : MonoBehaviour
     {
         //ここでは入力にラグが出てしまうため、入力以外の処理を行うといい。
 
+        MoveDirection();//移動
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
         InvincibleTime(invincibleTime);//無敵時間     
+
+
+        Debug.Log(testVel);
     }
 
     /// <summary>
+    /// 入力の処理だけ書いてあるよ
     /// プレイヤーの移動
     /// ねじり中and解放中は動けない
     /// </summary>
-    private void Move()
+    private void InputVelocity()
     {
         //ねじっているor解放中なら動けない
         if (isTwisted || isRelease) return;
 
-        velocity = Vector3.zero;
+        testVel = Vector3.zero;
 
-        Vector3 inputVelocity = Vector3.zero;
-        inputVelocity.x = Input.GetAxisRaw("Horizontal");
-        inputVelocity.z = Input.GetAxisRaw("Vertical");
+        testVel.x = Input.GetAxisRaw("Horizontal");
+        testVel.z = Input.GetAxisRaw("Vertical");
 
-        //右
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
+        #region RigidBodyを使わなかった頃の移動
+        //velocity = Vector3.zero;
+        //Vector3 inputVelocity = Vector3.zero;
+        //inputVelocity.x = Input.GetAxisRaw("Horizontal");
+        //inputVelocity.z = Input.GetAxisRaw("Vertical");
+
+        ////右
+        //if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
+        //{
+        //    velocity.x = 1.0f;
+        //    direction = Direction.RIGHT;
+        //}
+        ////左
+        //else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
+        //{
+        //    velocity.x = -1.0f;
+        //    direction = Direction.LEFT;
+        //}
+
+        ////上
+        //if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || inputVelocity.z > 0)
+        //{
+        //    velocity.z = 1.0f;
+        //    direction = Direction.UP;
+
+        //    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
+        //    {
+        //        direction = Direction.TOP_RIGHT;
+        //    }
+        //    else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
+        //    {
+        //        direction = Direction.TOP_LEFT;
+        //    }
+
+        //}
+        ////下
+        //else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || inputVelocity.z < 0)
+        //{
+        //    velocity.z = -1.0f;
+        //    direction = Direction.DOWN;
+
+        //    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
+        //    {
+        //        direction = Direction.DOWN_RIGHT;
+        //    }
+        //    else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
+        //    {
+        //        direction = Direction.DOWN_LEFT;
+        //    }
+        //}
+
+        ////正規化
+        //velocity = velocity.normalized;
+        //inputVelocity.Normalize();
+
+        ////移動処理
+        //position = velocity * moveSpeed * Time.deltaTime;
+
+        ////transform.position += position;   
+        #endregion
+
+        //ChangeDirection();
+    }
+
+    /// <summary>
+    /// 移動量と向きを反映させる
+    /// </summary>
+    private void MoveDirection()
+    {
+        //移動していたら
+        if (testVel != Vector3.zero) 
         {
-            velocity.x = 1.0f;
-            direction = Direction.RIGHT;
+            ////右
+            //if (testVel.x > 0)
+            //{
+            //    direction = Direction.RIGHT;
+            //}
+            ////左
+            //else if (testVel.x < 0)
+            //{
+            //    direction = Direction.LEFT;
+            //}
+
+            ////上
+            //if (testVel.z > 0)
+            //{
+            //    direction = Direction.UP;
+
+            //    //右上
+            //    if (testVel.x > 0)
+            //    {
+            //        direction = Direction.TOP_RIGHT;
+            //    }
+            //    //左上
+            //    else if (testVel.x < 0)
+            //    {
+            //        direction = Direction.TOP_LEFT;
+            //    }
+            //}
+            ////下
+            //else if (testVel.z < 0)
+            //{
+            //    direction = Direction.DOWN;
+
+            //    //右下
+            //    if (testVel.x > 0)
+            //    {
+            //        direction = Direction.DOWN_RIGHT;
+            //    }
+            //    //左下
+            //    else if (testVel.x < 0)
+            //    {
+            //        direction = Direction.DOWN_LEFT;
+            //    }
+            //}
+
+            testVel.Normalize();
+            rigid.velocity = testVel * moveSpeed;
         }
-        //左
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
+        else//移動していなかったら
         {
-            velocity.x = -1.0f;
-            direction = Direction.LEFT;
+            rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
         }
-
-        //上
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || inputVelocity.z > 0)
-        {
-            velocity.z = 1.0f;
-            direction = Direction.UP;
-
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
-            {
-                direction = Direction.TOP_RIGHT;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
-            {
-                direction = Direction.TOP_LEFT;
-            }
-
-        }
-        //下
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || inputVelocity.z < 0)
-        {
-            velocity.z = -1.0f;
-            direction = Direction.DOWN;
-
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
-            {
-                direction = Direction.DOWN_RIGHT;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
-            {
-                direction = Direction.DOWN_LEFT;
-            }
-        }
-
-        //正規化
-        velocity = velocity.normalized;
-
-        //移動処理
-        position = velocity * moveSpeed * Time.deltaTime;
-
-        transform.position += position;
-
-        ChangeDirection();
     }
 
     /// <summary>
@@ -355,6 +416,8 @@ public class Player : MonoBehaviour
     void TwistedAccumulate()
     {
         isTwisted = true;
+        testVel = Vector3.zero;
+        rigid.velocity = Vector3.zero;//ねじり中は移動量を無くす
     }
 
     /// <summary>
@@ -643,7 +706,7 @@ public class Player : MonoBehaviour
         }
 
         //最大体力以上にはならない。
-        if (currentHp >= maxHp)
+        if (currentHp >= maxHp || saveValue >= maxHp)
         {
             currentHp = saveValue = maxHp;
         }
