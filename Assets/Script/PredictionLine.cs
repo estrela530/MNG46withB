@@ -24,8 +24,14 @@ public class PredictionLine : MonoBehaviour
 
     Vector3 firstPos;//最初に当たった位置を保存しておく
 
+
+
+    int layerMask = ~(1 << 10);
+    //int layerMask;
+
     void Awake()
     {
+        layerMask = LayerMask.GetMask("Wall");
         lineRay = new Ray();
         lineRenderer = this.gameObject.GetComponent<LineRenderer>();
         lineRenderer.material = predictionColor;
@@ -111,26 +117,37 @@ public class PredictionLine : MonoBehaviour
         //}
         #endregion
 
+
+        /*予測線は回復玉と当たらないようにしたい
+         回復玉に当たっても、奥にある壁まで予測線が伸びてほしい。*/
+
         #region 長さ調節できるけど、手前に回復があると壁貫通する
-        if (Physics.Raycast(lineRay, out hit, maxDistance))
+        if (Physics.Raycast(lineRay, out hit, maxDistance,layerMask))
         {
             if (hit.collider.gameObject.CompareTag("Wall") ||
                 hit.collider.gameObject.CompareTag("Enemy"))
             {
                 //当たった位置を保存
                 hitPosition = hit.point;
-
+                
             }
+            //else if(hit.collider.gameObject.CompareTag("HealBall"))
+            //{
+            //    Debug.Log("回復玉" + hitPosition);
+            //    //何もしない
+                
+            //}
         }
-        else
-        {
-            //初期化
-            hitPosition = position + direction;
-        }
+        //else
+        //{
+        //    //Debug.Log("当たらなかった");
+        //    //初期化
+        //    hitPosition = position + direction;
+        //}
         //描画する
         lineRenderer.SetPosition(1, hitPosition);
         #endregion
 
-        //Debug.DrawRay(lineRay.origin, lineRay.direction * maxDistance, Color.red, 0.1f);
+        Debug.DrawRay(lineRay.origin, lineRay.direction * maxDistance, Color.red, 0.1f);
     }
 }
