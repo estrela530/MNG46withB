@@ -46,7 +46,11 @@ public class StageMove : MonoBehaviour
         bool stage2Clear = false;
         bool stage3Clear = false;
         One = true;
+
+        //0412バグ前
         koko = 240;
+        //0412バグ後
+        //koko = 90;
         fadeCount = 0;
         BGMmemo = 0f;
 
@@ -77,7 +81,7 @@ public class StageMove : MonoBehaviour
         if (stage1Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= 360)
+            if (fadeCount >= 360)//バグ前360　バグ後60
             {
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage2StartPosition.transform.position;
                 if (fadeCount >= 480)
@@ -128,5 +132,6 @@ public class StageMove : MonoBehaviour
             fadeCount = 0;
         }
 
+        Debug.Log(fadeCount);
     }
 }
