@@ -72,7 +72,7 @@ public class PoisonArea : MonoBehaviour
     //サーチ範囲を表示
     private void OnDrawGizmos()
     {
-        Handles.color = Color.magenta;
+        Handles.color = new Color(1.0f, 0.0f, 1.0f, 0.3f);
         Handles.DrawSolidArc(transform.position,
             Vector3.up,
             Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward

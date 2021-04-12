@@ -1,52 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEditor;
-
-[RequireComponent(typeof(BoxCollider))]
-
+//[RequireComponent(typeof(BoxCollider))]
 public class StealEnemy : MonoBehaviour
 {
     [SerializeField] GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
     // public float area;//この数値以下になったら追う
-
     [SerializeField, Header("体力")] float enemyHP = 5;
-
     Rigidbody rigid;
-
     private float workeAria1 = 1;//
     private float workeAria2 = 1;//
-
     private float Rspeed;
-
     private float ww;
     private float ww2;
-
     [Header("索敵に向かう場所")]
     public GameObject workObj1;
     public GameObject workObj2;
-
     int workNumber = 1;
-
     [Header("索敵時のスピード")]
     public float speed;
     [Header("発見時のスピード")]
     public float speedLoc;
-
     [Header("この数値まで進む")] public float social;//この数値まで進む
     private GameObject Enemy;
-
     [Header("追う時と索敵のフラグ")]
     public bool MoveFlag = false;//追う
     public bool workFlag = true;//徘徊
-    
     private Vector3 firstTage;
-
+    //StealArea取得
+    StealArea stealArea;
+    [SerializeField]
+    GameObject aria;
+    [SerializeField] bool areaGetFlag;
+    Vector3 ballPos;
+    [SerializeField] bool aaa;
     void Start()
     {
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
@@ -54,68 +46,51 @@ public class StealEnemy : MonoBehaviour
         Target = GameObject.FindGameObjectWithTag("HealBall");
         rigid = GetComponent<Rigidbody>();
         firstTage = new Vector3();
+        stealArea = aria.GetComponent<StealArea>();
+        //areaGetFlag = false;
+        ballPos = new Vector3();
+        aaa = false;
     }
-
-
     // Update is called once per frame
     void Update()
     {
         Target = GameObject.FindGameObjectWithTag("HealBall");
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
-
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
             SceneManager.LoadScene("GameClear");
-
         }
-
         //dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-
         ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
         ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
-
         if (MoveFlag)
         {
-            Ray ray;
-            RaycastHit rayHit;
-            //Vector3 origin(rayの開始地点), Vector3 direction(rayの向き),RaycastHit hitInfo(当たったオブジェクトの情報を格納), float distance(rayの発射距離), int layerMask(レイヤマスクの設定)
-            //if (Physics.Raycast(this.transform.position,this.transform.forward,Target,100,))
-            //{
-
-            //}
-            if (firstTage == new Vector3())
+           
+            areaGetFlag = stealArea.GetSearch();
+            if (areaGetFlag)
             {
-                firstTage = new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z);
-
+                if (!aaa)
+                {
+                    //位置取得
+                    ballPos = stealArea.GetBall();
+                    //ターゲットにむく
+                    this.transform.LookAt(new Vector3(ballPos.x, this.transform.position.y, ballPos.z));
+                    aaa = true;
+                }
+                else
+                {
+                    transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+                }
             }
-            else if(firstTage != new Vector3())
-            {
-
-               this.transform.LookAt(firstTage);//ターゲットにむく
-               transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
-            }
-            //到着
-            if(this.transform.position == firstTage)
-            {
-                firstTage = new Vector3();
-                MoveFlag = false;
-                workFlag = true;
-            }
-
-            //if (dis >= social)
-            //{
-            //    transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
-            //}
-
+           
         }
-
-        Debug.Log(firstTage);
-
+        Debug.Log(ballPos);
         //徘徊
         if (workFlag)
         {
+            areaGetFlag = false;
             if (ww < workeAria1)
             {
                 workNumber = 2;
@@ -124,36 +99,36 @@ public class StealEnemy : MonoBehaviour
             {
                 workNumber = 1;
             }
-
             switch (workNumber)
             {
-
                 case 1:
-
                     this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
                     transform.position += transform.forward * speed * Time.deltaTime;
-
                     break;
-
                 case 2:
-
                     this.transform.LookAt(this.workObj2.transform);//徘徊2の位置に向く
                     transform.position += transform.forward * speed * Time.deltaTime;
-
                     break;
             }
-
-
         }
-
     }
-
     public float HpGet()
     {
         return enemyHP;
     }
-
-
+    //(仮)指定されたtagに当たると消える
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("HealBall"))
+        {
+            Debug.Log("BallHit");
+            stealArea.ballFindedFlag = false;
+            MoveFlag = false;
+            workFlag = true;
+            aaa = false;
+            Destroy(other.gameObject);
+        }
+    }
     //(仮)指定されたtagに当たると消える
     private void OnTriggerEnter(Collider other)
     {
@@ -161,19 +136,21 @@ public class StealEnemy : MonoBehaviour
         {
             enemyHP = enemyHP - 1;
         }
-
         if (other.gameObject.CompareTag("PoisonBall"))
         {
             enemyHP = enemyHP - 1;
         }
-
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Debug.Log("WallHit");
+            //stealArea.ballFindedFlag = false;
+            MoveFlag = false;
+            workFlag = true;
+        }
     }
-
     private void OnDestroy()
     {
         Renderer renderer = gameObject.GetComponent<Renderer>();
         DestroyImmediate(renderer.material); //マテリアルのメモリーを消す
     }
-
-
 }
