@@ -26,8 +26,15 @@ public class HealBall : MonoBehaviour
     int levelCount; //レベルアップ用カウント
     int deleteCount;//消滅用カウント
     int healLevel;  //回復レベル
+    int playerLevel;//プレイヤーのねじレベル取得
 
-    private float speed;
+    float speed;//速度の値受け取り用
+
+
+
+    int moveState = 0;
+    float moveDistance;//プレイヤーとの距離を入れるよう
+
 
     //ParticleSystem particleSystem;
 
@@ -90,15 +97,30 @@ public class HealBall : MonoBehaviour
         //プレイヤーがねじっているかを取得
         isTwisted = player.GetTwisted();
 
-        if (isTwisted)
+
+        if(isTwisted == true)
         {
-            if (moveFlag == false)
+            if(moveState == 0)
             {
-                //ターゲットの位置を1度だけ取得
+                //まずは位置を取得(1度だけ)
                 playerPos = player.GetPosition();
-                moveFlag = true;
+
+                //ここでプレイヤーとの距離を計算
+                moveDistance = Vector3.Distance(playerPos, this.transform.position);
+                moveState = 1;
             }
-            else
+            if(moveState == 1)
+            {
+                //プレイヤーのレベルを取得
+                playerLevel = player.GetNeziLevel();
+
+                //指定した範囲内にじぶんがいたら
+                if(playerLevel == 3 && moveDistance < 5)
+                {
+                    moveState = 2;
+                }
+            }
+            if(moveState == 2)
             {
                 //ターゲットへの向きを取得
                 Vector3 direction = playerPos - this.transform.position;
@@ -109,7 +131,34 @@ public class HealBall : MonoBehaviour
                 this.transform.position += direction * speed * Time.deltaTime;
             }
         }
-        else moveFlag = false;
+        else
+        {
+            moveState = 0;
+        }
+
+
+
+
+        //if (isTwisted)
+        //{
+        //    if (moveFlag == false)
+        //    {
+        //        //ターゲットの位置を1度だけ取得
+        //        playerPos = player.GetPosition();
+        //        moveFlag = true;
+        //    }
+        //    else
+        //    {
+        //        //ターゲットへの向きを取得
+        //        Vector3 direction = playerPos - this.transform.position;
+
+        //        //正規化
+        //        direction.Normalize();
+
+        //        this.transform.position += direction * speed * Time.deltaTime;
+        //    }
+        //}
+        //else moveFlag = false;
     }
 
     /// <summary>
@@ -136,7 +185,7 @@ public class HealBall : MonoBehaviour
         }
 
         //吸い込み中はレベルアップしないようにする。
-        if (isTwisted || levelCount > levelUpTime[1]) return;
+        if (moveState ==2 || levelCount > levelUpTime[1]) return;
         
         levelCount++;//値を増やし続ける～
 

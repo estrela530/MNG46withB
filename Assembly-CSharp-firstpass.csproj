@@ -11,10 +11,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{79F5C243-B829-6EE2-2DB5-13A374CCA1A0}</ProjectGuid>
+    <ProjectGuid>{FA166FF1-F477-8C28-F619-60A725B6270A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -49,7 +49,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.19f1</UnityVersion>
   </PropertyGroup>
@@ -62,76 +62,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ClearStageUI.cs" />
-    <Compile Include="Assets\MissionManagerScript.cs" />
-    <Compile Include="Assets\Script\ActivateButton.cs" />
-    <Compile Include="Assets\Script\ButtonSE.cs" />
-    <Compile Include="Assets\Script\CameraMove.cs" />
-    <Compile Include="Assets\Script\DOTweenTest.cs" />
-    <Compile Include="Assets\Script\Enemys\Boss\BossArea.cs" />
-    <Compile Include="Assets\Script\Enemys\Boss\BossBullet.cs" />
-    <Compile Include="Assets\Script\Enemys\Boss\BossMove.cs" />
-    <Compile Include="Assets\Script\Enemys\Boss\BossShot.cs" />
-    <Compile Include="Assets\Script\Enemys\EmoveScene.cs" />
-    <Compile Include="Assets\Script\Enemys\Foundation\EnemyArea.cs" />
-    <Compile Include="Assets\Script\Enemys\Foundation\EnemyBullet.cs" />
-    <Compile Include="Assets\Script\Enemys\Foundation\EnemyDeath.cs" />
-    <Compile Include="Assets\Script\Enemys\Foundation\EnemyMove.cs" />
-    <Compile Include="Assets\Script\Enemys\Foundation\EnemyShot2.cs" />
-    <Compile Include="Assets\Script\Enemys\Foundation\EnemyShoto.cs" />
-    <Compile Include="Assets\Script\Enemys\Foundation\EnemyUI.cs" />
-    <Compile Include="Assets\Script\Enemys\Kraber\KraberAria.cs" />
-    <Compile Include="Assets\Script\Enemys\Kraber\KraberBallet.cs" />
-    <Compile Include="Assets\Script\Enemys\Kraber\KraberEnemy.cs" />
-    <Compile Include="Assets\Script\Enemys\Kraber\ShotK.cs" />
-    <Compile Include="Assets\Script\Enemys\Octane\OctaneAria.cs" />
-    <Compile Include="Assets\Script\Enemys\Octane\OctaneEnemy.cs" />
-    <Compile Include="Assets\Script\Enemys\Poison\BalletP.cs" />
-    <Compile Include="Assets\Script\Enemys\Poison\PoisonArea.cs" />
-    <Compile Include="Assets\Script\Enemys\Poison\PoisonEnemy.cs" />
-    <Compile Include="Assets\Script\Enemys\Poison\PoisonShot.cs" />
-    <Compile Include="Assets\Script\Enemys\Respawn.cs" />
-    <Compile Include="Assets\Script\Enemys\Steal\StealArea.cs" />
-    <Compile Include="Assets\Script\Enemys\Steal\StealEnemy.cs" />
-    <Compile Include="Assets\Script\Enemys\move2.cs" />
-    <Compile Include="Assets\Script\Enemys\playerMunage.cs" />
-    <Compile Include="Assets\Script\Enemys\scene1.cs" />
-    <Compile Include="Assets\Script\Enemys\scene2.cs" />
-    <Compile Include="Assets\Script\Escape.cs" />
-    <Compile Include="Assets\Script\FPS.cs" />
-    <Compile Include="Assets\Script\Fragment.cs" />
-    <Compile Include="Assets\Script\FragmentPool.cs" />
-    <Compile Include="Assets\Script\HealBall.cs" />
-    <Compile Include="Assets\Script\Pause.cs" />
-    <Compile Include="Assets\Script\PauseAudioButton.cs" />
-    <Compile Include="Assets\Script\Player.cs" />
-    <Compile Include="Assets\Script\PlayerHPGage.cs" />
-    <Compile Include="Assets\Script\PoisonBall.cs" />
-    <Compile Include="Assets\Script\PredictionLine.cs" />
-    <Compile Include="Assets\Script\PredictionLinePool.cs" />
-    <Compile Include="Assets\Script\RAudioButton.cs" />
-    <Compile Include="Assets\Script\ResB.cs" />
-    <Compile Include="Assets\Script\SceneGR.cs" />
-    <Compile Include="Assets\Script\SceneSG.cs" />
-    <Compile Include="Assets\Script\SceneTS.cs" />
-    <Compile Include="Assets\Script\SelectButton.cs" />
-    <Compile Include="Assets\Script\StageMove.cs" />
-    <Compile Include="Assets\Script\TestManager.cs" />
-    <Compile Include="Assets\Script\TestPredictionLine.cs" />
-    <Compile Include="Assets\Script\TestTest.cs" />
-    <Compile Include="Assets\Script\TimerScript.cs" />
-    <Compile Include="Assets\Script\TitB.cs" />
-    <Compile Include="Assets\Script\Transition.cs" />
-    <Compile Include="Assets\Script\TwistMeshTest.cs" />
-    <Compile Include="Assets\Script\TwistedMesh.cs" />
-    <Compile Include="Assets\Script\VloumeSlider.cs" />
-    <Compile Include="Assets\Script\kanban.cs" />
-    <Compile Include="Assets\Script\pauseManager.cs" />
-    <None Include="Assets\Deform\LICENSE.txt" />
-    <None Include="Assets\Shader\transition.shader" />
-    <None Include="Assets\Shader\transition2.shader" />
-    <None Include="Assets\Deform\EditorResources\Textures\External\MaterialDesign\LICENSE.txt" />
-    <None Include="Assets\Deform\README.txt" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
+    <None Include="Assets\Plugins\Demigiant\DOTween\readme.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -707,10 +645,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{FA166FF1-F477-8C28-F619-60A725B6270A}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="Beans.Unity.Editor.csproj">
       <Project>{B68ED86B-E893-C1F0-1223-C1C5BE4F8999}</Project>
       <Name>Beans.Unity.Editor</Name>

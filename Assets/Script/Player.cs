@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// プレイヤーの操作クラス
 /// </summary>
-[RequireComponent(typeof(FragmentPool))]//自動的にFragmentPoolを追加
-[RequireComponent(typeof(PredictionLinePool))]
+[RequireComponent(typeof(FragmentPool))]      //自動的にFragmentPoolを追加
+[RequireComponent(typeof(PredictionLinePool))]//自動的にPredictionLinePoolを追加
 public class Player : MonoBehaviour
 {
     //↓テスト : ボタンの種類をインスペクタで変えられるようにする。
@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     private int firstCreateFragment = 20;
     [SerializeField, Header("プレイヤーの欠片プレファブ")]
     private GameObject fragmentPrefab;
+    [SerializeField, Header("予測線プレファブ")]
+    private GameObject predictionLine;
     [SerializeField, Tooltip("レベルによる飛ばす球数")]
     private int[] fragmentCount = new int[3];//(180,90,45
     [SerializeField, Header("レベルによる欠片の飛距離(時間)")]
@@ -38,7 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField, Tooltip("最大体力")]
     private float maxHp = 10;
     [SerializeField, Tooltip("体力の減少量")]
-    private float decreaseHp = 0.01f;//体力の減少量
+    private float decreaseHp = 0.01f;
     [SerializeField, Header("回復玉のレベルによる回復量")]
     private float[] healValue = new float[3];//(0.2,0.5,1
 
@@ -49,19 +51,19 @@ public class Player : MonoBehaviour
     private int iziranaide;
     private AudioSource audioSource;
     public AudioClip releaseSE;//解放した瞬間
-    public AudioClip twistedSE; //ねじっているとき
-    public AudioClip healSE;    //回復した瞬間
-    public AudioClip cancelSE;    //キャンセルした瞬間
+    public AudioClip twistedSE;//ねじっているとき
+    public AudioClip healSE;   //回復した瞬間
+    public AudioClip cancelSE; //キャンセルした瞬間
 
     /// <summary>
     /// リセットしたかどうか(メッシュ側で取得&代入を行う)
     /// </summary>
     public bool isReset { get; set; } = false;
 
-    MeshRenderer meshRenderer;            //色変え用
-    FragmentPool fragmentPool;      //オブジェクトプール
-    PredictionLinePool predictionPool;
-    Vector3 myScale = Vector3.one;//自身の大きさ
+    MeshRenderer meshRenderer;        //色変え用
+    FragmentPool fragmentPool;        //かけらプール
+    PredictionLinePool predictionPool;//予測線プール
+    Vector3 myScale = Vector3.one;    //自身の大きさ
 
     private bool isTwisted;//ねじれているかどうか
     private bool isRelease;//解放中かどうか
@@ -72,23 +74,25 @@ public class Player : MonoBehaviour
     private Vector3 velocity;//移動量
     private Rigidbody rigid; //物理演算
 
-    public float currentHp; //現在の体力
+    public float currentHp; //現在の体力(確認用にpublicにしてる)
     private float saveValue;//体力一時保存用
     private float moveCount = 0.5f;//移動SEの鳴らす間隔
 
     float[] preTrigger = new float[2];//LT,RTトリガーの保存用キー
     float[] nowTrigger = new float[2];//LT,RTトリガーの取得用キー
 
-    public GameObject predictionLine;//予測線オブジェクト
+
+
 
     private float alphaTimer = 0;//点滅時間加算用
     private int alphaCount = 0;  //点滅用カウント
 
-    float testSpeed = 5f;
-    float testAngle = 30f;
-    float startTime;
-    Quaternion startRotation;
 
+    Vector3 testVel;
+
+    /// <summary>
+    /// LT,RTトリガーの入力用
+    /// </summary>
     private enum Keys
     {
         L_Trigger = 0,
@@ -116,7 +120,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //ねじれてる本体の色情報を取得
+        //ねじれてる本体(子ども)の色情報を取得
         meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         //プールの生成と、初期オブジェクトの追加
         fragmentPool = GetComponent<FragmentPool>();
@@ -133,13 +137,6 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         currentHp = saveValue = maxHp;
-
-
-        //startTime = Time.time;
-        //startRotation = transform.rotation;
-
-
-
 
         Initialize();
     }
@@ -167,15 +164,8 @@ public class Player : MonoBehaviour
         nowTrigger[0] = Input.GetAxisRaw("L_Trigger");
         nowTrigger[1] = Input.GetAxisRaw("R_Trigger");
 
-        Move();         //動く
+        InputVelocity();//移動用のキー入力を行う
         TwistedChange();//ねじチェンジ
-        //transform.rotation = startRotation * Quaternion.Euler(0f, 0f, Mathf.Sin((Time.time - startTime) * testSpeed) * testAngle);
-
-
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            Damage(1);
-        }
 
         //入力を使う処理が終わってからキーをコピーしないと動かなかった
         for (int i = 0; i < nowTrigger.Length; i++)
@@ -192,80 +182,169 @@ public class Player : MonoBehaviour
     {
         //ここでは入力にラグが出てしまうため、入力以外の処理を行うといい。
 
+        MoveDirection();//移動
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
         InvincibleTime(invincibleTime);//無敵時間     
     }
 
     /// <summary>
+    /// 入力の処理だけ書いてあるよ
     /// プレイヤーの移動
     /// ねじり中and解放中は動けない
     /// </summary>
-    private void Move()
+    private void InputVelocity()
     {
         //ねじっているor解放中なら動けない
         if (isTwisted || isRelease) return;
 
-        velocity = Vector3.zero;
+        testVel = Vector3.zero;
 
-        Vector3 inputVelocity = Vector3.zero;
-        inputVelocity.x = Input.GetAxisRaw("Horizontal");
-        inputVelocity.z = Input.GetAxisRaw("Vertical");
+        testVel.x = Input.GetAxisRaw("Horizontal");
+        testVel.z = Input.GetAxisRaw("Vertical");
 
-        //右
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
+        #region RigidBodyを使わなかった頃の移動
+        //velocity = Vector3.zero;
+        //Vector3 inputVelocity = Vector3.zero;
+        //inputVelocity.x = Input.GetAxisRaw("Horizontal");
+        //inputVelocity.z = Input.GetAxisRaw("Vertical");
+
+        ////右
+        //if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
+        //{
+        //    velocity.x = 1.0f;
+        //    direction = Direction.RIGHT;
+        //}
+        ////左
+        //else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
+        //{
+        //    velocity.x = -1.0f;
+        //    direction = Direction.LEFT;
+        //}
+
+        ////上
+        //if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || inputVelocity.z > 0)
+        //{
+        //    velocity.z = 1.0f;
+        //    direction = Direction.UP;
+
+        //    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
+        //    {
+        //        direction = Direction.TOP_RIGHT;
+        //    }
+        //    else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
+        //    {
+        //        direction = Direction.TOP_LEFT;
+        //    }
+
+        //}
+        ////下
+        //else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || inputVelocity.z < 0)
+        //{
+        //    velocity.z = -1.0f;
+        //    direction = Direction.DOWN;
+
+        //    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
+        //    {
+        //        direction = Direction.DOWN_RIGHT;
+        //    }
+        //    else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
+        //    {
+        //        direction = Direction.DOWN_LEFT;
+        //    }
+        //}
+
+        ////正規化
+        //velocity = velocity.normalized;
+        //inputVelocity.Normalize();
+
+        ////移動処理
+        //position = velocity * moveSpeed * Time.deltaTime;
+
+        ////transform.position += position;   
+        #endregion
+    }
+
+    /// <summary>
+    /// 移動量と向きを反映させる
+    /// </summary>
+    private void MoveDirection()
+    {
+        //移動していたら
+        if (testVel != Vector3.zero)
         {
-            velocity.x = 1.0f;
-            direction = Direction.RIGHT;
+            //右向きにする
+            if (testVel.x > 0)
+            {
+                direction = Direction.RIGHT;
+            }
+            //左向きにする
+            else if (testVel.x < 0)
+            {
+                direction = Direction.LEFT;
+            }
+
+            //上向きにする
+            if (testVel.z > 0)
+            {
+                direction = Direction.UP;
+
+                //右上向きにする
+                if (testVel.x > 0)
+                {
+                    direction = Direction.TOP_RIGHT;
+                }
+                //左上向きにする
+                else if (testVel.x < 0)
+                {
+                    direction = Direction.TOP_LEFT;
+                }
+            }
+            //下向きにする
+            else if (testVel.z < 0)
+            {
+                direction = Direction.DOWN;
+
+                //右下向きにする
+                if (testVel.x > 0)
+                {
+                    direction = Direction.DOWN_RIGHT;
+                }
+                //左下向きにする
+                else if (testVel.x < 0)
+                {
+                    direction = Direction.DOWN_LEFT;
+                }
+            }
+        
+            ChangeDirection(); //向きの反映
+            MoveSE(0.5f, 0.2f);//足音を鳴らす
+
+            testVel.Normalize();
+            rigid.velocity = testVel * moveSpeed;
         }
-        //左
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
+        else//移動していなかったら
         {
-            velocity.x = -1.0f;
-            direction = Direction.LEFT;
+            rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
         }
+    }
 
-        //上
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || inputVelocity.z > 0)
+    /// <summary>
+    /// 移動中のSEを鳴らす
+    /// </summary>
+    /// <param name="interval">間隔</param>
+    /// <param name="volume">音量</param>
+    private void MoveSE(float interval,float volume)
+    {
+        //移動中音を鳴らす
+        moveCount += Time.deltaTime;
+
+        if (moveCount > interval)
         {
-            velocity.z = 1.0f;
-            direction = Direction.UP;
-
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
-            {
-                direction = Direction.TOP_RIGHT;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
-            {
-                direction = Direction.TOP_LEFT;
-            }
-
+            audioSource.PlayOneShot(releaseSE, volume);
+            moveCount = 0f;
         }
-        //下
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || inputVelocity.z < 0)
-        {
-            velocity.z = -1.0f;
-            direction = Direction.DOWN;
-
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || inputVelocity.x > 0)
-            {
-                direction = Direction.DOWN_RIGHT;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || inputVelocity.x < 0)
-            {
-                direction = Direction.DOWN_LEFT;
-            }
-        }
-
-        //正規化
-        velocity = velocity.normalized;
-
-        //移動処理
-        position = velocity * moveSpeed * Time.deltaTime;
-
-        transform.position += position;
-
-        ChangeDirection();
     }
 
     /// <summary>
@@ -273,58 +352,41 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ChangeDirection()
     {
-        //移動しているとき、移動方向に回転させる
-        if (velocity != Vector3.zero)
+        Quaternion dir = Quaternion.identity;
+
+        //現在の向きに回転させる
+        switch (direction)
         {
-            Quaternion dir = Quaternion.identity;
-
-            switch (direction)
-            {
-                case Direction.UP:
-                    dir = Quaternion.Euler(0, 0, 0);
-                    break;
-                case Direction.DOWN:
-                    dir = Quaternion.Euler(0, 180f, 0);
-                    break;
-                case Direction.RIGHT:
-                    dir = Quaternion.Euler(0, 90f, 0);
-                    break;
-                case Direction.LEFT:
-                    dir = Quaternion.Euler(0, 270f, 0);
-                    break;
-                case Direction.TOP_RIGHT:
-                    dir = Quaternion.Euler(0, 45f, 0);
-                    break;
-                case Direction.TOP_LEFT:
-                    dir = Quaternion.Euler(0, 315f, 0);
-                    break;
-                case Direction.DOWN_RIGHT:
-                    dir = Quaternion.Euler(0, 135f, 0);
-                    break;
-                case Direction.DOWN_LEFT:
-                    dir = Quaternion.Euler(0, 225f, 0);
-                    break;
-                default:
-                    Debug.Log("存在しない向きに回転しようとしています。");
-                    break;
-            }
-
-            //移動中音を鳴らす
-            moveCount += Time.deltaTime;
-
-            if (moveCount > 0.5f)
-            {
-                audioSource.PlayOneShot(releaseSE, 0.2f);
-                moveCount = 0f;
-            }
-
-            transform.rotation = dir;//回転角度を反映
+            case Direction.UP:
+                dir = Quaternion.Euler(0, 0, 0);
+                break;
+            case Direction.DOWN:
+                dir = Quaternion.Euler(0, 180f, 0);
+                break;
+            case Direction.RIGHT:
+                dir = Quaternion.Euler(0, 90f, 0);
+                break;
+            case Direction.LEFT:
+                dir = Quaternion.Euler(0, 270f, 0);
+                break;
+            case Direction.TOP_RIGHT:
+                dir = Quaternion.Euler(0, 45f, 0);
+                break;
+            case Direction.TOP_LEFT:
+                dir = Quaternion.Euler(0, 315f, 0);
+                break;
+            case Direction.DOWN_RIGHT:
+                dir = Quaternion.Euler(0, 135f, 0);
+                break;
+            case Direction.DOWN_LEFT:
+                dir = Quaternion.Euler(0, 225f, 0);
+                break;
+            default:
+                Debug.Log("存在しない向きに回転しようとしています。");
+                break;
         }
-        else
-        {
-            rigid.velocity = Vector3.zero;
-            rigid.angularVelocity = Vector3.zero;
-        }
+
+        transform.rotation = dir;//回転角度を反映
     }
 
     /// <summary>
@@ -355,6 +417,8 @@ public class Player : MonoBehaviour
     void TwistedAccumulate()
     {
         isTwisted = true;
+        testVel = Vector3.zero;
+        rigid.velocity = Vector3.zero;//ねじり中は移動量を無くす
     }
 
     /// <summary>
@@ -418,8 +482,7 @@ public class Player : MonoBehaviour
     /// <param name="bulletNum">球数</param>
     void InitFragment(int bulletNum, float deleteCount)
     {
-        //-----------------------旧弾解放の処理--------------------------------------------------------
-        ////ここで解放する
+        #region 旧弾解放の処理
         //for (int angle = 0; angle < 360; angle += count)//360で割った個数分出てくる
         //{
         //    GameObject fragment = fragmentPool.GetObject();//生きているオブジェクトを代入
@@ -430,20 +493,19 @@ public class Player : MonoBehaviour
         //        fragment.GetComponent<Fragment>().Initialize(angle, transform.position, deleteCount);
         //    }
         //}
-        //---------------------------------------------------------------------------------------------
+        #endregion
 
-        //解放した音
-        audioSource.PlayOneShot(releaseSE, 2.0f);
-
+        //周囲に弾を解放する
         for (int i = 0; i < bulletNum; i++)
         {
+            #region 弾解放Tips
             //①現在の向き(軸)を取得し、値を正規化して0～1の値にする。
             //②360を球数で割って、角度(i)をかけることで、発射角度を計算することができる。
             //Quaternion.Eulerは引数にVector3を使用し、その軸を何度回転させるかという関数
             //→Quaternion.Euler(0,90,0) = Y軸を90度回転させる。
             //③角度に、軸をかけることで、軸を基準にした角度(Vector3型)がもとまる。
             //→(0,1,0)の軸に90°回転をかけると、Y軸が90°回転する(0,90,0)
-
+            #endregion
             Vector3 axis = transform.forward;
             axis.Normalize();
             axis = Quaternion.Euler(0, (360 / bulletNum) * i, 0) * axis;
@@ -455,6 +517,9 @@ public class Player : MonoBehaviour
                 fragment.GetComponent<Fragment>().Initialize(axis, transform.position, deleteCount);
             }
         }
+
+        //解放した音を鳴らす
+        audioSource.PlayOneShot(releaseSE, 2.0f);
     }
 
     /// <summary>
@@ -543,7 +608,7 @@ public class Player : MonoBehaviour
                 InitPredictionLine(fragmentCount[0]);
             }
 
-            //--------旧レベルの変更処理----------
+            #region 旧レベルの変更処理
             //if (neziCount >= levelCount[2])
             //{
             //    neziLevel = 3;
@@ -556,7 +621,7 @@ public class Player : MonoBehaviour
             //{
             //    neziLevel = 1;
             //}
-            //------------------------------------
+            #endregion
         }
         else
         {
@@ -618,11 +683,13 @@ public class Player : MonoBehaviour
     /// <param name="healBall">オブジェクトのスクリプトを取得</param>
     private void Heal(GameObject healBall)
     {
+        //当たったオブジェクトのレベルを取得
         int healAmounst = healBall.GetComponent<HealBall>().GetHealLevel();
 
         //回復の音
         audioSource.PlayOneShot(healSE);
 
+        //受け取ったレベルによって回復量を変化させる。
         switch (healAmounst)
         {
             case 1:
@@ -642,8 +709,9 @@ public class Player : MonoBehaviour
                 break;
         }
 
+        //memo : 予期せぬエラーが起こる可能性あり
         //最大体力以上にはならない。
-        if (currentHp >= maxHp)
+        if (currentHp >= maxHp || saveValue >= maxHp)
         {
             currentHp = saveValue = maxHp;
         }
@@ -683,7 +751,6 @@ public class Player : MonoBehaviour
     {
         if (!isDamage) return;
 
-
         //memo : 点滅の処理をもっとわかりやすく直す
         alphaCount++;
 
@@ -691,11 +758,11 @@ public class Player : MonoBehaviour
         {
             meshRenderer.material.color = Color.red;
         }
-        if(alphaCount > 4)
+        if (alphaCount > 4)
         {
             meshRenderer.material.color = Color.white;
         }
-        if(alphaCount > 8)
+        if (alphaCount > 8)
         {
             alphaCount = 0;
         }
@@ -720,7 +787,7 @@ public class Player : MonoBehaviour
             Heal(other.gameObject);   //回復
             Destroy(other.gameObject);//回復玉を消す
         }
-        else if(other.gameObject.CompareTag("PoisonBall"))
+        else if (other.gameObject.CompareTag("PoisonBall"))
         {
             Damage(1);                //ダメージ
             Destroy(other.gameObject);//毒玉を消す
@@ -821,5 +888,14 @@ public class Player : MonoBehaviour
     public Vector3 GetPosition()
     {
         return transform.position;
+    }
+
+    /// <summary>
+    /// 現在のねじレベルを取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetNeziLevel()
+    {
+        return neziLevel;
     }
 }
