@@ -75,7 +75,7 @@ public class OctaneAria : MonoBehaviour
     //サーチ範囲を表示
     private void OnDrawGizmos()
     {
-        Handles.color = Color.green;
+        Handles.color = new Color(0.0f, 1.0f, 0.0f, 0.3f);
         Handles.DrawSolidArc(transform.position,
             Vector3.up,
             Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward
