@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class Transition : MonoBehaviour
 {
+    //[SerializeField]
+    ////FadeMaanager
+    //private GameObject FadeMaanagerPrefab;
+    //GameObject fm;
+
     [SerializeField]
     private Material _transitionIn;
 
@@ -16,16 +21,23 @@ public class Transition : MonoBehaviour
     [SerializeField]
     private UnityEvent OnComplete;
 
-    void Start()
+    public void Start()
     {
+        Debug.Log("fade");
+        //fm = FadeMaanagerPrefab.GetComponent<GameObject>();
         StartCoroutine(BeginTransition());
     }
 
     void Update()
     {
+        //if (fm.activeSelf)
+        //{
+        //    StartCoroutine(BeginTransition());
+        //}
+
     }
 
-    IEnumerator BeginTransition()
+    public IEnumerator BeginTransition()
     {
         yield return Animate(_transitionIn, 2);
         if (OnTransition != null) { OnTransition.Invoke(); }
