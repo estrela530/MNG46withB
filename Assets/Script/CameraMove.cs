@@ -64,6 +64,12 @@ public class CameraMove : MonoBehaviour
                 
             }
         }
+
+        ////マウスカーソルのクリックを受け付けなくする
+        //if (Input.GetMouseButtonDown(0)&&Cursor.lockState !=CursorLockMode.Locked)
+        //{
+            
+        //}
     }
 
     /// <summary>

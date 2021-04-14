@@ -12,6 +12,8 @@ public class Pause : MonoBehaviour
 
     public bool isPause = false;
 
+    SelectButton selectButton;
+
     //音関連
     public AudioClip buttonSE;
     AudioSource audioSource;
@@ -23,6 +25,7 @@ public class Pause : MonoBehaviour
         PauseUIPrefab.SetActive(false);
         //コンポーネントゲッツ！
         audioSource = GetComponent<AudioSource>();
+        selectButton = GetComponent<SelectButton>();
     }
 
     // Update is called once per frame
@@ -36,6 +39,7 @@ public class Pause : MonoBehaviour
                 Time.timeScale = 0f;
                 //audioSource.PlayOneShot(buttonSE);
                 isPause = true;
+                selectButton.Wasshoi();
             }
             else
             {
@@ -48,10 +52,10 @@ public class Pause : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
         {
+            PauseUIPrefab.SetActive(false);
             Time.timeScale = 1f;
             //audioSource.PlayOneShot(buttonSE);
             isPause = false;
-            PauseUIPrefab.SetActive(false);
         }
     }
 
@@ -64,20 +68,20 @@ public class Pause : MonoBehaviour
     {
         //if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         //{
-            if (!isPause)
-            {
-                PauseUIPrefab.SetActive(true);
-                Time.timeScale = 0f;
-                //audioSource.PlayOneShot(buttonSE);
-                isPause = true;
-            }
-            else
-            {
-                Time.timeScale = 1f;
-                //udioSource.PlayOneShot(buttonSE);
-                isPause = false;
-                PauseUIPrefab.SetActive(false);
-            }
+        if (!isPause)
+        {
+            PauseUIPrefab.SetActive(true);
+            Time.timeScale = 0f;
+            //audioSource.PlayOneShot(buttonSE);
+            isPause = true;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            //udioSource.PlayOneShot(buttonSE);
+            isPause = false;
+            PauseUIPrefab.SetActive(false);
+        }
         //}
 
     }
