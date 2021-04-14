@@ -132,6 +132,6 @@ public class StageMove : MonoBehaviour
             fadeCount = 0;
         }
 
-        Debug.Log(fadeCount);
+        //Debug.Log(fadeCount);
     }
 }
