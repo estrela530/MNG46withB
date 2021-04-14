@@ -8,7 +8,7 @@ public class TimerScript : MonoBehaviour
     [SerializeField]
     private int minute;
     [SerializeField]
-    private float seconds;
+    public static float seconds;
     //　前のUpdateの時の秒数
     private float oldSeconds;
     //　タイマー表示用テキスト
@@ -38,6 +38,11 @@ public class TimerScript : MonoBehaviour
         }
         oldSeconds = seconds;
 
+    }
+
+    public float GetClearSeconds()
+    {
+        return seconds;
     }
 
 }
