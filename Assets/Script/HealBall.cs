@@ -11,6 +11,8 @@ public class HealBall : MonoBehaviour
     private float[] levelUpTime = new float[3];//(2,8,5
     [SerializeField, Tooltip("吸収時の移動速度")]
     private float[] inhaleSpeed = new float[3];
+    [SerializeField, Tooltip("吸収範囲")]
+    private int[] inhaleRange = new int[3];
 
     Player player;            //シーン上のプレイヤーを取得
     TestManager manager;      //回復玉管理リストを取得
@@ -115,7 +117,11 @@ public class HealBall : MonoBehaviour
                 playerLevel = player.GetNeziLevel();
 
                 //指定した範囲内にじぶんがいたら
-                if(playerLevel == 3 && moveDistance < 5)
+                if(playerLevel == 3 && moveDistance < inhaleRange[1])
+                {
+                    moveState = 2;
+                }
+                else if(playerLevel == 2 && moveDistance < inhaleRange[2])
                 {
                     moveState = 2;
                 }

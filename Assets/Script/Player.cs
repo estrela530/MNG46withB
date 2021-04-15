@@ -81,12 +81,13 @@ public class Player : MonoBehaviour
     float[] preTrigger = new float[2];//LT,RTトリガーの保存用キー
     float[] nowTrigger = new float[2];//LT,RTトリガーの取得用キー
 
-
-
+    public static int debugDamageCount = 0;
+    public static int debugTwistedCount = 0;
 
     private float alphaTimer = 0;//点滅時間加算用
     private int alphaCount = 0;  //点滅用カウント
 
+    Animator animator;//アニメーション用
 
     Vector3 testVel;
 
@@ -136,6 +137,8 @@ public class Player : MonoBehaviour
         //オーディオソースを取得
         audioSource = GetComponent<AudioSource>();
 
+        animator = GetComponent<Animator>();
+
         currentHp = saveValue = maxHp;
 
         Initialize();
@@ -148,7 +151,7 @@ public class Player : MonoBehaviour
     {
         isTwisted = false;
         isRelease = false;
-        isDamage = false;
+        animator.enabled = true;
         neziCount = 0;
         neziLevel = 0;
         transform.localScale = Vector3.one;
@@ -416,7 +419,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedAccumulate()
     {
-        isTwisted = true;
+        animator.enabled = false;
+        isTwisted = true;    
         testVel = Vector3.zero;
         rigid.velocity = Vector3.zero;//ねじり中は移動量を無くす
     }
@@ -448,6 +452,8 @@ public class Player : MonoBehaviour
     void TwistedRelease()
     {
         if (!isTwisted) return;//ねじり中じゃなかったら解放しない
+
+        debugTwistedCount++;
 
         //解放する前に一旦流れている音を止める
         audioSource.Stop();
@@ -732,6 +738,8 @@ public class Player : MonoBehaviour
 
             isReset = true;
             Initialize();
+
+            debugDamageCount++;
 
             isDamage = true;
         }

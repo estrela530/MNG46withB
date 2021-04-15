@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 7218287161412445532}
   - component: {fileID: 8980577220073085131}
   - component: {fileID: 5058311262198828748}
+  - component: {fileID: 732784952721072845}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -219,6 +220,8 @@ MonoBehaviour:
   firstCreateFragment: 20
   fragmentPrefab: {fileID: 5343818580403124431, guid: a7d28856afc8afb4a9fad14e098058f2,
     type: 3}
+  predictionLine: {fileID: 5033132528446646438, guid: 3a0cbdba13bdf4140a9fd9c03bdef429,
+    type: 3}
   fragmentCount: 040000000800000010000000
   deleteCount:
   - 0.35
@@ -238,8 +241,6 @@ MonoBehaviour:
   cancelSE: {fileID: 8300000, guid: 51e297d95e40dbc4c9e5aa8c55382f4e, type: 3}
   isDamage: 0
   currentHp: 10
-  predictionLine: {fileID: 5033132528446646438, guid: 3a0cbdba13bdf4140a9fd9c03bdef429,
-    type: 3}
 --- !u!54 &8980577220073085131
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -352,3 +353,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &732784952721072845
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7218287161412445507}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1be0bd76397a60d49adde930947162d1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

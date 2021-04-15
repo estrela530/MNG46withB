@@ -21,9 +21,9 @@ public class αScore : MonoBehaviour
         damageCount = 3;
         releaseCount = 12;
         //くぼしょ～の協力　被弾回数の取得
-        //damageCount = Player.aaa;
+        damageCount = Player.debugDamageCount;
         //くぼしょ～の協力　解放回数の取得
-        //releaseCount = Player.bbb;
+        releaseCount = Player.debugTwistedCount;
     }
 
     // Update is called once per frame
