@@ -16,12 +16,12 @@ public class BossArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Boss.GetComponent<KraberEnemy>();
+        Boss.GetComponent<BossMove>();
         rigid = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
@@ -41,19 +41,14 @@ public class BossArea : MonoBehaviour
             //サーチする角度の範囲内だったら発見
             if (angle <= searchAngle)
             {
-                Boss.GetComponent<KraberEnemy>().MoveFlag = true;
-                Boss.GetComponent<KraberEnemy>().workFlag = false;
-
-                //MoveFlag = true;
-                //workFlag = false;
-                // Debug.Log("主人公発見: " + angle);
+                
             }
 
             //サーチする角度の範囲外だったら索敵
             if (searchAngle <= angle)
             {
-                Boss.GetComponent<KraberEnemy>().MoveFlag = false;
-                Boss.GetComponent<KraberEnemy>().workFlag = true;
+                //Boss.GetComponent<KraberEnemy>().MoveFlag = false;
+                //Boss.GetComponent<KraberEnemy>().workFlag = true;
                 //Debug.Log("外: " + angle);
             }
 
@@ -66,8 +61,8 @@ public class BossArea : MonoBehaviour
         //サーチする角度の範囲外だったら索敵
         if (!other.gameObject.CompareTag("Player"))
         {
-            Boss.GetComponent<KraberEnemy>().MoveFlag = false;
-            Boss.GetComponent<KraberEnemy>().workFlag = true;
+            //Boss.GetComponent<KraberEnemy>().MoveFlag = false;
+            //Boss.GetComponent<KraberEnemy>().workFlag = true;
         }
     }
 
@@ -76,7 +71,7 @@ public class BossArea : MonoBehaviour
     //サーチ範囲を表示
     private void OnDrawGizmos()
     {
-        Handles.color = Color.blue;
+        Handles.color = new Color(0.0f,1.0f,0.0f,0.5f);
         Handles.DrawSolidArc(transform.position,
             Vector3.up,
             Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward

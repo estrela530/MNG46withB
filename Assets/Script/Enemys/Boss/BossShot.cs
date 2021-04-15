@@ -23,7 +23,7 @@ public class BossShot : MonoBehaviour
     {
         ss = 1;
         Target = GameObject.FindGameObjectWithTag("Player");//追尾させたいオブジェクトを書く
-        Move.GetComponent<EnemyMove>();
+        Move.GetComponent<BossMove>();
 
     }
 
@@ -44,7 +44,7 @@ public class BossShot : MonoBehaviour
 
     void Shot()
     {
-        if (Move.GetComponent<EnemyMove>().MoveFlag == true)
+        if (Move.GetComponent<BossMove>().MoveFlag == true)
         {
             Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
             GameObject shot = Instantiate(BossBullet, transform.position, transform.rotation);

@@ -9,55 +9,59 @@ using UnityEditor;
 
 public class BossMove : MonoBehaviour
 {
-    // Start is called before the first frame update
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
-                      // public float area;//この数値以下になったら追う
-
-
-    [SerializeField, Header("体力")] float enemyHP = 5;
+    //public float area;//この数値以下になったら追う
 
     Rigidbody rigid;
 
-    private float workeAria1 = 1;//
-    private float workeAria2 = 1;//
-
-    private float Rspeed;
-
-    private float ww;
-    private float ww2;
-
-    Color color;
-
-    [Header("索敵に向かう場所")]
-    public GameObject workObj1;
-    public GameObject workObj2;
-
-    int workNumber = 1;
-
-    [Header("索敵時のスピード")]
-    public float speed;
-    [Header("発見時のスピード")]
-    public float speedLoc;
-
-    [Header("この数値まで進む")] public float social;//この数値まで進む
     private GameObject Enemy;
 
-    [Header("追う時と索敵のフラグ")]
-    public bool MoveFlag = false;//追う
-    public bool workFlag = true;//徘徊
+    [SerializeField, Header("体力")] float enemyHP = 5;
+    [SerializeField, Header("この数値以下になったら攻撃が変わる")] float ChangeShotHP;
+
+    
+    [SerializeField, Header("発見時のスピード")]
+    float speedLoc;
+
+    [SerializeField, Header("突進時のスピード")]
+    float RushSpeed;
+
+    [SerializeField, Header("この数値まで進む")]
+    float social;//この数値まで進む
+    
+    [Header("追う時のフラグ")]
+     public bool MoveFlag = true;//追う
+
+    [Header("突進のフラグ")]
+     public bool RushFlag = false;//突進
+
+    [SerializeField, Header("何秒止まるか")]
+     float freezeTime;
+
+     private float lookTime;
+
+    [Header("何秒に実行するか")]
+    float RushRunTime;
+
+    [SerializeField,Header("突進のインターバル")]
+    float RushIntarval;
+
+    [SerializeField, Header("何秒止まるか")]
+    GameObject RespawnPosition;
+
 
     void Start()
     {
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
-        color = GetComponent<Renderer>().material.color;
-        //target = Target.transform.position;
+        MoveFlag = true;
     }
 
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
@@ -67,15 +71,21 @@ public class BossMove : MonoBehaviour
             gameObject.SetActive(false);//非表示
             //SceneManager.LoadScene("Result");
             SceneManager.LoadScene("GameClear");
+        }
+        //召喚
+        if(enemyHP<=ChangeShotHP)
+        {
+            MoveFlag = false;
+            RushRunTime -= Time.deltaTime;
+            RushFlag = false;
+
+            RespawnPosition.SetActive(true);
 
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-
-        ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
-        ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
-
-       
+        
+        //追いかける
         if (MoveFlag)
         {
             this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
@@ -83,40 +93,33 @@ public class BossMove : MonoBehaviour
             {
                 transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
             }
-
         }
 
-        //徘徊
-        if (workFlag)
+
+        RushRunTime += Time.deltaTime;
+
+        if(RushRunTime >=RushIntarval)
         {
-            if (ww < workeAria1)
+            RushFlag = true;
+            RushRunTime = 0;
+        }
+
+        //突進の処理
+        if (RushFlag)
+        {
+            MoveFlag = false;
+            lookTime += Time.deltaTime;
+
+            //見つめてる
+            if (lookTime <= freezeTime)
             {
-                workNumber = 2;
+                this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
             }
-            if (ww2 < workeAria2)
+            //突進する
+            if (lookTime >= freezeTime)
             {
-                workNumber = 1;
+                transform.position += transform.forward * RushSpeed * Time.deltaTime;//前進(スピードが変わる)
             }
-
-            switch (workNumber)
-            {
-
-                case 1:
-
-                    this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
-                    transform.position += transform.forward * speed * Time.deltaTime;
-
-                    break;
-
-                case 2:
-
-                    this.transform.LookAt(this.workObj2.transform);//徘徊2の位置に向く
-                    transform.position += transform.forward * speed * Time.deltaTime;
-
-                    break;
-            }
-
-
         }
 
     }
@@ -133,7 +136,13 @@ public class BossMove : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
-            color.g = 160;
+        }
+
+        if (other.gameObject.CompareTag("Player")|| (other.gameObject.CompareTag("Wall")))
+        {
+            lookTime = 0;
+            MoveFlag = true;
+            RushFlag = false;
         }
 
     }

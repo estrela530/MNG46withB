@@ -127,6 +127,7 @@ public class StealEnemy : MonoBehaviour
             workFlag = true;
             aaa = false;
             Destroy(other.gameObject);
+            
         }
     }
     //(仮)指定されたtagに当たると消える
