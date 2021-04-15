@@ -38,6 +38,7 @@ public class StageMove : MonoBehaviour
     Transition transition;
 
     int fadeCount;
+    int fadeMax;
     int koko;
 
     [SerializeField, Header("BGMスライダー")]
@@ -82,9 +83,11 @@ public class StageMove : MonoBehaviour
         One = true;
 
         //0412バグ前
-        koko = 240;
+        //koko = 240;
         //0412バグ後
-        //koko = 90;
+        koko = 90;
+        //バグ前360　バグ後60
+        fadeMax = 60;
         fadeCount = 0;
         BGMmemo = 0f;
 
@@ -97,7 +100,7 @@ public class StageMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ////くぼしょ～の協力
+        ////くぼしょ～の協力 ゴールである旗とのOnCollisionEnterで
         //nowFlag = player.GetGoalFlag();
         if (nowFlag)
         {
@@ -144,7 +147,7 @@ public class StageMove : MonoBehaviour
         if (stage1Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= 360)//バグ前360　バグ後60
+            if (fadeCount >= fadeMax)
             {
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage2StartPosition.transform.position;
             }
@@ -184,7 +187,7 @@ public class StageMove : MonoBehaviour
         if (stage2Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= 360)//バグ前360　バグ後60
+            if (fadeCount >= fadeMax)
             {
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage3StartPosition.transform.position;
             }
@@ -223,7 +226,7 @@ public class StageMove : MonoBehaviour
         if (stage3Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= 360)//バグ前360　バグ後60
+            if (fadeCount >= fadeMax)
             {
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage4StartPosition.transform.position;
             }
@@ -262,7 +265,7 @@ public class StageMove : MonoBehaviour
         if (stage4Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= 360)//バグ前360　バグ後60
+            if (fadeCount >= fadeMax)
             {
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage5StartPosition.transform.position;
             }
@@ -301,7 +304,7 @@ public class StageMove : MonoBehaviour
         if (stage5Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= 360)//バグ前360　バグ後60
+            if (fadeCount >= fadeMax)
             {
                 GameObject.FindGameObjectWithTag("Player").transform.position = stageBossStartPosition.transform.position;
             }
