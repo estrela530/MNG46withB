@@ -32,7 +32,7 @@ public class StageMove : MonoBehaviour
     [SerializeField]
     bool bossNow;
 
-    bool nowFlag;
+    public bool nowFlag;
 
     Player player;
     Transition transition;
@@ -86,8 +86,10 @@ public class StageMove : MonoBehaviour
         //koko = 240;
         //0412バグ後
         koko = 90;
-        //バグ前360　バグ後60
-        fadeMax = 60;
+        //バグ前360　バグ後60 0416 300
+        //fadeMax = 360;
+        fadeMax = 120;
+        //fadeMax = 60;
         fadeCount = 0;
         BGMmemo = 0f;
 
@@ -97,11 +99,10 @@ public class StageMove : MonoBehaviour
         transition = GetComponent<Transition>();
     }
 
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        ////くぼしょ～の協力 ゴールである旗とのOnCollisionEnterで
-        //nowFlag = player.GetGoalFlag();
         if (nowFlag)
         {
             //プレイヤーのポジションゴール(旗)にたどり着いた時に今がステージ1ならステージ1クリアフラグ
