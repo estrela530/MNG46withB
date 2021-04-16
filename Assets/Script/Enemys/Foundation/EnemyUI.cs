@@ -10,7 +10,7 @@ public class EnemyUI : MonoBehaviour
     private GameObject HpUI;
     float currHp;
 
-    EnemyMove enemy;
+    BossMove enemy;
 
 
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class EnemyUI : MonoBehaviour
     {
         slider = this.gameObject.GetComponent<Slider>();
 
-        enemy = GameObject.Find("Enemy").GetComponent<EnemyMove>();
+        enemy = GameObject.Find("Enemy").GetComponent<BossMove>();
         //enemy = GameObject.Find("Boss Enemy").GetComponent<EnemyMove>();
 
         slider.maxValue = slider.value = enemy.HpGet();

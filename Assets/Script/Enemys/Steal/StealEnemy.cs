@@ -52,7 +52,7 @@ public class StealEnemy : MonoBehaviour
         aaa = false;
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Target = GameObject.FindGameObjectWithTag("HealBall");
         rigid.angularVelocity = Vector3.zero;
@@ -127,6 +127,7 @@ public class StealEnemy : MonoBehaviour
             workFlag = true;
             aaa = false;
             Destroy(other.gameObject);
+            
         }
     }
     //(仮)指定されたtagに当たると消える
