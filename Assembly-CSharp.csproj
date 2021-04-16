@@ -62,11 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ClearStageUI.cs" />
-    <Compile Include="Assets\MissionManagerScript.cs" />
     <Compile Include="Assets\Script\ActivateButton.cs" />
     <Compile Include="Assets\Script\ButtonSE.cs" />
     <Compile Include="Assets\Script\CameraMove.cs" />
+    <Compile Include="Assets\Script\ClearStageUI.cs" />
     <Compile Include="Assets\Script\DOTweenTest.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossArea.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossBullet.cs" />
@@ -103,6 +102,8 @@
     <Compile Include="Assets\Script\Fragment.cs" />
     <Compile Include="Assets\Script\FragmentPool.cs" />
     <Compile Include="Assets\Script\HealBall.cs" />
+    <Compile Include="Assets\Script\MissionManagerScript.cs" />
+    <Compile Include="Assets\Script\NotCursor.cs" />
     <Compile Include="Assets\Script\Pause.cs" />
     <Compile Include="Assets\Script\PauseAudioButton.cs" />
     <Compile Include="Assets\Script\Player.cs" />
@@ -110,7 +111,6 @@
     <Compile Include="Assets\Script\PoisonBall.cs" />
     <Compile Include="Assets\Script\PredictionLine.cs" />
     <Compile Include="Assets\Script\PredictionLinePool.cs" />
-    <Compile Include="Assets\Script\RAudioButton.cs" />
     <Compile Include="Assets\Script\ResB.cs" />
     <Compile Include="Assets\Script\SceneGR.cs" />
     <Compile Include="Assets\Script\SceneSG.cs" />
@@ -128,6 +128,7 @@
     <Compile Include="Assets\Script\VloumeSlider.cs" />
     <Compile Include="Assets\Script\kanban.cs" />
     <Compile Include="Assets\Script\pauseManager.cs" />
+    <Compile Include="Assets\Script\αScore.cs" />
     <None Include="Assets\Deform\LICENSE.txt" />
     <None Include="Assets\Shader\transition.shader" />
     <None Include="Assets\Shader\transition2.shader" />

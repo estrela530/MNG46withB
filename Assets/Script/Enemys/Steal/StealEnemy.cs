@@ -37,7 +37,7 @@ public class StealEnemy : MonoBehaviour
     [SerializeField]
     GameObject aria;
     [SerializeField] bool areaGetFlag;
-    Vector3 ballPos;
+    GameObject targetBallObject;
     [SerializeField] bool aaa;
     void Start()
     {
@@ -48,7 +48,7 @@ public class StealEnemy : MonoBehaviour
         firstTage = new Vector3();
         stealArea = aria.GetComponent<StealArea>();
         //areaGetFlag = false;
-        ballPos = new Vector3();
+        targetBallObject = null;
         aaa = false;
     }
     // Update is called once per frame
@@ -62,6 +62,9 @@ public class StealEnemy : MonoBehaviour
             gameObject.SetActive(false);//非表示
             SceneManager.LoadScene("GameClear");
         }
+
+        
+
         //dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
         ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
         ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
@@ -71,22 +74,31 @@ public class StealEnemy : MonoBehaviour
             areaGetFlag = stealArea.GetSearch();
             if (areaGetFlag)
             {
+                //もう見つけてる↓
                 if (!aaa)
                 {
                     //位置取得
-                    ballPos = stealArea.GetBall();
+                    targetBallObject = stealArea.GetBall();
+                    if (targetBallObject == null)
+                    {
+                        return;
+                    }
                     //ターゲットにむく
-                    this.transform.LookAt(new Vector3(ballPos.x, this.transform.position.y, ballPos.z));
+                    this.transform.LookAt(new Vector3(targetBallObject.transform.position.x, this.transform.position.y, targetBallObject.transform.position.z));
                     aaa = true;
                 }
                 else
                 {
                     transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+                    if (targetBallObject == null)
+                    {
+                        aaa = false;
+                    }
                 }
             }
            
         }
-        Debug.Log(ballPos);
+        //Debug.Log(ballPos);
         //徘徊
         if (workFlag)
         {
@@ -111,6 +123,7 @@ public class StealEnemy : MonoBehaviour
                     break;
             }
         }
+        Debug.Log("areaGetFlag" + areaGetFlag);
     }
     public float HpGet()
     {

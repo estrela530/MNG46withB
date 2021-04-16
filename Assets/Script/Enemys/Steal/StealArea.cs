@@ -19,12 +19,13 @@ public class StealArea : MonoBehaviour
         ballFindedFlag = false;
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-       
+        Debug.Log("ballFindedFlag" + ballFindedFlag);
     }
     public void OnTriggerStay(Collider other)
     {
+        
         //プレイヤーの方向
         var playerDire = other.transform.position - this.transform.position;
         //自分の前方からプレイヤーの方向
@@ -40,10 +41,17 @@ public class StealArea : MonoBehaviour
                 {
                     ball = other.gameObject;
                     ballFindedFlag = true;
+
+                    
                 }
-                
+
                 Move.GetComponent<StealEnemy>().MoveFlag = true;
                 Move.GetComponent<StealEnemy>().workFlag = false;
+            }
+            
+            if(ball == other.gameObject)
+            {
+
             }
             ////サーチする角度の範囲外だったら索敵
             //if (searchAngle <= angle)
@@ -60,9 +68,9 @@ public class StealArea : MonoBehaviour
         return ballFindedFlag;
     }
     //わたすぜ2
-    public Vector3 GetBall()
+    public GameObject GetBall()
     {
-        return ball.transform.position;
+        return ball;
     }
     public void OnTriggerEnter(Collider other)
     {
