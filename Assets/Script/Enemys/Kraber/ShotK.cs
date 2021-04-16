@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShotK : MonoBehaviour
 {
     public GameObject Bullet;
+    public GameObject powerUpBullet;
 
     public GameObject Move;
 
@@ -17,6 +18,8 @@ public class ShotK : MonoBehaviour
 
     private float dis;//プレイヤーとの距離
     private GameObject Target;//追尾する相手
+    [SerializeField] bool falg;
+    [SerializeField] bool falg2;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,8 @@ public class ShotK : MonoBehaviour
         ss = 1;
         Target = GameObject.FindGameObjectWithTag("Player");//追尾させたいオブジェクトを書く
         Move.GetComponent<KraberEnemy>();
+        falg2 = false;
+        
 
     }
 
@@ -47,16 +52,29 @@ public class ShotK : MonoBehaviour
     {
         if (Move.GetComponent<KraberEnemy>().MoveFlag == true)
         {
+            falg = false;
+        }
+        if (Move.GetComponent<KraberEnemy>().powerFlag == true)
+        {
+            falg = true;
+        }
+
+        if (!falg)
+        {
+
             Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
             GameObject shot = Instantiate(Bullet, transform.position, transform.rotation);
             Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
             //rigidbody.AddForce(transform.forward * shotTime);
             rigidbody.AddForce(ff * shotTime);
         }
-        if (Move.GetComponent<KraberEnemy>().powerFlag == true)
+
+        
+        if (falg)
         {
+
             Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
-            GameObject shot = Instantiate(Bullet, transform.position, transform.rotation);
+            GameObject shot = Instantiate(powerUpBullet, transform.position, transform.rotation);
             Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
             //rigidbody.AddForce(transform.forward * shotTime);
             rigidbody.AddForce(ff * shotTime);
