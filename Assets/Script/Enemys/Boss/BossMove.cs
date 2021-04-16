@@ -17,12 +17,15 @@ public class BossMove : MonoBehaviour
 
     private GameObject Enemy;
 
-    [SerializeField, Header("体力")] float enemyHP = 5;
-    [SerializeField, Header("この数値以下になったら攻撃が変わる")] float ChangeShotHP;
+    [SerializeField, Header("体力")]
+    float enemyHP = 5;
+
+    [SerializeField, Header("この数値以下になったら召喚する")]
+    float ChangePawnHP;
 
     
-    [SerializeField, Header("発見時のスピード")]
-    float speedLoc;
+    //[SerializeField, Header("発見時のスピード")]
+    //float speedLoc;
 
     [SerializeField, Header("突進時のスピード")]
     float RushSpeed;
@@ -47,9 +50,20 @@ public class BossMove : MonoBehaviour
     [SerializeField,Header("突進のインターバル")]
     float RushIntarval;
 
-    [SerializeField, Header("何秒止まるか")]
-    GameObject RespawnPosition;
+    [SerializeField, Header("召喚するオブジェクト")]
+    GameObject PawnEnemy;
 
+    [SerializeField, Header("次の生成時間")]
+    float ResetTime;
+
+    [SerializeField, Header("生成までの時間")]
+    float PawnTime;
+
+    [SerializeField, Header("エネミーの出現数")]
+    int PawnCount;//プレハブの出現数
+
+    [SerializeField, Header("召喚するエネミーの上限")]
+    int MaxPawnCount;//プレハブの出現数
 
     void Start()
     {
@@ -72,15 +86,11 @@ public class BossMove : MonoBehaviour
             //SceneManager.LoadScene("Result");
             SceneManager.LoadScene("GameClear");
         }
+
         //召喚
-        if(enemyHP<=ChangeShotHP)
+        if(enemyHP <= ChangePawnHP)
         {
-            MoveFlag = false;
-            RushRunTime -= Time.deltaTime;
-            RushFlag = false;
-
-            RespawnPosition.SetActive(true);
-
+            Pawn();
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
@@ -89,13 +99,13 @@ public class BossMove : MonoBehaviour
         if (MoveFlag)
         {
             this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-            if (dis >= social)
-            {
-                transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
-            }
+            //if (dis >= social)
+            //{
+            //    transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+            //}
         }
 
-
+        //突進を実行するまで時間を足す
         RushRunTime += Time.deltaTime;
 
         if(RushRunTime >=RushIntarval)
@@ -103,7 +113,6 @@ public class BossMove : MonoBehaviour
             RushFlag = true;
             RushRunTime = 0;
         }
-
         //突進の処理
         if (RushFlag)
         {
@@ -121,8 +130,27 @@ public class BossMove : MonoBehaviour
                 transform.position += transform.forward * RushSpeed * Time.deltaTime;//前進(スピードが変わる)
             }
         }
-
     }
+
+    //召喚する処理
+    void Pawn()
+    {
+        MoveFlag = false;
+        RushRunTime -= Time.deltaTime;
+        RushFlag = false;
+        //カウントの値まで生成
+        if (PawnCount<MaxPawnCount)
+        {
+            PawnTime -= Time.deltaTime;
+            if(PawnTime <= 0.0f)
+            {
+                PawnTime = ResetTime;//1秒沖に生成
+                GameObject.Instantiate(PawnEnemy);
+                PawnCount++;
+            }
+        }
+    }
+
 
     public float HpGet()
     {

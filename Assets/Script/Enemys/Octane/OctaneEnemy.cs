@@ -64,7 +64,7 @@ public class OctaneEnemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;

@@ -17,7 +17,7 @@ public class KraberBallet : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.position += transform.forward * bullteSpeed * Time.deltaTime;
         Destroy(this.gameObject, desthTime);

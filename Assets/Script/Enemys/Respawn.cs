@@ -33,21 +33,12 @@ public class Respawn : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //disRes = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算
-
-        ////エリア以下の数値になったらでる
-        //if (disRes < area)
-        //{
-           Resp();
-        //}
-
-        
-
+        Resp();
     }
 
     void Resp()
     {
-        if (resCount == bases.Length)//
+        if (resCount == 4)//
         {
             time -= Time.deltaTime;
             if (time <= 0.0f)
