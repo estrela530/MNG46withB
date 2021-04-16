@@ -117,11 +117,11 @@ public class HealBall : MonoBehaviour
                 playerLevel = player.GetNeziLevel();
 
                 //指定した範囲内にじぶんがいたら
-                if(playerLevel == 3 && moveDistance < inhaleRange[1])
+                if(playerLevel == 3 && moveDistance < inhaleRange[2])
                 {
                     moveState = 2;
                 }
-                else if(playerLevel == 2 && moveDistance < inhaleRange[2])
+                else if(playerLevel == 2 && moveDistance < inhaleRange[1])
                 {
                     moveState = 2;
                 }
