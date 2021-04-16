@@ -10,7 +10,7 @@ public class EnemyUI : MonoBehaviour
     private GameObject HpUI;
     float currHp;
 
-    BossMove enemy;
+    [SerializeField] BossMove enemy;
 
 
     // Start is called before the first frame update
@@ -18,8 +18,8 @@ public class EnemyUI : MonoBehaviour
     {
         slider = this.gameObject.GetComponent<Slider>();
 
-        enemy = GameObject.Find("Enemy").GetComponent<BossMove>();
-        //enemy = GameObject.Find("Boss Enemy").GetComponent<EnemyMove>();
+        //enemy = GameObject.Find("Enemy").GetComponent<BossMove>();
+        enemy.GetComponent<EnemyMove>();
 
         slider.maxValue = slider.value = enemy.HpGet();
 
@@ -27,11 +27,11 @@ public class EnemyUI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         slider.value = currHp;
 
-        transform.rotation = Camera.main.transform.rotation;
+        //transform.rotation = Camera.main.transform.rotation;
         //Debug.Log(currHp);
         currHp = enemy.HpGet();
 

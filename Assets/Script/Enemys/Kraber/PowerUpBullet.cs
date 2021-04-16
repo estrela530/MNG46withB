@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KraberBallet : MonoBehaviour
+public class PowerUpBullet : MonoBehaviour
 {
     private GameObject Bullet;
     [SerializeField, Header("弾の速度")] public float bullteSpeed;
-    [SerializeField, Header("パワーアップした時の速度")] float upSpeed;
     [SerializeField, Header("消えるまでの時間")] float desthTime;//消えるまでの時間
-
-    [SerializeField, Header("クレバーエネミーをいれる")] GameObject kraberEnmy;
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +19,7 @@ public class KraberBallet : MonoBehaviour
     void FixedUpdate()
     {
         transform.position += transform.forward * bullteSpeed * Time.deltaTime;
-        
+
         Destroy(this.gameObject, desthTime);
     }
 
@@ -34,5 +31,4 @@ public class KraberBallet : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
 }

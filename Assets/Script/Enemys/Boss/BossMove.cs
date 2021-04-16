@@ -99,10 +99,6 @@ public class BossMove : MonoBehaviour
         if (MoveFlag)
         {
             this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-            //if (dis >= social)
-            //{
-            //    transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
-            //}
         }
 
         //突進を実行するまで時間を足す
@@ -135,17 +131,15 @@ public class BossMove : MonoBehaviour
     //召喚する処理
     void Pawn()
     {
-        MoveFlag = false;
-        RushRunTime -= Time.deltaTime;
-        RushFlag = false;
         //カウントの値まで生成
         if (PawnCount<MaxPawnCount)
         {
             PawnTime -= Time.deltaTime;
-            if(PawnTime <= 0.0f)
+            if(PawnTime <= 3.0f)
             {
                 PawnTime = ResetTime;//1秒沖に生成
                 GameObject.Instantiate(PawnEnemy);
+                //GameObject.Instantiate(PawnEnemy);
                 PawnCount++;
             }
         }

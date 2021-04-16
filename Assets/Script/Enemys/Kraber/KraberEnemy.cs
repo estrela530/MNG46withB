@@ -131,6 +131,7 @@ public class KraberEnemy : MonoBehaviour
         if(powerFlag)
         {
             bullet.GetComponent<KraberBallet>().bullteSpeed = upSpeed;
+
             this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
             freezTime += Time.deltaTime;
             if(freezTime>=stopTime)
