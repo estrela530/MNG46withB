@@ -15,11 +15,13 @@ public class StealArea : MonoBehaviour
     void Start()
     {
         Move.GetComponent<StealEnemy>();
+        //ball.GetComponent<HealBall>();
         ballFindedFlag = false;
     }
     // Update is called once per frame
     void Update()
     {
+       
     }
     public void OnTriggerStay(Collider other)
     {
@@ -39,6 +41,7 @@ public class StealArea : MonoBehaviour
                     ball = other.gameObject;
                     ballFindedFlag = true;
                 }
+                
                 Move.GetComponent<StealEnemy>().MoveFlag = true;
                 Move.GetComponent<StealEnemy>().workFlag = false;
             }
@@ -63,12 +66,12 @@ public class StealArea : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        ////サーチする角度の範囲外だったら索敵
-        //if (!other.gameObject.CompareTag("HealBall"))
-        //{
-        //    Move.GetComponent<StealEnemy>().MoveFlag = false;
-        //    Move.GetComponent<StealEnemy>().workFlag = true;
-        //}
+        //サーチする角度の範囲外だったら索敵
+        if (!other.gameObject.CompareTag("HealBall"))
+        {
+            Move.GetComponent<StealEnemy>().MoveFlag = false;
+            Move.GetComponent<StealEnemy>().workFlag = true;
+        }
     }
 #if UNITY_EDITOR
     //サーチ範囲を表示

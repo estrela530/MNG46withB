@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{9B1A7FCC-F958-61AB-3DCC-5EF3406867C6}</ProjectGuid>
+    <ProjectGuid>{F4E61BC2-9F3B-4640-A5D5-AB32A66B8E1F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -62,10 +62,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ClearStageUI.cs" />
+    <Compile Include="Assets\MissionManagerScript.cs" />
     <Compile Include="Assets\Script\ActivateButton.cs" />
     <Compile Include="Assets\Script\ButtonSE.cs" />
     <Compile Include="Assets\Script\CameraMove.cs" />
-    <Compile Include="Assets\Script\ClearStageUI.cs" />
     <Compile Include="Assets\Script\DOTweenTest.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossArea.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossBullet.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Script\Enemys\Kraber\ShotK.cs" />
     <Compile Include="Assets\Script\Enemys\Octane\OctaneAria.cs" />
     <Compile Include="Assets\Script\Enemys\Octane\OctaneEnemy.cs" />
+    <Compile Include="Assets\Script\Enemys\Pawn\PawnEnemy.cs" />
     <Compile Include="Assets\Script\Enemys\Poison\BalletP.cs" />
     <Compile Include="Assets\Script\Enemys\Poison\PoisonArea.cs" />
     <Compile Include="Assets\Script\Enemys\Poison\PoisonEnemy.cs" />
@@ -101,8 +103,6 @@
     <Compile Include="Assets\Script\Fragment.cs" />
     <Compile Include="Assets\Script\FragmentPool.cs" />
     <Compile Include="Assets\Script\HealBall.cs" />
-    <Compile Include="Assets\Script\MissionManagerScript.cs" />
-    <Compile Include="Assets\Script\NotCursor.cs" />
     <Compile Include="Assets\Script\Pause.cs" />
     <Compile Include="Assets\Script\PauseAudioButton.cs" />
     <Compile Include="Assets\Script\Player.cs" />
@@ -110,6 +110,7 @@
     <Compile Include="Assets\Script\PoisonBall.cs" />
     <Compile Include="Assets\Script\PredictionLine.cs" />
     <Compile Include="Assets\Script\PredictionLinePool.cs" />
+    <Compile Include="Assets\Script\RAudioButton.cs" />
     <Compile Include="Assets\Script\ResB.cs" />
     <Compile Include="Assets\Script\SceneGR.cs" />
     <Compile Include="Assets\Script\SceneSG.cs" />
@@ -127,7 +128,6 @@
     <Compile Include="Assets\Script\VloumeSlider.cs" />
     <Compile Include="Assets\Script\kanban.cs" />
     <Compile Include="Assets\Script\pauseManager.cs" />
-    <Compile Include="Assets\Script\αScore.cs" />
     <None Include="Assets\Deform\LICENSE.txt" />
     <None Include="Assets\Shader\transition.shader" />
     <None Include="Assets\Shader\transition2.shader" />
@@ -317,10 +317,10 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.19f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/PackageCache/com.unity.burst@1.4.2/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/PackageCache/com.unity.burst@1.4.2/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.19f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -674,68 +674,68 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.19f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/K018A1697/Desktop/MNG46MunaGameJum/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/K018A1815/Desktop/obusu5/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{293E6867-9FF0-471B-232E-F30C7366A2D8}</Project>
+      <Project>{29AEEA53-FF3D-51F4-4852-8722AF11E7E2}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
     <ProjectReference Include="Beans.Unity.Editor.csproj">
-      <Project>{A1637326-2DD9-1A06-A1C4-8B35DC23CF3B}</Project>
+      <Project>{A4A83C9F-7D4D-17F2-03E0-60AE049CB2E0}</Project>
       <Name>Beans.Unity.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Beans.Unity.Collections.csproj">
-      <Project>{0625C06C-BAE5-AA37-DE3E-695C2554D54F}</Project>
+      <Project>{98D4F2CF-4E2F-AE05-DE31-FC73D57BF1DB}</Project>
       <Name>Beans.Unity.Collections</Name>
     </ProjectReference>
     <ProjectReference Include="Deform.csproj">
-      <Project>{7027EC36-ED93-5247-34D2-FC007BD6720A}</Project>
+      <Project>{20AFD6BB-16D6-108D-2F5A-5E02B7B614D3}</Project>
       <Name>Deform</Name>
     </ProjectReference>
     <ProjectReference Include="DeformEditor.csproj">
-      <Project>{C69BC92E-533F-FBDD-37A0-17F96E243AC3}</Project>
+      <Project>{F4C8EAA0-DEFB-585F-65B9-24D5F0D5D953}</Project>
       <Name>DeformEditor</Name>
     </ProjectReference>
     <ProjectReference Include="Beans.Unity.Mathematics.csproj">
-      <Project>{E132F33D-F43A-0789-1DEF-AEC0532B029C}</Project>
+      <Project>{ECA0B459-65DC-DEA7-A826-172A0FE570D9}</Project>
       <Name>Beans.Unity.Mathematics</Name>
     </ProjectReference>
   </ItemGroup>
