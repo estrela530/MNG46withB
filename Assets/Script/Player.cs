@@ -716,10 +716,16 @@ public class Player : MonoBehaviour
         }
 
         //memo : 予期せぬエラーが起こる可能性あり
+        //memo : 4/16↑を修正
         //最大体力以上にはならない。
-        if (currentHp >= maxHp || saveValue >= maxHp)
+        if (currentHp >= maxHp)
         {
-            currentHp = saveValue = maxHp;
+            currentHp = maxHp;
+        }
+        //赤ゲージも最大以上にならない
+        if (saveValue >= maxHp)
+        {
+            saveValue = maxHp;
         }
     }
 
