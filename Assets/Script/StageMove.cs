@@ -34,6 +34,11 @@ public class StageMove : MonoBehaviour
 
     public bool nowFlag;
 
+    bool positionMove12;
+    bool positionMove23;
+    bool positionMove34;
+    bool positionMove4B;
+
     Player player;
     Transition transition;
 
@@ -59,8 +64,14 @@ public class StageMove : MonoBehaviour
     [SerializeField, Header("Bossステージのスタートポジション")]
     GameObject stageBossStartPosition;
 
-    [SerializeField, Header("シーン切り替え時エフェクトPrefab")]
+    [SerializeField, Header("1-2シーン切り替え時エフェクトPrefab")]
     GameObject fadeManager;
+    [SerializeField, Header("2-3シーン切り替え時エフェクトPrefab")]
+    GameObject fadeManager23;
+    [SerializeField, Header("3-4シーン切り替え時エフェクトPrefab")]
+    GameObject fadeManager34;
+    [SerializeField, Header("4-Bシーン切り替え時エフェクトPrefab")]
+    GameObject fadeManager4B;
 
 
     // Start is called before the first frame update
@@ -79,6 +90,12 @@ public class StageMove : MonoBehaviour
         bool stage4Now = false;
         bool stage5Now = false;
         bool bossNow = false;
+
+        positionMove12 = false;
+        positionMove23 = false;
+        positionMove34 = false;
+        positionMove4B = false;
+
 
         One = true;
 
@@ -148,9 +165,10 @@ public class StageMove : MonoBehaviour
         if (stage1Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= fadeMax)
+            if (fadeCount >= fadeMax && positionMove12 == false)
             {
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage2StartPosition.transform.position;
+                positionMove12 = true;
             }
 
             fadeManager.SetActive(true);
@@ -193,7 +211,7 @@ public class StageMove : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage3StartPosition.transform.position;
             }
 
-            fadeManager.SetActive(true);
+            fadeManager23.SetActive(true);
 
             if (fadeCount > 0 && fadeCount <= koko)
             {
@@ -209,7 +227,7 @@ public class StageMove : MonoBehaviour
                 stage2Now = false;
                 stage3Now = true;
                 fadeCount = 0;
-                fadeManager.SetActive(false);
+                fadeManager23.SetActive(false);
                 //0415Playerとのやつができたら削除（デバッグ用）
                 nowFlag = false;
 
@@ -232,7 +250,7 @@ public class StageMove : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage4StartPosition.transform.position;
             }
 
-            fadeManager.SetActive(true);
+            fadeManager34.SetActive(true);
 
             if (fadeCount > 0 && fadeCount <= koko)
             {
@@ -248,7 +266,7 @@ public class StageMove : MonoBehaviour
                 stage3Now = false;
                 stage4Now = true;
                 fadeCount = 0;
-                fadeManager.SetActive(false);
+                fadeManager34.SetActive(false);
                 //0415Playerとのやつができたら削除（デバッグ用）
                 nowFlag = false;
 
@@ -271,7 +289,7 @@ public class StageMove : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Player").transform.position = stage5StartPosition.transform.position;
             }
 
-            fadeManager.SetActive(true);
+            fadeManager4B.SetActive(true);
 
             if (fadeCount > 0 && fadeCount <= koko)
             {
@@ -285,9 +303,11 @@ public class StageMove : MonoBehaviour
             {
                 stage4Clear = false;
                 stage4Now = false;
-                stage5Now = true;
+                ////ステージ5がない
+                //stage5Now = true;
+                bossNow = true;
                 fadeCount = 0;
-                fadeManager.SetActive(false);
+                fadeManager4B.SetActive(false);
                 //0415Playerとのやつができたら削除（デバッグ用）
                 nowFlag = false;
 
