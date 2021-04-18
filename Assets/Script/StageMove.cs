@@ -48,8 +48,6 @@ public class StageMove : MonoBehaviour
 
     [SerializeField, Header("BGMスライダー")]
     public Slider bgmSlider;
-    float BGMmemo;
-    bool One;
 
     [SerializeField, Header("ステージ1のスタートポジション")]
     GameObject stage1StartPosition;
@@ -77,27 +75,24 @@ public class StageMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bool stage1Clear = false;
-        bool stage2Clear = false;
-        bool stage3Clear = false;
-        bool stage4Clear = false;
-        bool stage5Clear = false;
-        bool bossClear = false;
+        stage1Clear = false;
+        stage2Clear = false;
+        stage3Clear = false;
+        stage4Clear = false;
+        stage5Clear = false;
+        bossClear = false;
 
-        bool stage1Now = true;
-        bool stage2Now = false;
-        bool stage3Now = false;
-        bool stage4Now = false;
-        bool stage5Now = false;
-        bool bossNow = false;
+        stage1Now = true;
+        stage2Now = false;
+        stage3Now = false;
+        stage4Now = false;
+        stage5Now = false;
+        bossNow = false;
 
         positionMove12 = false;
         positionMove23 = false;
         positionMove34 = false;
         positionMove4B = false;
-
-
-        One = true;
 
         //0412バグ前
         //koko = 240;
@@ -108,7 +103,6 @@ public class StageMove : MonoBehaviour
         fadeMax = 120;
         //fadeMax = 60;
         fadeCount = 0;
-        BGMmemo = 0f;
 
         nowFlag = false;
 
@@ -167,7 +161,7 @@ public class StageMove : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax && positionMove12 == false)
             {
-                GameObject.FindGameObjectWithTag("Player").transform.position = stage2StartPosition.transform.position;
+                GameObject.Find("SlimePlayer").transform.position = stage2StartPosition.transform.position;
                 positionMove12 = true;
             }
 
@@ -208,7 +202,7 @@ public class StageMove : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                GameObject.FindGameObjectWithTag("Player").transform.position = stage3StartPosition.transform.position;
+                GameObject.Find("SlimePlayer").transform.position = stage3StartPosition.transform.position;
             }
 
             fadeManager23.SetActive(true);
@@ -247,7 +241,7 @@ public class StageMove : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                GameObject.FindGameObjectWithTag("Player").transform.position = stage4StartPosition.transform.position;
+                GameObject.Find("SlimePlayer").transform.position = stage4StartPosition.transform.position;
             }
 
             fadeManager34.SetActive(true);
@@ -286,7 +280,7 @@ public class StageMove : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                GameObject.FindGameObjectWithTag("Player").transform.position = stage5StartPosition.transform.position;
+                GameObject.Find("SlimePlayer").transform.position = stage5StartPosition.transform.position;
             }
 
             fadeManager4B.SetActive(true);
@@ -327,7 +321,7 @@ public class StageMove : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                GameObject.FindGameObjectWithTag("Player").transform.position = stageBossStartPosition.transform.position;
+                GameObject.Find("SlimePlayer").transform.position = stageBossStartPosition.transform.position;
             }
 
             fadeManager.SetActive(true);
