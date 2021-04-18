@@ -78,7 +78,6 @@ public class HealBall : MonoBehaviour
         //タグがPlayerのオブジェクトを取得
         //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         player = GameObject.Find("SlimePlayer").GetComponent<Player>();
-        Debug.Log(player.name);
 
         //particleSystem = transform.GetChild(0).GetComponent<ParticleSystem>();
         //particleSystem.gameObject.SetActive(false);
