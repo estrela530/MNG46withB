@@ -29,7 +29,7 @@ public class Fragment : MonoBehaviour
     {
         this.floatAngle = angle;
         //位置をちょっと高くする
-        this.parentPosition = new Vector3(position.x, position.y + 0.3f, position.z);
+        this.parentPosition = new Vector3(position.x, position.y + 0.5f, position.z);
         this.deleteCount = deleteCount;
 
         //位置初期化
