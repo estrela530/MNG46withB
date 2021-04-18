@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 7754000853222434969}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 7754000854117930301}
   - {fileID: 7754000853442252576}
@@ -118,7 +118,6 @@ MonoBehaviour:
   enemyHP: 3
   ChangePawnHP: 2
   RushSpeed: 15
-  social: 4
   MoveFlag: 0
   RushFlag: 0
   freezeTime: 3
@@ -399,6 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Boss: {fileID: 7754000853222434969}
   radius: 6
+  mesh: {fileID: 0}
 --- !u!1 &7754000853941303863
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,3 +790,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be93303054a6f45469011da6f5ffbff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
