@@ -65,7 +65,7 @@ public class PoisonEnemy : MonoBehaviour
         {
             gameObject.SetActive(false);//非表示
             //SceneManager.LoadScene("Result");
-            SceneManager.LoadScene("GameClear");
+            //SceneManager.LoadScene("GameClear");
 
         }
 
