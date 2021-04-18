@@ -29,9 +29,6 @@ public class BossMove : MonoBehaviour
 
     [SerializeField, Header("突進時のスピード")]
     float RushSpeed;
-
-    [SerializeField, Header("この数値まで進む")]
-    float social;//この数値まで進む
     
     [Header("追う時のフラグ")]
      public bool MoveFlag = true;//追う
