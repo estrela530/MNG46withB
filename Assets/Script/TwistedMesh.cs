@@ -44,7 +44,7 @@ public class TwistedMesh : MonoBehaviour
         isTwisted = player.GetTwisted();       //③
         isReset = player.isReset;              //③
 
-        Debug.Log("頂点数" + vertices.Length);
+        //Debug.Log("頂点数" + vertices.Length);
     }
 
     private void FixedUpdate()
