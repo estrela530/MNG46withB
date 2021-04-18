@@ -13,7 +13,7 @@ public class KraberEnemy : MonoBehaviour
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
 
-    [SerializeField, Header("弾オブジェクト")] GameObject bullet;
+    //[SerializeField, Header("弾オブジェクト")] GameObject bullet;
 
     [SerializeField, Header("体力")] float enemyHP = 5;
     [SerializeField, Header("止まってる時間")] float freezTime;
@@ -33,9 +33,9 @@ public class KraberEnemy : MonoBehaviour
 
     Color color;
 
-    [Header("索敵に向かう場所")]
+    [Header("戻る場所")]
     public GameObject workObj1;
-    public GameObject workObj2;
+   // public GameObject workObj2;
 
     int workNumber = 1;
 
@@ -60,7 +60,7 @@ public class KraberEnemy : MonoBehaviour
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         color = GetComponent<Renderer>().material.color;
-        bullet.GetComponent<KraberBallet>();
+        //bullet.GetComponent<KraberBallet>();
         //target = Target.transform.position;
     }
 
@@ -74,13 +74,13 @@ public class KraberEnemy : MonoBehaviour
         {
             gameObject.SetActive(false);//非表示
             //SceneManager.LoadScene("Result");
-            SceneManager.LoadScene("GameClear");
+            //SceneManager.LoadScene("GameClear");
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
         ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
-        ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
+       
         
         if (MoveFlag)
         {
@@ -100,43 +100,21 @@ public class KraberEnemy : MonoBehaviour
         if (workFlag)
         {
             powerFlag = false;
-            if (ww < workeAria1)
-            {
-                workNumber = 2;
-            }
-            if (ww2 < workeAria2)
-            {
-                workNumber = 1;
-            }
-
-            switch (workNumber)
-            {
-
-                case 1:
-
-                    this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
-                    transform.position += transform.forward * speed * Time.deltaTime;
-
-                    break;
-
-                case 2:
-
-                    this.transform.LookAt(this.workObj2.transform);//徘徊2の位置に向く
-                    transform.position += transform.forward * speed * Time.deltaTime;
-
-                    break;
-            }
+         
+            this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
+            transform.position += transform.forward * speed * Time.deltaTime;
+            
         }
 
-        if(powerFlag)
+        if (powerFlag)
         {
-            bullet.GetComponent<KraberBallet>().bullteSpeed = upSpeed;
+            //bullet.GetComponent<KraberBallet>().bullteSpeed = upSpeed;
 
             this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
             freezTime += Time.deltaTime;
             if(freezTime>=stopTime)
             {
-                workFlag = true;
+                MoveFlag = true;
                 freezTime = 0;
             }
 
@@ -156,7 +134,10 @@ public class KraberEnemy : MonoBehaviour
         {
             enemyHP = enemyHP - 1;
         }
-
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            MoveFlag = false;
+        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -164,6 +145,11 @@ public class KraberEnemy : MonoBehaviour
         {
             MoveFlag = false;
             powerFlag = true;
+        }
+
+        if (other.gameObject.CompareTag("Work"))
+        {
+            workFlag = false;
         }
     }
 
