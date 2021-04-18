@@ -39,7 +39,7 @@ public class PauseAudioButton : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("押された！");
+        //Debug.Log("押された！");
 
         if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
@@ -51,12 +51,12 @@ public class PauseAudioButton : MonoBehaviour
                 //audioSource.PlayOneShot(buttonSE);
                 PauseUIPrefab.SetActive(false);
                 PauseAudioUIPrefab.SetActive(true);
-                Debug.Log("2222" + isPauseAudio);
+               // Debug.Log("2222" + isPauseAudio);
             }
             else if (isPauseAudio == true)
             {
                 //audioSource.PlayOneShot(buttonSE);
-                Debug.Log("bbbbbbbb");
+                //Debug.Log("bbbbbbbb");
                 PauseUIPrefab.SetActive(false);
                 PauseAudioUIPrefab.SetActive(false);
                 isPauseAudio = false;
@@ -93,7 +93,7 @@ public class PauseAudioButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("見せなさい" + isPauseAudio);
+        //Debug.Log("見せなさい" + isPauseAudio);
 
         //if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         //{
