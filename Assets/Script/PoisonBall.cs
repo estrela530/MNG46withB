@@ -19,7 +19,8 @@ public class PoisonBall : MonoBehaviour
         GetComponent<Renderer>().material.color = new Color(1, 0, 1, 0);
 
         //プレイヤーを取得
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player = GameObject.Find("SlimePlayer").GetComponent<Player>();
     }
     
     void Update()
