@@ -6,7 +6,6 @@ public class KraberBallet : MonoBehaviour
 {
     private GameObject Bullet;
     [SerializeField, Header("弾の速度")] public float bullteSpeed;
-    [SerializeField, Header("パワーアップした時の速度")] float upSpeed;
     [SerializeField, Header("消えるまでの時間")] float desthTime;//消えるまでの時間
 
     [SerializeField, Header("クレバーエネミーをいれる")] GameObject kraberEnmy;

@@ -60,7 +60,7 @@ public class StealEnemy : MonoBehaviour
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
-            SceneManager.LoadScene("GameClear");
+            //SceneManager.LoadScene("GameClear");
         }
 
         

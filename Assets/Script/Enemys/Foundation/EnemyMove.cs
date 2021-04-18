@@ -71,7 +71,7 @@ public class EnemyMove : MonoBehaviour
         {
             gameObject.SetActive(false);//非表示
             //SceneManager.LoadScene("Result");
-            SceneManager.LoadScene("GameClear");
+            //SceneManager.LoadScene("GameClear");
 
         }
 
