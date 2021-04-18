@@ -23,9 +23,10 @@ public class HealBall : MonoBehaviour
 
     bool hitFlag = false;  //回復玉同士が当たったか
     bool isTwisted = false;//プレイヤーがねじっているか
-    bool moveFlag = false; //false = ターゲット取得：true = 移動中
+    //bool moveFlag = false; //false = ターゲット取得：true = 移動中
 
-    int levelCount; //レベルアップ用カウント
+    //int levelCount; //レベルアップ用カウント
+    float levelCount; //レベルアップ用カウント
     int deleteCount;//消滅用カウント
     int healLevel;  //回復レベル
     int playerLevel;//プレイヤーのねじレベル取得
@@ -52,38 +53,90 @@ public class HealBall : MonoBehaviour
         Death    //死亡
     }State state = State.Level1;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         //60かけて秒にする。
-        for(int i = 0;i<levelUpTime.Length;i++)
+        for (int i = 0; i < levelUpTime.Length; i++)
         {
             levelUpTime[i] *= 60.0f;
         }
 
         levelCount = 0;
         deleteCount = 0;
-        healLevel = 0;
+        //healLevel = 0;
+        healLevel = 1;
+
+        transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
         meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer.material.color = Color.yellow;
+        //meshRenderer.material.color = Color.yellow;
 
         //manager = GameObject.Find("Manager").GetComponent<TestManager>();
         //manager.AddList(this);//リストに自分を追加
 
         //タグがPlayerのオブジェクトを取得
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player = GameObject.Find("SlimePlayer").GetComponent<Player>();
+        Debug.Log(player.name);
 
         //particleSystem = transform.GetChild(0).GetComponent<ParticleSystem>();
         //particleSystem.gameObject.SetActive(false);
     }
 
-    void FixedUpdate()
+    private void Start()
     {
-        Move();       //移動
+        ////60かけて秒にする。
+        //for (int i = 0; i < levelUpTime.Length; i++)
+        //{
+        //    levelUpTime[i] *= 60.0f;
+        //}
+
+        //levelCount = 0;
+        //deleteCount = 0;
+        ////healLevel = 0;
+        //healLevel = 1;
+
+        //transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+        //meshRenderer = GetComponent<MeshRenderer>();
+        ////meshRenderer.material.color = Color.yellow;
+
+        ////manager = GameObject.Find("Manager").GetComponent<TestManager>();
+        ////manager.AddList(this);//リストに自分を追加
+
+        ////タグがPlayerのオブジェクトを取得
+        ////player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //player = GameObject.Find("SlimePlayer").GetComponent<Player>();
+        //Debug.Log(player.name);
+
+        ////particleSystem = transform.GetChild(0).GetComponent<ParticleSystem>();
+        ////particleSystem.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+
+
         ChangeState();//状態カウント
         SetAction();  //行動変化
+
+        if (player == null)
+        {
+            meshRenderer.material.color = Color.gray;
+        }
+
+        Move();       //移動
     }
+
+    //void FixedUpdate()
+    //{
+    //    Move();       //移動
+    //    ChangeState();//状態カウント
+    //    SetAction();  //行動変化
+
+    //    meshRenderer.material.color = Color.red;
+    //}
 
     //IEnumerator ParticleWorks()
     //{
@@ -96,9 +149,10 @@ public class HealBall : MonoBehaviour
     /// </summary>
     void Move()
     {
+        if (player == null) return;
+
         //プレイヤーがねじっているかを取得
         isTwisted = player.GetTwisted();
-
 
         if(isTwisted == true)
         {
@@ -141,30 +195,6 @@ public class HealBall : MonoBehaviour
         {
             moveState = 0;
         }
-
-
-
-
-        //if (isTwisted)
-        //{
-        //    if (moveFlag == false)
-        //    {
-        //        //ターゲットの位置を1度だけ取得
-        //        playerPos = player.GetPosition();
-        //        moveFlag = true;
-        //    }
-        //    else
-        //    {
-        //        //ターゲットへの向きを取得
-        //        Vector3 direction = playerPos - this.transform.position;
-
-        //        //正規化
-        //        direction.Normalize();
-
-        //        this.transform.position += direction * speed * Time.deltaTime;
-        //    }
-        //}
-        //else moveFlag = false;
     }
 
     /// <summary>
@@ -172,6 +202,8 @@ public class HealBall : MonoBehaviour
     /// </summary>
     void ChangeState()
     {
+        
+
         //レベルが3以上になったら死へのカウントダウンを開始
         if (healLevel == 3)
         {
@@ -194,6 +226,7 @@ public class HealBall : MonoBehaviour
         if (moveState ==2 || levelCount > levelUpTime[1]) return;
         
         levelCount++;//値を増やし続ける～
+        //levelCount += Time.deltaTime * 60.0f;
 
         if (levelCount >= levelUpTime[0])
         {
