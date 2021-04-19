@@ -737,6 +737,9 @@ public class Player : MonoBehaviour
     {
         if (isDamage) return;
 
+        //音を止めたい
+        audioSource.Stop();
+
         if (currentHp > 0)
         {
             currentHp -= damage;
