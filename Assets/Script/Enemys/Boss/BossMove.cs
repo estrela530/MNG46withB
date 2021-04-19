@@ -76,7 +76,48 @@ public class BossMove : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+        if(MoveFlag)
+        {
+            //召喚
+            if (enemyHP <= ChangePawnHP)
+            {
+                Pawn();
+            }
 
+            dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
+
+            //追いかける
+            if (MoveFlag)
+            {
+                this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+            }
+
+            //突進を実行するまで時間を足す
+            RushRunTime += Time.deltaTime;
+
+            if (RushRunTime >= RushIntarval)
+            {
+                RushFlag = true;
+                RushRunTime = 0;
+            }
+            //突進の処理
+            if (RushFlag)
+            {
+                MoveFlag = false;
+                lookTime += Time.deltaTime;
+
+                //見つめてる
+                if (lookTime <= freezeTime)
+                {
+                    this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+                }
+                //突進する
+                if (lookTime >= freezeTime)
+                {
+                    transform.position += transform.forward * RushSpeed * Time.deltaTime;//前進(スピードが変わる)
+                }
+            }
+        }
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
@@ -84,45 +125,7 @@ public class BossMove : MonoBehaviour
             SceneManager.LoadScene("GameClear");
         }
 
-        //召喚
-        if(enemyHP <= ChangePawnHP)
-        {
-            Pawn();
-        }
-
-        dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-        
-        //追いかける
-        if (MoveFlag)
-        {
-            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-        }
-
-        //突進を実行するまで時間を足す
-        RushRunTime += Time.deltaTime;
-
-        if(RushRunTime >=RushIntarval)
-        {
-            RushFlag = true;
-            RushRunTime = 0;
-        }
-        //突進の処理
-        if (RushFlag)
-        {
-            MoveFlag = false;
-            lookTime += Time.deltaTime;
-
-            //見つめてる
-            if (lookTime <= freezeTime)
-            {
-                this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-            }
-            //突進する
-            if (lookTime >= freezeTime)
-            {
-                transform.position += transform.forward * RushSpeed * Time.deltaTime;//前進(スピードが変わる)
-            }
-        }
+       
     }
 
     //召喚する処理

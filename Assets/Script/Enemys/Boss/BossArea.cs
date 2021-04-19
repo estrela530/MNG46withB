@@ -29,9 +29,17 @@ public class BossArea : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
-        //dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
+        
+    }
 
-        //this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+    public void OnTriggerStay(Collider other)
+    {
+        
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Boss.GetComponent<BossMove>().MoveFlag = true;
+            
+        }
     }
 
 
