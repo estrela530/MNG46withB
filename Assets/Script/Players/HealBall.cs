@@ -27,7 +27,7 @@ public class HealBall : MonoBehaviour
 
     //int levelCount; //レベルアップ用カウント
     float levelCount; //レベルアップ用カウント
-    int deleteCount;//消滅用カウント
+    float deleteCount;//消滅用カウント
     int healLevel;  //回復レベル
     int playerLevel;//プレイヤーのねじレベル取得
 
@@ -37,7 +37,6 @@ public class HealBall : MonoBehaviour
 
     int moveState = 0;
     float moveDistance;//プレイヤーとの距離を入れるよう
-
 
     //ParticleSystem particleSystem;
 
@@ -56,11 +55,11 @@ public class HealBall : MonoBehaviour
 
     private void Awake()
     {
-        //60かけて秒にする。
-        for (int i = 0; i < levelUpTime.Length; i++)
-        {
-            levelUpTime[i] *= 60.0f;
-        }
+        ////60かけて秒にする。
+        //for (int i = 0; i < levelUpTime.Length; i++)
+        //{
+        //    levelUpTime[i] *= 60.0f;
+        //}
 
         levelCount = 0;
         deleteCount = 0;
@@ -181,6 +180,11 @@ public class HealBall : MonoBehaviour
             }
             if(moveState == 2)
             {
+                if(player.GetTestBool())
+                {
+                    speed = 10;
+                }
+
                 //ターゲットへの向きを取得
                 Vector3 direction = playerPos - this.transform.position;
 
@@ -206,7 +210,7 @@ public class HealBall : MonoBehaviour
         //レベルが3以上になったら死へのカウントダウンを開始
         if (healLevel == 3)
         {
-            deleteCount++;
+            deleteCount += Time.deltaTime;
 
             //タイムアップで消滅
             if (deleteCount >= levelUpTime[2])
@@ -224,8 +228,7 @@ public class HealBall : MonoBehaviour
         //吸い込み中はレベルアップしないようにする。
         if (moveState ==2 || levelCount > levelUpTime[1]) return;
         
-        levelCount++;//値を増やし続ける～
-        //levelCount += Time.deltaTime * 60.0f;
+        levelCount += Time.deltaTime; ;//値を増やし続ける～
 
         if (levelCount >= levelUpTime[0])
         {

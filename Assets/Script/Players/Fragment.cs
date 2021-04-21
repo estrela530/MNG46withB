@@ -104,9 +104,10 @@ public class Fragment : MonoBehaviour
         //テスト↓ : 壁に当たったら削除
         if (other.gameObject.CompareTag("Wall"))
         {
-            Vector3 pos = this.transform.position;
-
-            GameObject pre = Instantiate(healBall, pos, Quaternion.identity) as GameObject;
+            //回復玉の生成位置を決める
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+           
+            GameObject pre = Instantiate(healBall, new Vector3(pos.x, pos.y + 0.2f, pos.z), Quaternion.identity) as GameObject;
 
             ResetPosition();
         }
