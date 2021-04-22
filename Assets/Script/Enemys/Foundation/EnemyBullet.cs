@@ -16,7 +16,7 @@ public class EnemyBullet : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.position += transform.forward * bullteSpeed * Time.deltaTime;
         Destroy(this.gameObject,desthTime);
@@ -24,7 +24,9 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.CompareTag("Wall")
+            ||other.gameObject.CompareTag("Fragmant")
+            || other.gameObject.CompareTag("Player"))
         {
             Destroy(this.gameObject);
         }

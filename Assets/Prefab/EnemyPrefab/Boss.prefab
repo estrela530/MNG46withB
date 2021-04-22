@@ -340,7 +340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7754000853940561016
 Transform:
   m_ObjectHideFlags: 0
@@ -397,8 +397,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Boss: {fileID: 7754000853222434969}
+  BossHP: {fileID: 2625669472924507511, guid: 6c925e445158bcd4b86a9800534f9ee7, type: 3}
   radius: 6
-  mesh: {fileID: 0}
 --- !u!1 &7754000853941303863
 GameObject:
   m_ObjectHideFlags: 0

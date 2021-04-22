@@ -28,7 +28,9 @@ public class KraberBallet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Wall")
-            || other.gameObject.CompareTag("Player"))
+            || other.gameObject.CompareTag("Player")
+            || other.gameObject.CompareTag("Fragmant")
+            )
         {
             Destroy(this.gameObject);
         }
