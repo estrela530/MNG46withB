@@ -31,7 +31,7 @@ public class StealEnemy : MonoBehaviour
     [Header("追う時と索敵のフラグ")]
     public bool MoveFlag = false;//追う
     public bool workFlag = true;//徘徊
-    private Vector3 firstTage;
+   // private Vector3 firstTage;
     //StealArea取得
     StealArea stealArea;
     [SerializeField]
@@ -45,7 +45,7 @@ public class StealEnemy : MonoBehaviour
         //Target = GameObject.FindGameObjectWithTag("Player");
         Target = GameObject.FindGameObjectWithTag("HealBall");
         rigid = GetComponent<Rigidbody>();
-        firstTage = new Vector3();
+        //firstTage = new Vector3();
         stealArea = aria.GetComponent<StealArea>();
         //areaGetFlag = false;
         targetBallObject = null;

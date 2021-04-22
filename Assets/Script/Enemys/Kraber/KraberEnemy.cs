@@ -23,8 +23,8 @@ public class KraberEnemy : MonoBehaviour
     Rigidbody rigid;
     [SerializeField]
 
-    private float workeAria1 = 1;//
-    private float workeAria2 = 1;//
+   // private float workeAria1 = 1;//
+    //private float workeAria2 = 1;//
 
     private float Rspeed;
 
@@ -37,7 +37,7 @@ public class KraberEnemy : MonoBehaviour
     public GameObject workObj1;
    // public GameObject workObj2;
 
-    int workNumber = 1;
+    //int workNumber = 1;
 
     [Header("索敵時のスピード")]
     public float speed;

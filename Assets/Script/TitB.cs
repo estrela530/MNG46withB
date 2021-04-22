@@ -7,13 +7,13 @@ using UnityEngine.EventSystems;
 public class TitB : MonoBehaviour
 {
     public AudioClip buttonSE;
-    AudioSource audioSource;
+    //AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         //コンポーネントゲッツ！
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -29,7 +29,7 @@ public class TitB : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
-            audioSource.PlayOneShot(buttonSE);
+            //audioSource.PlayOneShot(buttonSE);
             SceneManager.LoadScene("Title");
         }
     }

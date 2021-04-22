@@ -11,7 +11,6 @@ public class ClearStageUI : MonoBehaviour
     SceneGR sGR;
     [SerializeField]
     private GameObject sGRP;
-    int sText = 0;
 
     //今は仮段階、　後にはこのstageNumberにクリアしたシーンから受け取るシーン番号を代入できるようにする
     int stageNumber = 1;

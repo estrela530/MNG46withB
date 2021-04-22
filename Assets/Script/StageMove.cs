@@ -34,10 +34,10 @@ public class StageMove : MonoBehaviour
 
     public bool nowFlag;
 
-    bool positionMove12;
-    bool positionMove23;
-    bool positionMove34;
-    bool positionMove4B;
+    bool positionMove12 = false;
+    bool positionMove23 = false;
+    bool positionMove34 = false;
+    bool positionMove4B = false;
 
     Player player;
     Transition transition;

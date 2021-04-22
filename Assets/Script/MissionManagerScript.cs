@@ -20,7 +20,7 @@ public class MissionManagerScript : MonoBehaviour
     
     //TimerScript timerScript;
     float clearSeconds;
-    float missionClearCount;
+    //float missionClearCount;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class MissionManagerScript : MonoBehaviour
         fadeCount = 0;
         clearSeconds = 0;
         //ミッション用の数値「全滅ミッション」
-        missionClearCount = 10;
+        //missionClearCount = 10;
         //timerScript = GetComponent<TimerScript>();
 
         //もしステージごとにリザルトをさすのであれば変更が必要
