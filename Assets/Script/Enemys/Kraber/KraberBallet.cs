@@ -29,7 +29,7 @@ public class KraberBallet : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Wall")
             || other.gameObject.CompareTag("Player")
-            || other.gameObject.CompareTag("Fragmant")
+            || other.gameObject.CompareTag("Fragment")
             )
         {
             Destroy(this.gameObject);

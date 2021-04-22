@@ -23,7 +23,8 @@ public class BossBullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Wall")
-            || other.gameObject.CompareTag("Player"))
+            || other.gameObject.CompareTag("Player")
+            || other.gameObject.CompareTag("Fragment"))
         {
             Destroy(this.gameObject);
         }

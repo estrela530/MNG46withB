@@ -1349,8 +1349,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Boss: {fileID: 165687998}
+  BossHP: {fileID: 0}
   radius: 6
-  mesh: {fileID: 0}
 --- !u!54 &850787937
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2944,6 +2944,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 7.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977676809521044811, guid: 0e63a583bb91bc24fa5d1c4ad2159546,
+        type: 3}
+      propertyPath: intarval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977676810045266171, guid: 0e63a583bb91bc24fa5d1c4ad2159546,
+        type: 3}
+      propertyPath: m_Radius
+      value: 19.32
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e63a583bb91bc24fa5d1c4ad2159546, type: 3}
