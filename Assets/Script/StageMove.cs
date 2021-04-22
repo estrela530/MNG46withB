@@ -138,7 +138,7 @@ public class StageMove : MonoBehaviour
             {
                 Stage5();
             }//プレイヤーのポジションゴール(旗)にたどり着いた時に今がボスステージならゲームクリアフラグ
-             else if  (bossNow)
+            else if (bossNow)
             {
                 StageBoss();
             }
@@ -200,9 +200,10 @@ public class StageMove : MonoBehaviour
         if (stage2Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= fadeMax)
+            if (fadeCount >= fadeMax && positionMove23 == false)
             {
                 GameObject.Find("SlimePlayer").transform.position = stage3StartPosition.transform.position;
+                positionMove23 = true;
             }
 
             fadeManager23.SetActive(true);
@@ -239,9 +240,10 @@ public class StageMove : MonoBehaviour
         if (stage3Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= fadeMax)
+            if (fadeCount >= fadeMax && positionMove34 == false)
             {
                 GameObject.Find("SlimePlayer").transform.position = stage4StartPosition.transform.position;
+                positionMove34 = true;
             }
 
             fadeManager34.SetActive(true);
@@ -278,9 +280,10 @@ public class StageMove : MonoBehaviour
         if (stage4Clear == true)
         {
             fadeCount++;
-            if (fadeCount >= fadeMax)
+            if (fadeCount >= fadeMax && positionMove4B == false)
             {
                 GameObject.Find("SlimePlayer").transform.position = stage5StartPosition.transform.position;
+                positionMove4B = true;
             }
 
             fadeManager4B.SetActive(true);
@@ -359,7 +362,7 @@ public class StageMove : MonoBehaviour
         {
             bossClear = false;
             bossNow = false;
-            SceneManager.LoadScene("GameClear");      
+            SceneManager.LoadScene("GameClear");
             //0415Playerとのやつができたら削除（デバッグ用）
             nowFlag = false;
 
