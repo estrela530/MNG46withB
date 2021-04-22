@@ -78,8 +78,8 @@ public class Player : MonoBehaviour
     private float saveValue;//体力一時保存用
     private float moveCount = 0.5f;//移動SEの鳴らす間隔
 
-    float[] preTrigger = new float[2];//LT,RTトリガーの保存用キー
-    float[] nowTrigger = new float[2];//LT,RTトリガーの取得用キー
+    float[] preTrigger = new float[4];//LT,RT,Vertical,Horizontalトリガーの保存用キー
+    float[] nowTrigger = new float[4];//LT,RT,Vertical,Horizontalトリガーの取得用キー
 
     public static int debugDamageCount = 0;
     public static int debugTwistedCount = 0;
@@ -91,33 +91,43 @@ public class Player : MonoBehaviour
 
     Vector3 testVel;
 
+    Vector3 test;
+    bool testBool;
+    int testInt;
+    float testAngle;
+    float preAngle = 0;
+
     /// <summary>
     /// LT,RTトリガーの入力用
     /// </summary>
     private enum Keys
     {
         L_Trigger = 0,
-        R_Trigger = 1
+        R_Trigger = 1,
+        Vertical = 2,
+        Horizontal = 3
     }
     Keys key;
 
+    #region カクカクの回転の方向Enum
+    ///// <summary>
+    ///// プレイヤーの向いてる方向
+    ///// </summary>
+    //enum Direction
+    //{
+    //    UP,   //上
+    //    DOWN, //下
+    //    RIGHT,//右
+    //    LEFT, //左
 
-    /// <summary>
-    /// プレイヤーの向いてる方向
-    /// </summary>
-    enum Direction
-    {
-        UP,   //上
-        DOWN, //下
-        RIGHT,//右
-        LEFT, //左
+    //    TOP_RIGHT, //右上
+    //    TOP_LEFT,  //左上
+    //    DOWN_RIGHT,//右下
+    //    DOWN_LEFT  //左下
+    //}
+    //Direction direction = Direction.DOWN;
+    #endregion
 
-        TOP_RIGHT, //右上
-        TOP_LEFT,  //左上
-        DOWN_RIGHT,//右下
-        DOWN_LEFT  //左下
-    }
-    Direction direction = Direction.DOWN;
 
     void Start()
     {
@@ -166,9 +176,47 @@ public class Player : MonoBehaviour
     {
         nowTrigger[0] = Input.GetAxisRaw("L_Trigger");
         nowTrigger[1] = Input.GetAxisRaw("R_Trigger");
+        nowTrigger[2] = Input.GetAxisRaw("Horizontal");
+        nowTrigger[3] = Input.GetAxisRaw("Vertical");
 
         InputVelocity();//移動用のキー入力を行う
-        TwistedChange();//ねじチェンジ
+        TwistedChange();//ねじチェンジ      
+
+
+        testAngle = Mathf.Atan2(nowTrigger[2], nowTrigger[3]) * Mathf.Rad2Deg;
+
+        if(testAngle < 0)
+        {
+            testAngle += 360;
+        }
+
+        if(preAngle != testAngle)
+        {
+            //Debug.Log("違う！！");
+            testBool = true;
+        }
+        else if(preAngle == testAngle)
+        {
+            //Debug.Log("同じ！！");
+            testBool = false;
+        }
+
+        preAngle = testAngle;
+
+        //Debug.Log(radian);
+
+
+
+        ////入力を使う処理が終わってからキーをコピーしないと動かなかった
+        //for (int i = 0; i < nowTrigger.Length; i++)
+        //{
+        //    preTrigger[i] = nowTrigger[i];
+        //}
+    }
+
+    private void LateUpdate()
+    {
+        //テスト：入力の更新を最後にしてみる
 
         //入力を使う処理が終わってからキーをコピーしないと動かなかった
         for (int i = 0; i < nowTrigger.Length; i++)
@@ -198,8 +246,8 @@ public class Player : MonoBehaviour
     /// </summary>
     private void InputVelocity()
     {
-        //ねじっているor解放中なら動けない
-        if (isTwisted || isRelease) return;
+        ////ねじっているor解放中なら動けない
+        //if (isTwisted || isRelease) return;
 
         testVel = Vector3.zero;
 
@@ -276,52 +324,57 @@ public class Player : MonoBehaviour
         //移動していたら
         if (testVel != Vector3.zero)
         {
-            //右向きにする
-            if (testVel.x > 0)
-            {
-                direction = Direction.RIGHT;
-            }
-            //左向きにする
-            else if (testVel.x < 0)
-            {
-                direction = Direction.LEFT;
-            }
+            #region カクカク回転角度の変化
+            ////右向きにする
+            //if (testVel.x > 0)
+            //{
+            //    direction = Direction.RIGHT;
+            //}
+            ////左向きにする
+            //else if (testVel.x < 0)
+            //{
+            //    direction = Direction.LEFT;
+            //}
 
-            //上向きにする
-            if (testVel.z > 0)
-            {
-                direction = Direction.UP;
+            ////上向きにする
+            //if (testVel.z > 0)
+            //{
+            //    direction = Direction.UP;
 
-                //右上向きにする
-                if (testVel.x > 0)
-                {
-                    direction = Direction.TOP_RIGHT;
-                }
-                //左上向きにする
-                else if (testVel.x < 0)
-                {
-                    direction = Direction.TOP_LEFT;
-                }
-            }
-            //下向きにする
-            else if (testVel.z < 0)
-            {
-                direction = Direction.DOWN;
+            //    //右上向きにする
+            //    if (testVel.x > 0)
+            //    {
+            //        direction = Direction.TOP_RIGHT;
+            //    }
+            //    //左上向きにする
+            //    else if (testVel.x < 0)
+            //    {
+            //        direction = Direction.TOP_LEFT;
+            //    }
+            //}
+            ////下向きにする
+            //else if (testVel.z < 0)
+            //{
+            //    direction = Direction.DOWN;
 
-                //右下向きにする
-                if (testVel.x > 0)
-                {
-                    direction = Direction.DOWN_RIGHT;
-                }
-                //左下向きにする
-                else if (testVel.x < 0)
-                {
-                    direction = Direction.DOWN_LEFT;
-                }
-            }
-        
+            //    //右下向きにする
+            //    if (testVel.x > 0)
+            //    {
+            //        direction = Direction.DOWN_RIGHT;
+            //    }
+            //    //左下向きにする
+            //    else if (testVel.x < 0)
+            //    {
+            //        direction = Direction.DOWN_LEFT;
+            //    }
+            //}
+            #endregion
+
             ChangeDirection(); //向きの反映
-            MoveSE(0.5f, 0.2f);//足音を鳴らす
+            MoveSE(0.8f, 0.2f);//足音を鳴らす
+
+            //ねじっているor解放中なら動けない
+            if (isTwisted || isRelease) return;
 
             testVel.Normalize();
             rigid.velocity = testVel * moveSpeed;
@@ -338,7 +391,7 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="interval">間隔</param>
     /// <param name="volume">音量</param>
-    private void MoveSE(float interval,float volume)
+    private void MoveSE(float interval, float volume)
     {
         //移動中音を鳴らす
         moveCount += Time.deltaTime;
@@ -355,41 +408,46 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ChangeDirection()
     {
-        Quaternion dir = Quaternion.identity;
+        #region カクカクする回転
+        //Quaternion dir = Quaternion.identity;
+        ////現在の向きに回転させる
+        //switch (direction)
+        //{
+        //    case Direction.UP:
+        //        dir = Quaternion.Euler(0, 0, 0);
+        //        break;
+        //    case Direction.DOWN:
+        //        dir = Quaternion.Euler(0, 180f, 0);
+        //        break;
+        //    case Direction.RIGHT:
+        //        dir = Quaternion.Euler(0, 90f, 0);
+        //        break;
+        //    case Direction.LEFT:
+        //        dir = Quaternion.Euler(0, 270f, 0);
+        //        break;
+        //    case Direction.TOP_RIGHT:
+        //        dir = Quaternion.Euler(0, 45f, 0);
+        //        break;
+        //    case Direction.TOP_LEFT:
+        //        dir = Quaternion.Euler(0, 315f, 0);
+        //        break;
+        //    case Direction.DOWN_RIGHT:
+        //        dir = Quaternion.Euler(0, 135f, 0);
+        //        break;
+        //    case Direction.DOWN_LEFT:
+        //        dir = Quaternion.Euler(0, 225f, 0);
+        //        break;
+        //    default:
+        //        Debug.Log("存在しない向きに回転しようとしています。");
+        //        break;
+        //}
+        //transform.rotation = dir;//回転角度を反映
+        #endregion
 
-        //現在の向きに回転させる
-        switch (direction)
-        {
-            case Direction.UP:
-                dir = Quaternion.Euler(0, 0, 0);
-                break;
-            case Direction.DOWN:
-                dir = Quaternion.Euler(0, 180f, 0);
-                break;
-            case Direction.RIGHT:
-                dir = Quaternion.Euler(0, 90f, 0);
-                break;
-            case Direction.LEFT:
-                dir = Quaternion.Euler(0, 270f, 0);
-                break;
-            case Direction.TOP_RIGHT:
-                dir = Quaternion.Euler(0, 45f, 0);
-                break;
-            case Direction.TOP_LEFT:
-                dir = Quaternion.Euler(0, 315f, 0);
-                break;
-            case Direction.DOWN_RIGHT:
-                dir = Quaternion.Euler(0, 135f, 0);
-                break;
-            case Direction.DOWN_LEFT:
-                dir = Quaternion.Euler(0, 225f, 0);
-                break;
-            default:
-                Debug.Log("存在しない向きに回転しようとしています。");
-                break;
-        }
-
-        transform.rotation = dir;//回転角度を反映
+        #region 滑らかな回転
+        Vector3 test = new Vector3(testVel.x, 0, testVel.z) * Time.deltaTime / 2;
+        transform.localRotation = Quaternion.LookRotation(test,Vector3.up);
+        #endregion
     }
 
     /// <summary>
@@ -420,7 +478,7 @@ public class Player : MonoBehaviour
     void TwistedAccumulate()
     {
         animator.enabled = false;
-        isTwisted = true;    
+        isTwisted = true;
         testVel = Vector3.zero;
         rigid.velocity = Vector3.zero;//ねじり中は移動量を無くす
     }
@@ -541,6 +599,16 @@ public class Player : MonoBehaviour
         {
             TwistedCancel();//いつでもキャンセルできるように
 
+
+            #region MyRegion
+
+            //if (GetAxisDown(Keys.Horizontal) || GetAxisDown(Keys.Vertical))
+            //{
+            //    Debug.Log("あああああああああ");
+            //}
+
+            #endregion
+
             //1回maxNobiLengthより大きくなったらこれ以上処理しないね
             if (myScale.y >= maxNobiLength) return;
 
@@ -590,7 +658,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void ChangeLevel()
     {
-        if (neziCount > levelCount[2]) return;//これ以上は処理しない
+        //常に向きを反映させる場合、この処理はいらなくなる
+        //if (neziCount > levelCount[2]) return;//これ以上は処理しない
 
         //ねじカウントの値によるレベルの変化
         if (neziCount >= levelCount[0])
@@ -598,35 +667,40 @@ public class Player : MonoBehaviour
             //memo : 現状なんか納得いかない感じの書き方になってしまっている。
             //レベルが上がった瞬間に1度だけ呼び出せるようにしたい。
 
-            if (neziCount == levelCount[2])
+            #region 予測線に1度だけ向きを反映させる処理
+            //if (neziCount == levelCount[2])
+            //{
+            //    neziLevel = 3;
+            //    InitPredictionLine(fragmentCount[2]);
+            //}
+            //else if (neziCount == levelCount[1])
+            //{
+            //    neziLevel = 2;
+            //    InitPredictionLine(fragmentCount[1]);
+            //}
+            //else if (neziCount == levelCount[0])
+            //{
+            //    neziLevel = 1;
+            //    InitPredictionLine(fragmentCount[0]);
+            //}
+            #endregion
+
+            #region 予測線に常に向きを反映させる処理
+            if (neziCount >= levelCount[2])
             {
                 neziLevel = 3;
                 InitPredictionLine(fragmentCount[2]);
             }
-            else if (neziCount == levelCount[1])
+            else if (neziCount >= levelCount[1])
             {
                 neziLevel = 2;
                 InitPredictionLine(fragmentCount[1]);
             }
-            else if (neziCount == levelCount[0])
+            else
             {
                 neziLevel = 1;
                 InitPredictionLine(fragmentCount[0]);
             }
-
-            #region 旧レベルの変更処理
-            //if (neziCount >= levelCount[2])
-            //{
-            //    neziLevel = 3;
-            //}
-            //else if (neziCount >= levelCount[1])
-            //{
-            //    neziLevel = 2;
-            //}
-            //else
-            //{
-            //    neziLevel = 1;
-            //}
             #endregion
         }
         else
@@ -736,6 +810,9 @@ public class Player : MonoBehaviour
     private void Damage(int damage)
     {
         if (isDamage) return;
+
+        //音を止めたい
+        audioSource.Stop();
 
         if (currentHp > 0)
         {
@@ -855,6 +932,23 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 入力された瞬間
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private bool GetAxisDown(Keys key)
+    {
+        if (preTrigger[(int)key] == 0)
+        {
+            if (nowTrigger[(int)key] > 0 || nowTrigger[(int)key] < 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// 離した瞬間
     /// </summary>
     /// <param name="key"></param>
@@ -875,6 +969,11 @@ public class Player : MonoBehaviour
     public bool GetTwisted()
     {
         return isTwisted;
+    }
+
+    public bool GetTestBool()
+    {
+        return testBool;
     }
 
     /// <summary>

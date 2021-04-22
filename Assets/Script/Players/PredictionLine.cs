@@ -66,6 +66,30 @@ public class PredictionLine : MonoBehaviour
         //表示位置は初期化しておこうね!
         hitPosition = position + direction;
 
+        //Debug.Log("もらいました" + this.angle + " : " + this.position);
+
+        DrawLine();
+    }
+
+    public void InUpdate(Vector3 angle, Vector3 position)
+    {
+        this.angle = angle;
+        this.position = position;
+
+        //オブジェクトを回転する
+        transform.rotation = Quaternion.Euler(0, VectorToAngle(-angle), 0);
+        transform.position = position;
+
+        //レイの生成4/7ここでレイを生成してみた
+        lineRay.origin = position;
+        lineRay.direction = -transform.forward;
+        //始点の設定
+        lineRenderer.SetPosition(0, position);
+        //描画距離と方向の乗算
+        direction = -transform.forward * maxDistance;
+        //表示位置は初期化しておこうね!
+        hitPosition = position + direction;
+
         DrawLine();
     }
 

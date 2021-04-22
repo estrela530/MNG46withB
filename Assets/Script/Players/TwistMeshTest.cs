@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// もらったモデルがねじれるかどうかテストするクラス
+/// </summary>
 public class TwistMeshTest : MonoBehaviour
 {
     [SerializeField, Header("ねじれる速度")]
