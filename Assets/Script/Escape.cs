@@ -29,11 +29,10 @@ public class Escape : MonoBehaviour
             audioSource.PlayOneShot(buttonSE);
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-#else
-    Application.Quit();
-#endif
+#elif UNITY_STANDALONE
+      UnityEngine.Application.Quit();
+#endif        
         }
-
     }
 
     public void OnClick()
@@ -43,9 +42,9 @@ public class Escape : MonoBehaviour
             audioSource.PlayOneShot(buttonSE);
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-#else
-    Application.Quit();
-#endif
+#elif UNITY_STANDALONE
+      UnityEngine.Application.Quit();
+#endif        
         }
     }
 }
