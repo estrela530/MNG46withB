@@ -85,10 +85,10 @@ public class TwistMeshTest : MonoBehaviour
         //配列[].Length = その配列の要素数を取得
         for (int i = 0; i < newVertices.Length; i++)
         {
-            if (Mathf.Abs(vertices[i].y) < 0.3)
-            {
+            //if (Mathf.Abs(vertices[i].y) < 0.3)
+            //{
                 newVertices[i] = Quaternion.Euler(axis * twistedCount * vertices[i].y) * vertices[i];
-            }
+            //}
 
             //if (vertices[i].y > 0)
             //{
