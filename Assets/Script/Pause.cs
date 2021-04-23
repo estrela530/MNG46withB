@@ -20,7 +20,7 @@ public class Pause : MonoBehaviour
 
     // Start is called before the first frame update
     void Awake()
-    { 
+    {
         //Time.timeScale = 1f;
         //PauseUIPrefab.SetActive(false);
         //コンポーネントゲッツ！
@@ -29,9 +29,24 @@ public class Pause : MonoBehaviour
         isPause = false;
     }
 
+
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+    //    //Time.timeScale = 1f;
+    //    //PauseUIPrefab.SetActive(false);
+    //    //コンポーネントゲッツ！
+    //    //audioSource = GetComponent<AudioSource>();
+    //    selectButton = GetComponent<SelectButton>();
+    //    isPause = false;
+    //}
+
+
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("timeScale" + Time.timeScale);
+
         if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.P))
         {        
             if (!isPause)

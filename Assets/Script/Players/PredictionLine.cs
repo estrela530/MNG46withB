@@ -47,10 +47,13 @@ public class PredictionLine : MonoBehaviour
     /// </summary>
     /// <param name="angle">回転角度</param>
     /// <param name="position">生成位置</param>
-    public void Initialize(Vector3 angle, Vector3 position)
+    public void Initialize(Vector3 angle, Vector3 position,float deleteCount)
     {
         this.angle = angle;
         this.position = position;
+        maxDistance = deleteCount;
+
+        Debug.Log(maxDistance);
 
         //オブジェクトを回転する
         transform.rotation = Quaternion.Euler(0, VectorToAngle(-angle), 0);

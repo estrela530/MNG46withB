@@ -45,12 +45,14 @@ public class Fragment : MonoBehaviour
     /// <param name="angle">発射角度</param>
     /// <param name="position">発射位置</param>
     /// <param name="deleteCount">生存時間</param>
-    public void Initialize(Vector3 angle, Vector3 position, float deleteCount)
+    public void Initialize(Vector3 angle, Vector3 position, float deleteCount,float speed)
     {
         this.vectorAngle = angle;
         //位置をちょっと高くする
         this.parentPosition = new Vector3(position.x, position.y + 0.3f, position.z);
         this.deleteCount = deleteCount;
+
+        this.speed = speed;
 
         //位置初期化
         transform.position = this.parentPosition;
