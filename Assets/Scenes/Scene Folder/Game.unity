@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754353275}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1524691185e8494caf8f462dad29165, type: 3}
   m_Name: 
@@ -1581,6 +1581,11 @@ PrefabInstance:
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 7241110756744369581, guid: 82994f9a86408f148b5399885a28ccfb,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1561941973}
     - target: {fileID: 7241110756744369581, guid: 82994f9a86408f148b5399885a28ccfb,
         type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
