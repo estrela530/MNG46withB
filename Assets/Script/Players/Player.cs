@@ -97,6 +97,8 @@ public class Player : MonoBehaviour
     float testAngle;
     float preAngle = 0;
 
+    float fragmentSpeed = 10;
+
     /// <summary>
     /// LT,RTトリガーの入力用
     /// </summary>
@@ -578,7 +580,7 @@ public class Player : MonoBehaviour
             if (fragment != null)
             {
                 //この実装は、UpdateでGetComponentしているので良くない
-                fragment.GetComponent<Fragment>().Initialize(axis, transform.position, deleteCount);
+                fragment.GetComponent<Fragment>().Initialize(axis, transform.position, deleteCount,fragmentSpeed);
             }
         }
 
@@ -689,17 +691,17 @@ public class Player : MonoBehaviour
             if (neziCount >= levelCount[2])
             {
                 neziLevel = 3;
-                InitPredictionLine(fragmentCount[2]);
+                InitPredictionLine(fragmentCount[2],deleteCount[2]);
             }
             else if (neziCount >= levelCount[1])
             {
                 neziLevel = 2;
-                InitPredictionLine(fragmentCount[1]);
+                InitPredictionLine(fragmentCount[1], deleteCount[1]);
             }
             else
             {
                 neziLevel = 1;
-                InitPredictionLine(fragmentCount[0]);
+                InitPredictionLine(fragmentCount[0], deleteCount[0]);
             }
             #endregion
         }
@@ -736,7 +738,7 @@ public class Player : MonoBehaviour
     /// 予測線の生成
     /// </summary>
     /// <param name="count">生成個数</param>
-    void InitPredictionLine(int count)
+    void InitPredictionLine(int count,float deleteCount)
     {
         //https://gamelab.hatenablog.com/entry/AimForPlayer
 
@@ -752,7 +754,8 @@ public class Player : MonoBehaviour
             GameObject predictionLine = predictionPool.GetActiveObject();//生きているオブジェクトを代入
             if (predictionLine != null)
             {
-                predictionLine.GetComponent<PredictionLine>().Initialize(angle, transform.position);
+                float tester = fragmentSpeed * deleteCount;
+                predictionLine.GetComponent<PredictionLine>().Initialize(angle, transform.position,tester);
             }
         }
     }
@@ -882,6 +885,10 @@ public class Player : MonoBehaviour
         {
             Damage(1);                //ダメージ
             Destroy(other.gameObject);//毒玉を消す
+        }
+        else if(other.gameObject.CompareTag("Enemy"))
+        {
+            Damage(1);
         }
     }
 
