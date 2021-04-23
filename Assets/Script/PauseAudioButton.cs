@@ -15,7 +15,7 @@ public class PauseAudioButton : MonoBehaviour
     private GameObject PauseAudioUIPrefab;
 
     Pause pause;
-    public bool isPauseAudio;
+    public static bool isPauseAudio = false;
 
     //音関連
     public AudioClip buttonSE;
@@ -28,22 +28,20 @@ public class PauseAudioButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         //コンポーネントゲッツ！
         audioSource = GetComponent<AudioSource>();
         //PauseAudioUIPrefab.SetActive(false);
         pause = PauseUIPrefab.GetComponent<Pause>();
-        isPauseAudio = false;
+        //isPauseAudio = false;
         root = transform.root.gameObject;
     }
 
     public void OnClick()
     {
-        //Debug.Log("押された！");
 
         if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
-            //0405
             if (isPauseAudio == false)
             {
                 isPauseAudio = true;
@@ -61,7 +59,6 @@ public class PauseAudioButton : MonoBehaviour
                 PauseAudioUIPrefab.SetActive(false);
                 isPauseAudio = false;
             }
-
 
             //pABflag = root.GetComponent<pauseManager>().pMflag;
 
@@ -83,12 +80,7 @@ public class PauseAudioButton : MonoBehaviour
             //    pABflag = false;
             //}
         }
-
-
     }
-
-
-
 
     // Update is called once per frame
     void Update()
@@ -118,6 +110,7 @@ public class PauseAudioButton : MonoBehaviour
         //        PauseAudioUIPrefab.SetActive(false);
         //    }
         //}
+
         if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.P))
         {
             Time.timeScale = 1f;
@@ -125,7 +118,6 @@ public class PauseAudioButton : MonoBehaviour
             isPauseAudio = false;
             PauseUIPrefab.SetActive(false);
             PauseAudioUIPrefab.SetActive(false);
-
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))

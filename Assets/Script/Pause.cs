@@ -10,35 +10,39 @@ public class Pause : MonoBehaviour
     //　ポーズUIのインスタンス
     private GameObject pauseUIInstance;
 
-    public bool isPause = false;
+    public static bool isPause = false;
 
     SelectButton selectButton;
 
     //音関連
     public AudioClip buttonSE;
-    AudioSource audioSource;
+    //AudioSource audioSource;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        Time.timeScale = 1f;
-        PauseUIPrefab.SetActive(false);
+    void Awake()
+    { 
+        //Time.timeScale = 1f;
+        //PauseUIPrefab.SetActive(false);
         //コンポーネントゲッツ！
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
         selectButton = GetComponent<SelectButton>();
+        isPause = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.P))
-        {
+        {        
             if (!isPause)
             {
-                PauseUIPrefab.SetActive(true);
+                Debug.Log("押された");
+
                 Time.timeScale = 0f;
-                //audioSource.PlayOneShot(buttonSE);
+                PauseUIPrefab.SetActive(true);
                 isPause = true;
+                //audioSource.PlayOneShot(buttonSE);
+
                 selectButton.Wasshoi();
             }
             else
