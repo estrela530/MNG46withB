@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class TitB : MonoBehaviour
 {
     public AudioClip buttonSE;
+    Pause pause;
     //AudioSource audioSource;
 
     // Start is called before the first frame update
@@ -14,6 +15,7 @@ public class TitB : MonoBehaviour
     {
         //コンポーネントゲッツ！
         //audioSource = GetComponent<AudioSource>();
+        pause = GetComponent<Pause>();
     }
 
     void Update()
@@ -31,6 +33,8 @@ public class TitB : MonoBehaviour
         {
             //audioSource.PlayOneShot(buttonSE);
             SceneManager.LoadScene("Title");
+            //Pause.isPause = false;
+            Time.timeScale = 1f;
         }
     }
 }
