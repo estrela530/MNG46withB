@@ -120,8 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed8ea99406ad5a40ac9ded8479dcb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullteSpeed: 11
-  desthTime: 5
+  bullteSpeed: 4
+  desthTime: 8
 --- !u!54 &2662897719633597882
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0

@@ -54,12 +54,20 @@ public class KraberEnemy : MonoBehaviour
     public bool workFlag = true;//徘徊
     public bool powerFlag = false;//
 
+    [SerializeField, Header("ダメージ受けた時")]
+    bool DamageFlag;
+
+    float DamageTime;
+
+    //public MeshRenderer meshRenderer;
+
     void Start()
     {
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         color = GetComponent<Renderer>().material.color;
+        DamageFlag = false;
         //bullet.GetComponent<KraberBallet>();
         //target = Target.transform.position;
     }
@@ -69,7 +77,7 @@ public class KraberEnemy : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
-
+        //meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
@@ -119,6 +127,16 @@ public class KraberEnemy : MonoBehaviour
             }
 
         }
+
+        //ダメージ
+        if(DamageFlag)
+        {
+            if(DamageTime<1)
+            {
+                //meshRenderer.material.color = Color.black;
+                DamageTime = 0;
+            }
+        }
     }
 
     public float HpGet()
@@ -133,6 +151,7 @@ public class KraberEnemy : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
+            DamageFlag = true;
         }
         if (other.gameObject.CompareTag("Wall"))
         {
