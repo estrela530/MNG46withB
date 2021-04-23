@@ -66,4 +66,12 @@ public class PoisonBall : MonoBehaviour
         Renderer renderer = gameObject.GetComponent<Renderer>();
         DestroyImmediate(renderer.material);//マテリアルのメモリを削除
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Fragment"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
