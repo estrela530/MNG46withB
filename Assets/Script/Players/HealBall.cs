@@ -23,22 +23,17 @@ public class HealBall : MonoBehaviour
 
     bool hitFlag = false;  //回復玉同士が当たったか
     bool isTwisted = false;//プレイヤーがねじっているか
-    //bool moveFlag = false; //false = ターゲット取得：true = 移動中
+    
+    float levelCount;  //レベルアップ用カウント
+    float deleteCount; //消滅用カウント
+    float speed;       //速度の値受け取り用
+    float testSpeed;
+    float moveDistance;//プレイヤーとの距離
+    float[] twiceSpeed = new float[3];
 
-    //int levelCount; //レベルアップ用カウント
-    float levelCount; //レベルアップ用カウント
-    float deleteCount;//消滅用カウント
     int healLevel;  //回復レベル
     int playerLevel;//プレイヤーのねじレベル取得
-
-    float speed;//速度の値受け取り用
-
-
-
     int moveState = 0;
-    float moveDistance;//プレイヤーとの距離を入れるよう
-
-    //ParticleSystem particleSystem;
 
     /// <summary>
     /// 状態
@@ -55,92 +50,39 @@ public class HealBall : MonoBehaviour
 
     private void Awake()
     {
-        ////60かけて秒にする。
-        //for (int i = 0; i < levelUpTime.Length; i++)
-        //{
-        //    levelUpTime[i] *= 60.0f;
-        //}
-
         levelCount = 0;
         deleteCount = 0;
         //healLevel = 0;
         healLevel = 1;
 
+        //二倍の値を代入
+        for(int i = 0; i < inhaleSpeed.Length;i++)
+        {
+            twiceSpeed[i] = inhaleSpeed[i] * 2;
+        }
+
         transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
         meshRenderer = GetComponent<MeshRenderer>();
-        //meshRenderer.material.color = Color.yellow;
-
-        //manager = GameObject.Find("Manager").GetComponent<TestManager>();
-        //manager.AddList(this);//リストに自分を追加
 
         //タグがPlayerのオブジェクトを取得
+        //FindWithTagでできるようにしろ！
         //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         player = GameObject.Find("SlimePlayer").GetComponent<Player>();
-
-        //particleSystem = transform.GetChild(0).GetComponent<ParticleSystem>();
-        //particleSystem.gameObject.SetActive(false);
     }
 
     private void Start()
     {
-        ////60かけて秒にする。
-        //for (int i = 0; i < levelUpTime.Length; i++)
-        //{
-        //    levelUpTime[i] *= 60.0f;
-        //}
-
-        //levelCount = 0;
-        //deleteCount = 0;
-        ////healLevel = 0;
-        //healLevel = 1;
-
-        //transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
-        //meshRenderer = GetComponent<MeshRenderer>();
-        ////meshRenderer.material.color = Color.yellow;
-
-        ////manager = GameObject.Find("Manager").GetComponent<TestManager>();
-        ////manager.AddList(this);//リストに自分を追加
-
-        ////タグがPlayerのオブジェクトを取得
-        ////player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //player = GameObject.Find("SlimePlayer").GetComponent<Player>();
-        //Debug.Log(player.name);
-
-        ////particleSystem = transform.GetChild(0).GetComponent<ParticleSystem>();
-        ////particleSystem.gameObject.SetActive(false);
+        //スタートだったらfindwithtagで行けるかもしれないね
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-
+        if (player == null) meshRenderer.material.color = Color.gray;
 
         ChangeState();//状態カウント
         SetAction();  //行動変化
-
-        if (player == null)
-        {
-            meshRenderer.material.color = Color.gray;
-        }
-
         Move();       //移動
     }
-
-    //void FixedUpdate()
-    //{
-    //    Move();       //移動
-    //    ChangeState();//状態カウント
-    //    SetAction();  //行動変化
-
-    //    meshRenderer.material.color = Color.red;
-    //}
-
-    //IEnumerator ParticleWorks()
-    //{
-    //    yield return new WaitWhile(() => particleSystem.IsAlive(true));
-    //    particleSystem.gameObject.SetActive(false);
-    //}
 
     /// <summary>
     /// プレイヤーがねじっているとき移動する。
@@ -154,44 +96,40 @@ public class HealBall : MonoBehaviour
 
         if(isTwisted == true)
         {
-            if(moveState == 0)
+            switch(moveState)
             {
-                //まずは位置を取得(1度だけ)
-                playerPos = player.GetPosition();
+                case 0:
+                    //まずは位置を取得(1度だけ)
+                    playerPos = player.GetPosition();
+                    //ここでプレイヤーとの距離を計算
+                    moveDistance = Vector3.Distance(playerPos, this.transform.position);
+                    //計算が終わったら次に進む
+                    moveState = 1;
+                    break;
+                case 1:
+                    //プレイヤーのレベルを取得
+                    playerLevel = player.GetNeziLevel();
+                    //指定した範囲内にじぶんがいたら
+                    if (playerLevel == 3 && moveDistance < inhaleRange[2])
+                    {
+                        moveState = 2;
+                    }
+                    else if (playerLevel == 2 && moveDistance < inhaleRange[1])
+                    {
+                        moveState = 2;
+                    }
+                    break;
+                case 2:
 
-                //ここでプレイヤーとの距離を計算
-                moveDistance = Vector3.Distance(playerPos, this.transform.position);
-                moveState = 1;
-            }
-            if(moveState == 1)
-            {
-                //プレイヤーのレベルを取得
-                playerLevel = player.GetNeziLevel();
-
-                //指定した範囲内にじぶんがいたら
-                if(playerLevel == 3 && moveDistance < inhaleRange[2])
-                {
-                    moveState = 2;
-                }
-                else if(playerLevel == 2 && moveDistance < inhaleRange[1])
-                {
-                    moveState = 2;
-                }
-            }
-            if(moveState == 2)
-            {
-                if(player.GetTestBool())
-                {
-                    speed = 10;
-                }
-
-                //ターゲットへの向きを取得
-                Vector3 direction = playerPos - this.transform.position;
-
-                //正規化
-                direction.Normalize();
-
-                this.transform.position += direction * speed * Time.deltaTime;
+                    //ターゲットへの向きを取得
+                    Vector3 direction = playerPos - this.transform.position;
+                    //正規化
+                    direction.Normalize();
+                    //移動
+                    transform.position += direction * speed * Time.deltaTime;
+                    break;
+                default:
+                    break;
             }
         }
         else
@@ -205,8 +143,6 @@ public class HealBall : MonoBehaviour
     /// </summary>
     void ChangeState()
     {
-        
-
         //レベルが3以上になったら死へのカウントダウンを開始
         if (healLevel == 3)
         {
@@ -236,8 +172,6 @@ public class HealBall : MonoBehaviour
             else state = State.Level2;
         }
         else state = State.Level1;
-
-        //particleSystem.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -248,13 +182,25 @@ public class HealBall : MonoBehaviour
         switch (state)
         {
             case State.Level1:
-                Actions(1, Color.yellow, new Vector3(0.5f, 0.5f, 0.5f), inhaleSpeed[0]);
+                //吸い込み中かどうかを調べる
+                if (player.GetInhale())testSpeed = twiceSpeed[0];
+                else testSpeed = inhaleSpeed[0];    
+                
+                Actions(1, Color.yellow, new Vector3(0.5f, 0.5f, 0.5f), testSpeed);
                 break;
             case State.Level2:
-                Actions(2, Color.green, new Vector3(1, 1, 1), inhaleSpeed[1]);
+                //吸い込み中かどうかを調べる
+                if (player.GetInhale()) testSpeed = twiceSpeed[1];
+                else testSpeed = inhaleSpeed[1];
+
+                Actions(2, Color.green, new Vector3(1, 1, 1), testSpeed);
                 break;
             case State.Level3:
-                Actions(3, Color.black, new Vector3(1.5f, 1.5f, 1.5f), inhaleSpeed[2]);
+                //吸い込み中かどうかを調べる
+                if (player.GetInhale()) testSpeed = twiceSpeed[2];
+                else testSpeed = inhaleSpeed[2];
+
+                Actions(3, Color.black, new Vector3(1.5f, 1.5f, 1.5f), testSpeed);
                 break;
             case State.Blinking:
                 Blinking(10.0f);//点滅
@@ -277,16 +223,11 @@ public class HealBall : MonoBehaviour
     /// <param name="speed">吸収速度</param>
     void Actions(int level,Color color,Vector3 scale,float speed)
     {
+        //値を反映指せる
         healLevel = level;
         meshRenderer.material.color = color;
         transform.localScale = scale;
         this.speed = speed;
-        //---------------旧処理(各レベルごとに書く)------------
-        //healLevel = 1;
-        //meshRenderer.material.color = Color.yellow;
-        //transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        //speed = inhaleSpeed[0];
-        //-----------------------------------------------------
     }
 
     /// <summary>
@@ -308,8 +249,6 @@ public class HealBall : MonoBehaviour
 
         Renderer renderer = gameObject.GetComponent<Renderer>();
         DestroyImmediate(renderer.material);//マテリアルのメモリを削除
-        //System.GC.Collect();
-        //Resources.UnloadUnusedAssets();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -324,7 +263,6 @@ public class HealBall : MonoBehaviour
             //Other.Positionをマネージャーに渡す
 
             hitFlag = true;
-            //Debug.Log("回復同士がぶつかった");
         }
     }
 
