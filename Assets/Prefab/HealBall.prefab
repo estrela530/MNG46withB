@@ -108,15 +108,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341cfc453c955ea458c446a6ce454d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inhaleSpeed: 3
+  inhaleRange: 00000000070000000f000000
   levelUpTime:
   - 2
   - 6
   - 10
-  inhaleSpeed:
+  mInhaleSpeed:
   - 5
   - 3
   - 2
-  inhaleRange: 00000000070000000f000000
 --- !u!54 &8184494201427361179
 Rigidbody:
   m_ObjectHideFlags: 0
