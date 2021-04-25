@@ -45,7 +45,7 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("timeScale" + Time.timeScale);
+        //Debug.Log("timeScale" + Time.timeScale);
 
         if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.P))
         {        
