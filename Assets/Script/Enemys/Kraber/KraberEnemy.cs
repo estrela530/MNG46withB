@@ -59,7 +59,10 @@ public class KraberEnemy : MonoBehaviour
 
     float DamageTime;
 
-    //public MeshRenderer meshRenderer;
+    public MeshRenderer meshRenderer;
+
+    [SerializeField] float ColorInterval = 0.1f;
+    [SerializeField] float Interval = 0;
 
     void Start()
     {
@@ -70,6 +73,20 @@ public class KraberEnemy : MonoBehaviour
         DamageFlag = false;
         //bullet.GetComponent<KraberBallet>();
         //target = Target.transform.position;
+
+        //StartCoroutine("Blink");
+    }
+
+    //中断できる処理のまとまり
+    IEnumerator Blink()
+    {
+        while(true)
+        {
+            var renderComponent = GetComponent<Renderer>();
+            renderComponent.enabled = !renderComponent.enabled;
+            //何フレームとめる
+            yield return new WaitForSeconds(ColorInterval);
+        }
     }
 
     // Update is called once per frame
@@ -77,7 +94,7 @@ public class KraberEnemy : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
-        //meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
+        meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
@@ -127,15 +144,30 @@ public class KraberEnemy : MonoBehaviour
             }
 
         }
-
+        
         //ダメージ
         if(DamageFlag)
         {
-            if(DamageTime<1)
+            DamageTime += Time.deltaTime;
+            
+            if (DamageTime>1)
             {
                 //meshRenderer.material.color = Color.black;
                 DamageTime = 0;
+                //DamageFlag = false;
+                StartCoroutine("Blink");
+                DamageFlag = false;
             }
+        }
+        if(!DamageFlag)
+        {
+            Interval += Time.deltaTime;
+            if(Interval>1)
+            {
+                StopCoroutine("Blink");
+                Interval = 0;
+            }
+            
         }
     }
 

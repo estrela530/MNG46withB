@@ -10,7 +10,7 @@ public class KraberAria : MonoBehaviour
     public GameObject Kraber;
     [SerializeField]
     float radius;
-
+    Player player;
     Rigidbody rigid;
     // Start is called before the first frame update
     void Start()
@@ -34,6 +34,7 @@ public class KraberAria : MonoBehaviour
         //自分の前方からプレイヤーの方向
         var angle = Vector3.Angle(transform.forward, playerDire);
 
+       
         //触れているとき
         if (other.gameObject.CompareTag("Player"))
         {

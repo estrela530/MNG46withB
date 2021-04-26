@@ -8,9 +8,9 @@ public class OctaneAria : MonoBehaviour
     [SerializeField] private SpherecastCommand searchArea;//サーチ範囲
     [SerializeField] public float searchAngle;
     public GameObject Octane;
-
+    
     Rigidbody rigid;
-
+    
     //public float stopTime;
 
     // Start is called before the first frame update
@@ -18,11 +18,13 @@ public class OctaneAria : MonoBehaviour
     {
         Octane.GetComponent<OctaneEnemy>();
         rigid = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+       
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
     }
@@ -75,7 +77,9 @@ public class OctaneAria : MonoBehaviour
     //サーチ範囲を表示
     private void OnDrawGizmos()
     {
-        Handles.color = new Color(0.0f, 1.0f, 0.0f, 0.3f);
+       
+        
+            Handles.color = new Color(0.0f, 1.0f, 0.0f, 0.3f);
         Handles.DrawSolidArc(transform.position,
             Vector3.up,
             Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward

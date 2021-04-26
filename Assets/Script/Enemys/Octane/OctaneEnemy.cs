@@ -16,7 +16,7 @@ public class OctaneEnemy : MonoBehaviour
                       // public float area;//この数値以下になったら追う
 
 
-    [SerializeField, Header("体力")] float enemyHP = 5;
+    [Header("体力")]public float enemyHP = 5;
 
     Rigidbody rigid;
 
@@ -27,8 +27,9 @@ public class OctaneEnemy : MonoBehaviour
 
     private float ww;
     private float ww2;
-
+    Player player;
     Color color;
+    //Player player;
 
     [Header("索敵に向かう場所")]
     public GameObject workObj1;
@@ -57,10 +58,13 @@ public class OctaneEnemy : MonoBehaviour
     void Start()
     {
         Target = GameObject.FindGameObjectWithTag("Player");
+        //player = Target.GetComponent<Player>();
+        //Target = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //Debug.Log(Target.name);
         rigid = GetComponent<Rigidbody>();
         color = GetComponent<Renderer>().material.color;
         //lookTime = Time.deltaTime;
-
+        //player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -68,6 +72,11 @@ public class OctaneEnemy : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+
+        //if (Target != null)
+        //{
+        //    transform.localScale = new Vector3(2, 2, 2);
+        //}
 
         if (enemyHP <= 0)
         {

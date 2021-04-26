@@ -146,9 +146,9 @@ public class BossMove : MonoBehaviour
     }
 
 
-    public float HpGet()
+    public int HpGet()
     {
-        return enemyHP;
+        return (int)enemyHP;
     }
 
 
