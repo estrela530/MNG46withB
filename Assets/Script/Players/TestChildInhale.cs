@@ -2,25 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 回復玉クラス
-/// </summary>
-public class HealBall : InhaleObject
+public class TestChildInhale : TestParentInhale
 {
     [SerializeField, Header("レベルアップに必要な時間(成長2回、最大になってから消えるまでの時間)")]
     private float[] levelUpTime = new float[3];//(2,8,5
     [SerializeField, Tooltip("吸収時の移動速度")]
     private float[] mInhaleSpeed = new float[3];
-
-    GameObject findObject;
-
-    TestManager manager;      //回復玉管理リストを取得
+    
     MeshRenderer meshRenderer;//色変え用
-
-    Vector3 hitPosition = Vector3.zero;//回復玉同士が当たった位置
-    Vector3 playerPos = Vector3.zero;  //プレイヤーの現在位置
-
-    bool hitFlag = false;  //回復玉同士が当たったか
 
     float levelCount;  //レベルアップ用カウント
     float deleteCount; //消滅用カウント
@@ -42,13 +31,6 @@ public class HealBall : InhaleObject
     }
     State state = State.Level1;
 
-    private void Awake()
-    {
-        //まず最初にプレイヤーを探す。
-        findObject = GameObject.FindGameObjectWithTag("Player");
-        player = findObject.GetComponent<Player>();
-    }
-
     private void Start()
     {
         levelCount = 0;
@@ -63,70 +45,18 @@ public class HealBall : InhaleObject
 
         transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         meshRenderer = GetComponent<MeshRenderer>();
+
+        player = GameObject.Find("SlimePlayer").GetComponent<Player>();
     }
 
     private void FixedUpdate()
     {
-        if (player == null) meshRenderer.material.color = Color.gray;
-
         ChangeState();//状態カウント
         SetAction();  //行動変化
         base.Move();       //移動
+
+        //Debug.Log("私は子ども" + base.inhaleRange[2]);
     }
-
-    ///// <summary>
-    ///// プレイヤーがねじっているとき移動する。
-    ///// </summary>
-    //void Move()
-    //{
-    //    if (player == null) return;
-
-    //    //プレイヤーがねじっているかを取得
-    //    isTwisted = player.GetTwisted();
-
-    //    if(isTwisted == true)
-    //    {
-    //        switch(moveState)
-    //        {
-    //            case 0:
-    //                //まずは位置を取得(1度だけ)
-    //                playerPos = player.GetPosition();
-    //                //ここでプレイヤーとの距離を計算
-    //                moveDistance = Vector3.Distance(playerPos, this.transform.position);
-    //                //計算が終わったら次に進む
-    //                moveState = 1;
-    //                break;
-    //            case 1:
-    //                //プレイヤーのレベルを取得
-    //                playerLevel = player.GetNeziLevel();
-    //                //指定した範囲内にじぶんがいたら
-    //                if (playerLevel == 3 && moveDistance < inhaleRange[2])
-    //                {
-    //                    moveState = 2;
-    //                }
-    //                else if (playerLevel == 2 && moveDistance < inhaleRange[1])
-    //                {
-    //                    moveState = 2;
-    //                }
-    //                break;
-    //            case 2:
-
-    //                //ターゲットへの向きを取得
-    //                Vector3 direction = playerPos - this.transform.position;
-    //                //正規化
-    //                direction.Normalize();
-    //                //移動
-    //                transform.position += direction * speed * Time.deltaTime;
-    //                break;
-    //            default:
-    //                break;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        moveState = 0;
-    //    }
-    //}
 
     /// <summary>
     /// カウントに応じて状態を変える
@@ -211,13 +141,13 @@ public class HealBall : InhaleObject
     /// <param name="color">回復玉の色</param>
     /// <param name="scale">大きさ</param>
     /// <param name="speed">吸収速度</param>
-    void Actions(int level, Color color, Vector3 scale, float speed)
+    void Actions(int level, Color color, Vector3 scale, float mSpeed)
     {
         //値を反映指せる
         healLevel = level;
         meshRenderer.material.color = color;
         transform.localScale = scale;
-        this.speed = speed;
+        base.speed = mSpeed;
     }
 
     /// <summary>
@@ -235,25 +165,8 @@ public class HealBall : InhaleObject
     /// </summary>
     private void OnDestroy()
     {
-        //manager.RemoveList(this);
-
         Renderer renderer = gameObject.GetComponent<Renderer>();
         DestroyImmediate(renderer.material);//マテリアルのメモリを削除
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (isTwisted) return;
-
-        if (other.gameObject.CompareTag("HealBall"))
-        {
-            hitPosition = transform.position;//当たった位置保存
-
-            //ここで相手の位置を保存して、マネージャーに渡せばいいのでは？
-            //Other.Positionをマネージャーに渡す
-
-            hitFlag = true;
-        }
     }
 
     /// <summary>
@@ -263,15 +176,5 @@ public class HealBall : InhaleObject
     public int GetHealLevel()
     {
         return healLevel;
-    }
-
-    public bool GetHitFlag()
-    {
-        return hitFlag;
-    }
-
-    public Vector3 GetHitPos()
-    {
-        return hitPosition;
     }
 }

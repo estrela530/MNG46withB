@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 234456614212359710}
   m_Layer: 0
   m_Name: pCube1
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -296,17 +296,6 @@ MonoBehaviour:
   shrinkSpeed: 0.3
   maxNobiLength: 5
   levelCount: 1e000000460000007d000000
-  neziCount: 0
-  firstCreateFragment: 30
-  fragmentPrefab: {fileID: 5343818580403124431, guid: a7d28856afc8afb4a9fad14e098058f2,
-    type: 3}
-  predictionLine: {fileID: 5033132528446646438, guid: 3a0cbdba13bdf4140a9fd9c03bdef429,
-    type: 3}
-  fragmentCount: 040000000800000010000000
-  deleteCount:
-  - 0.35
-  - 0.55
-  - 10
   maxHp: 10
   decreaseHp: 0.02
   healValue:
@@ -314,6 +303,17 @@ MonoBehaviour:
   - 0.6
   - 1
   invincibleTime: 3
+  firstCreateFragment: 30
+  fragmentPrefab: {fileID: 5343818580403124431, guid: a7d28856afc8afb4a9fad14e098058f2,
+    type: 3}
+  predictionLine: {fileID: 5033132528446646438, guid: 3a0cbdba13bdf4140a9fd9c03bdef429,
+    type: 3}
+  fragmentSpeed: 10
+  fragmentCount: 040000000800000010000000
+  deleteCount:
+  - 0.35
+  - 0.55
+  - 10
   iziranaide: 0
   releaseSE: {fileID: 8300000, guid: de745f625b7fae54ab691334822aeae6, type: 3}
   twistedSE: {fileID: 8300000, guid: 51c9a98d32962e64e8d59838ae955d75, type: 3}
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 9157076451258453001}
   m_Layer: 0
   m_Name: pSphere1
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 4665322283810737324}
   m_Layer: 0
   m_Name: pSphere2
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -9,10 +9,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PredictionLinePool))]//自動的にPredictionLinePoolを追加
 public class Player : MonoBehaviour
 {
-    //↓テスト : ボタンの種類をインスペクタで変えられるようにする。
-    //[SerializeField, Header("ボタンのバージョン切り替え")]
-    //private bool bottunVersion = false;//(false = Version1 : true = Version2)
-
+    #region プレイヤーのステータス
     [SerializeField, Header("移動速度")]
     private float moveSpeed = 8.0f;
     [SerializeField, Header("伸びる速さ")]
@@ -22,43 +19,43 @@ public class Player : MonoBehaviour
     [SerializeField, Header("伸びる長さ")]
     private float maxNobiLength = 5.0f;
     [SerializeField, Header("レベルアップに必要なねじカウント")]
-    private int[] levelCount = new int[3];//(20,40,60
-    [SerializeField, Tooltip("どれくらいねじれているか(値を入れないでね!!!)")]
-    public int neziCount;
+    private int[] levelCount = new int[3];//初期値()
+    [SerializeField, Tooltip("最大体力")]
+    private float maxHp = 10;
+    [SerializeField, Tooltip("体力の減少量")]
+    private float decreaseHp = 0.01f;
+    [SerializeField, Header("回復玉のレベルによる回復量")]
+    private float[] healValue = new float[3];//初期値(0.2,0.5,1)
+    [SerializeField, Tooltip("無敵時間")]
+    private float invincibleTime = 2.0f;
+    //[SerializeField, Tooltip("どれくらいねじれているか(値を入れないでね!!!)")]
+    private int neziCount;//どれくらいねじれているか
+    #endregion
 
+    #region 欠片と回復玉
     [SerializeField, Tooltip("最初に生成しておくオブジェクトの数")]
     private int firstCreateFragment = 20;
     [SerializeField, Header("プレイヤーの欠片プレファブ")]
     private GameObject fragmentPrefab;
     [SerializeField, Header("予測線プレファブ")]
     private GameObject predictionLine;
+    [SerializeField,Header("欠片の速度")]
+    private float fragmentSpeed = 10;//後に距離計算で必要
     [SerializeField, Tooltip("レベルによる飛ばす球数")]
-    private int[] fragmentCount = new int[3];//(180,90,45
+    private int[] fragmentCount = new int[3];//初期値(180,90,45)
     [SerializeField, Header("レベルによる欠片の飛距離(時間)")]
-    private float[] deleteCount = new float[3];//(0.5,1.5,10
+    private float[] deleteCount = new float[3];//初期値(0.5,1.5,10)
+    #endregion
 
-    [SerializeField, Tooltip("最大体力")]
-    private float maxHp = 10;
-    [SerializeField, Tooltip("体力の減少量")]
-    private float decreaseHp = 0.01f;
-    [SerializeField, Header("回復玉のレベルによる回復量")]
-    private float[] healValue = new float[3];//(0.2,0.5,1
-
-    [SerializeField, Tooltip("無敵時間")]
-    private float invincibleTime = 2.0f;
-
-    [SerializeField, Header("ここから下音声------------------------------------------------------------------------------------------------------------")]
-    private int iziranaide;
+    #region サウンド関連
+    [SerializeField, Header("ここから下音声---------------------------------------------------")]
+    int iziranaide;
     private AudioSource audioSource;
     public AudioClip releaseSE;//解放した瞬間
     public AudioClip twistedSE;//ねじっているとき
     public AudioClip healSE;   //回復した瞬間
     public AudioClip cancelSE; //キャンセルした瞬間
-
-    /// <summary>
-    /// リセットしたかどうか(メッシュ側で取得&代入を行う)
-    /// </summary>
-    public bool isReset { get; set; } = false;
+    #endregion
 
     MeshRenderer meshRenderer;        //色変え用
     FragmentPool fragmentPool;        //かけらプール
@@ -67,37 +64,34 @@ public class Player : MonoBehaviour
 
     private bool isTwisted;//ねじれているかどうか
     private bool isRelease;//解放中かどうか
-    public bool isDamage; //ダメージを受けているかどうか
-    private int neziLevel; //ねじレベル
+    private bool isInhale; //吸い込んでいるか
+    public bool isDamage;  //ダメージを受けているかどうか(確認用にpublicにしてる)
 
-    private Vector3 position;//位置
-    private Vector3 velocity;//移動量
-    private Rigidbody rigid; //物理演算
+    private int neziLevel;     //ねじレベル
+    private int alphaCount = 0;//点滅用カウント
 
-    public float currentHp; //現在の体力(確認用にpublicにしてる)
-    private float saveValue;//体力一時保存用
-    private float moveCount = 0.5f;//移動SEの鳴らす間隔
+    private Vector3 position; //位置
+    private Vector3 velocity; //移動量
+    private Rigidbody rigid;  //物理演算
+    private Animator animator;//アニメーション用
+
+    public float currentHp;         //現在の体力(確認用にpublicにしてる)
+    private float saveValue;        //体力一時保存用
+    private float moveCount = 0.5f; //移動SEの鳴らす間隔
+    private float alphaTimer = 0;   //点滅時間加算用
+    private float directionAngle;   //キーの倒した角度
+    private float previousAngle = 0;//前フレームのキーを倒した角度
 
     float[] preTrigger = new float[4];//LT,RT,Vertical,Horizontalトリガーの保存用キー
     float[] nowTrigger = new float[4];//LT,RT,Vertical,Horizontalトリガーの取得用キー
 
-    public static int debugDamageCount = 0;
-    public static int debugTwistedCount = 0;
+    public static int debugDamageCount = 0; //リザルト表示用ダメージ数
+    public static int debugTwistedCount = 0;//リザルト標示用解放数
 
-    private float alphaTimer = 0;//点滅時間加算用
-    private int alphaCount = 0;  //点滅用カウント
-
-    Animator animator;//アニメーション用
-
-    Vector3 testVel;
-
-    Vector3 test;
-    bool testBool;
-    int testInt;
-    float testAngle;
-    float preAngle = 0;
-
-    float fragmentSpeed = 10;
+    /// <summary>
+    /// リセットしたかどうか(メッシュ側で取得&代入を行う)
+    /// </summary>
+    public bool isReset { get; set; } = false;
 
     /// <summary>
     /// LT,RTトリガーの入力用
@@ -130,11 +124,8 @@ public class Player : MonoBehaviour
     //Direction direction = Direction.DOWN;
     #endregion
 
-
-    void Start()
+    void Awake()
     {
-        //ねじれてる本体(子ども)の色情報を取得
-        meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         //プールの生成と、初期オブジェクトの追加
         fragmentPool = GetComponent<FragmentPool>();
         fragmentPool.CreatePool(fragmentPrefab, firstCreateFragment);
@@ -143,16 +134,16 @@ public class Player : MonoBehaviour
         predictionPool = GetComponent<PredictionLinePool>();
         predictionPool.CreatePredictionLinePool(predictionLine, fragmentCount[2]);
 
-        //移動量を消すために必要だった
+        //コンポーネントの取得
+        meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         rigid = GetComponent<Rigidbody>();
-
-        //オーディオソースを取得
         audioSource = GetComponent<AudioSource>();
-
         animator = GetComponent<Animator>();
 
+        //体力の設定
         currentHp = saveValue = maxHp;
 
+        //一番最初に初期化
         Initialize();
     }
 
@@ -184,41 +175,28 @@ public class Player : MonoBehaviour
         InputVelocity();//移動用のキー入力を行う
         TwistedChange();//ねじチェンジ      
 
+        //入力されたキー情報から角度を計算する。
+        directionAngle = Mathf.Atan2(nowTrigger[2], nowTrigger[3]) * Mathf.Rad2Deg;
 
-        testAngle = Mathf.Atan2(nowTrigger[2], nowTrigger[3]) * Mathf.Rad2Deg;
-
-        if(testAngle < 0)
+        //-180 ～ +180なのを、0～360に変換する
+        if (directionAngle < 0)
         {
-            testAngle += 360;
+            directionAngle += 360;
         }
 
-        if(preAngle != testAngle)
+        if (previousAngle != directionAngle)
         {
-            //Debug.Log("違う！！");
-            testBool = true;
+            isInhale = true;
         }
-        else if(preAngle == testAngle)
+        else if (previousAngle == directionAngle)
         {
-            //Debug.Log("同じ！！");
-            testBool = false;
+            isInhale = false;
         }
 
-        preAngle = testAngle;
-
-        //Debug.Log(radian);
-
+        //前フレームの角度をコピーする
+        previousAngle = directionAngle;
 
 
-        ////入力を使う処理が終わってからキーをコピーしないと動かなかった
-        //for (int i = 0; i < nowTrigger.Length; i++)
-        //{
-        //    preTrigger[i] = nowTrigger[i];
-        //}
-    }
-
-    private void LateUpdate()
-    {
-        //テスト：入力の更新を最後にしてみる
 
         //入力を使う処理が終わってからキーをコピーしないと動かなかった
         for (int i = 0; i < nowTrigger.Length; i++)
@@ -248,13 +226,10 @@ public class Player : MonoBehaviour
     /// </summary>
     private void InputVelocity()
     {
-        ////ねじっているor解放中なら動けない
-        //if (isTwisted || isRelease) return;
+        velocity = Vector3.zero;
 
-        testVel = Vector3.zero;
-
-        testVel.x = Input.GetAxisRaw("Horizontal");
-        testVel.z = Input.GetAxisRaw("Vertical");
+        velocity.x = Input.GetAxisRaw("Horizontal");
+        velocity.z = Input.GetAxisRaw("Vertical");
 
         #region RigidBodyを使わなかった頃の移動
         //velocity = Vector3.zero;
@@ -324,7 +299,7 @@ public class Player : MonoBehaviour
     private void MoveDirection()
     {
         //移動していたら
-        if (testVel != Vector3.zero)
+        if (velocity != Vector3.zero)
         {
             #region カクカク回転角度の変化
             ////右向きにする
@@ -378,8 +353,8 @@ public class Player : MonoBehaviour
             //ねじっているor解放中なら動けない
             if (isTwisted || isRelease) return;
 
-            testVel.Normalize();
-            rigid.velocity = testVel * moveSpeed;
+            velocity.Normalize();
+            rigid.velocity = velocity * moveSpeed;
         }
         else//移動していなかったら
         {
@@ -389,7 +364,7 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 移動中のSEを鳴らす
+    /// 移動中の足音SEを鳴らす
     /// </summary>
     /// <param name="interval">間隔</param>
     /// <param name="volume">音量</param>
@@ -398,6 +373,7 @@ public class Player : MonoBehaviour
         //移動中音を鳴らす
         moveCount += Time.deltaTime;
 
+        //一定時間ごとに音を鳴らす
         if (moveCount > interval)
         {
             audioSource.PlayOneShot(releaseSE, volume);
@@ -447,8 +423,8 @@ public class Player : MonoBehaviour
         #endregion
 
         #region 滑らかな回転
-        Vector3 test = new Vector3(testVel.x, 0, testVel.z) * Time.deltaTime / 2;
-        transform.localRotation = Quaternion.LookRotation(test,Vector3.up);
+        Vector3 test = new Vector3(velocity.x, 0, velocity.z) * Time.deltaTime / 2;
+        transform.localRotation = Quaternion.LookRotation(test, Vector3.up);
         #endregion
     }
 
@@ -481,7 +457,7 @@ public class Player : MonoBehaviour
     {
         animator.enabled = false;
         isTwisted = true;
-        testVel = Vector3.zero;
+        velocity = Vector3.zero;
         rigid.velocity = Vector3.zero;//ねじり中は移動量を無くす
     }
 
@@ -580,7 +556,7 @@ public class Player : MonoBehaviour
             if (fragment != null)
             {
                 //この実装は、UpdateでGetComponentしているので良くない
-                fragment.GetComponent<Fragment>().Initialize(axis, transform.position, deleteCount,fragmentSpeed);
+                fragment.GetComponent<Fragment>().Initialize(axis, transform.position, deleteCount, fragmentSpeed);
             }
         }
 
@@ -600,16 +576,6 @@ public class Player : MonoBehaviour
         if (isTwisted)
         {
             TwistedCancel();//いつでもキャンセルできるように
-
-
-            #region MyRegion
-
-            //if (GetAxisDown(Keys.Horizontal) || GetAxisDown(Keys.Vertical))
-            //{
-            //    Debug.Log("あああああああああ");
-            //}
-
-            #endregion
 
             //1回maxNobiLengthより大きくなったらこれ以上処理しないね
             if (myScale.y >= maxNobiLength) return;
@@ -660,7 +626,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void ChangeLevel()
     {
-        //常に向きを反映させる場合、この処理はいらなくなる
+        //↓常に向きを反映させる場合、この処理はいらなくなる
         //if (neziCount > levelCount[2]) return;//これ以上は処理しない
 
         //ねじカウントの値によるレベルの変化
@@ -691,7 +657,7 @@ public class Player : MonoBehaviour
             if (neziCount >= levelCount[2])
             {
                 neziLevel = 3;
-                InitPredictionLine(fragmentCount[2],deleteCount[2]);
+                InitPredictionLine(fragmentCount[2], deleteCount[2]);
             }
             else if (neziCount >= levelCount[1])
             {
@@ -738,7 +704,7 @@ public class Player : MonoBehaviour
     /// 予測線の生成
     /// </summary>
     /// <param name="count">生成個数</param>
-    void InitPredictionLine(int count,float deleteCount)
+    void InitPredictionLine(int count, float deleteCount)
     {
         //https://gamelab.hatenablog.com/entry/AimForPlayer
 
@@ -754,8 +720,9 @@ public class Player : MonoBehaviour
             GameObject predictionLine = predictionPool.GetActiveObject();//生きているオブジェクトを代入
             if (predictionLine != null)
             {
-                float tester = fragmentSpeed * deleteCount;
-                predictionLine.GetComponent<PredictionLine>().Initialize(angle, transform.position,tester);
+                //速度(速さ)と生存時間(時間)から、予測線の長さ(距離)を計算する。
+                float distance = fragmentSpeed * deleteCount;
+                predictionLine.GetComponent<PredictionLine>().Initialize(angle, transform.position, distance);
             }
         }
     }
@@ -792,8 +759,6 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        //memo : 予期せぬエラーが起こる可能性あり
-        //memo : 4/16↑を修正
         //最大体力以上にはならない。
         if (currentHp >= maxHp)
         {
@@ -832,7 +797,8 @@ public class Player : MonoBehaviour
 
         if (currentHp < 1.0f)
         {
-            Debug.Log("死んだよ");
+            //死んだらシーン遷移
+            //memo : ここも死んだらフラグをtrueにしてそれをどっかに伝えるようにした方がいい
             SceneManager.LoadScene("GameOver");
         }
     }
@@ -886,7 +852,7 @@ public class Player : MonoBehaviour
             Damage(1);                //ダメージ
             Destroy(other.gameObject);//毒玉を消す
         }
-        else if(other.gameObject.CompareTag("Enemy"))
+        else if (other.gameObject.CompareTag("Enemy"))
         {
             Damage(1);
         }
@@ -902,11 +868,11 @@ public class Player : MonoBehaviour
         {
             Damage(1);
         }
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            //移動量を0にする。
-            rigid.velocity = Vector3.zero;
-        }
+        //if (collision.gameObject.CompareTag("Wall"))
+        //{
+        //    //移動量を0にする。
+        //    rigid.velocity = Vector3.zero;
+        //}
     }
 
     /// <summary>
@@ -978,9 +944,13 @@ public class Player : MonoBehaviour
         return isTwisted;
     }
 
-    public bool GetTestBool()
+    /// <summary>
+    /// 吸い込んでいるか
+    /// </summary>
+    /// <returns></returns>
+    public bool GetInhale()
     {
-        return testBool;
+        return isInhale;
     }
 
     /// <summary>
