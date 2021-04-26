@@ -12,6 +12,8 @@ public class HealBall : InhaleObject
     [SerializeField, Tooltip("吸収時の移動速度")]
     private float[] mInhaleSpeed = new float[3];
 
+    GameObject findObject;
+
     TestManager manager;      //回復玉管理リストを取得
     MeshRenderer meshRenderer;//色変え用
 
@@ -19,7 +21,7 @@ public class HealBall : InhaleObject
     Vector3 playerPos = Vector3.zero;  //プレイヤーの現在位置
 
     bool hitFlag = false;  //回復玉同士が当たったか
-    
+
     float levelCount;  //レベルアップ用カウント
     float deleteCount; //消滅用カウント
     float testSpeed;
@@ -37,30 +39,30 @@ public class HealBall : InhaleObject
         Level3,  //2回成長
         Blinking,//点滅
         Death    //死亡
-    }State state = State.Level1;
+    }
+    State state = State.Level1;
 
+    private void Awake()
+    {
+        //まず最初にプレイヤーを探す。
+        findObject = GameObject.FindGameObjectWithTag("Player");
+        player = findObject.GetComponent<Player>();
+    }
 
     private void Start()
     {
         levelCount = 0;
         deleteCount = 0;
-        //healLevel = 0;
         healLevel = 1;
 
         //二倍の値を代入
-        for (int i = 0; i < mInhaleSpeed.Length;i++)
+        for (int i = 0; i < mInhaleSpeed.Length; i++)
         {
             twiceSpeed[i] = mInhaleSpeed[i] * 2;
         }
 
         transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         meshRenderer = GetComponent<MeshRenderer>();
-
-        //タグがPlayerのオブジェクトを取得
-        //FindWithTagでできるようにしろ！
-        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //Debug.Log(player.name);
-        player = GameObject.Find("SlimePlayer").GetComponent<Player>();
     }
 
     private void FixedUpdate()
@@ -150,8 +152,8 @@ public class HealBall : InhaleObject
         }
 
         //吸い込み中はレベルアップしないようにする。
-        if (moveState ==2 || levelCount > levelUpTime[1]) return;
-        
+        if (moveState == 2 || levelCount > levelUpTime[1]) return;
+
         levelCount += Time.deltaTime; ;//値を増やし続ける～
 
         if (levelCount >= levelUpTime[0])
@@ -171,9 +173,9 @@ public class HealBall : InhaleObject
         {
             case State.Level1:
                 //吸い込み中かどうかを調べる
-                if (player.GetInhale())testSpeed = twiceSpeed[0];
-                else testSpeed = mInhaleSpeed[0];    
-                
+                if (player.GetInhale()) testSpeed = twiceSpeed[0];
+                else testSpeed = mInhaleSpeed[0];
+
                 Actions(1, Color.yellow, new Vector3(0.5f, 0.5f, 0.5f), testSpeed);
                 break;
             case State.Level2:
@@ -209,7 +211,7 @@ public class HealBall : InhaleObject
     /// <param name="color">回復玉の色</param>
     /// <param name="scale">大きさ</param>
     /// <param name="speed">吸収速度</param>
-    void Actions(int level,Color color,Vector3 scale,float speed)
+    void Actions(int level, Color color, Vector3 scale, float speed)
     {
         //値を反映指せる
         healLevel = level;
@@ -243,7 +245,7 @@ public class HealBall : InhaleObject
     {
         if (isTwisted) return;
 
-        if(other.gameObject.CompareTag("HealBall"))
+        if (other.gameObject.CompareTag("HealBall"))
         {
             hitPosition = transform.position;//当たった位置保存
 
