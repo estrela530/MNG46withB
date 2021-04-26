@@ -44,7 +44,7 @@ public class EnemyUI : MonoBehaviour
         {
             Normal = this.Enemy.GetComponent<EnemyMove>();
             slider.maxValue = slider.value = Normal.HpGet();
-            currHp = (int)Kraber.HpGet();
+            currHp = (int)Normal.HpGet();
         }
 
         if (this.Enemy.GetComponent<PoisonEnemy>())
@@ -52,6 +52,13 @@ public class EnemyUI : MonoBehaviour
             Poison = this.Enemy.GetComponent<PoisonEnemy>();
             slider.maxValue = slider.value = Poison.HpGet();
             currHp = (int)Poison.HpGet();
+        }
+
+        if (this.Enemy.GetComponent<BossMove>())
+        {
+            Boss = this.Enemy.GetComponent<BossMove>();
+            slider.maxValue = slider.value = Boss.HpGet();
+            currHp = (int)Boss.HpGet();
         }
 
         //enemy = GameObject.Find("Enemy").GetComponent<BossMove>();
@@ -90,7 +97,12 @@ public class EnemyUI : MonoBehaviour
             currHp = (int)Poison.HpGet();
         }
 
-
+        else if (Enemy.GetComponent<BossMove>())
+        {
+            slider.value = Boss.HpGet();
+            currHp = (int)Boss.HpGet();
+        }
+        
         transform.rotation = Camera.main.transform.rotation;
         //Debug.Log(currHp);
 

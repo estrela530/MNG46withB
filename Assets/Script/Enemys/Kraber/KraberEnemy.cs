@@ -30,9 +30,7 @@ public class KraberEnemy : MonoBehaviour
 
     private float ww;
     private float ww2;
-
-    Color color;
-
+    
     [Header("戻る場所")]
     public GameObject workObj1;
    // public GameObject workObj2;
@@ -57,9 +55,11 @@ public class KraberEnemy : MonoBehaviour
     [SerializeField, Header("ダメージ受けた時")]
     bool DamageFlag;
 
-    float DamageTime;
+   [SerializeField] float DamageTime;
 
-    public MeshRenderer meshRenderer;
+    Renderer renderComponent;
+
+    //public MeshRenderer meshRenderer;
 
     [SerializeField] float ColorInterval = 0.1f;
     [SerializeField] float Interval = 0;
@@ -69,8 +69,10 @@ public class KraberEnemy : MonoBehaviour
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
-        color = GetComponent<Renderer>().material.color;
+        
         DamageFlag = false;
+
+        renderComponent = GetComponent<Renderer>();
         //bullet.GetComponent<KraberBallet>();
         //target = Target.transform.position;
 
@@ -82,7 +84,7 @@ public class KraberEnemy : MonoBehaviour
     {
         while(true)
         {
-            var renderComponent = GetComponent<Renderer>();
+            
             renderComponent.enabled = !renderComponent.enabled;
             //何フレームとめる
             yield return new WaitForSeconds(ColorInterval);
@@ -94,7 +96,7 @@ public class KraberEnemy : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
-        meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
+        //meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
@@ -149,26 +151,16 @@ public class KraberEnemy : MonoBehaviour
         if(DamageFlag)
         {
             DamageTime += Time.deltaTime;
-            
+            StartCoroutine("Blink");
             if (DamageTime>1)
             {
-                //meshRenderer.material.color = Color.black;
                 DamageTime = 0;
-                //DamageFlag = false;
-                StartCoroutine("Blink");
+                StopCoroutine("Blink");
+                renderComponent.enabled = true;
                 DamageFlag = false;
             }
         }
-        if(!DamageFlag)
-        {
-            Interval += Time.deltaTime;
-            if(Interval>1)
-            {
-                StopCoroutine("Blink");
-                Interval = 0;
-            }
-            
-        }
+        
     }
 
     public float HpGet()
