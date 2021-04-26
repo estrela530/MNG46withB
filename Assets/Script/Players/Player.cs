@@ -216,7 +216,7 @@ public class Player : MonoBehaviour
         MoveDirection();//移動
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
-        InvincibleTime(invincibleTime);//無敵時間     
+        InvincibleTime(invincibleTime);//無敵時間
     }
 
     /// <summary>
@@ -349,6 +349,7 @@ public class Player : MonoBehaviour
 
             ChangeDirection(); //向きの反映
             MoveSE(0.8f, 0.2f);//足音を鳴らす
+            animator.SetFloat("Speed", velocity.magnitude);
 
             //ねじっているor解放中なら動けない
             if (isTwisted || isRelease) return;
@@ -360,6 +361,8 @@ public class Player : MonoBehaviour
         {
             rigid.velocity = Vector3.zero;
             rigid.angularVelocity = Vector3.zero;
+
+            animator.SetFloat("Speed", 0.0f);
         }
     }
 
@@ -578,7 +581,7 @@ public class Player : MonoBehaviour
             TwistedCancel();//いつでもキャンセルできるように
 
             //1回maxNobiLengthより大きくなったらこれ以上処理しないね
-            if (myScale.y >= maxNobiLength) return;
+            if (myScale.y > maxNobiLength) return;
 
             //ねじっているとき上に伸びる
             myScale += new Vector3(0, extendSpeed, 0);
@@ -602,17 +605,21 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //1回1以下になったら(以下略
-            if (myScale.y <= 1.0f) return;
+            //解放中でなければ処理をしない
+            if (!isRelease) return;
 
+            //体を縮めていく
             myScale += new Vector3(0, -shrinkSpeed, 0);
 
             //赤ゲージをなめらかに現在の体力値まで減らす。
             saveValue -= 0.1f;
 
+            //大きさが一定以下になったら
             if (myScale.y <= 1.0f)
             {
+                //解放終了とみなす
                 myScale.y = 1.0f;
+                isRelease = false;
                 Initialize();//元の大きさに戻ったら初期化
             }
         }
