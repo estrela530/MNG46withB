@@ -124,6 +124,13 @@ public class Player : MonoBehaviour
     //Direction direction = Direction.DOWN;
     #endregion
 
+
+    //最後に、ねじれ中に体力が減りすぎる不具合を修正。
+    //マージはしていない。
+    
+    bool testBool = false;
+
+
     void Awake()
     {
         //プールの生成と、初期オブジェクトの追加
@@ -197,7 +204,6 @@ public class Player : MonoBehaviour
         previousAngle = directionAngle;
 
 
-
         //入力を使う処理が終わってからキーをコピーしないと動かなかった
         for (int i = 0; i < nowTrigger.Length; i++)
         {
@@ -213,10 +219,11 @@ public class Player : MonoBehaviour
     {
         //ここでは入力にラグが出てしまうため、入力以外の処理を行うといい。
 
-        MoveDirection();//移動
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
-        InvincibleTime(invincibleTime);//無敵時間     
+        InvincibleTime(invincibleTime);//無敵時間
+        MoveDirection();//移動
+        //Debug.Log("ねじり状態：" + isTwisted);
     }
 
     /// <summary>
@@ -348,10 +355,12 @@ public class Player : MonoBehaviour
             #endregion
 
             ChangeDirection(); //向きの反映
-            MoveSE(0.8f, 0.2f);//足音を鳴らす
 
             //ねじっているor解放中なら動けない
-            if (isTwisted || isRelease) return;
+            if (isTwisted || isRelease || testBool) return;
+          
+            MoveSE(0.8f, 0.2f);//足音を鳴らす
+            animator.SetFloat("Speed", velocity.magnitude);
 
             velocity.Normalize();
             rigid.velocity = velocity * moveSpeed;
@@ -360,6 +369,8 @@ public class Player : MonoBehaviour
         {
             rigid.velocity = Vector3.zero;
             rigid.angularVelocity = Vector3.zero;
+
+            animator.SetFloat("Speed", 0.0f);
         }
     }
 
@@ -456,6 +467,7 @@ public class Player : MonoBehaviour
     void TwistedAccumulate()
     {
         animator.enabled = false;
+        transform.localScale = Vector3.one;
         isTwisted = true;
         velocity = Vector3.zero;
         rigid.velocity = Vector3.zero;//ねじり中は移動量を無くす
@@ -584,6 +596,7 @@ public class Player : MonoBehaviour
             myScale += new Vector3(0, extendSpeed, 0);
             //ねじねじしてる間カウントを増やす
             neziCount++;
+            
 
             //体力を滑らかに減らす
             currentHp -= decreaseHp;
@@ -602,17 +615,21 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //1回1以下になったら(以下略
-            if (myScale.y <= 1.0f) return;
+            //解放中でなければ処理をしない
+            if (!isRelease) return;
 
+            //体を縮めていく
             myScale += new Vector3(0, -shrinkSpeed, 0);
 
             //赤ゲージをなめらかに現在の体力値まで減らす。
             saveValue -= 0.1f;
 
+            //大きさが一定以下になったら
             if (myScale.y <= 1.0f)
             {
+                //解放終了とみなす
                 myScale.y = 1.0f;
+                isRelease = false;
                 Initialize();//元の大きさに戻ったら初期化
             }
         }
@@ -775,12 +792,15 @@ public class Player : MonoBehaviour
     /// ダメージを受ける
     /// </summary>
     /// <param name="damage">ダメージ量</param>
-    private void Damage(int damage)
+    private void Damage(int damage,GameObject other)
     {
         if (isDamage) return;
 
         //音を止めたい
         audioSource.Stop();
+
+        NockBack(other, 50);
+        animator.SetTrigger("Trigger");
 
         if (currentHp > 0)
         {
@@ -802,6 +822,7 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
     }
+    
 
     /// <summary>
     /// 無敵時間
@@ -811,23 +832,35 @@ public class Player : MonoBehaviour
     {
         if (!isDamage) return;
 
-        //memo : 点滅の処理をもっとわかりやすく直す
-        alphaCount++;
 
-        if (alphaCount > 0)
-        {
-            meshRenderer.material.color = Color.red;
-        }
-        if (alphaCount > 4)
-        {
-            meshRenderer.material.color = Color.white;
-        }
-        if (alphaCount > 8)
-        {
-            alphaCount = 0;
-        }
 
         alphaTimer += Time.deltaTime;
+
+        if (alphaTimer < 1.0f)
+        {
+            velocity = Vector3.zero;
+            testBool = true;
+        }
+        else
+        {
+            testBool = false;
+
+            //memo : 点滅の処理をもっとわかりやすく直す
+            alphaCount++;
+
+            if (alphaCount > 0)
+            {
+                meshRenderer.material.color = Color.red;
+            }
+            if (alphaCount > 4)
+            {
+                meshRenderer.material.color = Color.white;
+            }
+            if (alphaCount > 8)
+            {
+                alphaCount = 0;
+            }
+        }
 
         if (time < alphaTimer)
         {
@@ -849,13 +882,29 @@ public class Player : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("PoisonBall"))
         {
-            Damage(1);                //ダメージ
+            Damage(1,other.gameObject);                //ダメージ
             Destroy(other.gameObject);//毒玉を消す
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {
-            Damage(1);
+            Damage(1, other.gameObject);
         }
+    }
+
+    /// <summary>
+    /// ノックバック処理
+    /// </summary>
+    /// <param name="other">当たったオブジェクト</param>
+    /// <param name="velocity">ノックバックの移動量</param>
+    void NockBack(GameObject other,float velocity)
+    {
+        //当たった敵の角度を取得して
+        //Wuaternionに変換しつつ正面ベクトル(0, 0 ,1)とかけて
+        //その方向に移動させたらノックバック完成
+        Vector3 angles = other.transform.localEulerAngles;
+        Vector3 directions = Quaternion.Euler(angles) * Vector3.forward;
+
+        transform.position += directions * velocity * Time.deltaTime;
     }
 
     /// <summary>
@@ -866,13 +915,8 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Damage(1);
+            Damage(1,collision.gameObject);
         }
-        //if (collision.gameObject.CompareTag("Wall"))
-        //{
-        //    //移動量を0にする。
-        //    rigid.velocity = Vector3.zero;
-        //}
     }
 
     /// <summary>

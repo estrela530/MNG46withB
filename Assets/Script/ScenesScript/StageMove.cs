@@ -71,6 +71,19 @@ public class StageMove : MonoBehaviour
     [SerializeField, Header("4-Bシーン切り替え時エフェクトPrefab")]
     GameObject fadeManager4B;
 
+    [SerializeField, Header("ステージ1Prefab")]
+    GameObject stage1Prefab;
+    [SerializeField, Header("ステージ2Prefab")]
+    GameObject stage2Prefab;
+    [SerializeField, Header("ステージ3Prefab")]
+    GameObject stage3Prefab;
+    [SerializeField, Header("ステージ4Prefab")]
+    GameObject stage4Prefab;
+    [SerializeField, Header("ステージBossPrefab")]
+    GameObject stageBossPrefab;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -93,6 +106,12 @@ public class StageMove : MonoBehaviour
         positionMove23 = false;
         positionMove34 = false;
         positionMove4B = false;
+
+        stage1Prefab.SetActive(true);
+        stage2Prefab.SetActive(false);
+        stage3Prefab.SetActive(false);
+        stage4Prefab.SetActive(false);
+        stageBossPrefab.SetActive(false);
 
         //0412バグ前
         //koko = 240;
@@ -158,10 +177,12 @@ public class StageMove : MonoBehaviour
         //プレイヤーのポジションをStage2のスタートポジションにする
         if (stage1Clear == true)
         {
+            //Time.timeScale = 0f;
             fadeCount++;
             if (fadeCount >= fadeMax && positionMove12 == false)
             {
                 GameObject.Find("SlimePlayer").transform.position = stage2StartPosition.transform.position;
+                stage2Prefab.SetActive(true);
                 positionMove12 = true;
             }
 
@@ -185,7 +206,8 @@ public class StageMove : MonoBehaviour
                 stage2Now = true;
                 fadeCount = 0;
                 fadeManager.SetActive(false);
-
+                stage1Prefab.SetActive(false);
+                //Time.timeScale = 1.0f;
             }
 
         }
@@ -203,6 +225,7 @@ public class StageMove : MonoBehaviour
             if (fadeCount >= fadeMax && positionMove23 == false)
             {
                 GameObject.Find("SlimePlayer").transform.position = stage3StartPosition.transform.position;
+                stage3Prefab.SetActive(true);
                 positionMove23 = true;
             }
 
@@ -223,6 +246,7 @@ public class StageMove : MonoBehaviour
                 stage3Now = true;
                 fadeCount = 0;
                 fadeManager23.SetActive(false);
+                stage2Prefab.SetActive(false);
                 //0415Playerとのやつができたら削除（デバッグ用）
                 nowFlag = false;
 
@@ -243,6 +267,7 @@ public class StageMove : MonoBehaviour
             if (fadeCount >= fadeMax && positionMove34 == false)
             {
                 GameObject.Find("SlimePlayer").transform.position = stage4StartPosition.transform.position;
+                stage4Prefab.SetActive(true);
                 positionMove34 = true;
             }
 
@@ -263,6 +288,7 @@ public class StageMove : MonoBehaviour
                 stage4Now = true;
                 fadeCount = 0;
                 fadeManager34.SetActive(false);
+                stage3Prefab.SetActive(false);
                 //0415Playerとのやつができたら削除（デバッグ用）
                 nowFlag = false;
 
@@ -283,6 +309,7 @@ public class StageMove : MonoBehaviour
             if (fadeCount >= fadeMax && positionMove4B == false)
             {
                 GameObject.Find("SlimePlayer").transform.position = stage5StartPosition.transform.position;
+                stageBossPrefab.SetActive(true);
                 positionMove4B = true;
             }
 
@@ -305,6 +332,7 @@ public class StageMove : MonoBehaviour
                 bossNow = true;
                 fadeCount = 0;
                 fadeManager4B.SetActive(false);
+                stage4Prefab.SetActive(false);
                 //0415Playerとのやつができたら削除（デバッグ用）
                 nowFlag = false;
 
