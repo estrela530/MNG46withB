@@ -16,6 +16,7 @@ public class HealBall : InhaleObject
 
     TestManager manager;      //回復玉管理リストを取得
     MeshRenderer meshRenderer;//色変え用
+    Animator animator;        //アニメーション用
 
     Vector3 hitPosition = Vector3.zero;//回復玉同士が当たった位置
     Vector3 playerPos = Vector3.zero;  //プレイヤーの現在位置
@@ -28,6 +29,8 @@ public class HealBall : InhaleObject
     float[] twiceSpeed = new float[3];
 
     int healLevel;  //回復レベル
+
+    
 
     /// <summary>
     /// 状態
@@ -63,6 +66,7 @@ public class HealBall : InhaleObject
 
         transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         meshRenderer = GetComponent<MeshRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -71,7 +75,7 @@ public class HealBall : InhaleObject
 
         ChangeState();//状態カウント
         SetAction();  //行動変化
-        base.Move();       //移動
+        base.Move();  //移動
     }
 
     ///// <summary>
@@ -177,12 +181,14 @@ public class HealBall : InhaleObject
                 else testSpeed = mInhaleSpeed[0];
 
                 Actions(1, Color.yellow, new Vector3(0.5f, 0.5f, 0.5f), testSpeed);
+                
                 break;
             case State.Level2:
                 //吸い込み中かどうかを調べる
                 if (player.GetInhale()) testSpeed = twiceSpeed[1];
                 else testSpeed = mInhaleSpeed[1];
 
+                animator.SetInteger("HealLevel", 2);
                 Actions(2, Color.green, new Vector3(1, 1, 1), testSpeed);
                 break;
             case State.Level3:
@@ -190,6 +196,7 @@ public class HealBall : InhaleObject
                 if (player.GetInhale()) testSpeed = twiceSpeed[2];
                 else testSpeed = mInhaleSpeed[2];
 
+                animator.SetInteger("HealLevel", 3);
                 Actions(3, Color.black, new Vector3(1.5f, 1.5f, 1.5f), testSpeed);
                 break;
             case State.Blinking:
