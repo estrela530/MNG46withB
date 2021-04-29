@@ -158,6 +158,7 @@ public class StageMove : MonoBehaviour
         //プレイヤーのポジションをStage2のスタートポジションにする
         if (stage1Clear == true)
         {
+            //Time.timeScale = 0f;
             fadeCount++;
             if (fadeCount >= fadeMax && positionMove12 == false)
             {
@@ -185,7 +186,7 @@ public class StageMove : MonoBehaviour
                 stage2Now = true;
                 fadeCount = 0;
                 fadeManager.SetActive(false);
-
+                //Time.timeScale = 1.0f;
             }
 
         }
