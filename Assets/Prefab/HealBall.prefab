@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5090278601654797600}
   - component: {fileID: 242330108656326922}
   - component: {fileID: 8184494201427361179}
+  - component: {fileID: 46779934521112344}
   m_Layer: 10
   m_Name: HealBall
   m_TagString: HealBall
@@ -134,6 +135,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!95 &46779934521112344
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2582936535863146379}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: deaf236999f94bd41bc176b1f9084403, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7324377332014842400
 GameObject:
   m_ObjectHideFlags: 0
