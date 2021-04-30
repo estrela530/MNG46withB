@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     private GameObject fragmentPrefab;
     [SerializeField, Header("予測線プレファブ")]
     private GameObject predictionLine;
-    [SerializeField,Header("欠片の速度")]
+    [SerializeField, Header("欠片の速度")]
     private float fragmentSpeed = 10;//後に距離計算で必要
     [SerializeField, Tooltip("レベルによる飛ばす球数")]
     private int[] fragmentCount = new int[3];//初期値(180,90,45)
@@ -62,10 +62,11 @@ public class Player : MonoBehaviour
     PredictionLinePool predictionPool;//予測線プール
     Vector3 myScale = Vector3.one;    //自身の大きさ
 
-    private bool isTwisted;//ねじれているかどうか
-    private bool isRelease;//解放中かどうか
-    private bool isInhale; //吸い込んでいるか
-    public bool isDamage;  //ダメージを受けているかどうか(確認用にpublicにしてる)
+    private bool isTwisted; //ねじれているかどうか
+    private bool isRelease; //解放中かどうか
+    private bool isInhale;  //吸い込んでいるか
+    private bool isNockBack;//ノックバックアニメーション中か
+    public bool isDamage;   //ダメージを受けているかどうか(確認用にpublicにしてる)
 
     private int neziLevel;     //ねじレベル
     private int alphaCount = 0;//点滅用カウント
@@ -125,11 +126,7 @@ public class Player : MonoBehaviour
     #endregion
 
 
-    //最後に、ねじれ中に体力が減りすぎる不具合を修正。
-    //マージはしていない。
-    
     bool testBool = false;
-
 
     void Awake()
     {
@@ -161,6 +158,7 @@ public class Player : MonoBehaviour
     {
         isTwisted = false;
         isRelease = false;
+        isNockBack = false;
         animator.enabled = true;
         neziCount = 0;
         neziLevel = 0;
@@ -357,8 +355,8 @@ public class Player : MonoBehaviour
             ChangeDirection(); //向きの反映
 
             //ねじっているor解放中なら動けない
-            if (isTwisted || isRelease || testBool) return;
-          
+            if (isTwisted || isRelease || isNockBack) return;
+
             MoveSE(0.8f, 0.2f);//足音を鳴らす
             animator.SetFloat("Speed", velocity.magnitude);
 
@@ -589,6 +587,14 @@ public class Player : MonoBehaviour
         {
             TwistedCancel();//いつでもキャンセルできるように
 
+            //最大までねじったらアニメーションをする。
+            if (testBool)
+            {
+                //                                 はやさ            揺れ幅
+                float sin = Mathf.Sin(2 * Mathf.PI * 5 * Time.time) * 0.05f;
+                this.transform.localScale = new Vector3(sin + 1f, this.transform.localScale.y, sin + 1f);
+            }
+
             //1回maxNobiLengthより大きくなったらこれ以上処理しないね
             if (myScale.y >= maxNobiLength) return;
 
@@ -596,7 +602,7 @@ public class Player : MonoBehaviour
             myScale += new Vector3(0, extendSpeed, 0);
             //ねじねじしてる間カウントを増やす
             neziCount++;
-            
+
 
             //体力を滑らかに減らす
             currentHp -= decreaseHp;
@@ -606,17 +612,20 @@ public class Player : MonoBehaviour
                 currentHp = 1.0f;
             }
 
+            //最大まで伸びきった時に1度だけ呼ばれる
             if (myScale.y > maxNobiLength)
             {
-                myScale.y = maxNobiLength;
-                //音を止めたい
-                audioSource.Stop();
+                myScale.y = maxNobiLength;           
+                audioSource.Stop();       //音を止めたい
+                testBool = true;
             }
         }
         else
         {
             //解放中でなければ処理をしない
             if (!isRelease) return;
+
+            testBool = false;
 
             //体を縮めていく
             myScale += new Vector3(0, -shrinkSpeed, 0);
@@ -792,14 +801,14 @@ public class Player : MonoBehaviour
     /// ダメージを受ける
     /// </summary>
     /// <param name="damage">ダメージ量</param>
-    private void Damage(int damage,GameObject other)
+    private void Damage(int damage, GameObject other)
     {
         if (isDamage) return;
 
         //音を止めたい
         audioSource.Stop();
 
-        NockBack(other, 50);
+        NockBack(other, 50);//ノックバックの移動をする
         animator.SetTrigger("Trigger");
 
         if (currentHp > 0)
@@ -807,6 +816,7 @@ public class Player : MonoBehaviour
             currentHp -= damage;
             saveValue -= damage;
 
+            //ダメージを受けたとき、ねじれ状態などを解除する。
             isReset = true;
             Initialize();
 
@@ -822,7 +832,7 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
     }
-    
+
 
     /// <summary>
     /// 無敵時間
@@ -832,18 +842,16 @@ public class Player : MonoBehaviour
     {
         if (!isDamage) return;
 
-
-
+        //無敵時間計測開始
         alphaTimer += Time.deltaTime;
-
-        if (alphaTimer < 1.0f)
+        if (alphaTimer < 1.0f)//ノックバックアニメションの時間
         {
             velocity = Vector3.zero;
-            testBool = true;
+            isNockBack = true;
         }
-        else
+        else//ノックバックアニメーションが終了したら以下の処理に移る。
         {
-            testBool = false;
+            isNockBack = false;
 
             //memo : 点滅の処理をもっとわかりやすく直す
             alphaCount++;
@@ -862,6 +870,7 @@ public class Player : MonoBehaviour
             }
         }
 
+        //無敵時間の終了
         if (time < alphaTimer)
         {
             alphaTimer = 0;
@@ -882,7 +891,7 @@ public class Player : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("PoisonBall"))
         {
-            Damage(1,other.gameObject);                //ダメージ
+            Damage(1, other.gameObject);                //ダメージ
             Destroy(other.gameObject);//毒玉を消す
         }
         else if (other.gameObject.CompareTag("Enemy"))
@@ -896,7 +905,7 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="other">当たったオブジェクト</param>
     /// <param name="velocity">ノックバックの移動量</param>
-    void NockBack(GameObject other,float velocity)
+    void NockBack(GameObject other, float velocity)
     {
         //当たった敵の角度を取得して
         //Wuaternionに変換しつつ正面ベクトル(0, 0 ,1)とかけて
@@ -915,7 +924,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Damage(1,collision.gameObject);
+            Damage(1, collision.gameObject);
         }
     }
 

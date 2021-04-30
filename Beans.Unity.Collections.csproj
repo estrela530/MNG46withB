@@ -10,9 +10,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
-    <ProjectGuid>{E03C0BCC-8EB7-5184-D57F-1EF277413AA7}</ProjectGuid>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{A32915C4-FF1B-544D-A3A2-1D1B2BEE457A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Beans.Unity.Collections</AssemblyName>
@@ -624,8 +623,7 @@
       <HintPath>C:/Users/KPC-018A1434/Desktop/TwistedSlime/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
