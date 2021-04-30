@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3312549955671230354}
   m_LocalRotation: {x: -0, y: -0.258819, z: -0, w: 0.9659259}
-  m_LocalPosition: {x: -1.5, y: 0, z: 2}
+  m_LocalPosition: {x: -0.5, y: 0, z: 2}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 3977676809771190299}
@@ -45,8 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerUpBullet: {fileID: 8267096414213421396, guid: 9e379cb5fe45c3c4fa72ff8d121026ef,
     type: 3}
-  Move: {fileID: 0}
-  intarval: 1
+  Move: {fileID: 3977676809771190298}
+  intarval: 3
   min: 1
   max: 100
   shotTime: 1
@@ -1248,7 +1248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8461363149218722044}
   m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 1.5, y: 0, z: 2}
+  m_LocalPosition: {x: 0.5, y: 0, z: 2}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 3977676809771190299}
@@ -1268,8 +1268,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerUpBullet: {fileID: 8267096414213421396, guid: 9e379cb5fe45c3c4fa72ff8d121026ef,
     type: 3}
-  Move: {fileID: 0}
-  intarval: 1
+  Move: {fileID: 3977676809771190298}
+  intarval: 3
   min: 1
   max: 100
   shotTime: 1
