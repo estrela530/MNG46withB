@@ -9,7 +9,6 @@ public class PredictionLine : MonoBehaviour
 {
     [SerializeField, Header("予測線の色")]
     Material predictionColor;
-    //[SerializeField, Header("最大描画距離")]
     float maxDistance = 0f;//最大描画距離(レベル依存)
 
     Vector3 angle;      //回転角度
