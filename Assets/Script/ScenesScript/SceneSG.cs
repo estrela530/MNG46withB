@@ -16,7 +16,7 @@ public class SceneSG : MonoBehaviour
     void Start()
     {
         fadeCount = 0;
-        fadeMax = 180;
+        fadeMax = 90;
         isSceneChangeFlag = false;
     }
 

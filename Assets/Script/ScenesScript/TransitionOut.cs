@@ -15,7 +15,7 @@ public class TransitionOut : MonoBehaviour
 
     IEnumerator BeginTransition()
     {
-        yield return Animate(_transitionIn, 2);
+        yield return Animate(_transitionIn, 1);
     }
 
     /// <summary>
