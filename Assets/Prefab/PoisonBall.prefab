@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6028163059150064931}
   - component: {fileID: 5530819057496306907}
   - component: {fileID: 2040000367266444521}
+  - component: {fileID: 6878728669770007481}
   m_Layer: 0
   m_Name: PoisonBall
   m_TagString: PoisonBall
@@ -111,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inhaleSpeed: 3
   inhaleRange: 02000000050000000a000000
+  deleteTime: 5
 --- !u!54 &5530819057496306907
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -141,6 +143,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inhaleSpeed: 3
   inhaleRange: 02000000050000000a000000
+--- !u!95 &6878728669770007481
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6028163059150064932}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b35cf679fb063ec44b5e37b56bb0d6a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8714023844681748701
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +176,7 @@ GameObject:
   - component: {fileID: 1686253148414204200}
   m_Layer: 12
   m_Name: PoisonSmok
-  m_TagString: Untagged
+  m_TagString: kanban
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

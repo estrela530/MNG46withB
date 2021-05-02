@@ -16,32 +16,36 @@ public class InhaleObject : MonoBehaviour
     [SerializeField, Header("ねじレベルによる吸収範囲")]
     protected int[] inhaleRange = new int[3];
 
-    protected Player player;
-    protected Vector3 playerPosition;
-    protected float speed;
-    protected float moveDistance;
-    protected int playerLevel;
-    protected int moveState;
-    protected bool isTwisted;
+    protected Player player;　　　　　//プレイヤー格納用
+    protected Vector3 playerPosition; //プレイヤーの位置保存用
+    protected float speed;            //移動速度
+    protected float moveDistance;     //プレイヤーとの距離(オブジェクトの移動距離)
+    protected int playerLevel;        //プレイヤーのレベル取得用
+    protected int moveState;          //オブジェクトの移動状態
+    protected bool isTwisted;         //プレイヤーがねじっているかどうか
+
+    private GameObject findObject;    //プレイヤーを検索して保存する
 
     // Start is called before the first frame update
     void Start()
     {
-        moveState = 0;
-        isTwisted = false;
+        //まず最初にプレイヤーを探す。
+        findObject = GameObject.FindGameObjectWithTag("Player");
+        player = findObject.GetComponent<Player>();
 
         speed = inhaleSpeed;
-
-        player = GameObject.Find("SlimePlayer").GetComponent<Player>();
+        moveState = 0;
+        isTwisted = false;    
     }
 
     private void FixedUpdate()
     {
-        Move();
-
-        //Debug.Log("私は親" +player);
+        Move();//移動
     }
 
+    /// <summary>
+    /// 移動
+    /// </summary>
     public virtual void Move()
     {
         if (player == null) return;
@@ -64,7 +68,7 @@ public class InhaleObject : MonoBehaviour
                 case 1:
                     //プレイヤーのレベルを取得
                     playerLevel = player.GetNeziLevel();
-                    //指定した範囲内にじぶんがいたら
+                    //指定した範囲内にじぶんがいたら次に進む
                     if (playerLevel == 3 && moveDistance < inhaleRange[2])
                     {
                         moveState = 2;
@@ -80,7 +84,6 @@ public class InhaleObject : MonoBehaviour
                     //正規化
                     direction.Normalize();
                     direction.y = 0.0f;
-                    //Debug.Log(speed);
                     //移動
                     transform.position += direction * speed * Time.deltaTime;
                     break;
@@ -89,9 +92,6 @@ public class InhaleObject : MonoBehaviour
                     break;
             }
         }
-        else
-        {
-            moveState = 0;
-        }
+        else moveState = 0;
     }
 }

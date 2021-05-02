@@ -4,47 +4,57 @@ using UnityEngine;
 
 public class PoisonBall : InhaleObject
 {
-    GameObject findObject;
-
-    MeshRenderer meshRenderer;//色変え用
-                              //Animator animator;//アニメーション用
-
-    float deleteCount = 0;
+    [SerializeField,Header("毒ガスを生成するまでの時間")]
     float deleteTime = 5;
 
-    GameObject child;
-    bool smokFlag = false;
+    GameObject poisonSmoke;   //エフェクト用オブジェクト
+    MeshRenderer meshRenderer;//色変え用
+    Animator animator;        //アニメーション用
+
+    float smokeCount = 0;//生成時間計測用  
+    bool smokFlag;       //毒ガス生成状態
 
     void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
 
-        meshRenderer.material.color = new Color(1, 0, 1, 0);
+        meshRenderer.material.color = new Color(1, 0, 1, 0);//色変更
 
-        child = transform.GetChild(0).gameObject;
-        child.SetActive(false);
+        //エフェクト用オブジェクトを取得
+        poisonSmoke = transform.GetChild(0).gameObject;
+        poisonSmoke.SetActive(false);//待機状態
         smokFlag = false;
     }
 
     private void FixedUpdate()
     {
-        deleteCount += Time.deltaTime;
+        Smoke();//毒ガスの時間計測
+    }
 
-        if(deleteCount > deleteTime)
+    /// <summary>
+    /// 毒ガスを生成
+    /// </summary>
+    void Smoke()
+    {
+        //一定時間経過で毒ガスを生成する
+        //毒玉本体は「コア」として残る。
+        //コアが破壊されると、毒ガスも消滅する。
+        //毒ガス生成時、破壊しやすいようにコアを拡大する。
+
+        smokeCount += Time.deltaTime;
+
+        if (smokeCount > deleteTime)
         {
             smokFlag = true;
-            
+
         }
 
-        if(smokFlag)
+        if (smokFlag)
         {
-            child.SetActive(true);
+            poisonSmoke.SetActive(true);
+            animator.SetTrigger("Smoke");
             this.transform.localScale = new Vector3(1, 1, 1);
-        }
-        else
-        {
-            child.SetActive(false);
         }
     }
 

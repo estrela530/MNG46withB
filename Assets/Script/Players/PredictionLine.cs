@@ -96,6 +96,9 @@ public class PredictionLine : MonoBehaviour
 
     private void DrawLine()
     {
+        //Wall = 当たった位置まで予測線を伸ばす
+        //Enemy = 当たった位置まで予測線を伸ばす
+
         //【Tips】Raycast(使用するレイ、当たった情報、長さ、無視するレイヤー)
         if (Physics.Raycast(lineRay, out hit, maxDistance, layerMask))
         {

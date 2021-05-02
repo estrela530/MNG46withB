@@ -6,16 +6,19 @@ using UnityEngine;
 /// </summary>
 public class Fragment : MonoBehaviour
 {
+    [SerializeField, Header("回復玉のプレファブを入れてね")]
+    private GameObject healBall;
     [SerializeField,Tooltip("欠片の速度")]
     private float speed = 5f; //欠片の速度
+
     private float floatAngle; //飛ばす角度
-    Vector3 vectorAngle;      //飛ばす角度
     private float deleteCount;//存在時間
     private int deleteTimer;  //カウント用
-    Vector3 parentPosition;   //親の位置を取得
 
-    [SerializeField,Header("回復玉のプレファブを入れてね")]
-    private GameObject healBall;
+    private Vector3 vectorAngle;   //飛ばす角度
+    private Vector3 parentPosition;//親の位置を取得
+
+
 
     /// <summary>
     /// 初期化&生成
@@ -43,12 +46,12 @@ public class Fragment : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        Move();
-        ResetTimeMeasure();
+        Move();            //移動
+        ResetTimeMeasure();//生存時間計測
     }
 
     /// <summary>
-    /// 時間を計測する
+    /// 時間になったら位置を戻す
     /// </summary>
     void ResetTimeMeasure()
     {
@@ -67,19 +70,23 @@ public class Fragment : MonoBehaviour
     {
         Vector3 velocity = Vector3.zero;
 
-        //角度を計算して移動量に変換する
-        //velocity = GetDirection(angle);
-
         velocity = vectorAngle;
-
-        //transform.position += vectorAngle * Time.deltaTime * speed;
 
         //移動処理
         transform.position += velocity * Time.deltaTime * speed;
+
+        //角度を計算して移動量に変換する
+        //velocity = GetDirection(angle);
+        //transform.position += vectorAngle * Time.deltaTime * speed;
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //Wall = 回復玉を生成
+        //Enemy = 自身をリセットする
+        //PoisonBall = 自身をリセットする
+
         if (other.gameObject.CompareTag("Wall"))
         {
             //回復玉の生成位置を決める
@@ -92,7 +99,6 @@ public class Fragment : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") ||
             other.gameObject.CompareTag("PoisonBall"))
         {
-            //Vector3 pos = transform.position;
             ResetPosition();
         }
     }

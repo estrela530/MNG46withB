@@ -882,6 +882,10 @@ public class Player : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
+        //HealBall = 回復&対象を削除
+        //PoisonBall = ダメージ&対象を削除
+        //Enemy = ダメージ
+
         if (other.gameObject.CompareTag("HealBall"))
         {
             Heal(other.gameObject);   //回復
@@ -894,12 +898,14 @@ public class Player : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {
-            Damage(1, other.gameObject);
+            Damage(1, other.gameObject);//ダメージ
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
+        //kanban = 持続ダメージ&点滅
+
         //memo : 持続ダメージの処理は仮
         if (other.gameObject.CompareTag("kanban"))
         {
@@ -937,18 +943,6 @@ public class Player : MonoBehaviour
 
         transform.position += directions * velocity * Time.deltaTime;
     }
-
-    ///// <summary>
-    ///// 当たっている間の処理
-    ///// </summary>
-    ///// <param name="collision"></param>
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Enemy"))
-    //    {
-    //        Damage(1, collision.gameObject);
-    //    }
-    //}
 
     /// <summary>
     /// 押してる間
