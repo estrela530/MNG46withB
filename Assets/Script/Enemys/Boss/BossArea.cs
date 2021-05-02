@@ -15,6 +15,7 @@ public class BossArea : MonoBehaviour
     float radius;
     private float dis;//プレイヤーとの距離
     Rigidbody rigid;
+
     //public Mesh mesh;
 
     // Start is called before the first frame update

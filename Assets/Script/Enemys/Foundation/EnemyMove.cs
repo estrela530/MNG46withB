@@ -44,8 +44,8 @@ public class EnemyMove : MonoBehaviour
     [Header("発見時のスピード")]
     public float speedLoc;
 
-    [Header("この数値まで進む")] public float social;//この数値まで進む
-    private GameObject Enemy;
+    //[Header("この数値まで進む")] public float social;//この数値まで進む
+    //private GameObject Enemy;
 
     [Header("追う時と索敵のフラグ")]
     public bool MoveFlag = false;//追う
@@ -94,10 +94,10 @@ public class EnemyMove : MonoBehaviour
         if (MoveFlag)
         {
            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-            if(dis>=social)
-            {
-               transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
-            }
+            //if(dis>=social)
+            //{
+            //   transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+            //}
             
         }
 

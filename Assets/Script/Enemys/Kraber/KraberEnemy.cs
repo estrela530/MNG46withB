@@ -101,6 +101,7 @@ public class KraberEnemy : MonoBehaviour
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
+            renderComponent.enabled = false;
             //SceneManager.LoadScene("Result");
             //SceneManager.LoadScene("GameClear");
         }
@@ -147,19 +148,23 @@ public class KraberEnemy : MonoBehaviour
 
         }
         
-        //ダメージ
-        if(DamageFlag)
+        if(enemyHP>0)
         {
-            DamageTime += Time.deltaTime;
-            StartCoroutine("Blink");
-            if (DamageTime>1)
+            //ダメージ
+            if (DamageFlag)
             {
-                DamageTime = 0;
-                StopCoroutine("Blink");
-                renderComponent.enabled = true;
-                DamageFlag = false;
+                DamageTime += Time.deltaTime;
+                StartCoroutine("Blink");
+                if (DamageTime > 1)
+                {
+                    DamageTime = 0;
+                    StopCoroutine("Blink");
+                    renderComponent.enabled = true;
+                    DamageFlag = false;
+                }
             }
         }
+       
         
     }
 

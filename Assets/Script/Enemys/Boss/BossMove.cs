@@ -62,12 +62,18 @@ public class BossMove : MonoBehaviour
     [SerializeField, Header("召喚するエネミーの上限")]
     int MaxPawnCount;//プレハブの出現数
 
+
+    [SerializeField] private float DeathTime = 0;
+    [SerializeField, Header("次のしーんに行くの開始までの時間")]  float NextTime;
+    [SerializeField,Header("次のシーンに行くフラグ")] bool NextFlag;
+
     void Start()
     {
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         MoveFlag = true;
+        NextFlag = false;
     }
 
 
@@ -120,11 +126,21 @@ public class BossMove : MonoBehaviour
         }
         if (enemyHP <= 0)
         {
+            MoveFlag = false;
+            DeathTime += Time.deltaTime;
+            if(DeathTime > NextTime)
+            {
+                NextFlag = true;
+                DeathTime = 0;
+            }
+        }
+
+        if(NextFlag)
+        {
             gameObject.SetActive(false);//非表示
             //SceneManager.LoadScene("Result");
             SceneManager.LoadScene("GameClear");
         }
-
        
     }
 
