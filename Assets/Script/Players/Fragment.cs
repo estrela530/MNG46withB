@@ -89,7 +89,8 @@ public class Fragment : MonoBehaviour
             //自身は待機状態になる
             ResetPosition();
         }
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") ||
+            other.gameObject.CompareTag("PoisonBall"))
         {
             //Vector3 pos = transform.position;
             ResetPosition();

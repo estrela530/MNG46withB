@@ -225,9 +225,7 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 入力の処理だけ書いてあるよ
-    /// プレイヤーの移動
-    /// ねじり中and解放中は動けない
+    /// キー入力で移動量得る
     /// </summary>
     private void InputVelocity()
     {
@@ -444,7 +442,7 @@ public class Player : MonoBehaviour
     void TwistedChange()
     {
         //解放中なら処理しない
-        if (isRelease) return;
+        if (isRelease || isNockBack) return;
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 5") || GetKeyDown(Keys.R_Trigger))
         {
@@ -891,12 +889,36 @@ public class Player : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("PoisonBall"))
         {
-            Damage(1, other.gameObject);                //ダメージ
-            Destroy(other.gameObject);//毒玉を消す
+            Damage(1, other.gameObject);//ダメージ
+            Destroy(other.gameObject);  //毒玉を消す
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {
             Damage(1, other.gameObject);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //memo : 持続ダメージの処理は仮
+        if (other.gameObject.CompareTag("kanban"))
+        {
+            currentHp -= 0.01f;
+            saveValue -= 0.01f;
+            alphaCount++;
+
+            if (alphaCount > 0)
+            {
+                meshRenderer.material.color = Color.red;
+            }
+            if (alphaCount > 4)
+            {
+                meshRenderer.material.color = Color.white;
+            }
+            if (alphaCount > 8)
+            {
+                alphaCount = 0;
+            }
         }
     }
 
@@ -916,17 +938,17 @@ public class Player : MonoBehaviour
         transform.position += directions * velocity * Time.deltaTime;
     }
 
-    /// <summary>
-    /// 当たっている間の処理
-    /// </summary>
-    /// <param name="collision"></param>
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Damage(1, collision.gameObject);
-        }
-    }
+    ///// <summary>
+    ///// 当たっている間の処理
+    ///// </summary>
+    ///// <param name="collision"></param>
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Enemy"))
+    //    {
+    //        Damage(1, collision.gameObject);
+    //    }
+    //}
 
     /// <summary>
     /// 押してる間

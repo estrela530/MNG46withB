@@ -2,60 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoisonBall : MonoBehaviour
+public class PoisonBall : InhaleObject
 {
-    [SerializeField, Tooltip("吸収時の移動速度")]
-    private float speed = 1.0f;
-    Player player;//シーン上のプレイヤーを取得
+    GameObject findObject;
 
-    Vector3 playerPos = Vector3.zero;  //プレイヤーの現在位置
+    MeshRenderer meshRenderer;//色変え用
+                              //Animator animator;//アニメーション用
 
-    bool isTwisted = false;//プレイヤーがねじっているか
-    bool moveFlag = false; //false = ターゲット取得：true = 移動中
+    float deleteCount = 0;
+    float deleteTime = 5;
+
+    GameObject child;
+    bool smokFlag = false;
 
     void Start()
     {
-        //色変更
-        GetComponent<Renderer>().material.color = new Color(1, 0, 1, 0);
+        meshRenderer = GetComponent<MeshRenderer>();
+        //animator = GetComponent<Animator>();
 
-        //プレイヤーを取得
-        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        player = GameObject.Find("SlimePlayer").GetComponent<Player>();
-    }
-    
-    void Update()
-    {
-        Suction();
+        meshRenderer.material.color = new Color(1, 0, 1, 0);
+
+        child = transform.GetChild(0).gameObject;
+        child.SetActive(false);
+        smokFlag = false;
     }
 
-    /// <summary>
-    /// 吸収
-    /// </summary>
-    void Suction()
+    private void FixedUpdate()
     {
-        //プレイヤーがねじっているかを取得
-        isTwisted = player.GetTwisted();
+        deleteCount += Time.deltaTime;
 
-        if (isTwisted)
+        if(deleteCount > deleteTime)
         {
-            if (moveFlag == false)
-            {
-                //ターゲットの位置を取得
-                playerPos = player.GetPosition();
-                moveFlag = true;
-            }
-            else
-            {
-                //ターゲットへの向きを取得
-                Vector3 direction = playerPos - this.transform.position;
-
-                //正規化
-                direction.Normalize();
-
-                this.transform.position += direction * speed * Time.deltaTime;
-            }
+            smokFlag = true;
+            
         }
-        else moveFlag = false;
+
+        if(smokFlag)
+        {
+            child.SetActive(true);
+            this.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            child.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -69,7 +59,7 @@ public class PoisonBall : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Fragment"))
+        if (other.gameObject.CompareTag("Fragment"))
         {
             Destroy(this.gameObject);
         }
