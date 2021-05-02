@@ -12,14 +12,13 @@ public class HealBall : InhaleObject
     [SerializeField, Tooltip("吸収時の移動速度")]
     private float[] mInhaleSpeed = new float[3];
 
-    GameObject findObject;    //プレイヤーを検索して保存する
+    //GameObject findObject;    //プレイヤーを検索して保存する
     GameObject growEffect;    //成長エフェクト用オブジェクトを保存する。
     MeshRenderer meshRenderer;//色変え用
     Animator animator;        //アニメーション用
 
     Vector3 playerPos = Vector3.zero;//プレイヤーの現在位置
 
-    bool hitFlag = false;//回復玉同士が当たったか
     int healLevel;       //回復レベル
 
     float mSpeed;        //移動速度保存用

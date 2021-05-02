@@ -24,7 +24,7 @@ public class InhaleObject : MonoBehaviour
     protected int moveState;          //オブジェクトの移動状態
     protected bool isTwisted;         //プレイヤーがねじっているかどうか
 
-    private GameObject findObject;    //プレイヤーを検索して保存する
+    protected GameObject findObject;    //プレイヤーを検索して保存する
 
     // Start is called before the first frame update
     void Start()
