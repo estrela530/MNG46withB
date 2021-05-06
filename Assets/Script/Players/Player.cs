@@ -57,10 +57,15 @@ public class Player : MonoBehaviour
     public AudioClip cancelSE; //キャンセルした瞬間
     #endregion
 
-    MeshRenderer meshRenderer;        //色変え用
-    FragmentPool fragmentPool;        //かけらプール
-    PredictionLinePool predictionPool;//予測線プール
-    Vector3 myScale = Vector3.one;    //自身の大きさ
+    public GameObject child;
+    private Rigidbody rigid;                  //物理演算
+    private Animator animator;                //アニメーション用
+    private MeshRenderer meshRenderer;        //色変え用
+    private FragmentPool fragmentPool;        //かけらプール
+    private PredictionLinePool predictionPool;//予測線プール
+    private Vector3 myScale = Vector3.one;    //自身の大きさ
+    private Vector3 position;                 //位置
+    private Vector3 velocity;                 //移動量
 
     private bool isTwisted; //ねじれているかどうか
     private bool isRelease; //解放中かどうか
@@ -70,11 +75,6 @@ public class Player : MonoBehaviour
 
     private int neziLevel;     //ねじレベル
     private int alphaCount = 0;//点滅用カウント
-
-    private Vector3 position; //位置
-    private Vector3 velocity; //移動量
-    private Rigidbody rigid;  //物理演算
-    private Animator animator;//アニメーション用
 
     public float currentHp;         //現在の体力(確認用にpublicにしてる)
     private float saveValue;        //体力一時保存用
@@ -128,6 +128,9 @@ public class Player : MonoBehaviour
 
     bool testBool = false;
 
+    public GameObject releaseEffect;
+    private ParticleSystem particle;
+
     void Awake()
     {
         //プールの生成と、初期オブジェクトの追加
@@ -144,11 +147,27 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
 
+        child.SetActive(true);
+
         //体力の設定
         currentHp = saveValue = maxHp;
 
         //一番最初に初期化
         Initialize();
+
+
+
+        //foreach(Transform child in this.gameObject.transform)
+        //{
+        //    //子どもを全検索して、パーティクルを持っていたら、
+        //    if(child.GetComponent<ParticleSystem>())
+        //    {
+                
+        //    }
+        //}
+
+
+        particle = releaseEffect.GetComponent<ParticleSystem>();
     }
 
     /// <summary>
@@ -498,6 +517,7 @@ public class Player : MonoBehaviour
         if (!isTwisted) return;//ねじり中じゃなかったら解放しない
 
         debugTwistedCount++;
+        particle.Play();
 
         //解放する前に一旦流れている音を止める
         audioSource.Stop();
