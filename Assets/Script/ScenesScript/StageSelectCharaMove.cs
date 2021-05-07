@@ -14,8 +14,8 @@ public class StageSelectCharaMove : MonoBehaviour
     GameObject s2Image;
 
 
-    Vector3 nejirinnStage1Pos = new Vector3(240, 280, 0);
-    Vector3 nejirinnStage2Pos = new Vector3(500, 280, 0);
+    Vector3 nejirinnStage1Pos = new Vector3(-40, -23, 80);
+    Vector3 nejirinnStage2Pos = new Vector3(5, -9, 80);
     bool stage1nowFlag;
     bool stage2NowFlag;
 

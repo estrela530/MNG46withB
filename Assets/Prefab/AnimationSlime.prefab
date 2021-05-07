@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6429471764700291340}
-  - component: {fileID: 6823142535893018351}
+  - component: {fileID: 7094762457749904752}
   m_Layer: 0
   m_Name: AnimationSlime
   m_TagString: Untagged
@@ -104,8 +104,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5940742885479365558}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -20, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 876797759018971210}
   - {fileID: 6919235068852726905}
@@ -113,7 +113,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!95 &6823142535893018351
+--- !u!95 &7094762457749904752
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -123,7 +123,7 @@ Animator:
   m_GameObject: {fileID: 5940742885479365558}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1be0bd76397a60d49adde930947162d1, type: 2}
+  m_Controller: {fileID: 9100000, guid: f3e8f770ee6275943a0ddda04ffbd48a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
