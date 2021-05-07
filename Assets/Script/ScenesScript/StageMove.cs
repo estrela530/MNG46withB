@@ -32,7 +32,7 @@ public class StageMove : MonoBehaviour
     [SerializeField]
     bool bossNow;
 
-    public bool nowFlag;
+    public bool nowFlag { get; set; }
 
     bool positionMove12 = false;
     bool positionMove23 = false;
@@ -141,7 +141,6 @@ public class StageMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log("Updateきたぁーーー！！");
         if (nowFlag)
         {
             //プレイヤーのポジションゴール(旗)にたどり着いた時に今がステージ1ならステージ1クリアフラグ

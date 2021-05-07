@@ -125,11 +125,15 @@ public class Player : MonoBehaviour
     //Direction direction = Direction.DOWN;
     #endregion
 
-
-    bool testBool = false;
+    //もうねじれないよぷるぷるBool
+    bool limiteAnimeFlag = false;
 
     public GameObject releaseEffect;
     private ParticleSystem particle;
+
+    public GameObject stageMoveObject;
+    private StageMove stageMove;
+    private bool nowFlag = false;
 
     void Awake()
     {
@@ -154,26 +158,15 @@ public class Player : MonoBehaviour
 
         //一番最初に初期化
         Initialize();
-
-
-
-        //foreach(Transform child in this.gameObject.transform)
-        //{
-        //    //子どもを全検索して、パーティクルを持っていたら、
-        //    if(child.GetComponent<ParticleSystem>())
-        //    {
-                
-        //    }
-        //}
-
-
-        
     }
 
     private void Start()
     {
         child.SetActive(true);
         particle = releaseEffect.GetComponent<ParticleSystem>();
+
+        stageMove = stageMoveObject.GetComponent<StageMove>();
+        nowFlag = stageMove.nowFlag;
     }
 
     /// <summary>
@@ -246,7 +239,6 @@ public class Player : MonoBehaviour
         ChangeLevel();  //レベル変更
         InvincibleTime(invincibleTime);//無敵時間
         MoveDirection();//移動
-        //Debug.Log("ねじり状態：" + isTwisted);
     }
 
     /// <summary>
@@ -256,8 +248,13 @@ public class Player : MonoBehaviour
     {
         velocity = Vector3.zero;
 
+        nowFlag = stageMove.nowFlag;
+        if (nowFlag) return;
+
         velocity.x = Input.GetAxisRaw("Horizontal");
         velocity.z = Input.GetAxisRaw("Vertical");
+
+        
 
         #region RigidBodyを使わなかった頃の移動
         //velocity = Vector3.zero;
@@ -455,8 +452,8 @@ public class Player : MonoBehaviour
         #endregion
 
         #region 滑らかな回転
-        Vector3 test = new Vector3(velocity.x, 0, velocity.z) * Time.deltaTime / 2;
-        transform.localRotation = Quaternion.LookRotation(test, Vector3.up);
+        Vector3 nowRotate = new Vector3(velocity.x, 0, velocity.z) * Time.deltaTime / 2;
+        transform.localRotation = Quaternion.LookRotation(nowRotate, Vector3.up);
         #endregion
     }
 
@@ -612,7 +609,7 @@ public class Player : MonoBehaviour
             TwistedCancel();//いつでもキャンセルできるように
 
             //最大までねじったらアニメーションをする。
-            if (testBool)
+            if (limiteAnimeFlag)
             {
                 //                                 はやさ            揺れ幅
                 float sin = Mathf.Sin(2 * Mathf.PI * 5 * Time.time) * 0.05f;
@@ -641,7 +638,7 @@ public class Player : MonoBehaviour
             {
                 myScale.y = maxNobiLength;           
                 audioSource.Stop();       //音を止めたい
-                testBool = true;
+                limiteAnimeFlag = true;
             }
         }
         else
@@ -649,7 +646,7 @@ public class Player : MonoBehaviour
             //解放中でなければ処理をしない
             if (!isRelease) return;
 
-            testBool = false;
+            limiteAnimeFlag = false;
 
             //体を縮めていく
             myScale += new Vector3(0, -shrinkSpeed, 0);
@@ -827,7 +824,7 @@ public class Player : MonoBehaviour
     /// <param name="damage">ダメージ量</param>
     private void Damage(int damage, GameObject other)
     {
-        if (isDamage) return;
+        if (isDamage || nowFlag) return;
 
         //音を止めたい
         audioSource.Stop();
