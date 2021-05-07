@@ -129,10 +129,19 @@ public class StageMove : MonoBehaviour
         transition = GetComponent<Transition>();
     }
 
+    //void Update()
+    //{
+    //    if (stage1Clear == true)
+    //    {
+    //        Time.timeScale = 0f;
+    //    }
+    //}
+
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.Log("Updateきたぁーーー！！");
         if (nowFlag)
         {
             //プレイヤーのポジションゴール(旗)にたどり着いた時に今がステージ1ならステージ1クリアフラグ
@@ -207,7 +216,7 @@ public class StageMove : MonoBehaviour
                 fadeCount = 0;
                 fadeManager.SetActive(false);
                 stage1Prefab.SetActive(false);
-                //Time.timeScale = 1.0f;
+                Time.timeScale = 1.0f;
             }
 
         }

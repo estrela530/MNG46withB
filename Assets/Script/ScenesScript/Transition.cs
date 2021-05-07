@@ -10,6 +10,8 @@ public class Transition : MonoBehaviour
     //private GameObject FadeMaanagerPrefab;
     //GameObject fm;
 
+    bool stopFlag = false;
+
     [SerializeField]
     private Material _transitionIn;
 
@@ -21,23 +23,28 @@ public class Transition : MonoBehaviour
     [SerializeField]
     private UnityEvent OnComplete;
 
-    public void Start()
+    void Start()
     {
         Debug.Log("fade");
         //fm = FadeMaanagerPrefab.GetComponent<GameObject>();
-        StartCoroutine(BeginTransition());
+
+    }
+
+    void OnEnable()
+    {
+        stopFlag = true;
     }
 
     void Update()
     {
-        //if (fm.activeSelf)
-        //{
-        //    StartCoroutine(BeginTransition());
-        //}
-
+        if (stopFlag)
+        {
+            StartCoroutine(BeginTransition());
+            stopFlag = false;
+        }
     }
 
-    public IEnumerator BeginTransition()
+    IEnumerator BeginTransition()
     {
         yield return Animate(_transitionIn, 2);
         if (OnTransition != null) { OnTransition.Invoke(); }

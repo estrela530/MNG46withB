@@ -14,6 +14,8 @@ public class Blink : MonoBehaviour
     private Image image;
     private float time;
 
+   public bool fadeFlag = true;
+
     private enum ObjType
     {
         TEXT,
@@ -34,14 +36,16 @@ public class Blink : MonoBehaviour
             thisObjType = ObjType.TEXT;
             text = this.gameObject.GetComponent<Text>();
         }
+
+        fadeFlag = true;   
     }
 
     void Update()
     {
         //オブジェクトのAlpha値を更新
-        if (thisObjType == ObjType.IMAGE)
+        if (thisObjType == ObjType.IMAGE )
         {
-            image.color = GetAlphaColor(image.color);
+            image.color = GetAlphaColor2(image.color);
         }
         else if (thisObjType == ObjType.TEXT)
         {
@@ -57,4 +61,29 @@ public class Blink : MonoBehaviour
 
         return color;
     }
+
+
+    //Alpha値を更新してColorを返す
+    Color GetAlphaColor2(Color color)
+    {
+        if (color.a <= 1 && fadeFlag)
+        {
+            Debug.Log("image");
+            time += Time.deltaTime * speed;
+            color.a = time * 0.5f + 0.5f;
+        }
+        else
+        {
+            fadeFlag = false;
+        }
+
+        //if (!fadeFlag && this.gameObject.activeSelf == false)
+        //{
+        //    color.a = 0;
+        //    time = 0;
+        //}
+
+        return color;
+    }
+
 }
