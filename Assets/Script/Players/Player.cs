@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
 
-        child.SetActive(true);
+        
 
         //体力の設定
         currentHp = saveValue = maxHp;
@@ -167,6 +167,12 @@ public class Player : MonoBehaviour
         //}
 
 
+        
+    }
+
+    private void Start()
+    {
+        child.SetActive(true);
         particle = releaseEffect.GetComponent<ParticleSystem>();
     }
 
