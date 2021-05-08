@@ -15,6 +15,8 @@ public class InhaleEffect : MonoBehaviour
     int childCount; //子オブジェクトの数
     bool[] isActive;//各子オブジェクトの表示状態
 
+    Vector3 lossyScale;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,8 @@ public class InhaleEffect : MonoBehaviour
             effects[i] = gameObject.transform.GetChild(i).gameObject;
             effects[i].SetActive(false);
         }
+
+        lossyScale = transform.lossyScale;
     }
 
     // Update is called once per frame
@@ -40,6 +44,8 @@ public class InhaleEffect : MonoBehaviour
     {
         //親オブジェクトが回転しても、反映されないようにする。
         gameObject.transform.rotation = Quaternion.Euler(Vector3.forward);
+
+        //transform.localScale = lossyScale;
 
         //プレイヤーのねじレべえるを取得
         level = player.GetNeziLevel();

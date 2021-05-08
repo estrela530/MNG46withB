@@ -1085,4 +1085,9 @@ public class Player : MonoBehaviour
     {
         return neziLevel;
     }
+
+    public bool GetDamageFlag()
+    {
+        return isNockBack;
+    }
 }
