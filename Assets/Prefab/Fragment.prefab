@@ -107,9 +107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96127f0b02fc074ea84ee4cc7334dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
   healBall: {fileID: 2582936535863146379, guid: e99ad04f5a405c24bbfb1b124c15296e,
     type: 3}
+  speed: 12
 --- !u!54 &4517498683870534106
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -124,5 +124,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0

@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEffect : MonoBehaviour
+/// <summary>
+/// ねじっているときの吸収のパーティクルを管理
+/// </summary>
+public class InhaleEffect : MonoBehaviour
 {
     GameObject[] effects;//子オブジェクト
     GameObject parent;   //一番上の親を取得
@@ -12,7 +15,7 @@ public class PlayerEffect : MonoBehaviour
     int childCount; //子オブジェクトの数
     bool[] isActive;//各子オブジェクトの表示状態
 
-    Vector3 defaultScale;
+    Vector3 lossyScale;
 
     // Start is called before the first frame update
     void Start()
@@ -33,10 +36,7 @@ public class PlayerEffect : MonoBehaviour
             effects[i].SetActive(false);
         }
 
-
-
-
-        defaultScale = transform.lossyScale;
+        lossyScale = transform.lossyScale;
     }
 
     // Update is called once per frame
@@ -44,6 +44,8 @@ public class PlayerEffect : MonoBehaviour
     {
         //親オブジェクトが回転しても、反映されないようにする。
         gameObject.transform.rotation = Quaternion.Euler(Vector3.forward);
+
+        //transform.localScale = lossyScale;
 
         //プレイヤーのねじレべえるを取得
         level = player.GetNeziLevel();
@@ -60,13 +62,13 @@ public class PlayerEffect : MonoBehaviour
                 }
                 break;
             case 1://レベル1
-                Test(0);
+                ChangeEffect(0);
                 break;
             case 2://レベル2
-                Test(1);
+                ChangeEffect(1);
                 break;
             case 3://レベル3
-                Test(2);
+                ChangeEffect(2);
                 break;
             default:
                 Debug.Log("存在しないねじレベルに達しています。");
@@ -74,10 +76,14 @@ public class PlayerEffect : MonoBehaviour
         }
     }
 
-    void Test(int count)
+    /// <summary>
+    /// 表示エフェクトの変更
+    /// </summary>
+    /// <param name="count">表示するエフェクト番号</param>
+    void ChangeEffect(int count)
     {
         //各フラグがfalseの時、
-        //エフェクトを一旦非表示にし、
+        //全てのエフェクトを一旦非表示にし、
         //その後指定されたエフェクトを表示する。
         //処理は一度しか実行されない。
 

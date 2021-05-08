@@ -18,8 +18,6 @@ public class Fragment : MonoBehaviour
     private Vector3 vectorAngle;   //飛ばす角度
     private Vector3 parentPosition;//親の位置を取得
 
-
-
     /// <summary>
     /// 初期化&生成
     /// </summary>

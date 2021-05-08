@@ -284,7 +284,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.5
+      scalar: 0.5
       minScalar: 0.1
       maxCurve:
         serializedVersion: 2
@@ -4767,7 +4767,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d2cd0414777eb1d44b9ee2b415fc6769, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4823,7 +4823,7 @@ GameObject:
   - component: {fileID: 1403393234}
   - component: {fileID: 1403393235}
   m_Layer: 0
-  m_Name: PlayerEffect
+  m_Name: InhaleEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5142,7 +5142,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
+      scalar: 0.8
       minScalar: 0.5
       maxCurve:
         serializedVersion: 2
@@ -6159,8 +6159,8 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 6.283185
-      minScalar: -3.1415925
+      scalar: 18.849556
+      minScalar: -18.849556
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9625,7 +9625,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d2cd0414777eb1d44b9ee2b415fc6769, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 2100000, guid: d2cd0414777eb1d44b9ee2b415fc6769, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -9954,7 +9954,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
+      scalar: 0.8
       minScalar: 0.5
       maxCurve:
         serializedVersion: 2
@@ -10971,8 +10971,8 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 6.283185
-      minScalar: -3.1415925
+      scalar: 18.849556
+      minScalar: -18.849556
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14437,7 +14437,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d2cd0414777eb1d44b9ee2b415fc6769, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 2100000, guid: d2cd0414777eb1d44b9ee2b415fc6769, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -14495,7 +14495,7 @@ GameObject:
   - component: {fileID: 2922259895025091864}
   - component: {fileID: 234456614212359710}
   m_Layer: 0
-  m_Name: pCube1
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14615,7 +14615,6 @@ Transform:
   - {fileID: 4464845497431762663}
   - {fileID: 4784713407138415763}
   - {fileID: 1403393234}
-  - {fileID: 5402730032026804830}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14775,38 +14774,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 589fba74eb7dd754eb4e59046f8b04f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6
-  extendSpeed: 0.03
-  shrinkSpeed: 0.3
-  maxNobiLength: 5
-  levelCount: 1e000000460000007d000000
-  maxHp: 10
-  decreaseHp: 0.02
-  healValue:
-  - 0.2
-  - 0.6
-  - 1
-  invincibleTime: 3
-  firstCreateFragment: 30
   fragmentPrefab: {fileID: 5343818580403124431, guid: a7d28856afc8afb4a9fad14e098058f2,
     type: 3}
   predictionLine: {fileID: 5033132528446646438, guid: 3a0cbdba13bdf4140a9fd9c03bdef429,
     type: 3}
-  fragmentSpeed: 10
+  inhaleEffect: {fileID: 1403393233}
+  releaseEffect: {fileID: 5402730031968338045, guid: b569f033ccb0b0c45b736d646bed598a,
+    type: 3}
+  stageMoveObject: {fileID: 0}
+  moveSpeed: 6
+  extendSpeed: 0.03
+  shrinkSpeed: 0.3
+  maxNobiLength: 5
+  invincibleTime: 3
+  maxHp: 10
+  decreaseHp: 0.02
+  levelCount: 1e000000460000007d000000
+  healValue:
+  - 0.2
+  - 0.6
+  - 1
   fragmentCount: 040000000800000010000000
   deleteCount:
   - 0.35
   - 0.55
   - 10
+  fragmentSpeed: 10
+  firstCreateFragment: 30
   iziranaide: 0
   releaseSE: {fileID: 8300000, guid: de745f625b7fae54ab691334822aeae6, type: 3}
   twistedSE: {fileID: 8300000, guid: 51c9a98d32962e64e8d59838ae955d75, type: 3}
   healSE: {fileID: 8300000, guid: 18f72a4c766fe6b40807c03d6ecb407b, type: 3}
   cancelSE: {fileID: 8300000, guid: 51e297d95e40dbc4c9e5aa8c55382f4e, type: 3}
-  child: {fileID: 1403393233}
-  isDamage: 0
-  currentHp: 10
-  releaseEffect: {fileID: 5402730032026804827}
 --- !u!114 &234456613984188010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14843,7 +14842,7 @@ GameObject:
   - component: {fileID: 8461626786431809771}
   - component: {fileID: 9157076451258453001}
   m_Layer: 0
-  m_Name: pSphere1
+  m_Name: Left_Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14922,7 +14921,7 @@ GameObject:
   - component: {fileID: 550212651531455319}
   - component: {fileID: 4665322283810737324}
   m_Layer: 0
-  m_Name: pSphere2
+  m_Name: Right_Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14989,84 +14988,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1001 &209986086
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 345172369718193042}
-    m_Modifications:
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402730031968338045, guid: b569f033ccb0b0c45b736d646bed598a,
-        type: 3}
-      propertyPath: m_Name
-      value: Release
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b569f033ccb0b0c45b736d646bed598a, type: 3}
---- !u!1 &5402730032026804827 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5402730031968338045, guid: b569f033ccb0b0c45b736d646bed598a,
-    type: 3}
-  m_PrefabInstance: {fileID: 209986086}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &5402730032026804830 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5402730031968338040, guid: b569f033ccb0b0c45b736d646bed598a,
-    type: 3}
-  m_PrefabInstance: {fileID: 209986086}
-  m_PrefabAsset: {fileID: 0}

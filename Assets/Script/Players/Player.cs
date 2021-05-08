@@ -9,45 +9,54 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PredictionLinePool))]//自動的にPredictionLinePoolを追加
 public class Player : MonoBehaviour
 {
+    [SerializeField, Header("プレイヤーの欠片")]
+    private GameObject fragmentPrefab;
+    [SerializeField, Header("予測線")]
+    private GameObject predictionLine;
+    [SerializeField, Header("自身の子のInhaleEffect")]
+    private GameObject inhaleEffect;
+    [SerializeField, Header("解放時のエフェクト")]
+    private GameObject releaseEffect;
+    [SerializeField, Header("ステージムーブ")]
+    private GameObject stageMoveObject;
+
     #region プレイヤーのステータス
-    [SerializeField, Header("移動速度")]
+    [SerializeField, Tooltip("移動速度")]
     private float moveSpeed = 8.0f;
-    [SerializeField, Header("伸びる速さ")]
+    [SerializeField, Tooltip("伸びる速さ")]
     private float extendSpeed = 0.06f;
-    [SerializeField, Header("縮む速さ")]
+    [SerializeField, Tooltip("縮む速さ")]
     private float shrinkSpeed = 0.3f;
-    [SerializeField, Header("伸びる長さ")]
+    [SerializeField, Tooltip("伸びる長さ")]
     private float maxNobiLength = 5.0f;
-    [SerializeField, Header("レベルアップに必要なねじカウント")]
-    private int[] levelCount = new int[3];//初期値()
+    [SerializeField, Tooltip("無敵時間")]
+    private float invincibleTime = 2.0f;
     [SerializeField, Tooltip("最大体力")]
     private float maxHp = 10;
     [SerializeField, Tooltip("体力の減少量")]
     private float decreaseHp = 0.01f;
-    [SerializeField, Header("回復玉のレベルによる回復量")]
-    private float[] healValue = new float[3];//初期値(0.2,0.5,1)
-    [SerializeField, Tooltip("無敵時間")]
-    private float invincibleTime = 2.0f;
+    [SerializeField, Header("レベルアップに必要なねじカウント")]
+    private int[] levelCount = new int[3];//初期値()
+
     //[SerializeField, Tooltip("どれくらいねじれているか(値を入れないでね!!!)")]
     private int neziCount;//どれくらいねじれているか
     #endregion
 
-    #region 欠片と回復玉
-    [SerializeField, Tooltip("最初に生成しておくオブジェクトの数")]
-    private int firstCreateFragment = 20;
-    [SerializeField, Header("プレイヤーの欠片プレファブ")]
-    private GameObject fragmentPrefab;
-    [SerializeField, Header("予測線プレファブ")]
-    private GameObject predictionLine;
-    [SerializeField, Header("欠片の速度")]
-    private float fragmentSpeed = 10;//後に距離計算で必要
-    [SerializeField, Tooltip("レベルによる飛ばす球数")]
+    #region 欠片と回復玉のステータス
+
+    [SerializeField, Header("回復玉のレベルによる回復量")]
+    private float[] healValue = new float[3];//初期値(0.2,0.5,1)
+    [SerializeField, Header("レベルによる飛ばす球数")]
     private int[] fragmentCount = new int[3];//初期値(180,90,45)
     [SerializeField, Header("レベルによる欠片の飛距離(時間)")]
     private float[] deleteCount = new float[3];//初期値(0.5,1.5,10)
+    [SerializeField, Tooltip("欠片の速度")]
+    private float fragmentSpeed = 10;//後に距離計算で必要
+    [SerializeField, Tooltip("最初に生成しておく欠片の数")]
+    private int firstCreateFragment = 20;
     #endregion
 
-    #region サウンド関連
+    #region SE
     [SerializeField, Header("ここから下音声---------------------------------------------------")]
     int iziranaide;
     private AudioSource audioSource;
@@ -56,8 +65,7 @@ public class Player : MonoBehaviour
     public AudioClip healSE;   //回復した瞬間
     public AudioClip cancelSE; //キャンセルした瞬間
     #endregion
-
-    public GameObject child;
+   
     private Rigidbody rigid;                  //物理演算
     private Animator animator;                //アニメーション用
     private MeshRenderer meshRenderer;        //色変え用
@@ -65,18 +73,22 @@ public class Player : MonoBehaviour
     private PredictionLinePool predictionPool;//予測線プール
     private Vector3 myScale = Vector3.one;    //自身の大きさ
     private Vector3 position;                 //位置
-    private Vector3 velocity;                 //移動量
-
-    private bool isTwisted; //ねじれているかどうか
-    private bool isRelease; //解放中かどうか
-    private bool isInhale;  //吸い込んでいるか
-    private bool isNockBack;//ノックバックアニメーション中か
-    public bool isDamage;   //ダメージを受けているかどうか(確認用にpublicにしてる)
+    private Vector3 velocity;                 //移動量    
+    private ParticleSystem releaseParticle;   //解放時のパーティクル
+    private StageMove stageMove;              //ステージムーブ
+    
+    private bool isTwisted;      //ねじれているかどうか
+    private bool isRelease;      //解放中かどうか
+    private bool isInhale;       //吸い込んでいるか
+    private bool isNockBack;     //ノックバックアニメーション中か           
+    private bool isGoalFlag;     //ステージのゴールに触れているか
+    private bool limiteAnimeFlag;//Maxまでねじった時のアニメーション用フラグ
+    /*public*/ bool isDamage;        //ダメージを受けているかどうか(確認用にpublicにしてる)
 
     private int neziLevel;     //ねじレベル
     private int alphaCount = 0;//点滅用カウント
 
-    public float currentHp;         //現在の体力(確認用にpublicにしてる)
+    /*public*/ float currentHp;         //現在の体力(確認用にpublicにしてる)
     private float saveValue;        //体力一時保存用
     private float moveCount = 0.5f; //移動SEの鳴らす間隔
     private float alphaTimer = 0;   //点滅時間加算用
@@ -106,6 +118,9 @@ public class Player : MonoBehaviour
     }
     Keys key;
 
+    //memo : いらないプレファブを消そう！
+    /*BigHealBall,GoalFlag,kanban,NormalEnemy,Player,*/
+
     #region カクカクの回転の方向Enum
     ///// <summary>
     ///// プレイヤーの向いてる方向
@@ -124,16 +139,6 @@ public class Player : MonoBehaviour
     //}
     //Direction direction = Direction.DOWN;
     #endregion
-
-    //もうねじれないよぷるぷるBool
-    bool limiteAnimeFlag = false;
-
-    public GameObject releaseEffect;
-    private ParticleSystem particle;
-
-    public GameObject stageMoveObject;
-    private StageMove stageMove;
-    private bool nowFlag = false;
 
     void Awake()
     {
@@ -162,11 +167,11 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        child.SetActive(true);
-        particle = releaseEffect.GetComponent<ParticleSystem>();
+        inhaleEffect.SetActive(true);
+        releaseParticle = releaseEffect.GetComponent<ParticleSystem>();
 
         stageMove = stageMoveObject.GetComponent<StageMove>();
-        nowFlag = stageMove.nowFlag;
+        isGoalFlag = stageMove.nowFlag;
     }
 
     /// <summary>
@@ -248,8 +253,8 @@ public class Player : MonoBehaviour
     {
         velocity = Vector3.zero;
 
-        nowFlag = stageMove.nowFlag;
-        if (nowFlag) return;
+        isGoalFlag = stageMove.nowFlag;
+        if (isGoalFlag) return;
 
         velocity.x = Input.GetAxisRaw("Horizontal");
         velocity.z = Input.GetAxisRaw("Vertical");
@@ -520,7 +525,7 @@ public class Player : MonoBehaviour
         if (!isTwisted) return;//ねじり中じゃなかったら解放しない
 
         debugTwistedCount++;
-        particle.Play();
+        releaseParticle.Play();
 
         //解放する前に一旦流れている音を止める
         audioSource.Stop();
@@ -824,7 +829,7 @@ public class Player : MonoBehaviour
     /// <param name="damage">ダメージ量</param>
     private void Damage(int damage, GameObject other)
     {
-        if (isDamage || nowFlag) return;
+        if (isDamage || isGoalFlag) return;
 
         //音を止めたい
         audioSource.Stop();
@@ -1079,5 +1084,10 @@ public class Player : MonoBehaviour
     public int GetNeziLevel()
     {
         return neziLevel;
+    }
+
+    public bool GetDamageFlag()
+    {
+        return isNockBack;
     }
 }

@@ -21,7 +21,9 @@ public class PredictionLine : MonoBehaviour
     RaycastHit hit;           //当たったオブジェクトの情報
     LineRenderer lineRenderer;//線の描画
 
-    int layerMask = ~(1 << 10);//無視するレイヤーの設定
+    //int layerMask = ~(1 << 10);//無視するレイヤーの設定
+    //int layerMask = ~(1 << 10) | ~(1 << 0);//無視するレイヤーの設定
+    int layerMask = 1 << 8 | 1 << 9 | 1 << 12;//当たるレイヤーを限定する
 
     void Awake()
     {
@@ -46,7 +48,7 @@ public class PredictionLine : MonoBehaviour
     public void Initialize(Vector3 angle, Vector3 position, float distance)
     {
         this.angle = angle;
-        this.position = position;
+        this.position = new Vector3(position.x, 0, position.z);
         maxDistance = distance;
 
         //オブジェクトを回転する
