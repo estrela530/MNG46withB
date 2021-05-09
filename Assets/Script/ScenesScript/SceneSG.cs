@@ -7,7 +7,8 @@ public class SceneSG : MonoBehaviour
 {
     int fadeCount;
     int fadeMax;
-    bool isSceneChangeFlag;
+    bool isScene1ChangeFlag;
+    bool isScene2ChangeFlag;
 
     [SerializeField, Header("フェードPrefab")]
     GameObject fadeManager;
@@ -17,41 +18,51 @@ public class SceneSG : MonoBehaviour
     {
         fadeCount = 0;
         fadeMax = 90;
-        isSceneChangeFlag = false;
+        isScene1ChangeFlag = false;
+        isScene2ChangeFlag = false;
     }
 
 
-    public void OnClickStartButton()
+    public void OnClickStartStage1Button()
     {
         if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
-            isSceneChangeFlag = true;
+            isScene1ChangeFlag = true;
         }
     }
 
-    void Update()
+    public void OnClickStartStage2Button()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
-            SceneManager.LoadScene("estrelaStage");
+            isScene2ChangeFlag = true;
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SceneManager.LoadScene("KubotaPlayer");
-        }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SceneManager.LoadScene("Enemy Scene");
-        }
+    void FixedUpdate()
+    {
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    SceneManager.LoadScene("estrelaStage");
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    SceneManager.LoadScene("KubotaPlayer");
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    SceneManager.LoadScene("Enemy Scene");
+        //}
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
         {
             SceneManager.LoadScene("Game");
         }
 
-        if (isSceneChangeFlag)
+        if (isScene1ChangeFlag)
         {
             fadeManager.SetActive(true);
             fadeCount++;
@@ -59,6 +70,16 @@ public class SceneSG : MonoBehaviour
             {
                 SceneManager.LoadScene("Game");
             }
+        }
+        else if (isScene2ChangeFlag)
+        {
+            fadeManager.SetActive(true);
+            fadeCount++;
+            if (fadeCount >= fadeMax)
+            {
+                SceneManager.LoadScene("Game2");
+            }
+
         }
 
     }
