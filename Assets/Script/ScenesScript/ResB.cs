@@ -19,7 +19,7 @@ public class ResB : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("StageSelect");
         }
     }
 }

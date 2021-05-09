@@ -42,10 +42,10 @@ public class SceneSG : MonoBehaviour
 
     void FixedUpdate()
     {
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    SceneManager.LoadScene("estrelaStage");
-        //}
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SceneManager.LoadScene("Game");
+        }
 
         //if (Input.GetKeyDown(KeyCode.Alpha2))
         //{
@@ -59,7 +59,7 @@ public class SceneSG : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
         {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("Game2");
         }
 
         if (isScene1ChangeFlag)
@@ -68,7 +68,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("Game2");
             }
         }
         else if (isScene2ChangeFlag)
@@ -77,7 +77,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game2");
+                SceneManager.LoadScene("Game3");
             }
 
         }
