@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
     private Vector3 position;                 //位置
     private Vector3 velocity;                 //移動量    
     private ParticleSystem releaseParticle;   //解放時のパーティクル
-    private StageMove stageMove;              //ステージムーブ
+    private StageMove1 stageMove;              //ステージムーブ
     
     private bool isTwisted;      //ねじれているかどうか
     private bool isRelease;      //解放中かどうか
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
         inhaleEffect.SetActive(true);
         releaseParticle = releaseEffect.GetComponent<ParticleSystem>();
 
-        stageMove = stageMoveObject.GetComponent<StageMove>();
+        stageMove = stageMoveObject.GetComponent<StageMove1>();
         isGoalFlag = stageMove.nowFlag;
     }
 

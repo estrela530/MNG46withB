@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GoalFlag : MonoBehaviour
 {
-    StageMove stageMove;
+    StageMove1 stageMove;
     [SerializeField]
     private GameObject StageMovePrefab;
 
@@ -13,7 +13,7 @@ public class GoalFlag : MonoBehaviour
     void Start()
     {
 
-        stageMove = StageMovePrefab.GetComponent<StageMove>();
+        stageMove = StageMovePrefab.GetComponent<StageMove1>();
     }
 
     void OnCollisionEnter(Collision collision)
