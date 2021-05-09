@@ -33,9 +33,9 @@ public class EnemyMove : MonoBehaviour
 
     Color color;
 
-    [Header("索敵に向かう場所")]
-    public GameObject workObj1;
-    public GameObject workObj2;
+    //[Header("索敵に向かう場所")]
+    //public GameObject workObj1;
+    //public GameObject workObj2;
 
     int workNumber = 1;
 
@@ -51,6 +51,11 @@ public class EnemyMove : MonoBehaviour
     public bool MoveFlag = false;//追う
     public bool workFlag = true;//徘徊
 
+    //レイ関連
+    Ray ray;
+    RaycastHit hitRay;
+    LineRenderer lineRenderer;
+
     void Start()
     {
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
@@ -58,18 +63,40 @@ public class EnemyMove : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         color = GetComponent<Renderer>().material.color;
         //target = Target.transform.position;
+
+
+        ray = new Ray();
+        lineRenderer = this.gameObject.GetComponent<LineRenderer>();
+        
+        //lineRenderer.SetPosition(0, this.transform.position);
+        lineRenderer.enabled = false;
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        //ラインレンダラーの色
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.red;//初めの色
+        lineRenderer.endColor = Color.red;//終わりの色
+
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
+
+        //変えるかも?
+        ray.direction = transform.forward;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-       
+        
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
+        //常にターゲットにむく
+        this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
+
             //SceneManager.LoadScene("Result");
             //SceneManager.LoadScene("GameClear");
 
@@ -77,8 +104,37 @@ public class EnemyMove : MonoBehaviour
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
-        ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
-        ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
+       //ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
+       //ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
+
+        lineRenderer.SetPosition(0, this.transform.position);
+
+        //レイの処理
+        if (Physics.Raycast(ray, out hitRay, 10))
+        {
+            if (hitRay.collider.gameObject.CompareTag("Player"))
+            {
+                lineRenderer.enabled = true;
+
+                MoveFlag = true;
+
+                lineRenderer.SetPosition(1, hitRay.point);
+
+            }
+            else
+            {
+                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+                MoveFlag = false;
+                workFlag = true;
+            }
+        }
+
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        ray.direction = transform.forward;//自分の向きのレイ
+
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
+
 
         //if (dis < area)
         //{
@@ -90,7 +146,7 @@ public class EnemyMove : MonoBehaviour
         //    MoveFlag = false;
         //    workFlag = true;
         //}
-        
+
         if (MoveFlag)
         {
            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
@@ -102,37 +158,37 @@ public class EnemyMove : MonoBehaviour
         }
 
         //徘徊
-        if (workFlag)
-        {
-            if(ww<workeAria1)
-            {
-                workNumber = 2;
-            }
-            if (ww2 < workeAria2)
-            {
-                workNumber = 1;
-            }
+        //if (workFlag)
+        //{
+        //    if(ww<workeAria1)
+        //    {
+        //        workNumber = 2;
+        //    }
+        //    if (ww2 < workeAria2)
+        //    {
+        //        workNumber = 1;
+        //    }
 
-            switch (workNumber)
-            {
+        //    switch (workNumber)
+        //    {
 
-                case 1:
+        //        case 1:
 
-                    this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
-                    transform.position += transform.forward * speed * Time.deltaTime;
+        //            this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
+        //            transform.position += transform.forward * speed * Time.deltaTime;
 
-                    break;
+        //            break;
 
-                case 2:
+        //        case 2:
 
-                    this.transform.LookAt(this.workObj2.transform);//徘徊2の位置に向く
-                    transform.position += transform.forward * speed * Time.deltaTime;
+        //            this.transform.LookAt(this.workObj2.transform);//徘徊2の位置に向く
+        //            transform.position += transform.forward * speed * Time.deltaTime;
 
-                    break;
-            }
+        //            break;
+        //    }
 
 
-        }
+        //}
 
     }
     
@@ -141,6 +197,8 @@ public class EnemyMove : MonoBehaviour
         return enemyHP;
     }
 
+   
+
 
     //(仮)指定されたtagに当たると消える
     private void OnTriggerEnter(Collider other)
@@ -148,28 +206,27 @@ public class EnemyMove : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
-            color.g = 160;
+            MoveFlag = true;
+
+            
         }
-        
+        if (other.gameObject.CompareTag("Player"))
+        {
+            NockBack(other.gameObject, 50);
+        }
+
+
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("Fragment"))
-    //    {
-    //        enemyHP = enemyHP - 1;
-    //        color = Color.green;
-    //    }
 
-    //    if (other.gameObject.CompareTag("Player"))
-    //    {
-    //        enemyHP = enemyHP - 1;
-    //        color = Color.green;
-    //    }
-    //}
-    //private void OnTriggerStay(Collider other)
-    //{
+    //ノックバック処理
+    void NockBack(GameObject other, float velocity)
+    {
+        Vector3 angles = other.transform.localEulerAngles;//当たったオブジェクトの角度
+        Vector3 directions = Quaternion.Euler(angles) * Vector3.forward;//Wuaternionに変換しつつ正面ベクトル(0, 0 ,1)とかけて
 
-    //}
+        this.transform.position += directions * velocity * Time.deltaTime;
+    }
+
     private void OnDestroy()
     {
         Renderer renderer = gameObject.GetComponent<Renderer>();

@@ -75,6 +75,8 @@
     <Compile Include="Assets\Script\Enemys\Foundation\EnemyShot2.cs" />
     <Compile Include="Assets\Script\Enemys\Foundation\EnemyShoto.cs" />
     <Compile Include="Assets\Script\Enemys\Foundation\EnemyUI.cs" />
+    <Compile Include="Assets\Script\Enemys\Key\KeyArea.cs" />
+    <Compile Include="Assets\Script\Enemys\Key\KeyEnemy.cs" />
     <Compile Include="Assets\Script\Enemys\Kraber\KraberAria.cs" />
     <Compile Include="Assets\Script\Enemys\Kraber\KraberBallet.cs" />
     <Compile Include="Assets\Script\Enemys\Kraber\KraberEnemy.cs" />
@@ -83,6 +85,8 @@
     <Compile Include="Assets\Script\Enemys\Kraber\ShotPower.cs" />
     <Compile Include="Assets\Script\Enemys\Octane\OctaneAria.cs" />
     <Compile Include="Assets\Script\Enemys\Octane\OctaneEnemy.cs" />
+    <Compile Include="Assets\Script\Enemys\OctaneWandering\OctaneWand.cs" />
+    <Compile Include="Assets\Script\Enemys\OctaneWandering\OctaneWandArea.cs" />
     <Compile Include="Assets\Script\Enemys\Pawn\PawnEnemy.cs" />
     <Compile Include="Assets\Script\Enemys\Poison\BalletP.cs" />
     <Compile Include="Assets\Script\Enemys\Poison\PoisonArea.cs" />
@@ -106,7 +110,6 @@
     <Compile Include="Assets\Script\Players\PredictionLinePool.cs" />
     <Compile Include="Assets\Script\Players\TestChildInhale.cs" />
     <Compile Include="Assets\Script\Players\TestJump.cs" />
-    <Compile Include="Assets\Script\Players\TestManager.cs" />
     <Compile Include="Assets\Script\Players\TestParentInhale.cs" />
     <Compile Include="Assets\Script\Players\TestPredictionLine.cs" />
     <Compile Include="Assets\Script\Players\TestTest.cs" />
@@ -131,6 +134,7 @@
     <Compile Include="Assets\Script\ScenesScript\SceneTS.cs" />
     <Compile Include="Assets\Script\ScenesScript\SelectButton.cs" />
     <Compile Include="Assets\Script\ScenesScript\StageMove.cs" />
+    <Compile Include="Assets\Script\ScenesScript\StageSelectCharaMove.cs" />
     <Compile Include="Assets\Script\ScenesScript\TimerScript.cs" />
     <Compile Include="Assets\Script\ScenesScript\TitB.cs" />
     <Compile Include="Assets\Script\ScenesScript\Transition.cs" />

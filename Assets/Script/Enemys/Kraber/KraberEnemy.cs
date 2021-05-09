@@ -56,6 +56,10 @@ public class KraberEnemy : MonoBehaviour
 
    [SerializeField] float DamageTime;
 
+    Ray ray;
+    RaycastHit hitRay;
+    LineRenderer lineRenderer;
+
     Renderer renderComponent;
 
     //public MeshRenderer meshRenderer;
@@ -65,6 +69,9 @@ public class KraberEnemy : MonoBehaviour
 
     void Start()
     {
+       
+        ray = new Ray();
+        lineRenderer = this.gameObject.GetComponent<LineRenderer>();
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
@@ -73,12 +80,22 @@ public class KraberEnemy : MonoBehaviour
 
         renderComponent = GetComponent<Renderer>();
 
+        //lineRenderer.SetPosition(0, this.transform.position);
+        lineRenderer.enabled = false;
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        ////////////////
+        ray.direction = transform.forward;
+
+
         //bullet.GetComponent<KraberBallet>();
         //target = Target.transform.position;
 
         //StartCoroutine("Blink");
 
-       //renderComponent = this.gameObject.transform.GetChild(0).GetComponent<Renderer>();
+        //renderComponent = this.gameObject.transform.GetChild(0).GetComponent<Renderer>();
     }
 
     //中断できる処理のまとまり
@@ -93,10 +110,13 @@ public class KraberEnemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+        this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+
+
         //meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
         if (enemyHP <= 0)
         {
@@ -109,7 +129,33 @@ public class KraberEnemy : MonoBehaviour
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
         ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
-       
+
+        lineRenderer.SetPosition(0, this.transform.position);
+
+        if (Physics.Raycast(ray, out hitRay, 20))
+        {
+            if(hitRay.collider.gameObject.CompareTag("Player"))
+            {
+                lineRenderer.enabled = true;
+                lineRenderer.SetPosition(1, hitRay.point);
+
+                MoveFlag = true;
+
+                
+            }
+            else
+            {
+                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+                MoveFlag = false;
+                workFlag = true;
+            }
+        }
+
+        ray.origin = this.transform.position;//自分の位置のレイ
+        
+        ray.direction = transform.forward;//自分の向きのレイ
+
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
         
         if (MoveFlag)
         {
@@ -125,15 +171,15 @@ public class KraberEnemy : MonoBehaviour
 
         }
 
-        //徘徊
-        if (workFlag)
-        {
-            powerFlag = false;
+        ////徘徊
+        //if (workFlag)
+        //{
+        //    powerFlag = false;
          
-            this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
-            transform.position += transform.forward * speed * Time.deltaTime;
+        //    this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
+        //    transform.position += transform.forward * speed * Time.deltaTime;
             
-        }
+        //}
 
         if (powerFlag)
         {
