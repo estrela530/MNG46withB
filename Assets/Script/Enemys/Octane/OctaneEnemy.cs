@@ -14,7 +14,7 @@ public class OctaneEnemy : MonoBehaviour
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
     // public float area;//この数値以下になったら追う
-
+    StageMove1 stageMove1;
 
     [Header("体力")]public float enemyHP = 5;
 
@@ -61,6 +61,7 @@ public class OctaneEnemy : MonoBehaviour
     void Start()
     {
         moveState = 0;
+        stageMove1 = GetComponent<StageMove1>();
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         color = GetComponent<Renderer>().material.color;
@@ -89,6 +90,12 @@ public class OctaneEnemy : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+
+        if(stageMove1.GetComponent<StageMove1>().nowFlag == true)
+        {
+            MoveFlag = false;
+            moveState = 0;
+        }
 
         switch(moveState)
         {

@@ -24,11 +24,16 @@ public class PawnEnemy : MonoBehaviour
     float speedLoc;
     
     [Header("追う時のフラグ")]
-    public bool MoveFlag = true;//追う
+    public bool MoveFlag;//追う
 
-  
+
+    GameObject stageMove1;
+
+
     void Start()
     {
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
@@ -42,6 +47,8 @@ public class PawnEnemy : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
+       
+
         if (enemyHP <= 0)
         {
             //Destroy(transform.parent);
@@ -50,6 +57,10 @@ public class PawnEnemy : MonoBehaviour
 
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
+
+
+
+        
 
         //追いかける
         if (MoveFlag)
@@ -60,7 +71,13 @@ public class PawnEnemy : MonoBehaviour
                 transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
             }
         }
-        
+        Debug.Log("動くff" + MoveFlag);
+
+        if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
+        {
+            MoveFlag = false;
+        }
+
     }
 
     public float HpGet()

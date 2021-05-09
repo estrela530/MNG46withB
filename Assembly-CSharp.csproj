@@ -102,6 +102,7 @@
     <Compile Include="Assets\Script\Players\Fragment.cs" />
     <Compile Include="Assets\Script\Players\FragmentPool.cs" />
     <Compile Include="Assets\Script\Players\HealBall.cs" />
+    <Compile Include="Assets\Script\Players\InhaleEffect.cs" />
     <Compile Include="Assets\Script\Players\InhaleObject.cs" />
     <Compile Include="Assets\Script\Players\Player.cs" />
     <Compile Include="Assets\Script\Players\PlayerHPGage.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Assets\Script\Players\TestChildInhale.cs" />
     <Compile Include="Assets\Script\Players\TestJump.cs" />
     <Compile Include="Assets\Script\Players\TestParentInhale.cs" />
+    <Compile Include="Assets\Script\Players\TestParticles.cs" />
     <Compile Include="Assets\Script\Players\TestPredictionLine.cs" />
     <Compile Include="Assets\Script\Players\TestTest.cs" />
     <Compile Include="Assets\Script\Players\TwistMeshTest.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Assets\Script\ScenesScript\ButtonSE.cs" />
     <Compile Include="Assets\Script\ScenesScript\CameraMove.cs" />
     <Compile Include="Assets\Script\ScenesScript\ClearStageUI.cs" />
+    <Compile Include="Assets\Script\ScenesScript\CountTest.cs" />
     <Compile Include="Assets\Script\ScenesScript\Escape.cs" />
     <Compile Include="Assets\Script\ScenesScript\FPS.cs" />
     <Compile Include="Assets\Script\ScenesScript\GoSSButton.cs" />
@@ -133,7 +136,9 @@
     <Compile Include="Assets\Script\ScenesScript\SceneSG.cs" />
     <Compile Include="Assets\Script\ScenesScript\SceneTS.cs" />
     <Compile Include="Assets\Script\ScenesScript\SelectButton.cs" />
+    <Compile Include="Assets\Script\ScenesScript\SpawnPoint.cs" />
     <Compile Include="Assets\Script\ScenesScript\StageMove.cs" />
+    <Compile Include="Assets\Script\ScenesScript\StageMove1.cs" />
     <Compile Include="Assets\Script\ScenesScript\StageSelectCharaMove.cs" />
     <Compile Include="Assets\Script\ScenesScript\TimerScript.cs" />
     <Compile Include="Assets\Script\ScenesScript\TitB.cs" />
@@ -144,6 +149,7 @@
     <Compile Include="Assets\Script\ScenesScript\kanban.cs" />
     <Compile Include="Assets\Script\ScenesScript\pauseManager.cs" />
     <Compile Include="Assets\Script\ScenesScript\αScore.cs" />
+    <None Include="Assets\Script\Players\Lambert_Test.shader" />
     <None Include="Assets\Deform\LICENSE.txt" />
     <None Include="Assets\Shader\transition.shader" />
     <None Include="Assets\Shader\transition2.shader" />
