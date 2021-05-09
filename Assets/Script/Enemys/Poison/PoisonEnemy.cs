@@ -24,16 +24,8 @@ public class PoisonEnemy : MonoBehaviour
     private float workeAria2 = 1;//
 
     private float Rspeed;
-
-    private float ww;
-    private float ww2;
     
-    [Header("索敵に向かう場所")]
-    public GameObject workObj1;
-    public GameObject workObj2;
-
-    int workNumber = 1;
-
+    
     [Header("索敵時のスピード")]
     public float speed;
     [Header("発見時のスピード")]
@@ -44,14 +36,32 @@ public class PoisonEnemy : MonoBehaviour
 
     [Header("追う時と索敵のフラグ")]
     public bool MoveFlag = false;//追う
-    public bool workFlag = true;//徘徊
+    //public bool workFlag = true;//徘徊
+
+    //レイ関連
+    Ray ray;
+    RaycastHit hitRay;
+    LineRenderer lineRenderer;
 
     void Start()
     {
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
-        //target = Target.transform.position;
+
+        ray = new Ray();
+        lineRenderer = this.gameObject.GetComponent<LineRenderer>();
+
+        //lineRenderer.SetPosition(0, this.transform.position);
+        lineRenderer.enabled = false;
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        //ラインレンダラーの色
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.red;//初めの色
+        lineRenderer.endColor = Color.red;//終わりの色
+        //変えるかも?
+        ray.direction = transform.forward;
     }
 
     // Update is called once per frame
@@ -61,19 +71,17 @@ public class PoisonEnemy : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
+        //常にターゲットにむく
+        this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));
+
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
-            //SceneManager.LoadScene("Result");
-            //SceneManager.LoadScene("GameClear");
 
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-
-        ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
-        ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
-
+        
         //if (dis < area)
         //{
         //    MoveFlag = true;
@@ -84,49 +92,75 @@ public class PoisonEnemy : MonoBehaviour
         //    MoveFlag = false;
         //    workFlag = true;
         //}
+        lineRenderer.SetPosition(0, this.transform.position);
 
-        if (MoveFlag)
+        //レイの処理
+        if (Physics.Raycast(ray, out hitRay, 20))
         {
-            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-            //if (dis >= social)
-            //{
-            //    transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
-            //}
+            if (hitRay.collider.gameObject.CompareTag("Player"))
+            {
+                lineRenderer.enabled = true;
 
+                MoveFlag = true;
+
+                lineRenderer.SetPosition(1, hitRay.point);
+
+            }
+            else
+            {
+                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+                MoveFlag = false;
+            }
         }
+
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        ray.direction = transform.forward;//自分の向きのレイ
+
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
+
+        //if (MoveFlag)
+        //{
+        //    this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+        //    //if (dis >= social)
+        //    //{
+        //    //    transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+        //    //}
+
+        //}
 
         //徘徊
-        if (workFlag)
-        {
-            if (ww < workeAria1)
-            {
-                workNumber = 2;
-            }
-            if (ww2 < workeAria2)
-            {
-                workNumber = 1;
-            }
+        //if (workFlag)
+        //{
+        //    if (ww < workeAria1)
+        //    {
+        //        workNumber = 2;
+        //    }
+        //    if (ww2 < workeAria2)
+        //    {
+        //        workNumber = 1;
+        //    }
 
-            switch (workNumber)
-            {
+        //    switch (workNumber)
+        //    {
 
-                case 1:
+        //        case 1:
 
-                    this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
-                    transform.position += transform.forward * speed * Time.deltaTime;
+        //            this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
+        //            transform.position += transform.forward * speed * Time.deltaTime;
 
-                    break;
+        //            break;
 
-                case 2:
+        //        case 2:
 
-                    this.transform.LookAt(this.workObj2.transform);//徘徊2の位置に向く
-                    transform.position += transform.forward * speed * Time.deltaTime;
+        //            this.transform.LookAt(this.workObj2.transform);//徘徊2の位置に向く
+        //            transform.position += transform.forward * speed * Time.deltaTime;
 
-                    break;
-            }
+        //            break;
+        //    }
 
 
-        }
+        //}
 
     }
 

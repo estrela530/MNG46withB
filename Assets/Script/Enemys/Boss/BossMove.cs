@@ -67,6 +67,11 @@ public class BossMove : MonoBehaviour
     [SerializeField, Header("次のしーんに行くの開始までの時間")]  float NextTime;
     [SerializeField,Header("次のシーンに行くフラグ")] bool NextFlag;
 
+    //レイ関連
+    Ray ray;
+    RaycastHit hitRay;
+    LineRenderer lineRenderer;
+
     void Start()
     {
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
@@ -74,6 +79,24 @@ public class BossMove : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         MoveFlag = true;
         NextFlag = false;
+
+        ray = new Ray();
+        lineRenderer = this.gameObject.GetComponent<LineRenderer>();
+
+        //lineRenderer.SetPosition(0, this.transform.position);
+        lineRenderer.enabled = false;
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        //ラインレンダラーの色
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.red;//初めの色
+        lineRenderer.endColor = Color.red;//終わりの色
+
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
+
+        //変えるかも?
+        ray.direction = transform.forward;
     }
 
 
@@ -84,6 +107,7 @@ public class BossMove : MonoBehaviour
         rigid.velocity = Vector3.zero;
         if(MoveFlag)
         {
+            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
             //召喚
             if (enemyHP <= ChangePawnHP)
             {
@@ -92,11 +116,34 @@ public class BossMove : MonoBehaviour
 
             dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
-            //追いかける
-            if (MoveFlag)
+            lineRenderer.SetPosition(0, this.transform.position);
+
+          
+            //レイの処理
+            if (Physics.Raycast(ray, out hitRay, 20))
             {
-                this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+                if (hitRay.collider.gameObject.CompareTag("Player"))
+                {
+                    lineRenderer.enabled = true;
+                    
+                    lineRenderer.SetPosition(1, hitRay.point);
+
+                }
+                else
+                {
+                    lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+                }
             }
+
+            ray.origin = this.transform.position;//自分の位置のレイ
+
+            ray.direction = transform.forward;//自分の向きのレイ
+            
+            ////追いかける
+            //if (MoveFlag)
+            //{
+            //    this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+            //}
 
             //突進を実行するまで時間を足す
             RushRunTime += Time.deltaTime;

@@ -1,22 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEditor;
 
-//[RequireComponent(typeof(BoxCollider))]
-
-public class OctaneEnemy : MonoBehaviour
+public class OctaneWand : MonoBehaviour
 {
     // Start is called before the first frame update
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
-    // public float area;//この数値以下になったら追う
+                      // public float area;//この数値以下になったら追う
 
 
-    [Header("体力")]public float enemyHP = 5;
+    [Header("体力")] public float enemyHP = 5;
 
     Rigidbody rigid;
 
@@ -30,17 +24,24 @@ public class OctaneEnemy : MonoBehaviour
     Player player;
     Color color;
     //Player player;
-    
+
+    [Header("索敵に向かう場所")]
+    public GameObject workObj1;
+    public GameObject workObj2;
+
     int workNumber = 1;
-    
+
+    [Header("索敵時のスピード")]
+    public float speed;
     [Header("発見時のスピード")]
     public float speedLoc;
 
     [Header("この数値まで進む")] public float social;//この数値まで進む
     private GameObject Enemy;
 
-    [Header("追う時")]
+    [Header("追う時と索敵のフラグ")]
     public bool MoveFlag = false;//追う
+    public bool workFlag = true;//徘徊
     //public bool lookFlag = false;
 
     [SerializeField, Header("何秒止まるか")]
@@ -55,7 +56,7 @@ public class OctaneEnemy : MonoBehaviour
     Vector3 EnemyPos;
     Vector3 velocity = Vector3.zero;
 
-    public int moveState;
+    int moveState;
 
     // Start is called before the first frame update
     void Start()
@@ -90,11 +91,13 @@ public class OctaneEnemy : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
-        switch(moveState)
+        switch (moveState)
         {
             case 0:
-                
-                if(MoveFlag)
+
+                Work();
+
+                if (MoveFlag)
                 {
                     moveState = 1;
                 }
@@ -102,9 +105,6 @@ public class OctaneEnemy : MonoBehaviour
 
             case 1://見てる時
                 lookTime += Time.deltaTime;
-
-
-                
 
                 if (lookTime <= freezeTime)
                 {
@@ -123,65 +123,129 @@ public class OctaneEnemy : MonoBehaviour
 
                     }
                 }
-
-                if(lookTime >= freezeTime - 0.5f)
-                {
-                    lineRenderer.startColor = Color.red;//初めの色
-                    lineRenderer.endColor = Color.red;//終わりの色
-                }
-
                 if (lookTime >= freezeTime)
                 {
                     moveState = 2;
                 }
-                 break;
-
+                break;
             case 2://位置
 
                 playerPos = Target.transform.position;
                 //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
                 moveState = 3;
                 break;
-
             case 3:
-
-                lineRenderer.startColor = Color.green;//初めの色
-                lineRenderer.endColor = Color.green;//終わりの色
-
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(playerPos.x,this.transform.position.y,playerPos.z), speedLoc * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(playerPos.x, this.transform.position.y, playerPos.z), speedLoc * Time.deltaTime);
 
                 lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
-
                 lookTime = 0;
-
-                if(playerPos.x == transform.position.x
+                if (playerPos.x == transform.position.x
                     && playerPos.z == transform.position.z)
                 {
                     moveState = 0;
                 }
-                //moveState = 0;
+
                 break;
 
         }
+        //if (Target != null)
+        //{
+        //    transform.localScale = new Vector3(2, 2, 2);
+        //}
 
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
+            //SceneManager.LoadScene("Result");
+            //SceneManager.LoadScene("GameClear");
+
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-        
-        //レイ
+
+        ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
+        ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
+
         lineRenderer.SetPosition(0, this.transform.position);
+
+
 
         ray.origin = this.transform.position;//自分の位置のレイ
 
         ray.direction = transform.forward;//自分の向きのレイ
 
         Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
-        
+
+        //if (MoveFlag)
+        //{
+        //    lookTime += Time.deltaTime;
+
+        //    if(lookTime <=freezeTime)
+        //    {
+        //      this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+
+        //        //レイの処理
+        //        if (Physics.Raycast(ray, out hitRay, 10))
+        //        {
+        //            if (hitRay.collider.gameObject.CompareTag("Player"))
+        //            {
+        //                lineRenderer.enabled = true;
+
+        //                lineRenderer.SetPosition(1, hitRay.point);
+        //                //hitRay.point;
+        //            }
+
+        //        }
+        //    }
+
+        //    if (lookTime >= freezeTime)
+        //    {
+        //        transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+
+        //        lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+
+        //        //lookTime = 0;
+        //    }
+
+        //}
     }
 
+    void Work()
+    {
+        //徘徊
+        if (workFlag)
+        {
+            lookTime = 0;
+            if (ww < workeAria1)
+            {
+                workNumber = 2;
+            }
+            if (ww2 < workeAria2)
+            {
+                workNumber = 1;
+            }
+
+            switch (workNumber)
+            {
+
+                case 1:
+
+                    this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
+                    transform.position += transform.forward * speed * Time.deltaTime;
+
+                    break;
+
+                case 2:
+
+                    this.transform.LookAt(this.workObj2.transform);//徘徊2の位置に向く
+                    transform.position += transform.forward * speed * Time.deltaTime;
+
+                    break;
+            }
+
+
+        }
+    }
 
     public float HpGet()
     {
@@ -194,14 +258,15 @@ public class OctaneEnemy : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
+            //color.g = 160;
         }
     }
-
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")|| 
+        if (other.gameObject.CompareTag("Player") ||
             other.gameObject.CompareTag("Wall"))
         {
+            workFlag = true;
             MoveFlag = false;
             moveState = 0;
         }

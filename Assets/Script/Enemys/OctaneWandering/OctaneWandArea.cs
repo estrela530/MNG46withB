@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class PoisonArea : MonoBehaviour
+public class OctaneWandArea : MonoBehaviour
 {
     [SerializeField] private SpherecastCommand searchArea;//サーチ範囲
     [SerializeField] public float searchAngle;
-    public GameObject Move;
+    public GameObject Octane;
 
-    [SerializeField]
-    float radius;
+    Rigidbody rigid;
+
+    //public float stopTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        Move.GetComponent<PoisonEnemy>();
+        Octane.GetComponent<OctaneWand>();
+        rigid = GetComponent<Rigidbody>();
 
     }
 
@@ -23,6 +25,8 @@ public class PoisonArea : MonoBehaviour
     void Update()
     {
 
+        rigid.angularVelocity = Vector3.zero;
+        rigid.velocity = Vector3.zero;
     }
     public void OnTriggerStay(Collider other)
     {
@@ -35,23 +39,24 @@ public class PoisonArea : MonoBehaviour
         //触れているとき
         if (other.gameObject.CompareTag("Player"))
         {
+
             //サーチする角度の範囲内だったら発見
             if (angle <= searchAngle)
             {
-                Move.GetComponent<PoisonEnemy>().MoveFlag = true;
-                //Move.GetComponent<PoisonEnemy>().workFlag = false;
+                Octane.GetComponent<OctaneWand>().MoveFlag = true;
+                Octane.GetComponent<OctaneWand>().workFlag = false;
                 //MoveFlag = true;
                 //workFlag = false;
                 // Debug.Log("主人公発見: " + angle);
             }
 
-            //サーチする角度の範囲外だったら索敵
-            if (searchAngle <= angle)
-            {
-                Move.GetComponent<PoisonEnemy>().MoveFlag = false;
-               // Move.GetComponent<PoisonEnemy>().workFlag = true;
-                //Debug.Log("外: " + angle);
-            }
+            ////サーチする角度の範囲外だったら索敵
+            //if (searchAngle <= angle)
+            //{
+            //    Octane.GetComponent<OctaneEnemy>().MoveFlag = false;
+            //    Octane.GetComponent<OctaneEnemy>().workFlag = true;
+            //    //Debug.Log("外: " + angle);
+            //}
 
 
         }
@@ -62,8 +67,8 @@ public class PoisonArea : MonoBehaviour
         //サーチする角度の範囲外だったら索敵
         if (!other.gameObject.CompareTag("Player"))
         {
-            Move.GetComponent<PoisonEnemy>().MoveFlag = false;
-           // Move.GetComponent<PoisonEnemy>().workFlag = true;
+            Octane.GetComponent<OctaneWand>().MoveFlag = false;
+            Octane.GetComponent<OctaneWand>().workFlag = true;
         }
     }
 
@@ -72,14 +77,13 @@ public class PoisonArea : MonoBehaviour
     //サーチ範囲を表示
     private void OnDrawGizmos()
     {
-        Handles.color = new Color(1.0f, 0.0f, 1.0f, 0.3f);
+        Handles.color = new Color(0.0f, 1.0f, 0.0f, 0.3f);
         Handles.DrawSolidArc(transform.position,
             Vector3.up,
             Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward
             , searchAngle * 2f,
-            radius);
+            5f);
     }
 #endif
-
 
 }

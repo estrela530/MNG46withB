@@ -18,6 +18,7 @@ public class EnemyUI : MonoBehaviour
     private KraberEnemy Kraber;
     private PoisonEnemy Poison;
     private BossMove Boss;
+    private PawnEnemy Pawn;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +62,13 @@ public class EnemyUI : MonoBehaviour
             currHp = (int)Boss.HpGet();
         }
 
+        if (this.Enemy.GetComponent<PawnEnemy>())
+        {
+            Pawn = this.Enemy.GetComponent<PawnEnemy>();
+            slider.maxValue = slider.value = Pawn.HpGet();
+            currHp = (int)Pawn.HpGet();
+        }
+
         //enemy = GameObject.Find("Enemy").GetComponent<BossMove>();
 
         //slider.maxValue = slider.value = enemy.HpGet();
@@ -102,7 +110,13 @@ public class EnemyUI : MonoBehaviour
             slider.value = Boss.HpGet();
             currHp = (int)Boss.HpGet();
         }
-        
+
+        else if (Enemy.GetComponent<PawnEnemy>())
+        {
+            slider.value = Pawn.HpGet();
+            currHp = (int)Pawn.HpGet();
+        }
+
         transform.rotation = Camera.main.transform.rotation;
         //Debug.Log(currHp);
 

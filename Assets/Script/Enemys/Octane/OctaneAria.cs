@@ -44,7 +44,6 @@ public class OctaneAria : MonoBehaviour
             if (angle <= searchAngle)
             {
                 Octane.GetComponent<OctaneEnemy>().MoveFlag = true;
-                Octane.GetComponent<OctaneEnemy>().workFlag = false;
                 //MoveFlag = true;
                 //workFlag = false;
                 // Debug.Log("主人公発見: " + angle);
@@ -68,7 +67,6 @@ public class OctaneAria : MonoBehaviour
         if (!other.gameObject.CompareTag("Player"))
         {
             Octane.GetComponent<OctaneEnemy>().MoveFlag = false;
-            Octane.GetComponent<OctaneEnemy>().workFlag = true;
         }
     }
 
