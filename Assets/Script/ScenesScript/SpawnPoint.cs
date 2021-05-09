@@ -9,6 +9,9 @@ public class SpawnPoint : MonoBehaviour
     //private GameObject SpawnEnemys;
     GameObject[] enemys;
     int enemysCount;
+    GameObject door;
+    CountTest countTest;
+    bool allDeathFlag;
 
     // Start is called before the first frame update
     void Start()
@@ -17,18 +20,36 @@ public class SpawnPoint : MonoBehaviour
         //SpawnEnemys.SetActive(false);
         enemysCount = gameObject.transform.childCount;
         enemys = new GameObject[enemysCount];
-        Debug.Log(enemysCount);
+        door = transform.GetChild(0).gameObject;
+        door.SetActive(false);
 
         for (int i = 0; i < enemysCount; i++)
         {
             enemys[i] = gameObject.transform.GetChild(i).gameObject;
             enemys[i].SetActive(false);
+
+
         }
+        enemys[1].SetActive(true);
+        countTest = enemys[1].GetComponent<CountTest>();
+
+        this.allDeathFlag = countTest.allDeathFlag;
+        allDeathFlag = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        this.allDeathFlag = countTest.allDeathFlag;
+        Debug.Log(allDeathFlag);
+        if (allDeathFlag)
+        {
+            door.SetActive(false);
+        }
+        else 
+        {
+            door.SetActive(true);
+        }
     }
 
     void OnTriggerEnter(Collider collision)

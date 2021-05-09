@@ -44,9 +44,10 @@ public class PawnEnemy : MonoBehaviour
 
         if (enemyHP <= 0)
         {
+            //Destroy(transform.parent);
             Destroy(this.gameObject);
         }
-       
+
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
