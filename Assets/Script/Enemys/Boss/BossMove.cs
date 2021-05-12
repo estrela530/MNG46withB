@@ -20,8 +20,8 @@ public class BossMove : MonoBehaviour
     [SerializeField, Header("体力")]
     float enemyHP = 5;
 
-    [SerializeField, Header("この数値以下になったら召喚する")]
-    float ChangePawnHP;
+    [SerializeField, Header("この数値以下になったら変わる")]
+    float ChangeAttackHP;
 
     
     //[SerializeField, Header("発見時のスピード")]
@@ -62,6 +62,7 @@ public class BossMove : MonoBehaviour
     [SerializeField, Header("召喚するエネミーの上限")]
     int MaxPawnCount;//プレハブの出現数
 
+    bool PawnFalg;
 
     [SerializeField] private float DeathTime = 0;
     [SerializeField, Header("次のしーんに行くの開始までの時間")]  float NextTime;
@@ -72,8 +73,15 @@ public class BossMove : MonoBehaviour
     RaycastHit hitRay;
     LineRenderer lineRenderer;
 
+    Renderer renderComponent;
+    [SerializeField] float ColorInterval = 0.1f;
+    [SerializeField] float DamageTime;
+    [SerializeField, Header("ダメージ受けた時")]
+    bool DamageFlag = false;
+
     void Start()
     {
+        PawnFalg = false;
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
@@ -99,20 +107,50 @@ public class BossMove : MonoBehaviour
         ray.direction = transform.forward;
     }
 
+    //中断できる処理のまとまり
+    IEnumerator Blink()
+    {
+        while (true)
+        {
+            renderComponent.enabled = !renderComponent.enabled;
+            //何フレームとめる
+            yield return new WaitForSeconds(ColorInterval);
+        }
+    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
-        if(MoveFlag)
+
+        //ダメージ演出
+        if (enemyHP > 0)
         {
-            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-            //召喚
-            if (enemyHP <= ChangePawnHP)
+            //ダメージ
+            if (DamageFlag)
             {
-                Pawn();
+                DamageTime += Time.deltaTime;
+                StartCoroutine("Blink");
+                if (DamageTime > 1)
+                {
+                    DamageTime = 0;
+                    StopCoroutine("Blink");
+                    renderComponent.enabled = true;
+                    DamageFlag = false;
+                }
             }
+        }
+
+        if (MoveFlag)
+        {
+
+            //this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+            //召喚
+            //if (enemyHP <= ChangeAttackHP)
+            //{
+            //    Pawn();
+            //}
 
             dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
@@ -198,7 +236,7 @@ public class BossMove : MonoBehaviour
         if (PawnCount<MaxPawnCount)
         {
             PawnTime -= Time.deltaTime;
-            if(PawnTime <= 3.0f)
+            if(PawnTime <= 0.0f)
             {
                 PawnTime = ResetTime;//1秒沖に生成
                 GameObject.Instantiate(PawnEnemy);
@@ -221,6 +259,7 @@ public class BossMove : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
+            DamageFlag = true;
         }
 
         if (other.gameObject.CompareTag("Player")|| (other.gameObject.CompareTag("Wall")))

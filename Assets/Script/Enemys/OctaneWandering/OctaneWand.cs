@@ -57,10 +57,22 @@ public class OctaneWand : MonoBehaviour
     Vector3 velocity = Vector3.zero;
 
     int moveState;
+    
+    GameObject stageMove1;
+
+    Renderer renderComponent;
+    [SerializeField] float ColorInterval = 0.1f;
+    [SerializeField] float DamageTime;
+    [SerializeField, Header("ダメージ受けた時")]
+    bool DamageFlag;
 
     // Start is called before the first frame update
     void Start()
     {
+        renderComponent = GetComponent<Renderer>();
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
+
         moveState = 0;
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
@@ -84,12 +96,45 @@ public class OctaneWand : MonoBehaviour
         //変えるかも?
         ray.direction = transform.forward;
     }
-
+    IEnumerator Blink()
+    {
+        while (true)
+        {
+            renderComponent.enabled = !renderComponent.enabled;
+            //何フレームとめる
+            yield return new WaitForSeconds(ColorInterval);
+        }
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+
+        //ダメージ演出
+        if (enemyHP > 0)
+        {
+            //ダメージ
+            if (DamageFlag)
+            {
+                DamageTime += Time.deltaTime;
+                StartCoroutine("Blink");
+                if (DamageTime > 1)
+                {
+                    DamageTime = 0;
+                    StopCoroutine("Blink");
+                    renderComponent.enabled = true;
+                    DamageFlag = false;
+                }
+            }
+        }
+
+        if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
+        {
+            MoveFlag = false;
+            moveState = 0;
+            workFlag = false;
+        }
 
         switch (moveState)
         {
@@ -123,24 +168,37 @@ public class OctaneWand : MonoBehaviour
 
                     }
                 }
+
                 if (lookTime >= freezeTime)
                 {
                     moveState = 2;
                 }
+
+                if (lookTime >= freezeTime - 0.5f)
+                {
+                    lineRenderer.startColor = Color.red;//初めの色
+                    lineRenderer.endColor = Color.red;//終わりの色
+                }
                 break;
+
+
             case 2://位置
 
                 playerPos = Target.transform.position;
                 //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
                 moveState = 3;
                 break;
+
+
             case 3:
+                lineRenderer.startColor = Color.green;//初めの色
+                lineRenderer.endColor = Color.green;//終わりの色
+
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(playerPos.x, this.transform.position.y, playerPos.z), speedLoc * Time.deltaTime);
 
                 lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
                 lookTime = 0;
-                if (playerPos.x == transform.position.x
-                    && playerPos.z == transform.position.z)
+                if ( playerPos.z == transform.position.z)
                 {
                     moveState = 0;
                 }
@@ -258,6 +316,9 @@ public class OctaneWand : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
+            MoveFlag = true;
+            workFlag = false;
+            DamageFlag = true;
             //color.g = 160;
         }
     }

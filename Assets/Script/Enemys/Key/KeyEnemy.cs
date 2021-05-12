@@ -94,11 +94,12 @@ public class KeyEnemy : MonoBehaviour
         if (PawnCount < MaxPawnCount)
         {
             PawnTime -= Time.deltaTime;
-            if (PawnTime <= 3.0f)
+            if (PawnTime <= 0.0f)
             {
                 PawnTime = ResetTime;//1秒沖に生成
-                GameObject.Instantiate(PawnEnemy);
-                //GameObject.Instantiate(PawnEnemy);
+                var sum = Instantiate(PawnEnemy,
+                    new Vector3(transform.position.x, transform.position.y, transform.position.z + 3),
+                    Quaternion.identity);
                 PawnCount++;
             }
         }

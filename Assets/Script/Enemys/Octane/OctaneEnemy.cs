@@ -14,7 +14,6 @@ public class OctaneEnemy : MonoBehaviour
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
     // public float area;//この数値以下になったら追う
-    StageMove1 stageMove1;
 
     [Header("体力")]public float enemyHP = 5;
 
@@ -51,17 +50,30 @@ public class OctaneEnemy : MonoBehaviour
     RaycastHit hitRay;
     LineRenderer lineRenderer;
 
-    Vector3 playerPos;
+    public Vector3 playerPos;
     Vector3 EnemyPos;
     Vector3 velocity = Vector3.zero;
 
     public int moveState;
 
+    GameObject stageMove1;
+
+
+    Renderer renderComponent;
+    [SerializeField] float ColorInterval = 0.1f;
+    [SerializeField] float DamageTime;
+    [SerializeField, Header("ダメージ受けた時")]
+    bool DamageFlag = false;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        renderComponent = GetComponent<Renderer>();
+
         moveState = 0;
-        stageMove1 = GetComponent<StageMove1>();
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         color = GetComponent<Renderer>().material.color;
@@ -84,20 +96,47 @@ public class OctaneEnemy : MonoBehaviour
         //変えるかも?
         ray.direction = transform.forward;
     }
-
+    //中断できる処理のまとまり
+    IEnumerator Blink()
+    {
+        while (true)
+        {
+            renderComponent.enabled = !renderComponent.enabled;
+            //何フレームとめる
+            yield return new WaitForSeconds(ColorInterval);
+        }
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+        //ダメージ演出
+        if (enemyHP > 0)
+        {
+            //ダメージ
+            if (DamageFlag)
+            {
+                DamageTime += Time.deltaTime;
+                StartCoroutine("Blink");
+                if (DamageTime > 1)
+                {
+                    DamageTime = 0;
+                    StopCoroutine("Blink");
+                    renderComponent.enabled = true;
+                    DamageFlag = false;
+                }
+            }
+        }
 
-        if(stageMove1.GetComponent<StageMove1>().nowFlag == true)
+
+        if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
         {
             MoveFlag = false;
             moveState = 0;
         }
 
-        switch(moveState)
+        switch (moveState)
         {
             case 0:
                 
@@ -109,10 +148,7 @@ public class OctaneEnemy : MonoBehaviour
 
             case 1://見てる時
                 lookTime += Time.deltaTime;
-
-
                 
-
                 if (lookTime <= freezeTime)
                 {
                     this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
@@ -161,14 +197,16 @@ public class OctaneEnemy : MonoBehaviour
 
                 lookTime = 0;
 
-                if(playerPos.x == transform.position.x
-                    && playerPos.z == transform.position.z)
+                if(/*playerPos.x == transform.position.x*/
+                    /*&&*/ playerPos.z == transform.position.z)
                 {
-                    moveState = 0;
+                    moveState = 4;
                 }
-                //moveState = 0;
                 break;
 
+            case 4:
+                moveState = 0;
+                break;
         }
 
         if (enemyHP <= 0)
@@ -201,16 +239,23 @@ public class OctaneEnemy : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
+            MoveFlag = true;
+            DamageFlag = true;
         }
+        
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")|| 
-            other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.CompareTag("Player"))
         {
             MoveFlag = false;
             moveState = 0;
+        }
+        if(other.gameObject.CompareTag("Wall"))
+        {
+            moveState = 0;
+            MoveFlag = false;
         }
 
     }

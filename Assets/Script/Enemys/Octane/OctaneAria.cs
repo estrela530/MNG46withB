@@ -22,7 +22,7 @@ public class OctaneAria : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
        
         rigid.angularVelocity = Vector3.zero;
@@ -39,25 +39,11 @@ public class OctaneAria : MonoBehaviour
         //触れているとき
         if (other.gameObject.CompareTag("Player"))
         {
-                
             //サーチする角度の範囲内だったら発見
             if (angle <= searchAngle)
             {
                 Octane.GetComponent<OctaneEnemy>().MoveFlag = true;
-                //MoveFlag = true;
-                //workFlag = false;
-                // Debug.Log("主人公発見: " + angle);
             }
-
-            ////サーチする角度の範囲外だったら索敵
-            //if (searchAngle <= angle)
-            //{
-            //    Octane.GetComponent<OctaneEnemy>().MoveFlag = false;
-            //    Octane.GetComponent<OctaneEnemy>().workFlag = true;
-            //    //Debug.Log("外: " + angle);
-            //}
-
-
         }
 
     }
@@ -75,8 +61,6 @@ public class OctaneAria : MonoBehaviour
     //サーチ範囲を表示
     private void OnDrawGizmos()
     {
-       
-        
             Handles.color = new Color(0.0f, 1.0f, 0.0f, 0.3f);
         Handles.DrawSolidArc(transform.position,
             Vector3.up,
