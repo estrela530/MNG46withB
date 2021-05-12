@@ -9,12 +9,9 @@ using UnityEditor;
 
 public class PoisonEnemy : MonoBehaviour
 {
-
-    // Start is called before the first frame update
+    
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
-   // public float area;//この数値以下になったら追う
-
 
     [SerializeField, Header("体力")] float enemyHP = 5;
 
@@ -43,11 +40,22 @@ public class PoisonEnemy : MonoBehaviour
     RaycastHit hitRay;
     LineRenderer lineRenderer;
 
+    Renderer renderComponent;
+    [SerializeField] float ColorInterval = 0.1f;
+    [SerializeField] float DamageTime;
+    [SerializeField, Header("ダメージ受けた時")]
+    bool DamageFlag = false;
+
+    GameObject stageMove1;
+    
     void Start()
     {
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
+
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
 
         ray = new Ray();
         lineRenderer = this.gameObject.GetComponent<LineRenderer>();
@@ -60,19 +68,53 @@ public class PoisonEnemy : MonoBehaviour
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.startColor = Color.red;//初めの色
         lineRenderer.endColor = Color.red;//終わりの色
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
         //変えるかも?
         ray.direction = transform.forward;
     }
 
+    //中断できる処理のまとまり
+    IEnumerator Blink()
+    {
+        while (true)
+        {
+            renderComponent.enabled = !renderComponent.enabled;
+            //何フレームとめる
+            yield return new WaitForSeconds(ColorInterval);
+        }
+    }
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
-
+        //ダメージ演出
+        if (enemyHP > 0)
+        {
+            //ダメージ
+            if (DamageFlag)
+            {
+                DamageTime += Time.deltaTime;
+                StartCoroutine("Blink");
+                if (DamageTime > 1)
+                {
+                    DamageTime = 0;
+                    StopCoroutine("Blink");
+                    renderComponent.enabled = true;
+                    DamageFlag = false;
+                }
+            }
+        }
         //常にターゲットにむく
         this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));
+
+        if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
+        {
+            MoveFlag = false;
+        }
 
         if (enemyHP <= 0)
         {
@@ -176,6 +218,7 @@ public class PoisonEnemy : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
+            DamageFlag = true;
         }
 
     }

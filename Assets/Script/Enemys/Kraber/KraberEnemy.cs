@@ -67,9 +67,12 @@ public class KraberEnemy : MonoBehaviour
     [SerializeField] float ColorInterval = 0.1f;
     //[SerializeField] float Interval = 0;
 
+    GameObject stageMove1;
+
     void Start()
     {
-       
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
         ray = new Ray();
         lineRenderer = this.gameObject.GetComponent<LineRenderer>();
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
@@ -116,6 +119,11 @@ public class KraberEnemy : MonoBehaviour
         rigid.velocity = Vector3.zero;
         this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
 
+        if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
+        {
+            MoveFlag = false;
+            powerFlag = false;
+        }
 
         //meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
         if (enemyHP <= 0)

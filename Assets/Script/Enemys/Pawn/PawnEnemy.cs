@@ -25,10 +25,8 @@ public class PawnEnemy : MonoBehaviour
     
     [Header("追う時のフラグ")]
     public bool MoveFlag;//追う
-
-
+    
     GameObject stageMove1;
-
 
     void Start()
     {
