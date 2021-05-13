@@ -55,11 +55,7 @@ public class PawnEnemy : MonoBehaviour
 
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-
-
-
         
-
         //追いかける
         if (MoveFlag)
         {
@@ -69,7 +65,6 @@ public class PawnEnemy : MonoBehaviour
                 transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
             }
         }
-        Debug.Log("動くff" + MoveFlag);
 
         if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
         {
