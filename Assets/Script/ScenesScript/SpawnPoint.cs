@@ -10,6 +10,7 @@ public class SpawnPoint : MonoBehaviour
     GameObject[] enemys;
     int enemysCount;
     GameObject door;
+    GameObject door2;
     CountTest countTest;
     bool allDeathFlag;
 
@@ -22,16 +23,17 @@ public class SpawnPoint : MonoBehaviour
         enemys = new GameObject[enemysCount];
         door = transform.GetChild(0).gameObject;
         door.SetActive(false);
+        door2 = transform.GetChild(1).gameObject;
+        door2.SetActive(false);
 
         for (int i = 0; i < enemysCount; i++)
         {
             enemys[i] = gameObject.transform.GetChild(i).gameObject;
             enemys[i].SetActive(false);
 
-
         }
         enemys[1].SetActive(true);
-        countTest = enemys[1].GetComponent<CountTest>();
+        countTest = enemys[2].GetComponent<CountTest>();
 
         this.allDeathFlag = countTest.allDeathFlag;
         allDeathFlag = false;
@@ -45,10 +47,12 @@ public class SpawnPoint : MonoBehaviour
         if (allDeathFlag)
         {
             door.SetActive(false);
+            door2.SetActive(false);
         }
         else 
         {
             door.SetActive(true);
+            door2.SetActive(true);
         }
     }
 
