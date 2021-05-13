@@ -40,7 +40,12 @@ public class InhaleEffect : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
+    {
+        ChangeLevel();
+    }
+
+    void ChangeLevel()
     {
         //親オブジェクトが回転しても、反映されないようにする。
         gameObject.transform.rotation = Quaternion.Euler(Vector3.forward);

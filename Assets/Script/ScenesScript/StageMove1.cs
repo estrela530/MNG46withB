@@ -140,7 +140,7 @@ public class StageMove1 : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax && positionMove12 == false)
             {
-                GameObject.Find("SlimePlayer").transform.position = stage2StartPosition.transform.position;
+                GameObject.FindGameObjectWithTag("Player").transform.position = stage2StartPosition.transform.position;
                 stage2Prefab.SetActive(true);
                 positionMove12 = true;
             }
@@ -183,7 +183,7 @@ public class StageMove1 : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax && positionMove2B == false)
             {
-                GameObject.Find("SlimePlayer").transform.position = stageBossStartPosition.transform.position;
+                GameObject.FindGameObjectWithTag("Player").transform.position = stageBossStartPosition.transform.position;
                 stageBossPrefab.SetActive(true);
                 positionMove2B = true;
             }
