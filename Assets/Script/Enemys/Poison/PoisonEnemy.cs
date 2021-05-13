@@ -46,10 +46,16 @@ public class PoisonEnemy : MonoBehaviour
     [SerializeField, Header("ダメージ受けた時")]
     bool DamageFlag = false;
 
+    [SerializeField, Header("死んだ時のエフェクト")]
+    private GameObject DeathEffect;
+    private ParticleSystem DeathParticle;   //ダメージのパーティクル
+
     GameObject stageMove1;
+
     
     void Start()
     {
+        DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
@@ -119,6 +125,9 @@ public class PoisonEnemy : MonoBehaviour
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
+            var sum = Instantiate(DeathEffect,
+                          this.transform.position,
+                          Quaternion.identity);
 
         }
 

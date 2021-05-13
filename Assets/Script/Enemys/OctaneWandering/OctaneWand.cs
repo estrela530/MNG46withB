@@ -66,9 +66,15 @@ public class OctaneWand : MonoBehaviour
     [SerializeField, Header("ダメージ受けた時")]
     bool DamageFlag;
 
+    [SerializeField, Header("死んだ時のエフェクト")]
+    private GameObject DeathEffect;
+    private ParticleSystem DeathParticle;   //ダメージのパーティクル
+
     // Start is called before the first frame update
     void Start()
     {
+        DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
+
         renderComponent = GetComponent<Renderer>();
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
         stageMove1.GetComponent<StageMove1>();
@@ -214,9 +220,9 @@ public class OctaneWand : MonoBehaviour
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
-            //SceneManager.LoadScene("Result");
-            //SceneManager.LoadScene("GameClear");
-
+            var sum = Instantiate(DeathEffect,
+                          this.transform.position,
+                          Quaternion.identity);
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾

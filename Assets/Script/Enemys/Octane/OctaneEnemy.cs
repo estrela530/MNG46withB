@@ -63,6 +63,8 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField, Header("召喚するエネミーの上限")]
     int MaxEnemyCount;//プレハブの出現数
 
+    int enemyNumber = (1<<13);
+
     //レイ関連
     Ray ray;
     RaycastHit hitRay;
@@ -82,9 +84,15 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField, Header("ダメージ受けた時")]
     bool DamageFlag = false;
 
+    [SerializeField, Header("死んだ時のエフェクト")]
+    private GameObject DeathEffect;
+    private ParticleSystem DeathParticle;   //ダメージのパーティクル
+
     // Start is called before the first frame update
     void Start()
     {
+        DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
+
         attackCount = 0;
         renderComponent = GetComponent<Renderer>();
 
@@ -176,7 +184,7 @@ public class OctaneEnemy : MonoBehaviour
                     this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
 
                     //レイの処理
-                    if (Physics.Raycast(ray, out hitRay, 15))
+                    if (Physics.Raycast(ray, out hitRay, 30,enemyNumber))
                     {
                         if (hitRay.collider.gameObject.CompareTag("Player"))
                         {
@@ -249,7 +257,7 @@ public class OctaneEnemy : MonoBehaviour
                     {
                         PawnTime = ResetTime;//1秒沖に生成
                         var sum = Instantiate(SummonEnemy,
-                            new Vector3(0, transform.position.y, 0),
+                            new Vector3(transform.position.x+2, transform.position.y, transform.position.z+2),
                             Quaternion.identity);
 
                         EnemyCount++;
@@ -272,6 +280,9 @@ public class OctaneEnemy : MonoBehaviour
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
+            var sum = Instantiate(DeathEffect,
+                          this.transform.position,
+                          Quaternion.identity);
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
@@ -301,7 +312,8 @@ public class OctaneEnemy : MonoBehaviour
             enemyHP = enemyHP - 1;
             DamageFlag = true;
         }
-        if (other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.CompareTag("Wall")
+            /*|| other.gameObject.CompareTag("Enemy")*/)
         {
             moveState = 4;
             MoveFlag = false;

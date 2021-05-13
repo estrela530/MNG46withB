@@ -63,7 +63,7 @@ public class EnemyMove : MonoBehaviour
     [SerializeField, Header("ダメージ受けた時")]
     bool DamageFlag;
 
-    [SerializeField, Header("ダメージのエフェクト")]
+    [SerializeField, Header("死んだ時のエフェクト")]
     private GameObject DeathEffect;
     private ParticleSystem DeathParticle;   //ダメージのパーティクル
 

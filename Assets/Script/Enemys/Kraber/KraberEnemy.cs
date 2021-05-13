@@ -56,6 +56,10 @@ public class KraberEnemy : MonoBehaviour
 
    [SerializeField] float DamageTime;
 
+    [SerializeField, Header("死んだ時のエフェクト")]
+    private GameObject DeathEffect;
+    private ParticleSystem DeathParticle;   //ダメージのパーティクル
+
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
@@ -69,8 +73,11 @@ public class KraberEnemy : MonoBehaviour
 
     GameObject stageMove1;
 
+
     void Start()
     {
+        DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
+
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
         stageMove1.GetComponent<StageMove1>();
         ray = new Ray();
@@ -130,8 +137,9 @@ public class KraberEnemy : MonoBehaviour
         {
             gameObject.SetActive(false);//非表示
             renderComponent.enabled = false;
-            //SceneManager.LoadScene("Result");
-            //SceneManager.LoadScene("GameClear");
+            var sum = Instantiate(DeathEffect,
+                          this.transform.position,
+                          Quaternion.identity);
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
