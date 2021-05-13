@@ -133,9 +133,10 @@ public class KraberEnemy : MonoBehaviour
         }
 
         //meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
-        if (enemyHP <= 0)
+        if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
         {
             gameObject.SetActive(false);//非表示
+            TimerScript.enemyCounter += 1;
             renderComponent.enabled = false;
             var sum = Instantiate(DeathEffect,
                           this.transform.position,
