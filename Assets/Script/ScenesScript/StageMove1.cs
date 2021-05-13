@@ -55,7 +55,7 @@ public class StageMove1 : MonoBehaviour
     GameObject stageBossPrefab;
 
 
-
+    
 
     // Start is called before the first frame update
     void Start()

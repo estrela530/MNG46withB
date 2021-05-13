@@ -9,6 +9,8 @@ public class TimerScript : MonoBehaviour
     private int minute;
     [SerializeField]
     public static float seconds;
+
+    public static int enemyCounter;
     //　前のUpdateの時の秒数
     private float oldSeconds;
     //　タイマー表示用テキスト
@@ -18,6 +20,7 @@ public class TimerScript : MonoBehaviour
     {
         minute = 0;
         seconds = 0f;
+        enemyCounter = 0;
         oldSeconds = 0f;
         timerText = GetComponentInChildren<Text>();
 

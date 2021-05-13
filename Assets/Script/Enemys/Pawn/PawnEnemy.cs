@@ -70,6 +70,10 @@ public class PawnEnemy : MonoBehaviour
         {
             MoveFlag = false;
         }
+        else if (!stageMove1.GetComponent<StageMove1>().nowFlag)
+        {
+            MoveFlag = true;
+        }
 
     }
 
