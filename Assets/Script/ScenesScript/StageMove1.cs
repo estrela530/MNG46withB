@@ -13,12 +13,13 @@ public class StageMove1 : MonoBehaviour
     [SerializeField]
     bool bossClear;
 
-    [SerializeField, Header("現在進行ステージフラグ")]
-    bool stage1Now = true;
+    //[SerializeField, Header("現在進行ステージフラグ")]
     [SerializeField]
-    bool stage2Now;
+    public bool stage1Now { get; set; } = true;
     [SerializeField]
-    bool bossNow;
+    public bool stage2Now { get; set; }
+    [SerializeField]
+    public bool bossNow { get; set; }
 
     public bool nowFlag { get; set; }
 

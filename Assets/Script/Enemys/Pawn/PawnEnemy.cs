@@ -19,13 +19,12 @@ public class PawnEnemy : MonoBehaviour
 
     [SerializeField, Header("体力")] float enemyHP = 2;
 
-
     [SerializeField, Header("スピード")]
     float speedLoc;
-    
+
     [Header("追う時のフラグ")]
     public bool MoveFlag;//追う
-    
+
     GameObject stageMove1;
 
     void Start()
@@ -45,17 +44,16 @@ public class PawnEnemy : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
-       
-
-        if (enemyHP <= 0)
+        if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
         {
             //Destroy(transform.parent);
+            TimerScript.enemyCounter += 1;
             Destroy(this.gameObject);
         }
 
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-        
+
         //追いかける
         if (MoveFlag)
         {

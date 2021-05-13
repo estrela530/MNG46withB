@@ -175,6 +175,9 @@ public class Player : MonoBehaviour
 
         stageMove = stageMoveObject.GetComponent<StageMove1>();
         isGoalFlag = stageMove.nowFlag;
+
+        debugDamageCount = 0;
+        debugTwistedCount = 0;
     }
 
     /// <summary>
