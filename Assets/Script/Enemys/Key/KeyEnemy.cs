@@ -44,6 +44,11 @@ public class KeyEnemy : MonoBehaviour
     [SerializeField, Header("鍵オブジェクト")]
     GameObject KeyObject;
 
+    GameObject stageMove1;
+
+    [SerializeField, Header("死んだ時のエフェクト")]
+    private GameObject DeathEffect;
+    private ParticleSystem DeathParticle;   //ダメージのパーティクル
 
     //レイ関連
     Ray ray;
@@ -56,14 +61,23 @@ public class KeyEnemy : MonoBehaviour
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         MoveFlag = true;
+
+
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
     }
 
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+        if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
+        {
+            MoveFlag = false;
+        }
         if (MoveFlag)
         {
             //召喚
@@ -78,9 +92,13 @@ public class KeyEnemy : MonoBehaviour
            
         }
         //死んだら鍵を出す
-        if (enemyHP <= 0)
+        if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
         {
             MoveFlag = false;
+            TimerScript.enemyCounter += 1;
+            var sum = Instantiate(DeathEffect,
+                           this.transform.position,
+                           Quaternion.identity);
             Instantiate(KeyObject, this.transform.position, Quaternion.identity);
             gameObject.SetActive(false);//非表示
         }

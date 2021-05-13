@@ -25,10 +25,15 @@ public class PawnEnemy : MonoBehaviour
     [Header("追う時のフラグ")]
     public bool MoveFlag;//追う
 
+    [SerializeField, Header("死んだ時のエフェクト")]
+    private GameObject DeathEffect;
+    private ParticleSystem DeathParticle;   //ダメージのパーティクル
+
     GameObject stageMove1;
 
     void Start()
     {
+        DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
         stageMove1.GetComponent<StageMove1>();
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
@@ -48,6 +53,9 @@ public class PawnEnemy : MonoBehaviour
         {
             //Destroy(transform.parent);
             TimerScript.enemyCounter += 1;
+            var sum = Instantiate(DeathEffect,
+                          this.transform.position,
+                          Quaternion.identity);
             Destroy(this.gameObject);
         }
 

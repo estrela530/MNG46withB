@@ -122,9 +122,10 @@ public class PoisonEnemy : MonoBehaviour
             MoveFlag = false;
         }
 
-        if (enemyHP <= 0)
+        if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
         {
             gameObject.SetActive(false);//非表示
+            TimerScript.enemyCounter += 1;
             var sum = Instantiate(DeathEffect,
                           this.transform.position,
                           Quaternion.identity);
