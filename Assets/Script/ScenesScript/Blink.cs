@@ -13,13 +13,17 @@ public class Blink : MonoBehaviour
     private Text text;
     private Image image;
     private float time;
+    private GameObject gameObject;
+    private MeshRenderer meshRenderer;
+    private int alphaCount = 0;//点滅用カウント
 
-   public bool fadeFlag = true;
+    public bool fadeFlag = true;
 
     private enum ObjType
     {
         TEXT,
-        IMAGE
+        IMAGE,
+        GAMEOBJECT
     };
     private ObjType thisObjType = ObjType.TEXT;
 
@@ -36,14 +40,21 @@ public class Blink : MonoBehaviour
             thisObjType = ObjType.TEXT;
             text = this.gameObject.GetComponent<Text>();
         }
+        else if (this.gameObject.GetComponent<GameObject>())
+        {
+            thisObjType = ObjType.GAMEOBJECT;
+            gameObject = this.gameObject.GetComponent<GameObject>();
+            meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        }
 
-        fadeFlag = true;   
+
+        fadeFlag = true;
     }
 
     void Update()
     {
         //オブジェクトのAlpha値を更新
-        if (thisObjType == ObjType.IMAGE )
+        if (thisObjType == ObjType.IMAGE)
         {
             image.color = GetAlphaColor2(image.color);
         }
@@ -51,6 +62,26 @@ public class Blink : MonoBehaviour
         {
             text.color = GetAlphaColor(text.color);
         }
+        else if (thisObjType == ObjType.GAMEOBJECT)
+        {
+            //meshRenderer.material.color
+
+            alphaCount++;
+
+            if (alphaCount > 0)
+            {
+                meshRenderer.material.color = Color.red;
+            }
+            if (alphaCount > 4)
+            {
+                meshRenderer.material.color = Color.white;
+            }
+            if (alphaCount > 8)
+            {
+                alphaCount = 0;
+            }
+        }
+
     }
 
     //Alpha値を更新してColorを返す
