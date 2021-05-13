@@ -49,11 +49,12 @@ public class HealBall : InhaleObject
 
     private void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+        Debug.Log(meshRenderer.gameObject.name);
         animator = GetComponent<Animator>();
 
         //エフェクト用オブジェクトを取得
-        growEffect = transform.GetChild(0).gameObject;
+        growEffect = transform.GetChild(1).gameObject;
         growEffect.SetActive(false);//エフェクトを非表示
         //初期スケールの設定
         transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -145,13 +146,13 @@ public class HealBall : InhaleObject
                 else mSpeed = mInhaleSpeed[1];
                 //アニメーションの変更
                 animator.SetInteger("HealLevel", 2);
-                Actions(2, Color.green, new Vector3(1, 1, 1), mSpeed);
+                Actions(2, Color.red, new Vector3(1, 1, 1), mSpeed);
                 break;
             case State.Level3:
                 if (player.GetInhale()) mSpeed = twiceSpeed[2];
                 else mSpeed = mInhaleSpeed[2];
                 animator.SetInteger("HealLevel", 3);
-                Actions(3, Color.black, new Vector3(1.5f, 1.5f, 1.5f), mSpeed);
+                Actions(3, Color.white, new Vector3(1.5f, 1.5f, 1.5f), mSpeed);
                 break;
             case State.Blinking:
                 Blinking(10.0f);//点滅(点滅の速さ)
@@ -189,7 +190,7 @@ public class HealBall : InhaleObject
     void Blinking(float time)
     {
         float alpha = Mathf.Sin(Time.time * time) / 2 + 0.5f;
-        meshRenderer.material.color = new Color(1, 1, 1, alpha);
+        meshRenderer.material.color = new Color(255, 1, 1, alpha);
     }
 
     /// <summary>
@@ -197,7 +198,7 @@ public class HealBall : InhaleObject
     /// </summary>
     private void OnDestroy()
     {
-        Renderer renderer = gameObject.GetComponent<Renderer>();
+        Renderer renderer = transform.GetChild(0).gameObject.GetComponent<Renderer>();
         DestroyImmediate(renderer.material);//マテリアルのメモリを削除
     }
 
