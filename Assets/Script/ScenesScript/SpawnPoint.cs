@@ -32,7 +32,7 @@ public class SpawnPoint : MonoBehaviour
             enemys[i].SetActive(false);
 
         }
-        enemys[1].SetActive(true);
+        //enemys[2].SetActive(true);
         countTest = enemys[2].GetComponent<CountTest>();
 
         this.allDeathFlag = countTest.allDeathFlag;
@@ -42,8 +42,12 @@ public class SpawnPoint : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!isTouchPlayerFlag)
+        {
+            return;
+        }
         this.allDeathFlag = countTest.allDeathFlag;
-        Debug.Log(allDeathFlag);
+        //Debug.Log(allDeathFlag);
         if (allDeathFlag)
         {
             door.SetActive(false);
@@ -71,8 +75,9 @@ public class SpawnPoint : MonoBehaviour
             {
                 enemys[i].SetActive(true);
             }
+            enemys[2].SetActive(true);
             isTouchPlayerFlag = true;
-            Debug.Log("触ったな…");
+            //Debug.Log("触ったな…");
         }
 
     }
