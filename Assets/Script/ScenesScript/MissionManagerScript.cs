@@ -18,9 +18,9 @@ public class MissionManagerScript : MonoBehaviour
 
     float fadeCount;
     
-    //TimerScript timerScript;
+    TimerScript timerScript;
     float clearSeconds;
-    //float missionClearCount;
+    int missionClearCount;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +28,8 @@ public class MissionManagerScript : MonoBehaviour
         fadeCount = 0;
         clearSeconds = 0;
         //ミッション用の数値「全滅ミッション」
-        //missionClearCount = 10;
-        //timerScript = GetComponent<TimerScript>();
+        missionClearCount = 10;
+        timerScript = GetComponent<TimerScript>();
 
         //もしステージごとにリザルトをさすのであれば変更が必要
         clearSeconds = TimerScript.seconds;
@@ -45,7 +45,7 @@ public class MissionManagerScript : MonoBehaviour
         {
             Mission1.GetComponent<Image>().color = Color.yellow;
         }
-        if (fadeCount >= 300 && clearSeconds <= 60)
+        if (fadeCount >= 300 && clearSeconds <= 10)
         {
             Mission2.GetComponent<Image>().color = Color.yellow;
         }
