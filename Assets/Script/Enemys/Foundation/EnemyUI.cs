@@ -15,6 +15,7 @@ public class EnemyUI : MonoBehaviour
 
     private EnemyMove Normal;
     private OctaneEnemy Octane;
+    private OctaneWand OctaneWand;
     private KraberEnemy Kraber;
     private PoisonEnemy Poison;
     private BossMove Boss;
@@ -27,14 +28,21 @@ public class EnemyUI : MonoBehaviour
         
         //Octane = GameObject.Find("OctaneEnemy").GetComponent<OctaneEnemy>();
 
-        if(this.Enemy.GetComponent<OctaneEnemy>())
+        if(this.Enemy.GetComponent<OctaneWand>())
+        {
+            OctaneWand = this.Enemy.GetComponent<OctaneWand>();
+            slider.maxValue = slider.value = OctaneWand.HpGet();
+            currHp = (int)OctaneWand.HpGet();
+        }
+
+        if (this.Enemy.GetComponent<OctaneEnemy>())
         {
             Octane = this.Enemy.GetComponent<OctaneEnemy>();
             slider.maxValue = slider.value = Octane.HpGet();
             currHp = (int)Octane.HpGet();
         }
-       
-        if(this.Enemy.GetComponent<KraberEnemy>())
+
+        if (this.Enemy.GetComponent<KraberEnemy>())
         {
             Kraber = this.Enemy.GetComponent<KraberEnemy>();
             slider.maxValue = slider.value = Kraber.HpGet();
@@ -82,7 +90,12 @@ public class EnemyUI : MonoBehaviour
     void FixedUpdate()
     {
         slider.value = currHp;
-        if(Enemy.GetComponent<OctaneEnemy>())
+        if (Enemy.GetComponent<OctaneWand>())
+        {
+            slider.value = Octane.HpGet();
+            currHp = (int)Octane.HpGet();
+        }
+        if (Enemy.GetComponent<OctaneEnemy>())
         {
             slider.value = Octane.HpGet();
             currHp = (int)Octane.HpGet();

@@ -64,8 +64,13 @@ public class EnemyMove : MonoBehaviour
     [SerializeField, Header("ダメージ受けた時")]
     bool DamageFlag;
 
+    [SerializeField, Header("ダメージのエフェクト")]
+    private GameObject DeathEffect;
+    private ParticleSystem DeathParticle;   //ダメージのパーティクル
+
     void Start()
     {
+        DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
         renderComponent = GetComponent<Renderer>();
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
         stageMove1.GetComponent<StageMove1>();
@@ -108,6 +113,7 @@ public class EnemyMove : MonoBehaviour
     void FixedUpdate()
     {
         
+
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
         //ダメージ演出
@@ -125,6 +131,9 @@ public class EnemyMove : MonoBehaviour
                     renderComponent.enabled = true;
                     DamageFlag = false;
                 }
+
+                
+
             }
         }
         if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
@@ -134,10 +143,14 @@ public class EnemyMove : MonoBehaviour
 
         //常にターゲットにむく
         this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));
+
         if (enemyHP <= 0)
         {
             gameObject.SetActive(false);//非表示
-
+            var sum = Instantiate(DeathEffect,
+                           this.transform.position,
+                           Quaternion.identity);
+            //Debug.Log(DeathParticle + "エフェクトーーーー");
             //SceneManager.LoadScene("Result");
             //SceneManager.LoadScene("GameClear");
 

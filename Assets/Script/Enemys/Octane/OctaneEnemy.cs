@@ -39,24 +39,41 @@ public class OctaneEnemy : MonoBehaviour
     private GameObject Enemy;
 
     [Header("追う時")]
-    public bool MoveFlag = false;//追う
+    public bool MoveFlag = true;//追う
     //public bool lookFlag = false;
 
     [SerializeField, Header("何秒止まるか")]
     public float freezeTime;
     public float lookTime;
 
+    //召喚関連
+    [SerializeField, Header("召喚したエネミーの数")]
+    int EnemyCount;//プレハブの出現数
+    
+
+    [SerializeField, Header("召喚するオブジェクト")]
+    GameObject SummonEnemy;
+
+    [SerializeField, Header("次からの生成時間")]
+    float ResetTime;
+
+    [SerializeField, Header("生成までの時間")]
+    float PawnTime;
+
+    [SerializeField, Header("召喚するエネミーの上限")]
+    int MaxEnemyCount;//プレハブの出現数
+
+    //レイ関連
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
-
-    public Vector3 playerPos;
-    Vector3 EnemyPos;
+    
     Vector3 velocity = Vector3.zero;
 
     public int moveState;
+    public int attackCount;//突進した回数
 
-    GameObject stageMove1;
+   GameObject stageMove1;
 
 
     Renderer renderComponent;
@@ -68,7 +85,7 @@ public class OctaneEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        attackCount = 0;
         renderComponent = GetComponent<Renderer>();
 
         moveState = 0;
@@ -138,17 +155,22 @@ public class OctaneEnemy : MonoBehaviour
 
         switch (moveState)
         {
+            //召喚、突進どっちか? 1～3が突進、5
             case 0:
-                
-                if(MoveFlag)
+                if (attackCount >= 3)
                 {
-                    moveState = 1;
+                    moveState = 5;//召喚
+                }
+                else if(attackCount<3)
+                {
+                    moveState = 1;//突進
                 }
                 break;
 
-            case 1://見てる時
+            //見てる時
+            case 1:
                 lookTime += Time.deltaTime;
-                
+
                 if (lookTime <= freezeTime)
                 {
                     this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
@@ -167,7 +189,7 @@ public class OctaneEnemy : MonoBehaviour
                     }
                 }
 
-                if(lookTime >= freezeTime - 0.5f)
+                if (lookTime >= freezeTime - 0.5f)
                 {
                     lineRenderer.startColor = Color.red;//初めの色
                     lineRenderer.endColor = Color.red;//終わりの色
@@ -177,36 +199,73 @@ public class OctaneEnemy : MonoBehaviour
                 {
                     moveState = 2;
                 }
-                 break;
+                break;
 
-            case 2://位置
-
-                playerPos = Target.transform.position;
+            //位置を取得と攻撃カウントを+1する
+            case 2:
+                //playerPos = Target.transform.position;
+                attackCount = attackCount + 1;
                 //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
                 moveState = 3;
                 break;
-
+            
+                //突進
             case 3:
-
                 lineRenderer.startColor = Color.green;//初めの色
                 lineRenderer.endColor = Color.green;//終わりの色
 
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(playerPos.x,this.transform.position.y,playerPos.z), speedLoc * Time.deltaTime);
+                //transform.position = Vector3.MoveTowards(transform.position, 
+                //    new Vector3(playerPos.x, this.transform.position.y, playerPos.z), 
+                //    speedLoc * Time.deltaTime);
+                transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
 
                 lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
 
                 lookTime = 0;
 
-                if(/*playerPos.x == transform.position.x*/
-                    /*&&*/ playerPos.z == transform.position.z)
-                {
-                    moveState = 4;
-                }
+                //if (/*playerPos.x == transform.position.x*/
+                //    /*&&*/ playerPos.z == transform.position.z)
+                //{
+                //    moveState = 4;
+                //}
                 break;
 
+            //戻す
             case 4:
                 moveState = 0;
                 break;
+
+           
+            case 5:
+                if (EnemyCount == MaxEnemyCount)
+                {
+                    moveState = 6;
+                }
+                //カウントの値まで生成
+                if (EnemyCount < MaxEnemyCount)
+                {
+                    PawnTime -= Time.deltaTime;
+                    if (PawnTime <= 0.0f)
+                    {
+                        PawnTime = ResetTime;//1秒沖に生成
+                        var sum = Instantiate(SummonEnemy,
+                            new Vector3(transform.position.x, transform.position.y, transform.position.z - 6),
+                            Quaternion.identity);
+                        EnemyCount++;
+                    }
+                    //moveState = 6;
+                    
+                }
+                
+                
+                break;
+            //戻す
+            case 6:
+                attackCount = 0;
+                moveState = 0;
+               
+                break;
+
         }
 
         if (enemyHP <= 0)
@@ -239,24 +298,23 @@ public class OctaneEnemy : MonoBehaviour
         if (other.gameObject.CompareTag("Fragment"))
         {
             enemyHP = enemyHP - 1;
-            MoveFlag = true;
             DamageFlag = true;
         }
-        
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            moveState = 4;
+            MoveFlag = false;
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            MoveFlag = false;
-            moveState = 0;
+            //MoveFlag = false;
+            moveState = 4;
         }
-        if(other.gameObject.CompareTag("Wall"))
-        {
-            moveState = 0;
-            MoveFlag = false;
-        }
+        
 
     }
 
