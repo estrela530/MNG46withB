@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     private GameObject inhaleEffect;
     [SerializeField, Header("解放時のエフェクト")]
     private GameObject releaseEffect;
+    [SerializeField, Header("プレイヤーのマテリアル")]
+    private Material playerMaterial;
     [SerializeField, Header("ステージムーブ")]
     private GameObject stageMoveObject;
 
@@ -75,7 +77,8 @@ public class Player : MonoBehaviour
     private Vector3 position;                 //位置
     private Vector3 velocity;                 //移動量    
     private ParticleSystem releaseParticle;   //解放時のパーティクル
-    private StageMove1 stageMove;              //ステージムーブ
+    private Material normalMat;               //通常状態のマテリアル
+    private StageMove1 stageMove;             //ステージムーブ
     
     private bool isTwisted;      //ねじれているかどうか
     private bool isRelease;      //解放中かどうか
@@ -156,7 +159,7 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
 
-        
+        normalMat = playerMaterial;
 
         //体力の設定
         currentHp = saveValue = maxHp;
@@ -735,7 +738,8 @@ public class Player : MonoBehaviour
         switch (neziLevel)
         {
             case 0://レベル0
-                meshRenderer.material.color = Color.white;
+                //meshRenderer.material.color = Color.white;
+                meshRenderer.material = normalMat;
                 break;
             case 1:
                 meshRenderer.material.color = Color.magenta;
@@ -888,7 +892,8 @@ public class Player : MonoBehaviour
             }
             if (alphaCount > 4)
             {
-                meshRenderer.material.color = Color.white;
+                //meshRenderer.material.color = Color.white;
+                meshRenderer.material = normalMat;
             }
             if (alphaCount > 8)
             {
@@ -947,7 +952,7 @@ public class Player : MonoBehaviour
             }
             if (alphaCount > 4)
             {
-                meshRenderer.material.color = Color.white;
+                meshRenderer.material = normalMat;
             }
             if (alphaCount > 8)
             {
