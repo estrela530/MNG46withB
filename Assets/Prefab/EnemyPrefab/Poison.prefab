@@ -1066,7 +1066,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 20
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &5998551923994816084
 MonoBehaviour:
@@ -1084,6 +1084,9 @@ MonoBehaviour:
   speed: 2
   speedLoc: 2
   MoveFlag: 0
+  ColorInterval: 0.1
+  DamageTime: 0
+  DamageFlag: 0
 --- !u!135 &4644762438288742633
 SphereCollider:
   m_ObjectHideFlags: 0

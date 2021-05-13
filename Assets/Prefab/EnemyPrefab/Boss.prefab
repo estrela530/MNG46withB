@@ -102,7 +102,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 20
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &7754000853222435047
 MonoBehaviour:
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHP: 3
-  ChangePawnHP: 2
+  ChangeAttackHP: 0
   RushSpeed: 15
   MoveFlag: 0
   RushFlag: 0
@@ -132,6 +132,9 @@ MonoBehaviour:
   DeathTime: 0
   NextTime: 0
   NextFlag: 0
+  ColorInterval: 0.1
+  DamageTime: 0
+  DamageFlag: 0
 --- !u!135 &7754000853222435044
 SphereCollider:
   m_ObjectHideFlags: 0
