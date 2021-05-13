@@ -10,23 +10,32 @@ public class TimerScript : MonoBehaviour
     [SerializeField]
     public static float seconds;
 
-    public static int enemyCounter;
+    public static int enemyCounter { get; set; }
+    //public static int sendCounter;
+
     //　前のUpdateの時の秒数
     private float oldSeconds;
     //　タイマー表示用テキスト
     private Text timerText;
+    int missionClearCount;
+
+    public static bool allDeathMissionClearFlag;
 
     void Start()
     {
         minute = 0;
         seconds = 0f;
         enemyCounter = 0;
+        //sendCounter = 0;
         oldSeconds = 0f;
         timerText = GetComponentInChildren<Text>();
+        //ミッション用の数値「全滅ミッション」
+        missionClearCount = 7;
 
+        allDeathMissionClearFlag = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         seconds += Time.deltaTime;
         if (seconds >= 60f)
@@ -40,12 +49,21 @@ public class TimerScript : MonoBehaviour
             timerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
         }
         oldSeconds = seconds;
-
+        Debug.Log(enemyCounter);
+        if (enemyCounter >= missionClearCount)
+        {
+            allDeathMissionClearFlag = true;
+        }
     }
 
     public float GetClearSeconds()
     {
         return seconds;
+    }
+
+    public  bool GetAllDeathMissionClear()
+    {
+        return allDeathMissionClearFlag;
     }
 
 }

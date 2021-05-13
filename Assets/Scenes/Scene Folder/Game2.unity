@@ -942,21 +942,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1375273595374159038, guid: 4353200617b2b98419fb5db0ece18422,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5032999031589378611, guid: 4353200617b2b98419fb5db0ece18422,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5032999031589378611, guid: 4353200617b2b98419fb5db0ece18422,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4353200617b2b98419fb5db0ece18422, type: 3}
 --- !u!114 &1407216893 stripped
@@ -992,9 +977,6 @@ MonoBehaviour:
   stage1Clear: 0
   stage2Clear: 0
   bossClear: 0
-  stage1Now: 1
-  stage2Now: 0
-  bossNow: 0
   bgmSlider: {fileID: 1110932913}
   stage1StartPosition: {fileID: 1715055850}
   stage2StartPosition: {fileID: 1080762455}
@@ -1773,6 +1755,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1843665020172076099, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e88250089825a8f45b777c05146b4a67, type: 2}
     - target: {fileID: 3474365819694576604, guid: 47c27512735baf0478c03383c6960bc4,
         type: 3}
       propertyPath: m_Name
@@ -1833,6 +1820,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3474365821140564528, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e88250089825a8f45b777c05146b4a67, type: 2}
     - target: {fileID: 5136672117083610153, guid: 47c27512735baf0478c03383c6960bc4,
         type: 3}
       propertyPath: m_Center.z
