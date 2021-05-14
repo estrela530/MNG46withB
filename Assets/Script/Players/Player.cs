@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
     private bool isGoalFlag;     //ステージのゴールに触れているか
     private bool limiteAnimeFlag;//Maxまでねじった時のアニメーション用フラグ
     /*public*/ bool isDamage;        //ダメージを受けているかどうか(確認用にpublicにしてる)
+    public static bool isDeadFlag;
 
     private int neziLevel;     //ねじレベル
     private int alphaCount = 0;//点滅用カウント
@@ -178,6 +179,7 @@ public class Player : MonoBehaviour
 
         debugDamageCount = 0;
         debugTwistedCount = 0;
+        isDeadFlag = false;
     }
 
     /// <summary>
@@ -862,6 +864,7 @@ public class Player : MonoBehaviour
         {
             //死んだらシーン遷移
             //memo : ここも死んだらフラグをtrueにしてそれをどっかに伝えるようにした方がいい
+            isDeadFlag = true;
             SceneManager.LoadScene("GameOver");
         }
     }
