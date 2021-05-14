@@ -36,12 +36,17 @@ public class TwistMeshTest : MonoBehaviour
         //元の頂点数分のVector3を用意
         newVertices = new Vector3[vertices.Length];
 
-        Debug.Log("頂点数" + vertices.Length);
+        //Debug.Log("頂点数" + vertices.Length);
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.I))
+        //if (Input.GetKey(KeyCode.I))
+        //{
+        //    isTwisted = true;
+        //}
+
+        if (Input.GetKey("joystick button 5"))
         {
             isTwisted = true;
         }
@@ -54,7 +59,7 @@ public class TwistMeshTest : MonoBehaviour
             //伸びる速度
             twistedCount += twistedSpeed;
 
-            Debug.Log("伸びてる");
+            //Debug.Log("伸びてる");
 
             if (twistedCount > maxTwistedCount)
             {

@@ -38,7 +38,7 @@ public class StageSelectCharaMove : MonoBehaviour
         //L Stick
         float lsh = Input.GetAxisRaw("Horizontal");
 
-        Debug.Log(lsh);
+        //Debug.Log(lsh);
 
         if (Input.GetKeyDown(KeyCode.LeftArrow) || lsh < 0)
         {
