@@ -532,7 +532,6 @@ public class Player : MonoBehaviour
     {
         if (!isTwisted) return;//ねじり中じゃなかったら解放しない
 
-        debugTwistedCount++;
         releaseParticle.Play();
 
         //解放する前に一旦流れている音を止める
@@ -554,6 +553,7 @@ public class Player : MonoBehaviour
                 InitFragment(fragmentCount[1], deleteCount[1]);
                 break;
             case 3:
+                debugTwistedCount++;
                 InitFragment(fragmentCount[2], deleteCount[2]);
                 break;
             default:

@@ -367,6 +367,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7964f7bfae1270e41b12bef393c47bc4, type: 3}
+--- !u!1 &322271691 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1157101338500973263, guid: 47c27512735baf0478c03383c6960bc4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2139133369}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &450834995 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132147803995876, guid: 19a0eed939ab0ea4d9bfc3d350560a54,
@@ -395,12 +401,6 @@ Animator:
 --- !u!1 &575907809 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3474365820975021340, guid: 47c27512735baf0478c03383c6960bc4,
-    type: 3}
-  m_PrefabInstance: {fileID: 2139133369}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &681222048 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1956534660544351794, guid: 47c27512735baf0478c03383c6960bc4,
     type: 3}
   m_PrefabInstance: {fileID: 2139133369}
   m_PrefabAsset: {fileID: 0}
@@ -1017,7 +1017,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Enemy
       value: 
-      objectReference: {fileID: 681222048}
+      objectReference: {fileID: 322271691}
     - target: {fileID: 1375273595374159038, guid: 4353200617b2b98419fb5db0ece18422,
         type: 3}
       propertyPath: m_IsActive
@@ -1922,6 +1922,31 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 669351540719116652, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 669351540719116652, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157101337383190378, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: intarval
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157101337383190378, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: shotTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157101338076581393, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: BossHP
+      value: 
+      objectReference: {fileID: 2063067700}
     - target: {fileID: 1307199779739441917, guid: 47c27512735baf0478c03383c6960bc4,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -2068,6 +2093,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8160815843051345416, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287962304551502897, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287962304551502897, guid: 47c27512735baf0478c03383c6960bc4,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
