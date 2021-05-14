@@ -27,7 +27,7 @@ public class SceneTS : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
         {
             isSceneChangeFlag = true;
-            Debug.Log(isSceneChangeFlag);
+            //Debug.Log(isSceneChangeFlag);
         }
         if (isSceneChangeFlag)
         {
