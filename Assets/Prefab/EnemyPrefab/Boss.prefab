@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 7754000853222434969}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 7754000854117930301}
   - {fileID: 7754000853442252576}
@@ -116,22 +116,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831bd3e5131ee6e46928c656705c7047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHP: 3
-  ChangeAttackHP: 0
-  RushSpeed: 15
+  enemyHP: 4
   MoveFlag: 0
-  RushFlag: 0
-  freezeTime: 3
-  RushIntarval: 10
-  PawnEnemy: {fileID: 8042133914056818984, guid: fc5193d6fb3497f48b9731cb7eb3c238,
+  AttackFlag: 0
+  SummonEnemy: {fileID: 8042133914056818984, guid: fc5193d6fb3497f48b9731cb7eb3c238,
     type: 3}
-  ResetTime: 3
-  PawnTime: 5
-  PawnCount: 0
-  MaxPawnCount: 4
+  ResetTime: 2
+  PawnTime: 2
+  EnemyCount: 0
+  MaxEnemyCount: 1
+  bossShot: {fileID: 7754000854117930302}
+  moveState: 0
   DeathTime: 0
-  NextTime: 0
+  NextTime: 1
   NextFlag: 0
+  DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
+    type: 3}
   ColorInterval: 0.1
   DamageTime: 0
   DamageFlag: 0
@@ -147,7 +147,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &7754000853222435046
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -160,7 +160,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1.2
-  m_Center: {x: 0, y: 0, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!120 &146118128636843765
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -627,6 +627,7 @@ MonoBehaviour:
   min: -100
   max: 100
   shotTime: 2
+  shotCount: 0
 --- !u!1 &7754000854318013185
 GameObject:
   m_ObjectHideFlags: 0

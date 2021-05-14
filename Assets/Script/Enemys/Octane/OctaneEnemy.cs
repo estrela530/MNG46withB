@@ -65,6 +65,20 @@ public class OctaneEnemy : MonoBehaviour
 
     int enemyNumber = (1<<13);
 
+
+    [SerializeField] private float DeathTime = 0;
+
+    [SerializeField, Header("次のしーんに行くの開始までの時間")]
+    float NextTime;
+
+    [SerializeField, Header("次のシーンに行くフラグ")]
+    bool NextFlag;
+
+    int nextState = 0;
+
+    [SerializeField] GameObject BossHpSlider;
+
+
     //レイ関連
     Ray ray;
     RaycastHit hitRay;
@@ -91,6 +105,10 @@ public class OctaneEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BossHpSlider.SetActive(false);
+
+        NextFlag = false;
+
         DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
 
         attackCount = 0;
@@ -136,6 +154,10 @@ public class OctaneEnemy : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+        if(stageMove1.GetComponent<StageMove1>().bossNow)
+        {
+            BossHpSlider.SetActive(true);
+        }
         //ダメージ演出
         if (enemyHP > 0)
         {
@@ -276,14 +298,49 @@ public class OctaneEnemy : MonoBehaviour
                 break;
 
         }
-
-        if (enemyHP <= 0)
+        switch(nextState)
         {
-            gameObject.SetActive(false);//非表示
-            var sum = Instantiate(DeathEffect,
-                          this.transform.position,
-                          Quaternion.identity);
+            case 0:
+                if (enemyHP <= 0)
+                {
+                    nextState = 1;
+                }
+                break;
+
+            case 1:
+
+                var sum = Instantiate(DeathEffect,
+                           this.transform.position,
+                           Quaternion.identity);
+                
+                nextState = 2;
+
+                attackCount = 0;
+                moveState = 0;
+                EnemyCount = 5;
+
+                break;
+
+            case 2:
+                DeathTime += Time.deltaTime;
+                if (DeathTime > NextTime)
+                {
+
+                    DeathTime = 0;
+
+                    nextState = 3;
+                }
+
+                
+                break;
+
+            case 3:
+                SceneManager.LoadScene("GameClear");
+                gameObject.SetActive(false);//非表示
+                break;
+
         }
+        
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
         

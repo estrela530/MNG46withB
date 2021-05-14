@@ -398,6 +398,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2139133369}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &681222048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1956534660544351794, guid: 47c27512735baf0478c03383c6960bc4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2139133369}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &729402609
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1003,6 +1009,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 833176801326185192, guid: 4353200617b2b98419fb5db0ece18422,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213489965809201578, guid: 4353200617b2b98419fb5db0ece18422,
+        type: 3}
+      propertyPath: Enemy
+      value: 
+      objectReference: {fileID: 681222048}
+    - target: {fileID: 1375273595374159038, guid: 4353200617b2b98419fb5db0ece18422,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032999031589378611, guid: 4353200617b2b98419fb5db0ece18422,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032999031589378611, guid: 4353200617b2b98419fb5db0ece18422,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1732,6 +1758,12 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5960956031721895057, guid: 95786850950f78b4299d7fec5c5b9906, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 95786850950f78b4299d7fec5c5b9906, type: 3}
+--- !u!1 &2063067700 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1375273595374159038, guid: 4353200617b2b98419fb5db0ece18422,
+    type: 3}
+  m_PrefabInstance: {fileID: 1204523577}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2070681340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1905,6 +1937,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1956534660544351793, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: enemyHP
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1956534660544351793, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: NextTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1956534660544351793, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: BossHpSlider
+      value: 
+      objectReference: {fileID: 2063067700}
     - target: {fileID: 3474365819694576604, guid: 47c27512735baf0478c03383c6960bc4,
         type: 3}
       propertyPath: m_Name

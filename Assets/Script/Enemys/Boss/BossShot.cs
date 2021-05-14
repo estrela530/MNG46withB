@@ -13,6 +13,7 @@ public class BossShot : MonoBehaviour
     public float max = 100;
 
     public float shotTime;
+    public int shotCount;//撃った回数
     private float ss;
 
     private float dis;//プレイヤーとの距離
@@ -28,7 +29,7 @@ public class BossShot : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         ss += Time.deltaTime;
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
@@ -44,7 +45,9 @@ public class BossShot : MonoBehaviour
 
     void Shot()
     {
-        if (Move.GetComponent<BossMove>().MoveFlag == true)
+        shotCount = shotCount + 1;
+
+        if (Move.GetComponent<BossMove>().AttackFlag == true)
         {
             Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
             GameObject shot = Instantiate(BossBullet, transform.position, transform.rotation);
