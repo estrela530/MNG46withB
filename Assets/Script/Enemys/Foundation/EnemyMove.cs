@@ -145,7 +145,7 @@ public class EnemyMove : MonoBehaviour
 
         if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
         {
-            gameObject.SetActive(false);//非表示
+            //gameObject.SetActive(false);//非表示
             TimerScript.enemyCounter += 1;
             var sum = Instantiate(DeathEffect,
                            this.transform.position,
@@ -153,6 +153,7 @@ public class EnemyMove : MonoBehaviour
             //Debug.Log(DeathParticle + "エフェクトーーーー");
             //SceneManager.LoadScene("Result");
             //SceneManager.LoadScene("GameClear");
+            Destroy(this.gameObject);
 
         }
 
