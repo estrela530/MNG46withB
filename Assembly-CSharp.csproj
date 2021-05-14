@@ -62,6 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BackGround.cs" />
+    <Compile Include="Assets\BackGround2.cs" />
+    <Compile Include="Assets\Blink3.cs" />
     <Compile Include="Assets\KeyDoor.cs" />
     <Compile Include="Assets\Script\DOTweenTest.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossArea.cs" />
@@ -159,6 +162,7 @@
     <None Include="Assets\Deform\LICENSE.txt" />
     <None Include="Assets\Shader\transition.shader" />
     <None Include="Assets\Shader\transition2.shader" />
+    <None Include="Assets\Material\BG1.shader" />
     <None Include="Assets\Deform\EditorResources\Textures\External\MaterialDesign\LICENSE.txt" />
     <None Include="Assets\Deform\README.txt" />
     <Reference Include="UnityEngine">
