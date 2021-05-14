@@ -20,6 +20,7 @@ public class MissionManagerScript : MonoBehaviour
     
     TimerScript timerScript;
     float clearSeconds;
+    bool mission1ClearFlag;
     bool mission3ClearFlag;
     //int missionClearCount;
 
@@ -29,7 +30,8 @@ public class MissionManagerScript : MonoBehaviour
         fadeCount = 0;
         clearSeconds = 0;
         //ミッション用の数値「全滅ミッション」
-        //missionClearCount = 10;        
+        //missionClearCount = 10;     
+        mission1ClearFlag = Player.isDeadFlag;
         mission3ClearFlag = TimerScript.allDeathMissionClearFlag;
         //もしステージごとにリザルトをさすのであれば変更が必要
         clearSeconds = TimerScript.seconds;
@@ -41,7 +43,7 @@ public class MissionManagerScript : MonoBehaviour
         //clearSeconds = timerScript.GetClearSeconds();
         fadeCount++;
 
-        if (fadeCount >= 120)
+        if (fadeCount >= 120 && !mission1ClearFlag)
         {
             Mission1.GetComponent<Image>().color = Color.yellow;
         }

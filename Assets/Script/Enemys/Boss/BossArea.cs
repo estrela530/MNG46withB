@@ -44,19 +44,5 @@ public class BossArea : MonoBehaviour
             BossHP.SetActive(true);
         }
     }
-
-
-#if UNITY_EDITOR
-    //サーチ範囲を表示
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(1f, 1f, 0, 1f);
-
-        if (Boss.GetComponent<BossMove>().RushFlag == true)
-        {
-            Gizmos.DrawRay(transform.position, transform.forward * 50f);
-        }
-        
-    }
-#endif
+    
 }

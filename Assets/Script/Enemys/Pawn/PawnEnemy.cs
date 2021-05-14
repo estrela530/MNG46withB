@@ -49,10 +49,13 @@ public class PawnEnemy : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
-        if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
+        if (enemyHP <= 0)
         {
+            if(!stageMove1.GetComponent<StageMove1>().bossNow)
+            {
+                TimerScript.enemyCounter += 1;
+            }
             //Destroy(transform.parent);
-            TimerScript.enemyCounter += 1;
             var sum = Instantiate(DeathEffect,
                           this.transform.position,
                           Quaternion.identity);
