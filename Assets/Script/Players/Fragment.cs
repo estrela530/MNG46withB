@@ -95,7 +95,8 @@ public class Fragment : MonoBehaviour
             ResetPosition();
         }
         if (other.gameObject.CompareTag("Enemy") ||
-            other.gameObject.CompareTag("PoisonBall"))
+            other.gameObject.CompareTag("PoisonBall")||
+            other.gameObject.CompareTag("EnemyBullet"))
         {
             ResetPosition();
         }

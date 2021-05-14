@@ -932,7 +932,7 @@ public class Player : MonoBehaviour
             Damage(1, other.gameObject);//ダメージ
             Destroy(other.gameObject);  //毒玉を消す
         }
-        else if (other.gameObject.CompareTag("Enemy"))
+        else if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet"))
         {
             Damage(1, other.gameObject);//ダメージ
         }

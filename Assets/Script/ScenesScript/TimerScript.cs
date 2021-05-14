@@ -49,7 +49,7 @@ public class TimerScript : MonoBehaviour
             timerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
         }
         oldSeconds = seconds;
-        Debug.Log(enemyCounter);
+        //Debug.Log(enemyCounter);
         if (enemyCounter >= missionClearCount)
         {
             allDeathMissionClearFlag = true;
