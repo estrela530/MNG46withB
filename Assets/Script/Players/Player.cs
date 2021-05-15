@@ -412,15 +412,15 @@ public class Player : MonoBehaviour
     /// <param name="volume">音量</param>
     private void MoveSE(float interval, float volume)
     {
-        //移動中音を鳴らす
-        moveCount += Time.deltaTime;
-
         //一定時間ごとに音を鳴らす
         if (moveCount > interval)
         {
             audioSource.PlayOneShot(releaseSE, volume);
             moveCount = 0f;
         }
+
+        //移動中音を鳴らす
+        moveCount += Time.deltaTime;
     }
 
     /// <summary>
@@ -798,7 +798,7 @@ public class Player : MonoBehaviour
         int healAmounst = healBall.GetComponent<HealBall>().GetHealLevel();
 
         //回復の音
-        audioSource.PlayOneShot(healSE);
+        audioSource.PlayOneShot(healSE, 0.5f);
 
         //受け取ったレベルによって回復量を変化させる。
         switch (healAmounst)
