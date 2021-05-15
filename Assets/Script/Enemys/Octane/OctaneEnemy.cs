@@ -279,7 +279,7 @@ public class OctaneEnemy : MonoBehaviour
                     {
                         PawnTime = ResetTime;//1秒沖に生成
                         var sum = Instantiate(SummonEnemy,
-                            new Vector3(transform.position.x+2, transform.position.y, transform.position.z+2),
+                            new Vector3(140, transform.position.y, 3),
                             Quaternion.identity);
 
                         EnemyCount++;
