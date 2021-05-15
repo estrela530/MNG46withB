@@ -22,7 +22,7 @@ public class αScore : MonoBehaviour
         releaseCount = 12;
         //くぼしょ～の協力　被弾回数の取得
         damageCount = Player.debugDamageCount;
-        //くぼしょ～の協力　解放回数の取得
+        //くぼしょ～の協力　最大解放回数の取得
         releaseCount = Player.debugTwistedCount;
     }
 

@@ -123,11 +123,11 @@ public class StageMove1 : MonoBehaviour
             }
         }
 
-        //Aボタンを押したらシーン切り替え（デバッグ用）
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            nowFlag = true;
-        }
+        ////Nボタンを押したらシーン切り替え（デバッグ用）
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    nowFlag = true;
+        //}
     }
 
     public void Stage1()
