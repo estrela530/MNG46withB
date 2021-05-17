@@ -16,19 +16,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!135 &7995972184268491933
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2252236023467121888}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 45
-  m_Center: {x: 0, y: -8, z: 0}
 --- !u!135 &7995972184268491932
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -41,6 +28,19 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 40
+  m_Center: {x: 0, y: -8, z: 0}
+--- !u!135 &7995972184268491933
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252236023467121888}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 55
   m_Center: {x: 0, y: -8, z: 0}
 --- !u!23 &7995972184268491922
 MeshRenderer:
