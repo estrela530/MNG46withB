@@ -11,6 +11,7 @@ public class OctaneWand : MonoBehaviour
 
 
     [Header("体力")] public float enemyHP = 5;
+    [SerializeField, Header("最大体力")] float MaxEnemyHP;
 
     Rigidbody rigid;
 
@@ -73,6 +74,8 @@ public class OctaneWand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        MaxEnemyHP = enemyHP;
+
         DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
 
         renderComponent = GetComponent<Renderer>();
@@ -117,6 +120,11 @@ public class OctaneWand : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
+        //最大体力以上にはならない。
+        if (enemyHP >= MaxEnemyHP)
+        {
+            enemyHP = MaxEnemyHP;
+        }
         //ダメージ演出
         if (enemyHP > 0)
         {
@@ -327,6 +335,12 @@ public class OctaneWand : MonoBehaviour
             workFlag = false;
             DamageFlag = true;
             //color.g = 160;
+        }
+
+        //回復玉に当たったら回復する
+        if (other.gameObject.CompareTag("HealBall"))
+        {
+            enemyHP = enemyHP + 1;
         }
     }
     private void OnTriggerStay(Collider other)

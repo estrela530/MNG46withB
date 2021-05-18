@@ -18,7 +18,10 @@ public class EnemyMove : MonoBehaviour
     private float dis;//プレイヤーとの距離
    // public float area;//この数値以下になったら追う
 
-    [SerializeField,Header("体力")] float enemyHP = 5;
+    [SerializeField,Header("体力")] float enemyHP;
+
+    [SerializeField, Header("最大体力")] float MaxEnemyHP;
+
 
     Rigidbody rigid;
         
@@ -31,10 +34,7 @@ public class EnemyMove : MonoBehaviour
     private float ww2;
 
     Color color;
-
-    //[Header("索敵に向かう場所")]
-    //public GameObject workObj1;
-    //public GameObject workObj2;
+    
 
     int workNumber = 1;
 
@@ -42,19 +42,12 @@ public class EnemyMove : MonoBehaviour
     public float speed;
     [Header("発見時のスピード")]
     public float speedLoc;
-
-    //[Header("この数値まで進む")] public float social;//この数値まで進む
-    //private GameObject Enemy;
-
+    
     [Header("追う時と索敵のフラグ")]
     public bool MoveFlag = false;//追う
     public bool workFlag = true;//徘徊
 
-    //レイ関連
-    Ray ray;
-    RaycastHit hitRay;
-    LineRenderer lineRenderer;
-
+   
     GameObject stageMove1;
 
     Renderer renderComponent;
@@ -69,35 +62,16 @@ public class EnemyMove : MonoBehaviour
 
     void Start()
     {
+        MaxEnemyHP = enemyHP ;
         DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
         renderComponent = GetComponent<Renderer>();
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
         stageMove1.GetComponent<StageMove1>();
-
-        //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
+        
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         color = GetComponent<Renderer>().material.color;
-        //target = Target.transform.position;
-
-
-        ray = new Ray();
-        lineRenderer = this.gameObject.GetComponent<LineRenderer>();
         
-        //lineRenderer.SetPosition(0, this.transform.position);
-        lineRenderer.enabled = false;
-        ray.origin = this.transform.position;//自分の位置のレイ
-
-        //ラインレンダラーの色
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = Color.red;//初めの色
-        lineRenderer.endColor = Color.red;//終わりの色
-
-        lineRenderer.startWidth = 0.5f;
-        lineRenderer.endWidth = 0.5f;
-
-        //変えるかも?
-        ray.direction = transform.forward;
     }
     IEnumerator Blink()
     {
@@ -111,10 +85,15 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+
+        //最大体力以上にはならない。
+        if (enemyHP >= MaxEnemyHP)
+        {
+            enemyHP = MaxEnemyHP ;
+        }
+        
         //ダメージ演出
         if (enemyHP > 0)
         {
@@ -158,103 +137,20 @@ public class EnemyMove : MonoBehaviour
         }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-
-       //ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
-       //ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
-
-        lineRenderer.SetPosition(0, this.transform.position);
-
-        //レイの処理
-        if (Physics.Raycast(ray, out hitRay, 10))
-        {
-            if (hitRay.collider.gameObject.CompareTag("Player"))
-            {
-                lineRenderer.enabled = true;
-
-                MoveFlag = true;
-
-                lineRenderer.SetPosition(1, hitRay.point);
-
-            }
-            else
-            {
-                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
-                MoveFlag = false;
-                workFlag = true;
-            }
-        }
-
-        ray.origin = this.transform.position;//自分の位置のレイ
-
-        ray.direction = transform.forward;//自分の向きのレイ
-
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
-
-
-        //if (dis < area)
-        //{
-        //    MoveFlag = true;
-        //    workFlag = false;
-        //}
-        //else if(dis>area)
-        //{
-        //    MoveFlag = false;
-        //    workFlag = true;
-        //}
-
+        
         if (MoveFlag)
         {
            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-            //if(dis>=social)
-            //{
-            //   transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
-            //}
             
         }
-
-        //徘徊
-        //if (workFlag)
-        //{
-        //    if(ww<workeAria1)
-        //    {
-        //        workNumber = 2;
-        //    }
-        //    if (ww2 < workeAria2)
-        //    {
-        //        workNumber = 1;
-        //    }
-
-        //    switch (workNumber)
-        //    {
-
-        //        case 1:
-
-        //            this.transform.LookAt(this.workObj1.transform);//徘徊1の位置に向く
-        //            transform.position += transform.forward * speed * Time.deltaTime;
-
-        //            break;
-
-        //        case 2:
-
-        //            this.transform.LookAt(this.workObj2.transform);//徘徊2の位置に向く
-        //            transform.position += transform.forward * speed * Time.deltaTime;
-
-        //            break;
-        //    }
-
-
-        //}
-
+        
     }
     
     public float HpGet()
     {
         return enemyHP;
     }
-
-   
-
-
+    
     //(仮)指定されたtagに当たると消える
     private void OnTriggerEnter(Collider other)
     {
@@ -265,11 +161,12 @@ public class EnemyMove : MonoBehaviour
             DamageFlag = true;
 
         }
-        if (other.gameObject.CompareTag("Player"))
+       
+        //回復玉に当たったら回復する
+        if (other.gameObject.CompareTag("HealBall"))
         {
-            NockBack(other.gameObject, 50);
+            enemyHP = enemyHP + 1;
         }
-
 
     }
 

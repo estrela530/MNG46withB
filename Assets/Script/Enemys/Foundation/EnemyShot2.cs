@@ -17,6 +17,12 @@ public class EnemyShot2 : MonoBehaviour
 
     private float dis;//プレイヤーとの距離
     private GameObject Target;//追尾する相手
+    private bool shotFlag;
+
+    //レイ関連
+    Ray ray;
+    RaycastHit hitRay;
+    LineRenderer lineRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -24,34 +30,107 @@ public class EnemyShot2 : MonoBehaviour
         ss = 1;
         Target = GameObject.FindGameObjectWithTag("Player");//追尾させたいオブジェクトを書く
         Move.GetComponent<EnemyMove>();
-        
+
+        ray = new Ray();
+        lineRenderer = this.gameObject.GetComponent<LineRenderer>();
+
+        //lineRenderer.SetPosition(0, this.transform.position);
+        lineRenderer.enabled = false;
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        //ラインレンダラーの色
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.green;//初めの色
+        lineRenderer.endColor = Color.green;//終わりの色
+
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
+
+        //変えるかも?
+        ray.direction = transform.forward;
+
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         ss += Time.deltaTime;
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
        Random.Range(min, max);
-        
+
+
+        Ray();
 
         if (ss >= intarval)
         {
             Shot();
             ss = 0;
+
         }
+        //攻撃する前に色を変える
+        if (ss >= intarval-1)
+        {
+            //ラインレンダラーの色
+            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            lineRenderer.startColor = Color.red;//初めの色
+            lineRenderer.endColor = Color.red;//終わりの色
+
+        }
+    }
+
+    void Ray()
+    {
+        lineRenderer.SetPosition(0, this.transform.position);
+
+        //レイの処理
+        if (Physics.Raycast(ray, out hitRay, 10))
+        {
+            if (hitRay.collider.gameObject.CompareTag("Player"))
+            {
+                lineRenderer.enabled = true;
+
+                Move.GetComponent<EnemyMove>().MoveFlag = true;
+                lineRenderer.SetPosition(1, hitRay.point);
+                shotFlag = true;
+            }
+            else
+            {
+                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+                Move.GetComponent<EnemyMove>().MoveFlag = false;
+                Move.GetComponent<EnemyMove>().workFlag = true;
+                shotFlag = false;
+            }
+        }
+
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        ray.direction = transform.forward;//自分の向きのレイ
+
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
     }
 
     void Shot()
     {
-        if (Move.GetComponent<EnemyMove>().MoveFlag == true)
+        //if (Move.GetComponent<EnemyMove>().MoveFlag == true)
+        //{
+        //    Vector3 ff = new Vector3(dis+Random.Range(min, max), 0, dis);
+        //    GameObject shot = Instantiate(Bullet, transform.position, transform.rotation);
+        //    Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
+        //    rigidbody.AddForce(ff * shotTime);
+
+
+        //}
+        if (shotFlag)
         {
-            Vector3 ff = new Vector3(dis+Random.Range(min, max), 0, dis);
+            Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
             GameObject shot = Instantiate(Bullet, transform.position, transform.rotation);
             Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
-            //rigidbody.AddForce(transform.forward * shotTime);
             rigidbody.AddForce(ff * shotTime);
+
+            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            lineRenderer.startColor = Color.green;//初めの色
+            lineRenderer.endColor = Color.green;//終わりの色
         }
 
     }

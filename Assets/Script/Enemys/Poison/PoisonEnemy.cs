@@ -13,7 +13,8 @@ public class PoisonEnemy : MonoBehaviour
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
 
-    [SerializeField, Header("体力")] float enemyHP = 5;
+    [SerializeField, Header("体力")] float enemyHP;
+    [SerializeField, Header("最大体力")] float MaxEnemyHP;
 
     Rigidbody rigid;
 
@@ -55,6 +56,7 @@ public class PoisonEnemy : MonoBehaviour
     
     void Start()
     {
+        MaxEnemyHP = enemyHP;
         DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
@@ -97,6 +99,13 @@ public class PoisonEnemy : MonoBehaviour
 
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+
+        //最大体力以上にはならない。
+        if (enemyHP >= MaxEnemyHP)
+        {
+            enemyHP = MaxEnemyHP;
+        }
+
         //ダメージ演出
         if (enemyHP > 0)
         {

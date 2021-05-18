@@ -16,6 +16,9 @@ public class KraberEnemy : MonoBehaviour
     //[SerializeField, Header("弾オブジェクト")] GameObject bullet;
 
     [SerializeField, Header("体力")] float enemyHP = 5;
+
+    [SerializeField, Header("最大体力")] float MaxEnemyHP;
+
     [SerializeField, Header("止まってる時間")] float freezTime;
     [SerializeField, Header("いつまで止まるか")] float stopTime;
 
@@ -77,7 +80,7 @@ public class KraberEnemy : MonoBehaviour
     void Start()
     {
         DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
-
+        MaxEnemyHP = enemyHP;
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
         stageMove1.GetComponent<StageMove1>();
         ray = new Ray();
@@ -125,6 +128,12 @@ public class KraberEnemy : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
         this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+
+        //最大体力以上にはならない。
+        if (enemyHP >= MaxEnemyHP)
+        {
+            enemyHP = MaxEnemyHP;
+        }
 
         if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
         {
