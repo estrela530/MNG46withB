@@ -7,10 +7,16 @@ public class MissionManagerScript : MonoBehaviour
 {
     [SerializeField, Header("ミッション1星")]
     GameObject Mission1;
+    [SerializeField, Header("ミッション1星Clear")]
+    GameObject Mission1C;
     [SerializeField, Header("ミッション2星")]
     GameObject Mission2;
+    [SerializeField, Header("ミッション2星Clear")]
+    GameObject Mission2C;
     [SerializeField, Header("ミッション3星")]
     GameObject Mission3;
+    [SerializeField, Header("ミッション3星Clear")]
+    GameObject Mission3C;
 
     GameObject m1;
     GameObject m2;
@@ -34,26 +40,36 @@ public class MissionManagerScript : MonoBehaviour
         mission1ClearFlag = Player.isDeadFlag;
         mission3ClearFlag = TimerScript.allDeathMissionClearFlag;
         //もしステージごとにリザルトをさすのであれば変更が必要
-        clearSeconds = TimerScript.seconds;
+        clearSeconds = TimerScript.minute;
+
+        Mission1C.SetActive(false);
+        Mission2C.SetActive(false);
+        Mission3C.SetActive(false);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //clearSeconds = timerScript.GetClearSeconds();
         fadeCount++;
 
-        if (fadeCount >= 120 && !mission1ClearFlag)
+        if (fadeCount >= 60 && !mission1ClearFlag)
         {
-            Mission1.GetComponent<Image>().color = Color.yellow;
+            Mission1.SetActive(false);
+            Mission1C.SetActive(true);
         }
-        if (fadeCount >= 300 && clearSeconds <= 60)
+
+        if (fadeCount >= 120 && clearSeconds < 1)
         {
-            Mission2.GetComponent<Image>().color = Color.yellow;
+            Mission2.SetActive(false);
+            Mission2C.SetActive(true);
         }
-        if (fadeCount >= 480 && mission3ClearFlag)
+
+        if (fadeCount >= 180 && mission3ClearFlag)
         {
-            Mission3.GetComponent<Image>().color = Color.yellow;
-        }       
+            Mission3.SetActive(false);
+            Mission3C.SetActive(true);
+        }
+
     }
 }

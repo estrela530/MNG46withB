@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TimerScript : MonoBehaviour
 {
     [SerializeField]
-    private int minute;
+    public static int minute;
     [SerializeField]
     public static float seconds;
 
@@ -54,6 +54,8 @@ public class TimerScript : MonoBehaviour
         {
             allDeathMissionClearFlag = true;
         }
+
+        Debug.Log("seconds" + seconds);
     }
 
     public float GetClearSeconds()
