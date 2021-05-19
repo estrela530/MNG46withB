@@ -276,6 +276,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: MissionManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1515145715481652682, guid: 51d267132d1cf094089afe314a727670,
+        type: 3}
+      propertyPath: Mission1C
+      value: 
+      objectReference: {fileID: 282135497}
+    - target: {fileID: 1515145715481652682, guid: 51d267132d1cf094089afe314a727670,
+        type: 3}
+      propertyPath: Mission2C
+      value: 
+      objectReference: {fileID: 282135496}
+    - target: {fileID: 1515145715481652682, guid: 51d267132d1cf094089afe314a727670,
+        type: 3}
+      propertyPath: Mission3C
+      value: 
+      objectReference: {fileID: 282135495}
     - target: {fileID: 1515145715481652683, guid: 51d267132d1cf094089afe314a727670,
         type: 3}
       propertyPath: m_Pivot.x
@@ -463,6 +478,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51d267132d1cf094089afe314a727670, type: 3}
+--- !u!1 &282135495 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 616236973182517277, guid: 51d267132d1cf094089afe314a727670,
+    type: 3}
+  m_PrefabInstance: {fileID: 282135494}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &282135496 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4991706765689666578, guid: 51d267132d1cf094089afe314a727670,
+    type: 3}
+  m_PrefabInstance: {fileID: 282135494}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &282135497 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7380633580534226322, guid: 51d267132d1cf094089afe314a727670,
+    type: 3}
+  m_PrefabInstance: {fileID: 282135494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &618538439 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7815376099685872924, guid: a79707e024728cd49a9936b2ec70babe,
