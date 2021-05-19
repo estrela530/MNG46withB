@@ -55,7 +55,7 @@ public class TimerScript : MonoBehaviour
             allDeathMissionClearFlag = true;
         }
 
-        Debug.Log("seconds" + seconds);
+        //Debug.Log("seconds" + seconds);
     }
 
     public float GetClearSeconds()

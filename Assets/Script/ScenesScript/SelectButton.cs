@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SelectButton : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class SelectButton : MonoBehaviour
     //　ポーズした時に表示するUIのプレハブ
     private GameObject PauseUIPrefab;
     Pause pause;
-
+    [SerializeField] EventSystem eventSystem;
     //一度だけ呼び出す用のbool
     public bool callSet;
 

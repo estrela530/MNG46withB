@@ -110,7 +110,6 @@ public class PauseAudioButton : MonoBehaviour
         //        PauseAudioUIPrefab.SetActive(false);
         //    }
         //}
-
         if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.P))
         {
             Time.timeScale = 1f;

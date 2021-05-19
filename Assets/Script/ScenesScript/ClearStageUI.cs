@@ -27,6 +27,18 @@ public class ClearStageUI : MonoBehaviour
     void Update()
     {
         //なんでfalseなん？
+
+        if (SceneNumberData.numberData.referer == "Game2")
+        {
+            stageNumber = 1;
+
+        }
+        else if (SceneNumberData.numberData.referer == "Game3")
+        {
+            stageNumber = 2;
+
+        }
+
         if (!sGR.changeOKFlag)
         {
             Debug.Log(sGR.changeOKFlag);
