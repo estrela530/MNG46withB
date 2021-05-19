@@ -58,8 +58,10 @@ public class PredictionLine : MonoBehaviour
         //レイの生成4/7ここでレイを生成してみた
         lineRay.origin = position;
         lineRay.direction = -transform.forward;
-        //始点の設定
-        lineRenderer.SetPosition(0, position);
+        
+        lineRenderer.SetPosition(0, position);  //始点の設定  
+        lineRenderer.material = predictionColor;//色の初期化！
+
         //描画距離と方向の乗算
         direction = -transform.forward * maxDistance;
         //表示位置は初期化しておこうね!
@@ -104,13 +106,24 @@ public class PredictionLine : MonoBehaviour
         //【Tips】Raycast(使用するレイ、当たった情報、長さ、無視するレイヤー)
         if (Physics.Raycast(lineRay, out hit, maxDistance, layerMask))
         {
-            if (hit.collider.gameObject.CompareTag("Wall") ||
-                hit.collider.gameObject.CompareTag("Enemy"))
+            if (hit.collider.gameObject.CompareTag("Wall"))
             {
                 //当たった位置を保存
                 hitPosition = hit.point;
 
             }
+            else if (hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                //当たった位置を保存
+                hitPosition = hit.point;
+                //敵に当たっている時は、色を変える！！
+                lineRenderer.material.color = new Color(0, 0, 255,255);
+            }
+        }
+        else
+        {
+            //当たっていないときは色を初期化！
+            lineRenderer.material = predictionColor;
         }
         //描画する
         lineRenderer.SetPosition(1, hitPosition);

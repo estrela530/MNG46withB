@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class HealBall : InhaleObject
 {
+    [SerializeField, Header("壁にくっついた時のSE")]
+    private AudioClip clingSE;
     [SerializeField, Header("レベルアップに必要な時間(成長2回、最大になってから消えるまでの時間)")]
     private float[] levelUpTime = new float[3];//(2,8,5
     [SerializeField, Tooltip("吸収時の移動速度")]
@@ -26,6 +28,8 @@ public class HealBall : InhaleObject
     float deleteCount;   //消滅用カウント
     //ねじれ吸収の速度保存用
     float[] twiceSpeed = new float[3];
+
+    private AudioSource audioSource;
 
     /// <summary>
     /// 成長状態
@@ -52,6 +56,10 @@ public class HealBall : InhaleObject
         meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         Debug.Log(meshRenderer.gameObject.name);
         animator = GetComponent<Animator>();
+
+        //生成時に音を鳴らす
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(clingSE,0.2f);
 
         //エフェクト用オブジェクトを取得
         growEffect = transform.GetChild(1).gameObject;
