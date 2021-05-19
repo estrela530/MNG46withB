@@ -210,6 +210,7 @@ public class Player : MonoBehaviour
 
         InputVelocity();//移動用のキー入力を行う
         TwistedChange();//ねじチェンジ      
+        TwistedCancel();//ねじりキャンセル
 
         //入力されたキー情報から角度を計算する。
         directionAngle = Mathf.Atan2(nowTrigger[2], nowTrigger[3]) * Mathf.Rad2Deg;
@@ -510,6 +511,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedCancel()
     {
+        if (!isTwisted) return;
+
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown("joystick button 4") || GetKeyDown(Keys.L_Trigger))
         {
             //リセットする前に一旦流れている音を止める
@@ -540,11 +543,14 @@ public class Player : MonoBehaviour
         isRelease = true; //解放中にする
         isTwisted = false;//ねじっていない
 
+        
+
         //ねじレベルによる色と球数の変化
         switch (neziLevel)
         {
             case 0:
-                //何もしないよ
+                //memo : 解放してないときは体力が減らないよ！
+                currentHp = saveValue;
                 break;
             case 1:
                 InitFragment(fragmentCount[0], deleteCount[0]);
@@ -619,8 +625,6 @@ public class Player : MonoBehaviour
 
         if (isTwisted)
         {
-            TwistedCancel();//いつでもキャンセルできるように
-
             //最大までねじったらアニメーションをする。
             if (limiteAnimeFlag)
             {
