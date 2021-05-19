@@ -211,4 +211,12 @@ public class HealBall : InhaleObject
         //Playerで回復量を指定するために使用
         return healLevel;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
