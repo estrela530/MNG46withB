@@ -46,10 +46,10 @@ public class StageSelectCharaMove : MonoBehaviour
 
         //Debug.Log("isScene1ChangeFlag" + sceneSG.isScene1ChangeFlag);
         //Debug.Log("isScene2ChangeFlag" + sceneSG.isScene2ChangeFlag);
-        isSceneMoveFlag = sceneSG.isMoveFlag;
+        isSceneMoveFlag = sceneSG.GetIsMoveFlag();
         //Debug.Log(isSceneMoveFlag);
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow) /*|| lsh < 0 */&& !isSceneMoveFlag/* && !sceneSG.GetComponent<SceneSG>().isScene2ChangeFlag*/)
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || lsh < 0 && !isSceneMoveFlag)
         {
             Debug.Log("左押された");
             stage1nowFlag = true;
@@ -59,7 +59,7 @@ public class StageSelectCharaMove : MonoBehaviour
             stage1nowFlag = false;
             isMissionImageFlag = true;
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) /*|| lsh > 0*/　 && !isSceneMoveFlag /*&& !sceneSG.GetComponent<SceneSG>().isScene2ChangeFlag*/)
+        if (Input.GetKeyDown(KeyCode.RightArrow) || lsh > 0 && !isSceneMoveFlag)
         {
             Debug.Log("右押された");
             stage2NowFlag = true;

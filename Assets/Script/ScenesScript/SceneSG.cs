@@ -10,7 +10,7 @@ public class SceneSG : MonoBehaviour
     public bool isScene1ChangeFlag;
     public bool isScene2ChangeFlag;
 
-    public bool isMoveFlag;
+    public　static　bool isSceneMoveStoGFlag;
 
     [SerializeField, Header("フェードPrefab")]
     GameObject fadeManager;
@@ -22,7 +22,7 @@ public class SceneSG : MonoBehaviour
         fadeMax = 90;
         isScene1ChangeFlag = false;
         isScene2ChangeFlag = false;
-        isMoveFlag = false;
+        isSceneMoveStoGFlag = false;
 
     }
 
@@ -48,7 +48,7 @@ public class SceneSG : MonoBehaviour
     {
         //Debug.Log(isScene1ChangeFlag);
         //Debug.Log(isScene2ChangeFlag);
-        Debug.Log(isMoveFlag);
+        Debug.Log("isSceneMoveStoGFlagは" + isSceneMoveStoGFlag);
 
         //if ((Input.GetKeyDown(KeyCode.Space)))
         //{
@@ -67,7 +67,7 @@ public class SceneSG : MonoBehaviour
 
         if (isScene1ChangeFlag)
         {
-            isMoveFlag = true;
+            isSceneMoveStoGFlag = true;
             fadeManager.SetActive(true);
             fadeCount++;
             if (fadeCount >= fadeMax)
@@ -77,15 +77,19 @@ public class SceneSG : MonoBehaviour
         }
         else if (isScene2ChangeFlag)
         {
-            isMoveFlag = true;
+            isSceneMoveStoGFlag = true;
             fadeManager.SetActive(true);
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
                 SceneManager.LoadScene("Game3");
             }
-
         }
 
+    }
+
+    public bool GetIsMoveFlag()
+    {
+        return isSceneMoveStoGFlag;
     }
 }
