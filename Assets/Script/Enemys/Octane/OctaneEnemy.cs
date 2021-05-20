@@ -57,8 +57,11 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField,Header("ここに召喚する")]
      GameObject SummonPosObj;
 
+    //[SerializeField, Header("召喚エフェクトのポジション")]
+    //GameObject EffectPosObj;
+
     [SerializeField, Header("召喚のエフェクト")]
-    private GameObject SummonEffect;
+     GameObject SummonEffect;
     private ParticleSystem SummonParticle;
     private int EffectCount;
 
@@ -83,6 +86,11 @@ public class OctaneEnemy : MonoBehaviour
     bool NextFlag;
 
     int nextState = 0;
+
+    int effectChildCount;
+
+    GameObject[] childs;
+
 
     [SerializeField] GameObject BossHpSlider;
 
@@ -125,6 +133,8 @@ public class OctaneEnemy : MonoBehaviour
         attackCount = 0;
         renderComponent = GetComponent<Renderer>();
 
+        
+        
         moveState = 0;
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
         stageMove1.GetComponent<StageMove1>();
@@ -289,6 +299,7 @@ public class OctaneEnemy : MonoBehaviour
                     if (PawnTime <= 0.0f)
                     {
                         PawnTime = ResetTime;//1秒沖に生成
+
                         var sum = Instantiate(SummonEnemy,
                             new Vector3(
                                 SummonPosObj.transform.position.x,
@@ -306,10 +317,20 @@ public class OctaneEnemy : MonoBehaviour
                 if (EffectCount < 1)
                 {
                     //エフェクト
-                    SummonParticle.Play();
-                    var eff = Instantiate(SummonEffect,
-                           SummonPosObj.transform.position,
-                           Quaternion.identity);
+                    //var eff = Instantiate(SummonEffect,
+                    //       SummonPosObj.transform.position,
+                    //       Quaternion.identity);
+                    SummonEffect.SetActive(true);
+
+                    //effectChildCount = SummonEffect.transform.childCount;
+
+                    //childs = new GameObject[effectChildCount];
+
+                    //for (int i = 0; i < effectChildCount; i++)
+                    //{
+                    //    childs[i] = SummonEffect.transform.GetChild(i).gameObject;
+                    //}
+
                     EffectCount++;
                 }
                 
@@ -317,7 +338,12 @@ public class OctaneEnemy : MonoBehaviour
                 break;
             //戻す
             case 6:
-                Destroy(SummonEffect);
+                //for (int i = 0; i < effectChildCount; i++)
+                //{
+                //    Destroy(childs[i]);
+                //}
+                //Destroy(SummonEffect);
+                SummonEffect.SetActive(false);
                 attackCount = 0;
                 moveState = 0;
                 EnemyCount = 0;
