@@ -79,6 +79,36 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &1888335211553733742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8684419058251929574}
+  m_Layer: 0
+  m_Name: SummonPosObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8684419058251929574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888335211553733742}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3272220517971450210}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2339064959890328778
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +372,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6589134237849059708}
+  - {fileID: 8684419058251929574}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -405,6 +436,7 @@ MonoBehaviour:
   AttackFlag: 0
   SummonEnemy: {fileID: 8718287026340669308, guid: 0bee8c19de573ba43a1bfea8e087cbf5,
     type: 3}
+  SummonPosObj: {fileID: 1888335211553733742}
   ResetTime: 2
   PawnTime: 2
   EnemyCount: 0
@@ -728,7 +760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0287737ba0ae9bf428416cf9ef831e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BossBullet: {fileID: 2204829202509835248, guid: d650d402dadf2b04690796f74b45f4bc,
+  BossBullet: {fileID: 568270033313483591, guid: b5c00ec1a9d06f14699e859ad7c0117a,
     type: 3}
   Move: {fileID: 5781106799401491398}
   intarval: 3

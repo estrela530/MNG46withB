@@ -54,6 +54,14 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField, Header("召喚するオブジェクト")]
     GameObject SummonEnemy;
 
+    [SerializeField,Header("ここに召喚する")]
+     GameObject SummonPosObj;
+
+    [SerializeField, Header("召喚のエフェクト")]
+    private GameObject SummonEffect;
+    private ParticleSystem SummonParticle;
+    private int EffectCount;
+
     [SerializeField, Header("次からの生成時間")]
     float ResetTime;
 
@@ -63,7 +71,7 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField, Header("召喚するエネミーの上限")]
     int MaxEnemyCount;//プレハブの出現数
 
-    int enemyNumber = (1<<13);
+    int enemyNumber = (1<<13| 1 << 8);
 
 
     [SerializeField] private float DeathTime = 0;
@@ -105,11 +113,14 @@ public class OctaneEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        EffectCount = 0;
+
         BossHpSlider.SetActive(false);
 
         NextFlag = false;
 
         DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
+        SummonParticle = SummonEffect.GetComponent<ParticleSystem>();
 
         attackCount = 0;
         renderComponent = GetComponent<Renderer>();
@@ -279,22 +290,38 @@ public class OctaneEnemy : MonoBehaviour
                     {
                         PawnTime = ResetTime;//1秒沖に生成
                         var sum = Instantiate(SummonEnemy,
-                            new Vector3(140f ,transform.position.y, 3f),
+                            new Vector3(
+                                SummonPosObj.transform.position.x,
+                                transform.position.y,
+                                SummonPosObj.transform.position.z),
                             Quaternion.identity);
-
                         EnemyCount++;
+                        //EffectCount = 0;
+                        
                     }
                     //moveState = 6;
-                    
+
+                }
+                //召喚のエフェクト
+                if (EffectCount < 1)
+                {
+                    //エフェクト
+                    SummonParticle.Play();
+                    var eff = Instantiate(SummonEffect,
+                           SummonPosObj.transform.position,
+                           Quaternion.identity);
+                    EffectCount++;
                 }
                 
-                
+
                 break;
             //戻す
             case 6:
+                Destroy(SummonEffect);
                 attackCount = 0;
                 moveState = 0;
                 EnemyCount = 0;
+                EffectCount = 0;
                 break;
 
         }

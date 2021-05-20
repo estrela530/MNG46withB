@@ -19,6 +19,13 @@ public class BossShot : MonoBehaviour
     private float dis;//プレイヤーとの距離
     private GameObject Target;//追尾する相手
 
+    //レイ関連
+    Ray ray;
+    RaycastHit hitRay;
+    LineRenderer lineRenderer;
+
+    int enemyNumber = (1 << 13 | 1 << 8);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +33,23 @@ public class BossShot : MonoBehaviour
         Target = GameObject.FindGameObjectWithTag("Player");//追尾させたいオブジェクトを書く
         Move.GetComponent<BossMove>();
 
+        ray = new Ray();
+        lineRenderer = this.gameObject.GetComponent<LineRenderer>();
+
+        //lineRenderer.SetPosition(0, this.transform.position);
+        lineRenderer.enabled = false;
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        //ラインレンダラーの色
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.green;//初めの色
+        lineRenderer.endColor = Color.green;//終わりの色
+
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
+
+        //変えるかも?
+        ray.direction = transform.forward;
     }
 
     // Update is called once per frame
