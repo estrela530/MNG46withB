@@ -30,6 +30,9 @@ public class BossMove : MonoBehaviour
     [SerializeField, Header("召喚するオブジェクト")]
     GameObject SummonEnemy;
 
+    [SerializeField, Header("ここに召喚する")]
+    GameObject SummonPosObj;
+
     [SerializeField, Header("次の生成時間")]
     float ResetTime;
 
@@ -217,7 +220,10 @@ public class BossMove : MonoBehaviour
                         {
                             PawnTime = ResetTime;//1秒沖に生成
                             var sum = Instantiate(SummonEnemy,
-                                new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + 2),
+                                new Vector3(
+                                     SummonPosObj.transform.position.x, 
+                                     transform.position.y,
+                                     SummonPosObj.transform.position.z),
                                 Quaternion.identity);
 
                             EnemyCount++;
