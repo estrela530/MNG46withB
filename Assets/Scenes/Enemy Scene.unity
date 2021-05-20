@@ -2636,7 +2636,6 @@ MonoBehaviour:
   player: {fileID: 1359711692}
   offsetPos: {x: 2.5, y: 10, z: -5}
   offsetRot: {x: 60, y: -30, z: 0}
-  wallMaterial: {fileID: 2100000, guid: 65a424872de3ff1458217caf75acada0, type: 2}
 --- !u!81 &772347868
 AudioListener:
   m_ObjectHideFlags: 0
@@ -6971,7 +6970,7 @@ GameObject:
   - component: {fileID: 3235684514823167991}
   - component: {fileID: 8933858425283423576}
   m_Layer: 0
-  m_Name: DeathEffect
+  m_Name: SummonEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8010,7 +8009,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7141196674689897581}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3235684514823167991}
@@ -8053,8 +8052,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: b8d7ccbce7a20834bb0839f188b8b37e, type: 2}
+  - {fileID: 2100000, guid: b8d7ccbce7a20834bb0839f188b8b37e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8288,7 +8287,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.3537736, g: 1, b: 0.38117692, a: 1}
+      maxColor: {r: 1, g: 0.4481132, b: 0.78856844, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
