@@ -7,8 +7,10 @@ public class SceneSG : MonoBehaviour
 {
     int fadeCount;
     int fadeMax;
-    bool isScene1ChangeFlag;
-    bool isScene2ChangeFlag;
+    public bool isScene1ChangeFlag;
+    public bool isScene2ChangeFlag;
+
+    public bool isMoveFlag;
 
     [SerializeField, Header("フェードPrefab")]
     GameObject fadeManager;
@@ -20,6 +22,8 @@ public class SceneSG : MonoBehaviour
         fadeMax = 90;
         isScene1ChangeFlag = false;
         isScene2ChangeFlag = false;
+        isMoveFlag = false;
+
     }
 
 
@@ -42,20 +46,19 @@ public class SceneSG : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Debug.Log(isScene1ChangeFlag);
+        //Debug.Log(isScene2ChangeFlag);
+        Debug.Log(isMoveFlag);
+
+        //if ((Input.GetKeyDown(KeyCode.Space)))
+        //{
+        //    isScene1ChangeFlag = true;
+        //}
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SceneManager.LoadScene("Game");
         }
-
-        //if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    SceneManager.LoadScene("KubotaPlayer");
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Alpha3))
-        //{
-        //    SceneManager.LoadScene("Enemy Scene");
-        //}
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
         {
@@ -64,6 +67,7 @@ public class SceneSG : MonoBehaviour
 
         if (isScene1ChangeFlag)
         {
+            isMoveFlag = true;
             fadeManager.SetActive(true);
             fadeCount++;
             if (fadeCount >= fadeMax)
@@ -73,6 +77,7 @@ public class SceneSG : MonoBehaviour
         }
         else if (isScene2ChangeFlag)
         {
+            isMoveFlag = true;
             fadeManager.SetActive(true);
             fadeCount++;
             if (fadeCount >= fadeMax)

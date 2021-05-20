@@ -249,6 +249,7 @@ MonoBehaviour:
   - {fileID: 1023767450}
   firstSelectButton: 0
   PauseUIPrefab: {fileID: 34808158}
+  eventSystem: {fileID: 0}
   callSet: 0
 --- !u!1 &147505705
 GameObject:
@@ -353,6 +354,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FadeManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3480742152045312357, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3480742152045312362, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
         type: 3}
@@ -542,6 +548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386224bfc89bca04a83df37b4c9273b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isScene1ChangeFlag: 0
+  isScene2ChangeFlag: 0
   fadeManager: {fileID: 1240040398}
 --- !u!4 &424289029
 Transform:
@@ -1012,6 +1020,16 @@ PrefabInstance:
       propertyPath: nejirin
       value: 
       objectReference: {fileID: 1434081689}
+    - target: {fileID: 1757921607741046421, guid: 10b148aaa37c7314b994b6a5689759cb,
+        type: 3}
+      propertyPath: sceneSG
+      value: 
+      objectReference: {fileID: 424289027}
+    - target: {fileID: 1757921607741046421, guid: 10b148aaa37c7314b994b6a5689759cb,
+        type: 3}
+      propertyPath: sceneSGObj
+      value: 
+      objectReference: {fileID: 424289027}
     - target: {fileID: 7226740231074728693, guid: 10b148aaa37c7314b994b6a5689759cb,
         type: 3}
       propertyPath: m_Colors.m_SelectedColor.b

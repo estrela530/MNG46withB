@@ -13,6 +13,11 @@ public class StageSelectCharaMove : MonoBehaviour
     [SerializeField, Header("ステージ2")]
     GameObject s2Image;
 
+    [SerializeField, Header("シーン遷移")]
+    GameObject sceneSGObj;
+
+    SceneSG sceneSG;
+    bool isSceneMoveFlag;
 
     Vector3 nejirinnStage1Pos = new Vector3(-40, -23, 80);
     Vector3 nejirinnStage2Pos = new Vector3(5, -9, 80);
@@ -30,6 +35,7 @@ public class StageSelectCharaMove : MonoBehaviour
         isMissionImageFlag = true;
         s2Image.SetActive(false);
         s1Image.SetActive(true);
+        sceneSG = sceneSGObj.GetComponent<SceneSG>();
     }
 
     // Update is called once per frame
@@ -38,10 +44,14 @@ public class StageSelectCharaMove : MonoBehaviour
         //L Stick
         float lsh = Input.GetAxisRaw("Horizontal");
 
-        //Debug.Log(lsh);
+        //Debug.Log("isScene1ChangeFlag" + sceneSG.isScene1ChangeFlag);
+        //Debug.Log("isScene2ChangeFlag" + sceneSG.isScene2ChangeFlag);
+        isSceneMoveFlag = sceneSG.isMoveFlag;
+        //Debug.Log(isSceneMoveFlag);
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || lsh < 0)
+        if (Input.GetKeyDown(KeyCode.LeftArrow) /*|| lsh < 0 */&& !isSceneMoveFlag/* && !sceneSG.GetComponent<SceneSG>().isScene2ChangeFlag*/)
         {
+            Debug.Log("左押された");
             stage1nowFlag = true;
             s2Image.SetActive(false);
             s1Image.SetActive(true);
@@ -49,8 +59,9 @@ public class StageSelectCharaMove : MonoBehaviour
             stage1nowFlag = false;
             isMissionImageFlag = true;
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || lsh > 0)
+        else if (Input.GetKeyDown(KeyCode.RightArrow) /*|| lsh > 0*/　 && !isSceneMoveFlag /*&& !sceneSG.GetComponent<SceneSG>().isScene2ChangeFlag*/)
         {
+            Debug.Log("右押された");
             stage2NowFlag = true;
             s2Image.SetActive(true);
             s1Image.SetActive(false);
