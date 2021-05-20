@@ -17,12 +17,15 @@ public class EnemyShot2 : MonoBehaviour
 
     private float dis;//プレイヤーとの距離
     private GameObject Target;//追尾する相手
-    private bool shotFlag;
+    public bool shotFlag;
+
+    [SerializeField, Header("索敵の長さ")] float searchRange = 10;
 
     //レイ関連
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
+    int enemyNumber = (1 << 13 | 1 << 8);
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +57,7 @@ public class EnemyShot2 : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        ss += Time.deltaTime;
+        
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
        Random.Range(min, max);
@@ -62,21 +65,8 @@ public class EnemyShot2 : MonoBehaviour
 
         Ray();
 
-        if (ss >= intarval)
-        {
-            Shot();
-            ss = 0;
-
-        }
-        //攻撃する前に色を変える
-        if (ss >= intarval-1)
-        {
-            //ラインレンダラーの色
-            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-            lineRenderer.startColor = Color.red;//初めの色
-            lineRenderer.endColor = Color.red;//終わりの色
-
-        }
+        
+       
     }
 
     void Ray()
@@ -84,7 +74,7 @@ public class EnemyShot2 : MonoBehaviour
         lineRenderer.SetPosition(0, this.transform.position);
 
         //レイの処理
-        if (Physics.Raycast(ray, out hitRay, 10))
+        if (Physics.Raycast(ray, out hitRay, searchRange, enemyNumber))
         {
             if (hitRay.collider.gameObject.CompareTag("Player"))
             {
@@ -93,6 +83,23 @@ public class EnemyShot2 : MonoBehaviour
                 Move.GetComponent<EnemyMove>().MoveFlag = true;
                 lineRenderer.SetPosition(1, hitRay.point);
                 shotFlag = true;
+
+                ss += Time.deltaTime;
+                if (ss >= intarval)
+                {
+                    Shot();
+                    ss = 0;
+
+                }
+                //攻撃する前に色を変える
+                if (ss >= intarval - 1)
+                {
+                    //ラインレンダラーの色
+                    lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+                    lineRenderer.startColor = Color.red;//初めの色
+                    lineRenderer.endColor = Color.red;//終わりの色
+
+                }
             }
             else
             {
@@ -100,6 +107,14 @@ public class EnemyShot2 : MonoBehaviour
                 Move.GetComponent<EnemyMove>().MoveFlag = false;
                 Move.GetComponent<EnemyMove>().workFlag = true;
                 shotFlag = false;
+            }
+            if (!hitRay.collider.gameObject.CompareTag("Player"))
+            {
+                shotFlag = false;
+                //ラインレンダラーの色
+                lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+                lineRenderer.startColor = Color.green;//初めの色
+                lineRenderer.endColor = Color.green;//終わりの色
             }
         }
 
@@ -112,15 +127,6 @@ public class EnemyShot2 : MonoBehaviour
 
     void Shot()
     {
-        //if (Move.GetComponent<EnemyMove>().MoveFlag == true)
-        //{
-        //    Vector3 ff = new Vector3(dis+Random.Range(min, max), 0, dis);
-        //    GameObject shot = Instantiate(Bullet, transform.position, transform.rotation);
-        //    Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
-        //    rigidbody.AddForce(ff * shotTime);
-
-
-        //}
         if (shotFlag)
         {
             Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);

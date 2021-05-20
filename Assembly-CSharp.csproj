@@ -62,17 +62,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BackGround.cs" />
-    <Compile Include="Assets\BackGround2.cs" />
-    <Compile Include="Assets\Blink3.cs" />
-    <Compile Include="Assets\KeyDoor.cs" />
-    <Compile Include="Assets\SceneNumberData.cs" />
     <Compile Include="Assets\Script\DOTweenTest.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossArea.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossBullet.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossMove.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossShot.cs" />
     <Compile Include="Assets\Script\Enemys\DeathEff.cs" />
+    <Compile Include="Assets\Script\Enemys\Effect\Circle.cs" />
     <Compile Include="Assets\Script\Enemys\EmoveScene.cs" />
     <Compile Include="Assets\Script\Enemys\Foundation\EnemyArea.cs" />
     <Compile Include="Assets\Script\Enemys\Foundation\EnemyBullet.cs" />
@@ -127,7 +123,10 @@
     <Compile Include="Assets\Script\Players\TwistMeshTest.cs" />
     <Compile Include="Assets\Script\Players\TwistedMesh.cs" />
     <Compile Include="Assets\Script\ScenesScript\ActivateButton.cs" />
+    <Compile Include="Assets\Script\ScenesScript\BackGround.cs" />
+    <Compile Include="Assets\Script\ScenesScript\BackGround2.cs" />
     <Compile Include="Assets\Script\ScenesScript\Blink.cs" />
+    <Compile Include="Assets\Script\ScenesScript\Blink3.cs" />
     <Compile Include="Assets\Script\ScenesScript\ButtonSE.cs" />
     <Compile Include="Assets\Script\ScenesScript\CameraMove.cs" />
     <Compile Include="Assets\Script\ScenesScript\CameraMoveIcon.cs" />
@@ -137,16 +136,21 @@
     <Compile Include="Assets\Script\ScenesScript\FPS.cs" />
     <Compile Include="Assets\Script\ScenesScript\GoSSButton.cs" />
     <Compile Include="Assets\Script\ScenesScript\GoalFlag.cs" />
+    <Compile Include="Assets\Script\ScenesScript\KeyDoor.cs" />
     <Compile Include="Assets\Script\ScenesScript\MissionManagerScript.cs" />
     <Compile Include="Assets\Script\ScenesScript\NotCursor.cs" />
     <Compile Include="Assets\Script\ScenesScript\Pause.cs" />
     <Compile Include="Assets\Script\ScenesScript\PauseAudioButton.cs" />
     <Compile Include="Assets\Script\ScenesScript\ResB.cs" />
     <Compile Include="Assets\Script\ScenesScript\SceneGR.cs" />
+    <Compile Include="Assets\Script\ScenesScript\SceneNumberData.cs" />
     <Compile Include="Assets\Script\ScenesScript\SceneSG.cs" />
     <Compile Include="Assets\Script\ScenesScript\SceneTS.cs" />
     <Compile Include="Assets\Script\ScenesScript\SelectButton.cs" />
+    <Compile Include="Assets\Script\ScenesScript\SetumeiButton.cs" />
     <Compile Include="Assets\Script\ScenesScript\SpawnPoint.cs" />
+    <Compile Include="Assets\Script\ScenesScript\Stage1.cs" />
+    <Compile Include="Assets\Script\ScenesScript\Stage2.cs" />
     <Compile Include="Assets\Script\ScenesScript\StageMove.cs" />
     <Compile Include="Assets\Script\ScenesScript\StageMove1.cs" />
     <Compile Include="Assets\Script\ScenesScript\StageSelectCharaMove.cs" />
@@ -158,8 +162,8 @@
     <Compile Include="Assets\Script\ScenesScript\VloumeSlider.cs" />
     <Compile Include="Assets\Script\ScenesScript\kanban.cs" />
     <Compile Include="Assets\Script\ScenesScript\pauseManager.cs" />
+    <Compile Include="Assets\Script\ScenesScript\yajirusi.cs" />
     <Compile Include="Assets\Script\ScenesScript\αScore.cs" />
-    <Compile Include="Assets\yajirusi.cs" />
     <None Include="Assets\Script\Players\Lambert_Test.shader" />
     <None Include="Assets\Deform\LICENSE.txt" />
     <None Include="Assets\Shader\transition.shader" />

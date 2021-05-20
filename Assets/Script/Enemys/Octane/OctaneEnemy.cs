@@ -71,7 +71,7 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField, Header("召喚するエネミーの上限")]
     int MaxEnemyCount;//プレハブの出現数
 
-    int enemyNumber = (1<<13);
+    int enemyNumber = (1<<13| 1 << 8);
 
 
     [SerializeField] private float DeathTime = 0;
@@ -306,6 +306,7 @@ public class OctaneEnemy : MonoBehaviour
                 if (EffectCount < 1)
                 {
                     //エフェクト
+                    SummonParticle.Play();
                     var eff = Instantiate(SummonEffect,
                            SummonPosObj.transform.position,
                            Quaternion.identity);

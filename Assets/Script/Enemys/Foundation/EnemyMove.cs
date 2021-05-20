@@ -24,25 +24,10 @@ public class EnemyMove : MonoBehaviour
 
 
     Rigidbody rigid;
-        
-    private float workeAria1=1;//
-    private float workeAria2=1;//
 
-    private float Rspeed;
-
-    private float ww;
-    private float ww2;
-
-    Color color;
+    //Color color;
     
 
-    int workNumber = 1;
-
-    [Header("索敵時のスピード")]
-    public float speed;
-    [Header("発見時のスピード")]
-    public float speedLoc;
-    
     [Header("追う時と索敵のフラグ")]
     public bool MoveFlag = false;//追う
     public bool workFlag = true;//徘徊
@@ -70,7 +55,7 @@ public class EnemyMove : MonoBehaviour
         
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
-        color = GetComponent<Renderer>().material.color;
+        //color = GetComponent<Renderer>().material.color;
         
     }
     IEnumerator Blink()
