@@ -62,6 +62,9 @@ public class OctaneEnemy : MonoBehaviour
 
     [SerializeField, Header("召喚のエフェクト")]
      GameObject SummonEffect;
+    [SerializeField, Header("召喚のエフェクトの魔法陣")]
+    GameObject MagicCircle;
+
     private ParticleSystem SummonParticle;
     private int EffectCount;
 
@@ -316,11 +319,17 @@ public class OctaneEnemy : MonoBehaviour
                 //召喚のエフェクト
                 if (EffectCount < 1)
                 {
-                    //エフェクト
-                    //var eff = Instantiate(SummonEffect,
+                    //エフェクトパーティクル
+                    var eff = Instantiate(SummonEffect,
+                           SummonPosObj.transform.position,
+                           Quaternion.identity);
+                    //SummonEffect.SetActive(true);
+
+                    ////エフェクト画像
+                    //var effM = Instantiate(MagicCircle,
                     //       SummonPosObj.transform.position,
                     //       Quaternion.identity);
-                    SummonEffect.SetActive(true);
+                    MagicCircle.SetActive(true);
 
                     //effectChildCount = SummonEffect.transform.childCount;
 
@@ -342,8 +351,9 @@ public class OctaneEnemy : MonoBehaviour
                 //{
                 //    Destroy(childs[i]);
                 //}
-                //Destroy(SummonEffect);
-                SummonEffect.SetActive(false);
+                SummonParticle.Stop();//パーティクルを消す
+                //Destroy(MagicCircle);//画像を消す
+                MagicCircle.SetActive(false);
                 attackCount = 0;
                 moveState = 0;
                 EnemyCount = 0;
