@@ -1083,6 +1083,16 @@ PrefabInstance:
       propertyPath: Enemy
       value: 
       objectReference: {fileID: 258093024}
+    - target: {fileID: 5032999031589378611, guid: 4353200617b2b98419fb5db0ece18422,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032999031589378611, guid: 4353200617b2b98419fb5db0ece18422,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4353200617b2b98419fb5db0ece18422, type: 3}
 --- !u!114 &1407216893 stripped
@@ -1305,6 +1315,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 714124786491089657, guid: 1dec4f9c62f7d9c4c9a735d882f0b4d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1794050545182486714, guid: 1dec4f9c62f7d9c4c9a735d882f0b4d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629461806401740996, guid: 1dec4f9c62f7d9c4c9a735d882f0b4d9,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629461806401740996, guid: 1dec4f9c62f7d9c4c9a735d882f0b4d9,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 9076286973268761389, guid: 1dec4f9c62f7d9c4c9a735d882f0b4d9,
         type: 3}
       propertyPath: m_RootOrder
