@@ -33,6 +33,14 @@ public class BossMove : MonoBehaviour
     [SerializeField, Header("ここに召喚する")]
     GameObject SummonPosObj;
 
+    [SerializeField, Header("召喚のエフェクト")]
+    GameObject SummonEffect;
+    [SerializeField, Header("召喚のエフェクトの魔法陣")]
+    GameObject MagicCircle;
+
+    private ParticleSystem SummonParticle;
+    private int EffectCount;
+
     [SerializeField, Header("次の生成時間")]
     float ResetTime;
 
@@ -62,11 +70,7 @@ public class BossMove : MonoBehaviour
 
     int nextState = 0;
 
-    //レイ関連
-    Ray ray;
-    RaycastHit hitRay;
-    LineRenderer lineRenderer;
-    int enemyNumber = (1 << 13);
+    
 
     Renderer renderComponent;
     [SerializeField] float ColorInterval = 0.1f;
@@ -79,6 +83,7 @@ public class BossMove : MonoBehaviour
     void Start()
     {
         DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
+        SummonParticle = SummonEffect.GetComponent<ParticleSystem>();
 
         moveState = 0;
         bossShot.GetComponent<BossShot>();
@@ -92,23 +97,7 @@ public class BossMove : MonoBehaviour
 
         renderComponent = GetComponent<Renderer>();
 
-        ray = new Ray();
-        lineRenderer = this.gameObject.GetComponent<LineRenderer>();
-
-        //lineRenderer.SetPosition(0, this.transform.position);
-        lineRenderer.enabled = false;
-        ray.origin = this.transform.position;//自分の位置のレイ
-
-        //ラインレンダラーの色
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = Color.red;//初めの色
-        lineRenderer.endColor = Color.red;//終わりの色
-
-        lineRenderer.startWidth = 0.5f;
-        lineRenderer.endWidth = 0.5f;
-
-        //変えるかも?
-        ray.direction = transform.forward;
+       
     }
 
     //中断できる処理のまとまり
@@ -148,25 +137,7 @@ public class BossMove : MonoBehaviour
 
         if (MoveFlag)
         {
-            //レイの処理
-            if (Physics.Raycast(ray, out hitRay, 20, enemyNumber))
-            {
-                if (hitRay.collider.gameObject.CompareTag("Player"))
-                {
-                    lineRenderer.enabled = true;
-
-                    lineRenderer.SetPosition(1, hitRay.point);
-
-                }
-                else
-                {
-                    lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
-                }
-            }
-
-            ray.origin = this.transform.position;//自分の位置のレイ
-
-            ray.direction = transform.forward;//自分の向きのレイ
+            
 
             //ターゲットにむく
             this.transform.LookAt(
@@ -192,10 +163,6 @@ public class BossMove : MonoBehaviour
                 case 1:
                     AttackFlag = true;
                    
-
-                    lineRenderer.startColor = Color.red;//初めの色
-                    lineRenderer.endColor = Color.red;//終わりの色
-
                     moveState = 2;
 
                     break;
@@ -230,6 +197,19 @@ public class BossMove : MonoBehaviour
                         }
                         
                     }
+
+                    //召喚のエフェクト
+                    if (EffectCount < 1)
+                    {
+                        //エフェクトパーティクル
+                        var eff = Instantiate(SummonEffect,
+                               SummonPosObj.transform.position,
+                               Quaternion.identity);
+                      
+                        MagicCircle.SetActive(true);
+                        
+                        EffectCount++;
+                    }
                     break;
 
                 //戻す
@@ -237,6 +217,10 @@ public class BossMove : MonoBehaviour
                     moveState = 0;
                     EnemyCount = 0;
                     bossShot.GetComponent<BossShot>().shotCount = 0;
+
+                    SummonParticle.Stop();//パーティクルを消す
+
+                    MagicCircle.SetActive(false);
                     break;
                     
 
@@ -244,8 +228,7 @@ public class BossMove : MonoBehaviour
             //this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
            
             dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-
-            lineRenderer.SetPosition(0, this.transform.position);
+            
         }
 
         switch (nextState)

@@ -64,9 +64,6 @@ public class EnemyShot2 : MonoBehaviour
 
 
         Ray();
-
-        
-       
     }
 
     void Ray()
