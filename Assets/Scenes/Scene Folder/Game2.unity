@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 84c9b0db09ba114419590848a06729ba, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -725,17 +725,17 @@ PrefabInstance:
     - target: {fileID: 1903654873949377435, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 89.54909
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1903654873949377435, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 62.37093
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1903654873949377435, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -56.45467
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1903654873949377435, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
@@ -772,15 +772,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3080844008979896494, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080844008979896494, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506755208357560025, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506755208357560025, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4722257355946703571, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -91.59
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722257355946703571, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4722257355946703571, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 79.99
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5204416691150950892, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
@@ -795,12 +820,32 @@ PrefabInstance:
     - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -48.6
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 75
+      value: 17.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2452e8e62ee4a1448f0f3bb9ee4b020, type: 3}
