@@ -60,10 +60,10 @@ public class SceneSG : MonoBehaviour
             SceneManager.LoadScene("Game");
         }
 
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
-        {
-            SceneManager.LoadScene("Game2");
-        }
+        //if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        //{
+        //    SceneManager.LoadScene("Game2");
+        //}
 
         if (isScene1ChangeFlag)
         {

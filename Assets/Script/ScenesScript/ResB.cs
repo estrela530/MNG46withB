@@ -13,6 +13,7 @@ public class ResB : MonoBehaviour
             return;
         }
 
+
     }
 
     public void OnClickStartButton()

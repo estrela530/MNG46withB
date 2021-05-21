@@ -70,5 +70,14 @@ public class StageSelectCharaMove : MonoBehaviour
             isMissionImageFlag = true;
         }
 
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        {
+            stage1nowFlag = true;
+            s2Image.SetActive(false);
+            s1Image.SetActive(true);
+            nejirin.transform.position = nejirinnStage1Pos;
+            stage1nowFlag = false;
+            isMissionImageFlag = true;
+        }
     }
 }
