@@ -253,6 +253,7 @@ public class Player : MonoBehaviour
         ChangeLevel();  //レベル変更
         InvincibleTime(invincibleTime);//無敵時間
         MoveDirection();//移動
+        TwistedRelease();// 5/21変更解放を
     }
 
     /// <summary>
@@ -267,9 +268,7 @@ public class Player : MonoBehaviour
 
         velocity.x = Input.GetAxisRaw("Horizontal");
         velocity.z = Input.GetAxisRaw("Vertical");
-
-        
-
+    
         #region RigidBodyを使わなかった頃の移動
         //velocity = Vector3.zero;
         //Vector3 inputVelocity = Vector3.zero;
@@ -488,7 +487,8 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5") || GetKeyUP(Keys.R_Trigger))//離したら解放する
         {
-            TwistedRelease();//解放
+            isRelease = true; //解放中にする
+            //TwistedRelease();//解放
         }
     }
 
@@ -533,17 +533,16 @@ public class Player : MonoBehaviour
     /// </summary>
     void TwistedRelease()
     {
-        if (!isTwisted) return;//ねじり中じゃなかったら解放しない
+        //ねじり中じゃなかったら || 解放中でなければ解放しない
+        if (!isTwisted || !isRelease) return;
 
         releaseParticle.Play();
 
         //解放する前に一旦流れている音を止める
         audioSource.Stop();
 
-        isRelease = true; //解放中にする
-        isTwisted = false;//ねじっていない
-
-        
+        //isRelease = true; //解放中にする
+        isTwisted = false;//ねじっていない    
 
         //ねじレベルによる色と球数の変化
         switch (neziLevel)
