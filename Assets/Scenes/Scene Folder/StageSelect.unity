@@ -927,19 +927,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitionIn: {fileID: 2100000, guid: 16c5c1cac7d017f4e973e5669a3dc05f, type: 2}
---- !u!1 &1938819930 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7226740231413484074, guid: 10b148aaa37c7314b994b6a5689759cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7226740231930558831}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1978532868 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7226740232292449643, guid: 10b148aaa37c7314b994b6a5689759cb,
     type: 3}
   m_PrefabInstance: {fileID: 7226740231930558831}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1938819930}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -957,31 +951,6 @@ PrefabInstance:
       propertyPath: nejirin
       value: 
       objectReference: {fileID: 1434081689}
-    - target: {fileID: 1757921607741046421, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: sceneSG
-      value: 
-      objectReference: {fileID: 424289027}
-    - target: {fileID: 1757921607741046421, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: sceneSGObj
-      value: 
-      objectReference: {fileID: 1938819930}
-    - target: {fileID: 7226740231074728693, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: m_Colors.m_SelectedColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226740231074728693, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: m_Colors.m_SelectedColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226740231074728693, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: m_Colors.m_SelectedColor.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7226740231413484072, guid: 10b148aaa37c7314b994b6a5689759cb,
         type: 3}
       propertyPath: fadeManager
@@ -992,21 +961,6 @@ PrefabInstance:
       propertyPath: fadeManager
       value: 
       objectReference: {fileID: 1240040398}
-    - target: {fileID: 7226740232292449643, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: m_Colors.m_SelectedColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226740232292449643, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: m_Colors.m_SelectedColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226740232292449643, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: m_Colors.m_SelectedColor.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7226740232659678041, guid: 10b148aaa37c7314b994b6a5689759cb,
         type: 3}
       propertyPath: m_Camera

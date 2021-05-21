@@ -18,7 +18,7 @@ public class ResB : MonoBehaviour
 
     public void OnClickStartButton()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
         {
             SceneManager.LoadScene("StageSelect");
         }

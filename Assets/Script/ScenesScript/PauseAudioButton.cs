@@ -40,7 +40,7 @@ public class PauseAudioButton : MonoBehaviour
     public void OnClick()
     {
 
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
         {
             if (isPauseAudio == false)
             {

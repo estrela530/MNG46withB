@@ -24,7 +24,7 @@ public class SceneTS : MonoBehaviour
     void FixedUpdate()
     {
         //SceneChange();
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
         {
             isSceneChangeFlag = true;
             //Debug.Log(isSceneChangeFlag);

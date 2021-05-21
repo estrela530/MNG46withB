@@ -29,7 +29,7 @@ public class GoSSButton : MonoBehaviour
 
     public void OnClickStartButton()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
         {
             //audioSource.PlayOneShot(buttonSE);
             SceneManager.LoadScene("StageSelect");

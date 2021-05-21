@@ -9,8 +9,13 @@ public class SceneSG : MonoBehaviour
     int fadeMax;
     public bool isScene1ChangeFlag;
     public bool isScene2ChangeFlag;
+    public bool isScene3ChangeFlag;
+    public bool isScene4ChangeFlag;
+    public bool isScene5ChangeFlag;
+    public bool isScene6ChangeFlag;
 
-    public　static　bool isSceneMoveStoGFlag;
+
+    public static bool isSceneMoveStoGFlag;
 
     [SerializeField, Header("フェードPrefab")]
     GameObject fadeManager;
@@ -22,6 +27,10 @@ public class SceneSG : MonoBehaviour
         fadeMax = 90;
         isScene1ChangeFlag = false;
         isScene2ChangeFlag = false;
+        isScene3ChangeFlag = false;
+        isScene4ChangeFlag = false;
+        isScene5ChangeFlag = false;
+        isScene6ChangeFlag = false;
         isSceneMoveStoGFlag = false;
 
     }
@@ -29,7 +38,7 @@ public class SceneSG : MonoBehaviour
 
     public void OnClickStartStage1Button()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
         {
             isScene1ChangeFlag = true;
         }
@@ -37,34 +46,46 @@ public class SceneSG : MonoBehaviour
 
     public void OnClickStartStage2Button()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Space)))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
         {
             isScene2ChangeFlag = true;
+        }
+    }
+
+    public void OnClickStartStage3Button()
+    {
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
+        {
+            isScene3ChangeFlag = true;
+        }
+    }
+
+    public void OnClickStartStage4Button()
+    {
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
+        {
+            isScene4ChangeFlag = true;
+        }
+    }
+    public void OnClickStartStage5Button()
+    {
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
+        {
+            isScene5ChangeFlag = true;
+        }
+    }
+
+    public void OnClickStartStage6Button()
+    {
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)))
+        {
+            isScene6ChangeFlag = true;
         }
     }
 
 
     void FixedUpdate()
     {
-        //Debug.Log(isScene1ChangeFlag);
-        //Debug.Log(isScene2ChangeFlag);
-        Debug.Log("isSceneMoveStoGFlagは" + isSceneMoveStoGFlag);
-
-        //if ((Input.GetKeyDown(KeyCode.Space)))
-        //{
-        //    isScene1ChangeFlag = true;
-        //}
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SceneManager.LoadScene("Game");
-        }
-
-        //if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
-        //{
-        //    SceneManager.LoadScene("Game2");
-        //}
-
         if (isScene1ChangeFlag)
         {
             isSceneMoveStoGFlag = true;
@@ -85,7 +106,46 @@ public class SceneSG : MonoBehaviour
                 SceneManager.LoadScene("Game3");
             }
         }
-
+        else if (isScene3ChangeFlag)
+        {
+            isSceneMoveStoGFlag = true;
+            fadeManager.SetActive(true);
+            fadeCount++;
+            if (fadeCount >= fadeMax)
+            {
+                SceneManager.LoadScene("Game2");
+            }
+        }
+        else if (isScene4ChangeFlag)
+        {
+            isSceneMoveStoGFlag = true;
+            fadeManager.SetActive(true);
+            fadeCount++;
+            if (fadeCount >= fadeMax)
+            {
+                SceneManager.LoadScene("Game2");
+            }
+        }
+        else if (isScene5ChangeFlag)
+        {
+            isSceneMoveStoGFlag = true;
+            fadeManager.SetActive(true);
+            fadeCount++;
+            if (fadeCount >= fadeMax)
+            {
+                SceneManager.LoadScene("Game2");
+            }
+        }
+        else if (isScene6ChangeFlag)
+        {
+            isSceneMoveStoGFlag = true;
+            fadeManager.SetActive(true);
+            fadeCount++;
+            if (fadeCount >= fadeMax)
+            {
+                SceneManager.LoadScene("Game2");
+            }
+        }
     }
 
     public bool GetIsMoveFlag()
