@@ -55,21 +55,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Script\DOTweenTest.cs" />
      <Compile Include="Assets\Script\Enemys\Boss\BossArea.cs" />
      <Compile Include="Assets\Script\Enemys\Boss\BossBullet.cs" />
      <Compile Include="Assets\Script\Enemys\Boss\BossMove.cs" />
      <Compile Include="Assets\Script\Enemys\Boss\BossShot.cs" />
-     <Compile Include="Assets\Script\Enemys\DeathEff.cs" />
      <Compile Include="Assets\Script\Enemys\Effect\Circle.cs" />
-     <Compile Include="Assets\Script\Enemys\EmoveScene.cs" />
+     <Compile Include="Assets\Script\Enemys\Foundation\DeathEff.cs" />
      <Compile Include="Assets\Script\Enemys\Foundation\EnemyArea.cs" />
      <Compile Include="Assets\Script\Enemys\Foundation\EnemyBullet.cs" />
-     <Compile Include="Assets\Script\Enemys\Foundation\EnemyDeath.cs" />
      <Compile Include="Assets\Script\Enemys\Foundation\EnemyMove.cs" />
      <Compile Include="Assets\Script\Enemys\Foundation\EnemyShot2.cs" />
      <Compile Include="Assets\Script\Enemys\Foundation\EnemyShoto.cs" />
      <Compile Include="Assets\Script\Enemys\Foundation\EnemyUI.cs" />
+     <Compile Include="Assets\Script\Enemys\Foundation\Respawn.cs" />
+     <Compile Include="Assets\Script\Enemys\Foundation\Summon.cs" />
      <Compile Include="Assets\Script\Enemys\Key\Key.cs" />
      <Compile Include="Assets\Script\Enemys\Key\KeyArea.cs" />
      <Compile Include="Assets\Script\Enemys\Key\KeyEnemy.cs" />
@@ -88,14 +87,8 @@
      <Compile Include="Assets\Script\Enemys\Poison\PoisonArea.cs" />
      <Compile Include="Assets\Script\Enemys\Poison\PoisonEnemy.cs" />
      <Compile Include="Assets\Script\Enemys\Poison\PoisonShot.cs" />
-     <Compile Include="Assets\Script\Enemys\Respawn.cs" />
      <Compile Include="Assets\Script\Enemys\Steal\StealArea.cs" />
      <Compile Include="Assets\Script\Enemys\Steal\StealEnemy.cs" />
-     <Compile Include="Assets\Script\Enemys\Summon.cs" />
-     <Compile Include="Assets\Script\Enemys\move2.cs" />
-     <Compile Include="Assets\Script\Enemys\playerMunage.cs" />
-     <Compile Include="Assets\Script\Enemys\scene1.cs" />
-     <Compile Include="Assets\Script\Enemys\scene2.cs" />
      <Compile Include="Assets\Script\Players\Fragment.cs" />
      <Compile Include="Assets\Script\Players\FragmentPool.cs" />
      <Compile Include="Assets\Script\Players\HealBall.cs" />
@@ -106,12 +99,6 @@
      <Compile Include="Assets\Script\Players\PoisonBall.cs" />
      <Compile Include="Assets\Script\Players\PredictionLine.cs" />
      <Compile Include="Assets\Script\Players\PredictionLinePool.cs" />
-     <Compile Include="Assets\Script\Players\ScrollTest.cs" />
-     <Compile Include="Assets\Script\Players\TestChildInhale.cs" />
-     <Compile Include="Assets\Script\Players\TestJump.cs" />
-     <Compile Include="Assets\Script\Players\TestParentInhale.cs" />
-     <Compile Include="Assets\Script\Players\TestParticles.cs" />
-     <Compile Include="Assets\Script\Players\TestPredictionLine.cs" />
      <Compile Include="Assets\Script\Players\TestTest.cs" />
      <Compile Include="Assets\Script\Players\TwistMeshTest.cs" />
      <Compile Include="Assets\Script\Players\TwistedMesh.cs" />
@@ -125,8 +112,8 @@
      <Compile Include="Assets\Script\ScenesScript\CameraMoveIcon.cs" />
      <Compile Include="Assets\Script\ScenesScript\ClearStageUI.cs" />
      <Compile Include="Assets\Script\ScenesScript\CountTest.cs" />
+     <Compile Include="Assets\Script\ScenesScript\DOTweenTest.cs" />
      <Compile Include="Assets\Script\ScenesScript\Escape.cs" />
-     <Compile Include="Assets\Script\ScenesScript\FPS.cs" />
      <Compile Include="Assets\Script\ScenesScript\GoSSButton.cs" />
      <Compile Include="Assets\Script\ScenesScript\GoalFlag.cs" />
      <Compile Include="Assets\Script\ScenesScript\KeyDoor.cs" />
@@ -157,11 +144,9 @@
      <Compile Include="Assets\Script\ScenesScript\pauseManager.cs" />
      <Compile Include="Assets\Script\ScenesScript\yajirusi.cs" />
      <Compile Include="Assets\Script\ScenesScript\αScore.cs" />
-     <None Include="Assets\Script\Players\Lambert_Test.shader" />
      <None Include="Assets\Deform\LICENSE.txt" />
      <None Include="Assets\Shader\transition.shader" />
      <None Include="Assets\Shader\transition2.shader" />
-     <None Include="Assets\Material\BG1.shader" />
      <None Include="Assets\Deform\EditorResources\Textures\External\MaterialDesign\LICENSE.txt" />
      <None Include="Assets\Deform\README.txt" />
  <Reference Include="UnityEngine">
