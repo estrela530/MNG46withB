@@ -98,6 +98,7 @@ public class Player : MonoBehaviour
     private float alphaTimer = 0;   //点滅時間加算用
     private float directionAngle;   //キーの倒した角度
     private float previousAngle = 0;//前フレームのキーを倒した角度
+    private float deadAnimationTime;//死亡時のアニメーション時間
 
     float[] preTrigger = new float[4];//LT,RT,Vertical,Horizontalトリガーの保存用キー
     float[] nowTrigger = new float[4];//LT,RT,Vertical,Horizontalトリガーの取得用キー
@@ -203,6 +204,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (isDeadFlag) return;
+
         nowTrigger[0] = Input.GetAxisRaw("L_Trigger");
         nowTrigger[1] = Input.GetAxisRaw("R_Trigger");
         nowTrigger[2] = Input.GetAxisRaw("Horizontal");
@@ -248,6 +251,10 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         //ここでは入力にラグが出てしまうため、入力以外の処理を行うといい。
+
+        DeadAnimation();//死亡しているかどうか
+
+        if (isDeadFlag) return;     
 
         TwistedExtend();//伸びる
         ChangeLevel();  //レベル変更
@@ -846,11 +853,27 @@ public class Player : MonoBehaviour
         //音を止めたい
         audioSource.Stop();
 
-        NockBack(other, 50);//ノックバックの移動をする
-        animator.SetTrigger("Trigger");
-
-        if (currentHp > 0)
+        if (currentHp > 1)
         {
+
+            NockBack(other, 50);//ノックバックの移動をする
+            animator.SetTrigger("Trigger");
+
+            currentHp -= damage;
+            saveValue -= damage;
+
+            //ダメージを受けたとき、ねじれ状態などを解除する。
+            isReset = true;
+            Initialize();
+
+            debugDamageCount++;
+
+            isDamage = true;
+        }
+        else
+        {
+            animator.SetTrigger("Death");
+
             currentHp -= damage;
             saveValue -= damage;
 
@@ -863,11 +886,22 @@ public class Player : MonoBehaviour
             isDamage = true;
         }
 
-        if (currentHp < 1.0f)
+        if (currentHp <= 0)
         {
             //死んだらシーン遷移
-            //memo : ここも死んだらフラグをtrueにしてそれをどっかに伝えるようにした方がいい
             isDeadFlag = true;
+        }
+    }
+
+    void DeadAnimation()
+    {
+        if (!isDeadFlag) return;
+
+        deadAnimationTime += Time.deltaTime;
+
+        if(deadAnimationTime > 1.5f)
+        {
+            deadAnimationTime = 0;
             SceneManager.LoadScene("GameOver");
         }
     }
