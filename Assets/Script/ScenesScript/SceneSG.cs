@@ -113,7 +113,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game2");
+                SceneManager.LoadScene("Game4");
             }
         }
         else if (isScene4ChangeFlag)
@@ -123,7 +123,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game2");
+                SceneManager.LoadScene("Game5");
             }
         }
         else if (isScene5ChangeFlag)
@@ -133,7 +133,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game2");
+                SceneManager.LoadScene("Game6");
             }
         }
         else if (isScene6ChangeFlag)
