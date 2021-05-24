@@ -541,6 +541,7 @@ MonoBehaviour:
   - {fileID: 1500444939}
   firstSelectButton: 0
   PauseUIPrefab: {fileID: 1832054494}
+  eventSystem: {fileID: 0}
   callSet: 0
 --- !u!4 &1832054496
 Transform:
@@ -586,6 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281ec929c2820e24fbc072c5b3bc4d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  referer: 
 --- !u!4 &1962340410
 Transform:
   m_ObjectHideFlags: 0
@@ -727,6 +729,51 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 3ca467ba5e31f6747927f7d25f307d78,
         type: 3}
+    - target: {fileID: 948527506922783469, guid: 848aac29d29feb64b92831508d941bb3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 948527506922783469, guid: 848aac29d29feb64b92831508d941bb3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 948527506922783469, guid: 848aac29d29feb64b92831508d941bb3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102720354602577743, guid: 848aac29d29feb64b92831508d941bb3,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102720354602577743, guid: 848aac29d29feb64b92831508d941bb3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102720354602577743, guid: 848aac29d29feb64b92831508d941bb3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070908264982813292, guid: 848aac29d29feb64b92831508d941bb3,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070908264982813292, guid: 848aac29d29feb64b92831508d941bb3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070908264982813292, guid: 848aac29d29feb64b92831508d941bb3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.25
+      objectReference: {fileID: 0}
     - target: {fileID: 2664759217076748232, guid: 848aac29d29feb64b92831508d941bb3,
         type: 3}
       propertyPath: m_Sprite

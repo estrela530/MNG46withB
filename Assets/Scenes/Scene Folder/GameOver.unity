@@ -206,6 +206,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 999802356}
     m_Modifications:
+    - target: {fileID: 1057523393817625865, guid: 51d267132d1cf094089afe314a727670,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1515145715081419756, guid: 51d267132d1cf094089afe314a727670,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -215,6 +220,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 12.000015
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515145715081419757, guid: 51d267132d1cf094089afe314a727670,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1515145715081419758, guid: 51d267132d1cf094089afe314a727670,
         type: 3}
@@ -250,6 +260,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 87
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515145715411025645, guid: 51d267132d1cf094089afe314a727670,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1515145715411025646, guid: 51d267132d1cf094089afe314a727670,
         type: 3}
@@ -476,6 +491,16 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2969551532979057144, guid: 51d267132d1cf094089afe314a727670,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5040576261874085514, guid: 51d267132d1cf094089afe314a727670,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51d267132d1cf094089afe314a727670, type: 3}
 --- !u!1 &282135495 stripped
@@ -577,6 +602,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Text
       value: "\u3000\u3000 \u30B9\u30C6\u30FC\u30B7\u30BB\u30EC\u30AF\u30C8\u3078"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504807630490521390, guid: a79707e024728cd49a9936b2ec70babe,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504807630490521390, guid: a79707e024728cd49a9936b2ec70babe,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504807630490521390, guid: a79707e024728cd49a9936b2ec70babe,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544934397315004941, guid: a79707e024728cd49a9936b2ec70babe,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544934397315004941, guid: a79707e024728cd49a9936b2ec70babe,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544934397315004941, guid: a79707e024728cd49a9936b2ec70babe,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 4503464786509155696, guid: a79707e024728cd49a9936b2ec70babe,
         type: 3}
@@ -700,6 +755,7 @@ MonoBehaviour:
   - {fileID: 618538439}
   firstSelectButton: 0
   PauseUIPrefab: {fileID: 1459991003}
+  eventSystem: {fileID: 0}
   callSet: 0
 --- !u!4 &1459991005
 Transform:
