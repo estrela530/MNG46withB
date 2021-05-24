@@ -246,6 +246,7 @@ MonoBehaviour:
   ResetTime: 1
   PawnTime: 2
   MaxEnemyCount: 2
+  anime: {fileID: 9095515109977311536}
   DeathTime: 0
   NextTime: 1
   NextFlag: 0
@@ -257,6 +258,23 @@ MonoBehaviour:
   DamageFlag: 0
   DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
     type: 3}
+  DeathEffectTime: 1
+--- !u!111 &9095515109977311536
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4267951964212471969}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8559877998040321153
 GameObject:
   m_ObjectHideFlags: 0

@@ -318,6 +318,8 @@ MonoBehaviour:
   min: -50
   max: 50
   shotTime: 1
+  shotFlag: 0
+  searchRange: 10
 --- !u!120 &2996173949117360258
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -816,6 +818,7 @@ GameObject:
   - component: {fileID: 8955439827628780019}
   - component: {fileID: 8955439827628780017}
   - component: {fileID: 8955439827628780020}
+  - component: {fileID: 1297297449980172371}
   m_Layer: 9
   m_Name: Ant
   m_TagString: Enemy
@@ -1043,8 +1046,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHP: 2
   MaxEnemyHP: 0
-  speed: 2
-  speedLoc: 3
   MoveFlag: 0
   workFlag: 0
   ColorInterval: 0.1
@@ -1052,6 +1053,25 @@ MonoBehaviour:
   DamageFlag: 0
   DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
     type: 3}
+  DeathEffectTime: 0.5
+  anime: {fileID: 1297297449980172371}
+  DeathTime: 0
+--- !u!111 &1297297449980172371
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955439827628780024}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &9044552354614002726
 GameObject:
   m_ObjectHideFlags: 0

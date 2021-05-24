@@ -14,6 +14,7 @@ public class SpawnPoint : MonoBehaviour
     CountTest countTest;
     bool allDeathFlag;
 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +38,7 @@ public class SpawnPoint : MonoBehaviour
 
         this.allDeathFlag = countTest.allDeathFlag;
         allDeathFlag = false;
+        
     }
 
     // Update is called once per frame

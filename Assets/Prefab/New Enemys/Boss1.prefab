@@ -392,6 +392,7 @@ GameObject:
   - component: {fileID: 5781106799401491401}
   - component: {fileID: 5781106799401491404}
   - component: {fileID: 5781106799401491405}
+  - component: {fileID: 4627413579133153352}
   m_Layer: 0
   m_Name: Ant
   m_TagString: Enemy
@@ -454,6 +455,7 @@ MonoBehaviour:
   ColorInterval: 0.1
   DamageTime: 0
   DamageFlag: 0
+  anime: {fileID: 4627413579133153352}
 --- !u!33 &5781106799401491403
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -543,6 +545,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!111 &4627413579133153352
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5781106799401491398}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5905968847586457112
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +692,7 @@ MonoBehaviour:
   max: 100
   shotTime: 2
   shotCount: 0
+  shotFlag: 0
 --- !u!120 &5113978840055821389
 LineRenderer:
   m_ObjectHideFlags: 0
