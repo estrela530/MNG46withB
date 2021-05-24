@@ -721,6 +721,9 @@
     <Reference Include="Unity.Mathematics">
       <HintPath>C:/Users/KPC-018A1434/Desktop/TwistedSlime/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>C:/Users/KPC-018A1434/Desktop/TwistedSlime/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>C:/Users/KPC-018A1434/Desktop/TwistedSlime/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
@@ -730,38 +733,19 @@
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/KPC-018A1434/Desktop/TwistedSlime/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>C:/Users/KPC-018A1434/Desktop/TwistedSlime/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{FA166FF1-F477-8C28-F619-60A725B6270A}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
-    <ProjectReference Include="Beans.Unity.Editor.csproj">
-      <Project>{B68ED86B-E893-C1F0-1223-C1C5BE4F8999}</Project>
-      <Name>Beans.Unity.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Beans.Unity.Collections.csproj">
-      <Project>{A32915C4-FF1B-544D-A3A2-1D1B2BEE457A}</Project>
-      <Name>Beans.Unity.Collections</Name>
-    </ProjectReference>
-    <ProjectReference Include="Deform.csproj">
-      <Project>{5FF7447A-6F87-41AE-2397-2FC011002FD9}</Project>
-      <Name>Deform</Name>
-    </ProjectReference>
-    <ProjectReference Include="DeformEditor.csproj">
-      <Project>{018A1DE3-CFD5-D180-158D-6C8D18D401E7}</Project>
-      <Name>DeformEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Beans.Unity.Mathematics.csproj">
-      <Project>{F1E5B473-FE4A-DD8A-A4BB-6E59E6EE889F}</Project>
-      <Name>Beans.Unity.Mathematics</Name>
-    </ProjectReference>
     <ProjectReference Include="Fungus.FungusLuaEditor.csproj">
       <Project>{3C4A891D-7D12-01A3-1C8D-379C879895D0}</Project>
       <Name>Fungus.FungusLuaEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Beans.Unity.Editor.csproj">
+      <Project>{B68ED86B-E893-C1F0-1223-C1C5BE4F8999}</Project>
+      <Name>Beans.Unity.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="FungusEditor.csproj">
       <Project>{14E0B913-D6FF-B0BE-9F49-C5426B6737F0}</Project>
@@ -779,9 +763,25 @@
       <Project>{3AFD312E-7A18-4307-A819-469D8D5A687D}</Project>
       <Name>Fungus</Name>
     </ProjectReference>
+    <ProjectReference Include="Beans.Unity.Collections.csproj">
+      <Project>{A32915C4-FF1B-544D-A3A2-1D1B2BEE457A}</Project>
+      <Name>Beans.Unity.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="Deform.csproj">
+      <Project>{5FF7447A-6F87-41AE-2397-2FC011002FD9}</Project>
+      <Name>Deform</Name>
+    </ProjectReference>
     <ProjectReference Include="Fungus.UsfxrEditor.csproj">
       <Project>{95187014-A977-F069-951A-A017F6C57476}</Project>
       <Name>Fungus.UsfxrEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="DeformEditor.csproj">
+      <Project>{018A1DE3-CFD5-D180-158D-6C8D18D401E7}</Project>
+      <Name>DeformEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Beans.Unity.Mathematics.csproj">
+      <Project>{F1E5B473-FE4A-DD8A-A4BB-6E59E6EE889F}</Project>
+      <Name>Beans.Unity.Mathematics</Name>
     </ProjectReference>
     <ProjectReference Include="Fungus.FungusLuaJSONCheckerEditor.csproj">
       <Project>{C54BDF8F-70BD-6B5E-E702-C5E6968726EC}</Project>
