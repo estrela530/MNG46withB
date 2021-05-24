@@ -1375,6 +1375,7 @@ GameObject:
   - component: {fileID: 1238123646}
   - component: {fileID: 1238123645}
   - component: {fileID: 1238123648}
+  - component: {fileID: 1238123649}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1462,6 +1463,15 @@ MonoBehaviour:
   player: {fileID: 603745005}
   offsetPos: {x: 2.5, y: 10, z: -5}
   offsetRot: {x: 60, y: -30, z: 0}
+--- !u!45 &1238123649
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238123644}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 84c9b0db09ba114419590848a06729ba, type: 2}
 --- !u!1001 &1337190202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1675,6 +1685,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 808946716}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1746857514 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2785210362604779481, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+    type: 3}
+  m_PrefabInstance: {fileID: 585138084}
+  m_PrefabAsset: {fileID: 0}
+--- !u!45 &1746857518
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746857514}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 84c9b0db09ba114419590848a06729ba, type: 2}
 --- !u!1001 &1936771715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1736,6 +1761,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436846189477781638, guid: 1bd9b17aa3a21594381a64b274c08733,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7436846189477781883, guid: 1bd9b17aa3a21594381a64b274c08733,
         type: 3}
