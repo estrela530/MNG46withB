@@ -247,10 +247,10 @@ MonoBehaviour:
   buttons:
   - {fileID: 1978532868}
   - {fileID: 1023767450}
-  - {fileID: 7226740231930558835}
-  - {fileID: 7226740231930558834}
-  - {fileID: 7226740231930558833}
-  - {fileID: 7226740231930558832}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   firstSelectButton: 0
   PauseUIPrefab: {fileID: 34808158}
   eventSystem: {fileID: 0}
@@ -362,7 +362,7 @@ PrefabInstance:
     - target: {fileID: 3480742152045312357, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3480742152045312362, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
         type: 3}
@@ -954,31 +954,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 34808159}
     m_Modifications:
-    - target: {fileID: 636992379565663357, guid: 10b148aaa37c7314b994b6a5689759cb,
+    - target: {fileID: 193300852542819975, guid: 10b148aaa37c7314b994b6a5689759cb,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickStartStage4Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 1477879755173211525, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickStartStage6Button
-      objectReference: {fileID: 0}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 814762681}
     - target: {fileID: 1757921607741046421, guid: 10b148aaa37c7314b994b6a5689759cb,
         type: 3}
       propertyPath: nejirin
       value: 
       objectReference: {fileID: 1434081689}
-    - target: {fileID: 4172402210704284434, guid: 10b148aaa37c7314b994b6a5689759cb,
+    - target: {fileID: 4550187835818450499, guid: 10b148aaa37c7314b994b6a5689759cb,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickStartStage5Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 5495023165894761425, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickStartStage3Button
-      objectReference: {fileID: 0}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 814762681}
     - target: {fileID: 7226740231413484072, guid: 10b148aaa37c7314b994b6a5689759cb,
         type: 3}
       propertyPath: fadeManager
@@ -989,11 +979,6 @@ PrefabInstance:
       propertyPath: fadeManager
       value: 
       objectReference: {fileID: 1240040398}
-    - target: {fileID: 7226740232292449643, guid: 10b148aaa37c7314b994b6a5689759cb,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 7226740232659678041, guid: 10b148aaa37c7314b994b6a5689759cb,
         type: 3}
       propertyPath: m_Camera
@@ -1061,51 +1046,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10b148aaa37c7314b994b6a5689759cb, type: 3}
---- !u!114 &7226740231930558832 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1477879755173211525, guid: 10b148aaa37c7314b994b6a5689759cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7226740231930558831}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7226740231930558833 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4172402210704284434, guid: 10b148aaa37c7314b994b6a5689759cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7226740231930558831}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7226740231930558834 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 636992379565663357, guid: 10b148aaa37c7314b994b6a5689759cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7226740231930558831}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7226740231930558835 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5495023165894761425, guid: 10b148aaa37c7314b994b6a5689759cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7226740231930558831}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
