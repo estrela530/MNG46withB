@@ -45,6 +45,17 @@ public class EnemyMove : MonoBehaviour
     private GameObject DeathEffect;
     private ParticleSystem DeathParticle;   //ダメージのパーティクル
 
+    [SerializeField, Header("死ぬエフェがでるまでの時間")]
+    float DeathEffectTime = 0.5f;
+
+    private int deathState;
+
+    [SerializeField] Animation anime;
+    [SerializeField] private float DeathTime = 0;
+
+    GameObject[] enemyParts;
+    int partsCount;
+
     void Start()
     {
         MaxEnemyHP = enemyHP ;
@@ -56,7 +67,13 @@ public class EnemyMove : MonoBehaviour
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
         //color = GetComponent<Renderer>().material.color;
-        
+
+        partsCount = gameObject.transform.childCount;
+        enemyParts = new GameObject[partsCount];
+        for (int i = 0; i < partsCount; i++)
+        {
+            enemyParts[i] = gameObject.transform.GetChild(i).gameObject;
+        }
     }
     IEnumerator Blink()
     {
@@ -107,17 +124,82 @@ public class EnemyMove : MonoBehaviour
         //常にターゲットにむく
         this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));
 
-        if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
+        //if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
+        //{
+        //    //gameObject.SetActive(false);//非表示
+        //    TimerScript.enemyCounter += 1;
+        //    var sum = Instantiate(DeathEffect,
+        //                   this.transform.position,
+        //                   Quaternion.identity);
+        //    //Debug.Log(DeathParticle + "エフェクトーーーー");
+        //    //SceneManager.LoadScene("Result");
+        //    //SceneManager.LoadScene("GameClear");
+        //    Destroy(this.gameObject);
+
+        //}
+
+        switch (deathState)
         {
-            //gameObject.SetActive(false);//非表示
-            TimerScript.enemyCounter += 1;
-            var sum = Instantiate(DeathEffect,
-                           this.transform.position,
-                           Quaternion.identity);
-            //Debug.Log(DeathParticle + "エフェクトーーーー");
-            //SceneManager.LoadScene("Result");
-            //SceneManager.LoadScene("GameClear");
-            Destroy(this.gameObject);
+            case 0:
+                //if (enemyHP <= 0)
+                //{
+
+                //    //Destroy(transform.parent);
+                //    var sum = Instantiate(DeathEffect,
+                //                  this.transform.position,
+                //                  Quaternion.identity);
+                //    Destroy(this.gameObject);
+                //}
+
+                if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
+                {
+                    deathState = 1;
+                }
+
+                break;
+
+            case 1:
+                //アニメーション再生
+                anime.Play();
+
+                //Debug.Log("再生ーーーーーーー");
+                DeathTime += Time.deltaTime;
+                if (DeathTime > 1)
+                {
+
+                    DeathTime = 0;
+
+                    deathState = 2;
+                }
+                break;
+
+            case 2:
+                for (int i = 0; i < partsCount; i++)
+                {
+                    enemyParts[i] = gameObject.transform.GetChild(i).gameObject;
+                    enemyParts[i].SetActive(false);
+                }
+
+                // DeathEffectTime -= Time.deltaTime;
+                var sum = Instantiate(DeathEffect,
+                          this.transform.position,
+                          Quaternion.identity);
+                deathState = 3;
+                //if (DeathEffectTime <= 0)
+                //{
+
+                //}
+
+                break;
+
+            case 3:
+                if (!stageMove1.GetComponent<StageMove1>().bossNow)
+                {
+                    TimerScript.enemyCounter += 1;
+                }
+                Destroy(this.gameObject);
+                //gameObject.SetActive(false);//非表示
+                break;
 
         }
 

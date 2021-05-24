@@ -78,10 +78,12 @@ public class BossMove : MonoBehaviour
     [SerializeField, Header("ダメージ受けた時")]
     bool DamageFlag = false;
 
-
+    [SerializeField] Animation anime;
 
     void Start()
     {
+        anime = GetComponent<Animation>();
+
         DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
         SummonParticle = SummonEffect.GetComponent<ParticleSystem>();
 
@@ -241,7 +243,7 @@ public class BossMove : MonoBehaviour
                 break;
 
             case 1:
-
+                anime.Play();
                 var sum = Instantiate(DeathEffect,
                            this.transform.position,
                            Quaternion.identity);

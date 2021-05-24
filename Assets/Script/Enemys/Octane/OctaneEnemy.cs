@@ -12,7 +12,7 @@ public class OctaneEnemy : MonoBehaviour
 {
     // Start is called before the first frame update
     private GameObject Target;//追尾する相手
-    private float dis;//プレイヤーとの距離
+    //private float dis;//プレイヤーとの距離
     // public float area;//この数値以下になったら追う
 
     [Header("体力")]public float enemyHP = 5;
@@ -79,7 +79,7 @@ public class OctaneEnemy : MonoBehaviour
 
     int enemyNumber = (1<<13| 1 << 8);
 
-
+    [SerializeField] Animation anime;
     [SerializeField] private float DeathTime = 0;
 
     [SerializeField, Header("次のしーんに行くの開始までの時間")]
@@ -120,10 +120,15 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField, Header("死んだ時のエフェクト")]
     private GameObject DeathEffect;
     private ParticleSystem DeathParticle;   //ダメージのパーティクル
+    [SerializeField, Header("死ぬエフェがでるまでの時間")]
+    float DeathEffectTime = 1;
 
     // Start is called before the first frame update
     void Start()
     {
+        anime = GetComponent<Animation>();
+        
+
         EffectCount = 0;
 
         BossHpSlider.SetActive(false);
@@ -368,23 +373,35 @@ public class OctaneEnemy : MonoBehaviour
                 {
                     nextState = 1;
                 }
+                
                 break;
 
             case 1:
+                //アニメーション再生
+                anime.Play();
+                DeathEffectTime -= Time.deltaTime;
 
-                var sum = Instantiate(DeathEffect,
-                           this.transform.position,
-                           Quaternion.identity);
+                if(DeathEffectTime<=0)
+                {
+                    var sum = Instantiate(DeathEffect,
+                          this.transform.position,
+                          Quaternion.identity);
+                    nextState = 2;
+                }
+               
                 
-                nextState = 2;
+               
 
                 attackCount = 0;
                 moveState = 0;
                 EnemyCount = 5;
 
+
                 break;
 
             case 2:
+              
+
                 DeathTime += Time.deltaTime;
                 if (DeathTime > NextTime)
                 {
@@ -405,7 +422,7 @@ public class OctaneEnemy : MonoBehaviour
         }
         
 
-        dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
+        //dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
         
         //レイ
         lineRenderer.SetPosition(0, this.transform.position);
