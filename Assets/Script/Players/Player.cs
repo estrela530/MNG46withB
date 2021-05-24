@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
     public AudioClip twistedSE;//ねじっているとき
     public AudioClip healSE;   //回復した瞬間
     public AudioClip cancelSE; //キャンセルした瞬間
+    public AudioClip damageSE; //ダメージを受けた瞬間
     #endregion
    
     private Rigidbody rigid;                  //物理演算
@@ -79,6 +80,7 @@ public class Player : MonoBehaviour
     private ParticleSystem releaseParticle;   //解放時のパーティクル
     private Material normalMat;               //通常状態のマテリアル
     private StageMove1 stageMove;             //ステージムーブ
+    private BoxCollider boxCollider;          //自身の当たり判定
     
     private bool isTwisted;      //ねじれているかどうか
     private bool isRelease;      //解放中かどうか
@@ -160,6 +162,7 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider>();
 
         normalMat = playerMaterial;
 
@@ -858,6 +861,7 @@ public class Player : MonoBehaviour
 
             NockBack(other, 50);//ノックバックの移動をする
             animator.SetTrigger("Trigger");
+            audioSource.PlayOneShot(damageSE, 0.5f);
 
             currentHp -= damage;
             saveValue -= damage;
@@ -872,7 +876,9 @@ public class Player : MonoBehaviour
         }
         else
         {
+            boxCollider.enabled = false;
             animator.SetTrigger("Death");
+            audioSource.PlayOneShot(damageSE, 0.5f);
 
             currentHp -= damage;
             saveValue -= damage;
