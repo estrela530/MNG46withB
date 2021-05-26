@@ -400,7 +400,7 @@ public class Player : MonoBehaviour
             //ねじっているor解放中なら動けない
             if (isTwisted || isRelease || isNockBack) return;
 
-            MoveSE(0.8f, 0.2f);//足音を鳴らす
+            MoveSE(0.5f, 0.2f);//足音を鳴らす
             animator.SetFloat("Speed", velocity.magnitude);
 
             velocity.Normalize();

@@ -1626,7 +1626,7 @@ ParticleSystem:
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
     tilesX: 1
-    tilesY: 3
+    tilesY: 6
     animationType: 1
     rowIndex: 0
     cycles: 1
@@ -4862,7 +4862,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2c0d210df422b54478bd43d0838e6f1c, type: 2}
+  - {fileID: 2100000, guid: 7583016abab3cb24c9077c276b0f13c3, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4902,9 +4902,9 @@ ParticleSystemRenderer:
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  m_Mesh1: {fileID: 0}
-  m_Mesh2: {fileID: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: cfc511db79d7e044f9c4145e8baa7369, type: 3}
+  m_Mesh1: {fileID: 2540817853737639666, guid: 789b4544278e70442b8063a88dae5547, type: 3}
+  m_Mesh2: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
 --- !u!1 &7436846190133656067
@@ -6484,7 +6484,7 @@ ParticleSystem:
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
     tilesX: 1
-    tilesY: 3
+    tilesY: 6
     animationType: 1
     rowIndex: 0
     cycles: 1
@@ -9720,7 +9720,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2c0d210df422b54478bd43d0838e6f1c, type: 2}
+  - {fileID: 2100000, guid: 7583016abab3cb24c9077c276b0f13c3, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -9761,9 +9761,11 @@ ParticleSystemRenderer:
   m_AllowRoll: 1
   m_VertexStreams: 00010304
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  m_Mesh1: {fileID: 0}
-  m_Mesh2: {fileID: 0}
-  m_Mesh3: {fileID: 0}
+  m_Mesh1: {fileID: -2432090755550338912, guid: 7c14f883b83246345948d9931d74a732,
+    type: 3}
+  m_Mesh2: {fileID: 5302568919011541938, guid: 0191bb3f0a78e994d8c991324a0bd188, type: 3}
+  m_Mesh3: {fileID: -2432090755550338912, guid: 5b18f9c0e33ebab4182dd09cc7acaef4,
+    type: 3}
   m_MaskInteraction: 0
 --- !u!1 &7436846190798561545
 GameObject:
@@ -11296,7 +11298,7 @@ ParticleSystem:
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
     tilesX: 1
-    tilesY: 3
+    tilesY: 6
     animationType: 1
     rowIndex: 0
     cycles: 1
@@ -14532,7 +14534,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2c0d210df422b54478bd43d0838e6f1c, type: 2}
+  - {fileID: 2100000, guid: 7583016abab3cb24c9077c276b0f13c3, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -14572,8 +14574,9 @@ ParticleSystemRenderer:
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  m_Mesh1: {fileID: 37404471969208970, guid: 76aa05c26bd30074980c42ca730b44da, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: 27c6c380090b17d4bbf640b3cbcc5948, type: 3}
+  m_Mesh1: {fileID: -2432090755550338912, guid: cfc511db79d7e044f9c4145e8baa7369,
+    type: 3}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
