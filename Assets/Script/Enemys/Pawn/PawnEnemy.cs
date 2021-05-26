@@ -34,7 +34,9 @@ public class PawnEnemy : MonoBehaviour
 
     private int deathState;
 
-    [SerializeField] Animation anime;
+    //[SerializeField] Animation anime;
+    private string animeName;
+    [SerializeField] Animator anime;
     [SerializeField] private float DeathTime = 0;
 
     GameObject stageMove1;
@@ -58,9 +60,19 @@ public class PawnEnemy : MonoBehaviour
 
         //renderComponent = GetComponent<Renderer>();
 
-        anime = GetComponent<Animation>();
+        //anime = gameObject.GetComponent<Animation>();
+        //foreach(AnimationState Astate in anime)
+        //{
+        //    animeName = Astate.name;
+        //}
+        //anime[animeName].normalizedTime = 0f;
+
+
+        anime = GetComponent<Animator>();
+
         partsCount = gameObject.transform.childCount;
         enemyParts = new GameObject[partsCount];
+        anime.enabled = false;
         for (int i = 0; i < partsCount; i++)
         {
             enemyParts[i] = gameObject.transform.GetChild(i).gameObject;
@@ -79,6 +91,8 @@ public class PawnEnemy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //anime[animeName].normalizedTime = 1.0f;
+        //anime[animeName].normalizedSpeed = 1
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
         switch (deathState)
@@ -103,8 +117,12 @@ public class PawnEnemy : MonoBehaviour
 
             case 1:
                 //アニメーション再生
-                anime.Play();
-
+                anime.enabled = true;
+                anime.SetTrigger("Death");
+                //anime.Play();
+                //rigid.constraints = 
+                //  RigidbodyConstraints.FreezePositionX|
+                //  RigidbodyConstraints.FreezePositionZ;
                 //Debug.Log("再生ーーーーーーー");
                 DeathTime += Time.deltaTime;
                 if (DeathTime > 1)

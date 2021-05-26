@@ -88,7 +88,7 @@ public class Summon : MonoBehaviour
         //召喚
         if (ObjHp <= SummonHP)
         {
-            Debug.Log("召喚ー");
+            //Debug.Log("召喚ー");
             Summons();
         }
 

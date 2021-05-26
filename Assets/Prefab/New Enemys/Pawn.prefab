@@ -42,22 +42,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 55
   m_Center: {x: 0, y: -8, z: 0}
---- !u!111 &2238846565141747294
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2252236023467121888}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!23 &7995972184268491922
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -97,6 +81,25 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!95 &1749030181438451383
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252236023467121888}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 06c8c231c8995b94fbd2036355c1223a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &7995972184268491921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +118,7 @@ MonoBehaviour:
   DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
     type: 3}
   DeathEffectTime: 1
-  anime: {fileID: 2238846565141747294}
+  anime: {fileID: 1749030181438451383}
   DeathTime: 0
 --- !u!1 &8718287026340669308
 GameObject:
