@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4034000837122899456}
   m_Layer: 0
-  m_Name: Octane
+  m_Name: OctaneBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,6 +218,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4267951964212471969}
   m_Mesh: {fileID: 7049680821673942669, guid: aa583641ad122604082f82e878c3305c, type: 3}
+--- !u!111 &9095515109977311536
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4267951964212471969}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &4034000835561552692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,22 +275,6 @@ MonoBehaviour:
   DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
     type: 3}
   DeathEffectTime: 1
---- !u!111 &9095515109977311536
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4267951964212471969}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: e0574e36a139b3f498a20f989b0ce7db, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &8559877998040321153
 GameObject:
   m_ObjectHideFlags: 0

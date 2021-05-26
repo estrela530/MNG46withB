@@ -3,30 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class OctaneWandArea : MonoBehaviour
+public class OctaneNormalArea : MonoBehaviour
 {
     [SerializeField] private SpherecastCommand searchArea;//サーチ範囲
     [SerializeField] public float searchAngle;
     public GameObject Octane;
 
     Rigidbody rigid;
-
-    //public float stopTime;
-
     // Start is called before the first frame update
     void Start()
     {
-        Octane.GetComponent<OctaneWand>();
+        Octane.GetComponent<OctaneNormal>();
         rigid = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
     }
+
     public void OnTriggerStay(Collider other)
     {
         //プレイヤーの方向
@@ -38,26 +35,11 @@ public class OctaneWandArea : MonoBehaviour
         //触れているとき
         if (other.gameObject.CompareTag("Player"))
         {
-
             //サーチする角度の範囲内だったら発見
             if (angle <= searchAngle)
             {
-                Octane.GetComponent<OctaneWand>().MoveFlag = true;
-                Octane.GetComponent<OctaneWand>().workFlag = false;
-                //MoveFlag = true;
-                //workFlag = false;
-                // Debug.Log("主人公発見: " + angle);
+                Octane.GetComponent<OctaneNormal>().MoveFlag = true;
             }
-
-            ////サーチする角度の範囲外だったら索敵
-            //if (searchAngle <= angle)
-            //{
-            //    Octane.GetComponent<OctaneEnemy>().MoveFlag = false;
-            //    Octane.GetComponent<OctaneEnemy>().workFlag = true;
-            //    //Debug.Log("外: " + angle);
-            //}
-
-
         }
 
     }
@@ -66,8 +48,7 @@ public class OctaneWandArea : MonoBehaviour
         //サーチする角度の範囲外だったら索敵
         if (!other.gameObject.CompareTag("Player"))
         {
-            Octane.GetComponent<OctaneWand>().MoveFlag = false;
-            Octane.GetComponent<OctaneWand>().workFlag = true;
+            Octane.GetComponent<OctaneNormal>().MoveFlag = false;
         }
     }
 
@@ -84,5 +65,4 @@ public class OctaneWandArea : MonoBehaviour
             5f);
     }
 #endif
-
 }
