@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 730774172272749195}
   - component: {fileID: 2959218351379838344}
   - component: {fileID: 8854289969521443725}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model_Fragment
   m_TagString: Fragment
   m_Icon: {fileID: 0}
@@ -79,7 +79,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healBall: {fileID: 5316451983065079831, guid: 70b9f15a0ce36e9439a6581fa8937cdf,
     type: 3}
-  clingSE: {fileID: 8300000, guid: 51e297d95e40dbc4c9e5aa8c55382f4e, type: 3}
   speed: 12
 --- !u!82 &2959218351379838344
 AudioSource:
@@ -227,7 +226,7 @@ GameObject:
   - component: {fileID: 1552911810953929332}
   - component: {fileID: 4420883694572067646}
   - component: {fileID: 900606045337681834}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

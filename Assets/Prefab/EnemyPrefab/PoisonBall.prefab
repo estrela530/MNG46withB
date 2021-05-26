@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 150305684946278853}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 8418324421535792038}
   m_RootOrder: 0
@@ -4859,6 +4859,7 @@ GameObject:
   - component: {fileID: 8311775780797389889}
   - component: {fileID: 8311775780797389888}
   - component: {fileID: 8311775780797389890}
+  - component: {fileID: 4333016550108291841}
   m_Layer: 0
   m_Name: PoisonBall
   m_TagString: PoisonBall
@@ -4926,6 +4927,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0a5af283929354c95c4ff93f8d7a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inhaleSpeed: 3
-  inhaleRange: 010000000200000003000000
+  inhaleSpeed: 2
+  inhaleRange: 03000000070000000f000000
   deleteTime: 5
+--- !u!54 &4333016550108291841
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194157845788139804}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0

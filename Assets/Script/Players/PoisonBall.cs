@@ -25,11 +25,18 @@ public class PoisonBall : InhaleObject
         poisonSmoke = transform.GetChild(1).gameObject;
         poisonSmoke.SetActive(false);//待機状態
         smokFlag = false;
+
+        //まず最初にプレイヤーを探す。
+        findObject = GameObject.FindGameObjectWithTag("Player");
+        player = findObject.GetComponent<Player>();
+
+        speed = inhaleSpeed;
     }
 
     private void FixedUpdate()
     {
         Smoke();//毒ガスの時間計測
+        base.Move();
     }
 
     /// <summary>

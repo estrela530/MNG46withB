@@ -993,6 +993,13 @@ public class Player : MonoBehaviour
         {
             currentHp -= 0.01f;
             saveValue -= 0.01f;
+
+            if (currentHp <= 1)
+            {
+                //ねじりすぎて死なないようにする。
+                currentHp = 1.0f;
+            }
+
             alphaCount++;
 
             if (alphaCount > 0)
