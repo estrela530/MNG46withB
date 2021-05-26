@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stage1 : MonoBehaviour
+public class Stage5 : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        SceneNumberData.numberData.referer = "Game1";
+        SceneNumberData.numberData.referer = "Game5";
     }
 
     // Update is called once per frame

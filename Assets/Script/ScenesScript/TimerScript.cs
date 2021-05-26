@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TimerScript : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class TimerScript : MonoBehaviour
     //　前のUpdateの時の秒数
     private float oldSeconds;
     //　タイマー表示用テキスト
-    private Text timerText;
+    //private Text timerText; 
+    [SerializeField]
+    private TextMeshProUGUI timerText;
     int missionClearCount;
 
     public static bool allDeathMissionClearFlag;
@@ -28,7 +31,7 @@ public class TimerScript : MonoBehaviour
         enemyCounter = 0;
         //sendCounter = 0;
         oldSeconds = 0f;
-        timerText = GetComponentInChildren<Text>();
+        //timerText = GetComponentInChildren<Text>();
         //ミッション用の数値「全滅ミッション」
         missionClearCount = 7;
 
