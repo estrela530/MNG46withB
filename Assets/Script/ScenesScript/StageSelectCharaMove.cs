@@ -34,12 +34,7 @@ public class StageSelectCharaMove : MonoBehaviour
     SceneSG sceneSG;
     bool isSceneMoveFlag;
 
-    public bool button1NowFlag;
-    public bool button2NowFlag = false;
-    public bool button3NowFlag = false;
-    public bool button4NowFlag = false;
-    public bool button5NowFlag = false;
-    public bool button6NowFlag = false;
+    public int state = 1;
 
     Vector3 nejirinStage1Pos = new Vector3(-40, -23, 80);
     Vector3 nejirinStage2Pos = new Vector3(5, -9, 80);
@@ -47,18 +42,17 @@ public class StageSelectCharaMove : MonoBehaviour
     public bool isMissionImageFlag;
     int moveCount;
 
+    float lsh = 0;
+
+    float preStick = 0;//Horizontalトリガーの保存用キー
+    float nowStick = 0;//Horizontalトリガーの取得用キー
+
 
     // Start is called before the first frame update
     void Start()
     {
         nejirin.transform.position = nejirinStage1Pos;
         isMissionImageFlag = true;
-        button1NowFlag = true;
-        button2NowFlag = false;
-        button3NowFlag = false;
-        button4NowFlag = false;
-        button5NowFlag = false;
-        button6NowFlag = false;
         s2Image.SetActive(false);
         s1Image.SetActive(true);
         s12Canvas.SetActive(true);
@@ -70,145 +64,205 @@ public class StageSelectCharaMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        //入力状態を取得
+        nowStick = Input.GetAxisRaw("Horizontal");
+
+
         //moveCount++;
         //L Stick
-        float lsh = Input.GetAxisRaw("Horizontal");
+        lsh = Input.GetAxisRaw("Horizontal");
         isSceneMoveFlag = sceneSG.GetIsMoveFlag();
         Debug.Log("呼ばれた！");
         //1->2
-        if (Input.GetKeyUp(KeyCode.RightArrow) || lsh > 0 && !isSceneMoveFlag && button1NowFlag)
-        {
-            Debug.Log("1で右押された");
-            button1NowFlag = false;
-            button2NowFlag = true;
-            s1Image.SetActive(false);
-            s2Image.SetActive(true);
-            nejirin.transform.position = nejirinStage2Pos;
-            isMissionImageFlag = true;
-        }
-        //2->1
-        else if (Input.GetKeyUp(KeyCode.LeftArrow) || lsh < 0 && !isSceneMoveFlag && button2NowFlag)
-        {
-            Debug.Log("2で左押された");
-            button2NowFlag = false;
-            button1NowFlag = true;
-            s2Image.SetActive(false);
-            s1Image.SetActive(true);
-            nejirin.transform.position = nejirinStage1Pos;
-            isMissionImageFlag = true;
-        }
-        //2->3
-        else if (Input.GetKeyUp(KeyCode.RightArrow) || lsh > 0 && !isSceneMoveFlag && button2NowFlag)
-        {
-            Debug.Log("2で右押された");
-            button2NowFlag = false;
-            button3NowFlag = true;
-            s2Image.SetActive(false);
-            s3Image.SetActive(true);
-            s12Canvas.SetActive(false);
-            s34Canvas.SetActive(true);
-            nejirin.transform.position = nejirinStage2Pos;
-            isMissionImageFlag = true;
-        }
-        //3->2
-        else if (Input.GetKeyUp(KeyCode.LeftArrow) || lsh < 0 && !isSceneMoveFlag && button3NowFlag)
-        {
-            Debug.Log("3で左押された");
-            button3NowFlag = false;
-            button2NowFlag = true;
-            s3Image.SetActive(false);
-            s2Image.SetActive(true);
-            s34Canvas.SetActive(false);
-            s12Canvas.SetActive(true);
-            nejirin.transform.position = nejirinStage1Pos;
-            isMissionImageFlag = true;
-        }
-        //3->4
-        else if (Input.GetKeyUp(KeyCode.RightArrow) || lsh > 0 && !isSceneMoveFlag && button3NowFlag)
-        {
-            Debug.Log("3で右押された");
-            button3NowFlag = false;
-            button4NowFlag = true;
-            s3Image.SetActive(false);
-            s4Image.SetActive(true);
-            nejirin.transform.position = nejirinStage2Pos;
-            isMissionImageFlag = true;
-        }
-        //4->3
-        else if (Input.GetKeyUp(KeyCode.LeftArrow) || lsh < 0 && !isSceneMoveFlag && button4NowFlag)
-        {
-            Debug.Log("4で左押された");
-            button4NowFlag = false;
-            button3NowFlag = true;
-            s4Image.SetActive(false);
-            s3Image.SetActive(true);
-            nejirin.transform.position = nejirinStage1Pos;
-            isMissionImageFlag = true;
-        }
-        //4->5
-        else if (Input.GetKeyUp(KeyCode.RightArrow) || lsh > 0 && !isSceneMoveFlag && button4NowFlag)
-        {
-            Debug.Log("4で右押された");
-            button4NowFlag = false;
-            button5NowFlag = true;
-            s4Image.SetActive(false);
-            s5Image.SetActive(true);
-            s34Canvas.SetActive(false);
-            s56Canvas.SetActive(true);
-            nejirin.transform.position = nejirinStage2Pos;
-            isMissionImageFlag = true;
-        }
-        //5->4
-        else if (Input.GetKeyUp(KeyCode.LeftArrow) || lsh < 0 && !isSceneMoveFlag && button5NowFlag)
-        {
-            Debug.Log("5で左押された");
-            button5NowFlag = false;
-            button4NowFlag = true;
-            s5Image.SetActive(false);
-            s4Image.SetActive(true);
-            s56Canvas.SetActive(false);
-            s34Canvas.SetActive(true);
-            nejirin.transform.position = nejirinStage1Pos;
-            isMissionImageFlag = true;
-        }
-        //5->6
-        else if (Input.GetKeyUp(KeyCode.RightArrow) || lsh > 0 && !isSceneMoveFlag && button5NowFlag)
-        {
-            Debug.Log("5で右押された");
-            button5NowFlag = false;
-            button6NowFlag = true;
-            s5Image.SetActive(false);
-            s6Image.SetActive(true);
-            nejirin.transform.position = nejirinStage2Pos;
-            isMissionImageFlag = true;
-        }
-        //6->5
-        else if (Input.GetKeyUp(KeyCode.LeftArrow) || lsh < 0 && !isSceneMoveFlag && button6NowFlag)
-        {
-            Debug.Log("6で左押された");
-            button6NowFlag = false;
-            button5NowFlag = true;
-            s6Image.SetActive(false);
-            s5Image.SetActive(true);
-            nejirin.transform.position = nejirinStage1Pos;
-            isMissionImageFlag = true;
-        }
-        //クリックしたらButton1へ
-        else if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
-        {
-            button1NowFlag = true;
-            s12Canvas.SetActive(true);
-            s34Canvas.SetActive(false);
-            s56Canvas.SetActive(false);
-            s34Canvas.SetActive(false);
-            s56Canvas.SetActive(false);
-            s12Canvas.SetActive(true);
-            nejirin.transform.position = nejirinStage1Pos;
-            button1NowFlag = false;
-            isMissionImageFlag = true;
-        }
 
+        //関数を読んでいます。
+        Test();
+
+        //現在のキーの状態をコピーする
+        preStick = nowStick;
+
+    }
+
+    private void LateUpdate()
+    {
+
+    }
+
+    void Test()
+    {
+        if (isSceneMoveFlag) return;
+
+        switch (state)
+        {
+            case 1:
+                if (Input.GetKeyDown(KeyCode.RightArrow) || GetStick_Right())
+                {
+                    s1Image.SetActive(false);
+                    s2Image.SetActive(true);
+                    nejirin.transform.position = nejirinStage2Pos;
+                    isMissionImageFlag = true;
+
+
+                    state = 2;
+                }
+
+                break;
+            case 2:
+                //2->1
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || GetStick_Left())
+                {
+                    s2Image.SetActive(false);
+                    s1Image.SetActive(true);
+                    nejirin.transform.position = nejirinStage1Pos;
+                    isMissionImageFlag = true;
+
+                    state = 1;
+
+                }
+                //2->3
+                if (Input.GetKeyDown(KeyCode.RightArrow) || GetStick_Right())
+                {
+                    s2Image.SetActive(false);
+                    s3Image.SetActive(true);
+                    s12Canvas.SetActive(false);
+                    s34Canvas.SetActive(true);
+                    nejirin.transform.position = nejirinStage2Pos;
+                    isMissionImageFlag = true;
+
+                    state = 3;
+                }
+                break;
+            case 3:
+                //3->2
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || GetStick_Left())
+                {
+                    s3Image.SetActive(false);
+                    s2Image.SetActive(true);
+                    s34Canvas.SetActive(false);
+                    s12Canvas.SetActive(true);
+                    nejirin.transform.position = nejirinStage1Pos;
+                    isMissionImageFlag = true;
+
+                    state = 2;
+                }
+                //3->4
+                else if (Input.GetKeyDown(KeyCode.RightArrow) || GetStick_Right())
+                {
+                    s3Image.SetActive(false);
+                    s4Image.SetActive(true);
+                    nejirin.transform.position = nejirinStage2Pos;
+                    isMissionImageFlag = true;
+
+                    state = 4;
+                }
+                break;
+            case 4:
+                //4->3
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || GetStick_Left())
+                {
+                    s4Image.SetActive(false);
+                    s3Image.SetActive(true);
+                    nejirin.transform.position = nejirinStage1Pos;
+                    isMissionImageFlag = true;
+
+                    state = 3;
+                }
+                //4->5
+                else if (Input.GetKeyDown(KeyCode.RightArrow) || GetStick_Right())
+                {
+                    s4Image.SetActive(false);
+                    s5Image.SetActive(true);
+                    s34Canvas.SetActive(false);
+                    s56Canvas.SetActive(true);
+                    nejirin.transform.position = nejirinStage2Pos;
+                    isMissionImageFlag = true;
+
+                    state = 5;
+                }
+                break;
+            case 5:
+                //5->4
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || GetStick_Left())
+                {
+                    s5Image.SetActive(false);
+                    s4Image.SetActive(true);
+                    s56Canvas.SetActive(false);
+                    s34Canvas.SetActive(true);
+                    nejirin.transform.position = nejirinStage1Pos;
+                    isMissionImageFlag = true;
+
+                    state = 4;
+                }
+                //5->6
+                else if (Input.GetKeyDown(KeyCode.RightArrow) || GetStick_Right())
+                {
+                    s5Image.SetActive(false);
+                    s6Image.SetActive(true);
+                    nejirin.transform.position = nejirinStage2Pos;
+                    isMissionImageFlag = true;
+
+                    state = 6;
+                }
+                break;
+            case 6:
+                //6->5
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || GetStick_Left())
+                {
+                    s6Image.SetActive(false);
+                    s5Image.SetActive(true);
+                    nejirin.transform.position = nejirinStage1Pos;
+                    isMissionImageFlag = true;
+
+                    state = 5;
+                }
+                //クリックしたらButton1へ
+                else if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+                {
+                    s12Canvas.SetActive(true);
+                    s34Canvas.SetActive(false);
+                    s56Canvas.SetActive(false);
+                    s34Canvas.SetActive(false);
+                    s56Canvas.SetActive(false);
+                    s12Canvas.SetActive(true);
+                    nejirin.transform.position = nejirinStage1Pos;
+                    isMissionImageFlag = true;
+
+                    state = 1;
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private bool GetStick_Right()
+    {
+        //前が押されていない
+        if (preStick == 0.0f)
+        {
+            //左が押されている
+            if (nowStick > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool GetStick_Left()
+    {
+        //前が押されていない
+        if (preStick == 0.0f)
+        {
+            //右が押されている
+            if (nowStick < 0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
