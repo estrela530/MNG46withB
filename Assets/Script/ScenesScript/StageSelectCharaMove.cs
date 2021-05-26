@@ -85,11 +85,6 @@ public class StageSelectCharaMove : MonoBehaviour
 
     }
 
-    private void LateUpdate()
-    {
-
-    }
-
     void Test()
     {
         if (isSceneMoveFlag) return;
@@ -103,7 +98,6 @@ public class StageSelectCharaMove : MonoBehaviour
                     s2Image.SetActive(true);
                     nejirin.transform.position = nejirinStage2Pos;
                     isMissionImageFlag = true;
-
 
                     state = 2;
                 }
@@ -119,7 +113,6 @@ public class StageSelectCharaMove : MonoBehaviour
                     isMissionImageFlag = true;
 
                     state = 1;
-
                 }
                 //2->3
                 if (Input.GetKeyDown(KeyCode.RightArrow) || GetStick_Right())
@@ -128,7 +121,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s3Image.SetActive(true);
                     s12Canvas.SetActive(false);
                     s34Canvas.SetActive(true);
-                    nejirin.transform.position = nejirinStage2Pos;
+                    nejirin.transform.position = nejirinStage1Pos;
                     isMissionImageFlag = true;
 
                     state = 3;
@@ -142,7 +135,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s2Image.SetActive(true);
                     s34Canvas.SetActive(false);
                     s12Canvas.SetActive(true);
-                    nejirin.transform.position = nejirinStage1Pos;
+                    nejirin.transform.position = nejirinStage2Pos;
                     isMissionImageFlag = true;
 
                     state = 2;
@@ -176,7 +169,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s5Image.SetActive(true);
                     s34Canvas.SetActive(false);
                     s56Canvas.SetActive(true);
-                    nejirin.transform.position = nejirinStage2Pos;
+                    nejirin.transform.position = nejirinStage1Pos;
                     isMissionImageFlag = true;
 
                     state = 5;
@@ -190,7 +183,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s4Image.SetActive(true);
                     s56Canvas.SetActive(false);
                     s34Canvas.SetActive(true);
-                    nejirin.transform.position = nejirinStage1Pos;
+                    nejirin.transform.position = nejirinStage2Pos;
                     isMissionImageFlag = true;
 
                     state = 4;
