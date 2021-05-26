@@ -489,13 +489,13 @@ public class Player : MonoBehaviour
         //解放中なら処理しない
         if (isRelease || isNockBack) return;
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 5") || GetKeyDown(Keys.R_Trigger))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 5")/* || GetKeyDown(Keys.R_Trigger)*/)
         {
             //ねじってる音を鳴らす
             audioSource.PlayOneShot(twistedSE, 1f);
             TwistedAccumulate();//ねじねじ
         }
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5") || GetKeyUP(Keys.R_Trigger))//離したら解放する
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5")/* || GetKeyUP(Keys.R_Trigger)*/)//離したら解放する
         {
             isRelease = true; //解放中にする
             //TwistedRelease();//解放

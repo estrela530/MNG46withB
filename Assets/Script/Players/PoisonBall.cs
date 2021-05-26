@@ -16,13 +16,13 @@ public class PoisonBall : InhaleObject
 
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         animator = GetComponent<Animator>();
 
         meshRenderer.material.color = new Color(1, 0, 1, 0);//色変更
 
         //エフェクト用オブジェクトを取得
-        poisonSmoke = transform.GetChild(0).gameObject;
+        poisonSmoke = transform.GetChild(1).gameObject;
         poisonSmoke.SetActive(false);//待機状態
         smokFlag = false;
     }
@@ -63,7 +63,7 @@ public class PoisonBall : InhaleObject
     /// </summary>
     private void OnDestroy()
     {
-        Renderer renderer = gameObject.GetComponent<Renderer>();
+        Renderer renderer = transform.GetChild(0).gameObject.GetComponent<Renderer>();
         DestroyImmediate(renderer.material);//マテリアルのメモリを削除
     }
 

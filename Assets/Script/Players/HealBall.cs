@@ -54,7 +54,6 @@ public class HealBall : InhaleObject
     private void Start()
     {
         meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
-        Debug.Log(meshRenderer.gameObject.name);
         animator = GetComponent<Animator>();
 
         //生成時に音を鳴らす
