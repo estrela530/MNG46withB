@@ -93,7 +93,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game2");
+                SceneManager.LoadScene("Game1");
             }
         }
         else if (isScene2ChangeFlag)
@@ -103,7 +103,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game3");
+                SceneManager.LoadScene("Game2");
             }
         }
         else if (isScene3ChangeFlag)
@@ -113,7 +113,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game4");
+                SceneManager.LoadScene("Game3");
             }
         }
         else if (isScene4ChangeFlag)
@@ -123,7 +123,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game5");
+                SceneManager.LoadScene("Game4");
             }
         }
         else if (isScene5ChangeFlag)
@@ -133,7 +133,7 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game6");
+                SceneManager.LoadScene("Game5");
             }
         }
         else if (isScene6ChangeFlag)
@@ -143,8 +143,13 @@ public class SceneSG : MonoBehaviour
             fadeCount++;
             if (fadeCount >= fadeMax)
             {
-                SceneManager.LoadScene("Game2");
+                SceneManager.LoadScene("Game6");
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SceneManager.LoadScene("KubotaPlayer");
         }
     }
 
