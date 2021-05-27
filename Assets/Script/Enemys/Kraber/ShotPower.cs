@@ -21,6 +21,7 @@ public class ShotPower : MonoBehaviour
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
+    int enemyNumber = (1 << 13 | 1 << 8 | 1 << 9);
 
     Vector3 direction;
     Vector3 hitPosition;
@@ -76,11 +77,13 @@ public class ShotPower : MonoBehaviour
 
         if (Move.GetComponent<KraberEnemy>().MoveFlag == false)
         {
-            if (ss >= intarval)
-            {
-                Power();
-                ss = 0;
-            }
+            ss = 0;
+            //if (ss >= intarval)
+            //{
+            //    Power();
+
+            //}
+            lineRenderer.enabled = false;
         }
 
         if (Move.GetComponent<KraberEnemy>().MoveFlag == true)
@@ -107,19 +110,20 @@ public class ShotPower : MonoBehaviour
 
             
             lineRenderer.SetPosition(0, this.transform.position);
-            
-            if (Physics.Raycast(ray, out hitRay, 20))
+           
+            if (Physics.Raycast(ray, out hitRay, 20, enemyNumber))
             {
-                if(hitRay.collider.gameObject.CompareTag("Wall")||
-                hitRay.collider.gameObject.CompareTag("Player"))
-                {
-                    lineRenderer.enabled = true;
-                    hitPosition = hitRay.point;
-                }
-                else
-                {
-                    hitPosition = this.transform.position; 
-                }
+                lineRenderer.enabled = true;
+                hitPosition = hitRay.point;
+                //if (hitRay.collider.gameObject.CompareTag("Wall")||
+                //hitRay.collider.gameObject.CompareTag("Player"))
+                //{
+                   
+                //}
+                //else
+                //{
+                //    hitPosition = this.transform.position; 
+                //}
 
             }
             else

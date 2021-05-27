@@ -17,17 +17,9 @@ public class PoisonEnemy : MonoBehaviour
     [SerializeField, Header("最大体力")] float MaxEnemyHP;
 
     Rigidbody rigid;
-
-    private float workeAria1 = 1;//
-    private float workeAria2 = 1;//
-
+    
     private float Rspeed;
     
-    
-    [Header("索敵時のスピード")]
-    public float speed;
-    [Header("発見時のスピード")]
-    public float speedLoc;
 
     //[Header("この数値まで進む")] public float social;//この数値まで進む
     //private GameObject Enemy;
@@ -40,6 +32,7 @@ public class PoisonEnemy : MonoBehaviour
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
+    int enemyNumber = (1 << 13 | 1 << 8 | 1 << 9);
 
     Renderer renderComponent;
     [SerializeField] float ColorInterval = 0.1f;
@@ -156,8 +149,13 @@ public class PoisonEnemy : MonoBehaviour
         //}
         lineRenderer.SetPosition(0, this.transform.position);
 
+        if (!Physics.Raycast(ray, out hitRay, 20,enemyNumber))
+        {
+            lineRenderer.enabled = false;
+            MoveFlag = false;
+        }
         //レイの処理
-        if (Physics.Raycast(ray, out hitRay, 20))
+        if (Physics.Raycast(ray, out hitRay, 20,enemyNumber))
         {
             if (hitRay.collider.gameObject.CompareTag("Player"))
             {

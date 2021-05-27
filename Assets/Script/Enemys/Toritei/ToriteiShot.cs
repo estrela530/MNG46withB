@@ -22,7 +22,7 @@ public class ToriteiShot : MonoBehaviour
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
-    int enemyNumber = (1 << 13 | 1 << 8);
+    int enemyNumber = (1 << 13 | 1 << 8 | 1 << 9);
 
     Vector3 direction;
     Vector3 hitPosition;

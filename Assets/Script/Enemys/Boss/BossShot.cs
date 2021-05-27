@@ -61,21 +61,18 @@ public class BossShot : MonoBehaviour
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
         Random.Range(min, max);
-
-        if (ss >= intarval)
-        {
-            Shot();
-            ss = 0;
-        }
-
         
         Ray();
-
     }
 
     void Ray()
     {
         lineRenderer.SetPosition(0, this.transform.position);
+
+        if(!Physics.Raycast(ray, out hitRay, 30, enemyNumber))
+        {
+            lineRenderer.enabled = false;
+        }
 
         //レイの処理
         if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))

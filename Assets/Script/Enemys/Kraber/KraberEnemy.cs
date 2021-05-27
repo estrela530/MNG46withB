@@ -164,7 +164,11 @@ public class KraberEnemy : MonoBehaviour
         ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
 
         lineRenderer.SetPosition(0, this.transform.position);
-
+        if (!Physics.Raycast(ray, out hitRay, 40,enemyNumber))
+        {
+            MoveFlag = false;
+            lineRenderer.enabled = false;
+        }
         if (Physics.Raycast(ray, out hitRay, 40,enemyNumber))
         {
             if (!hitRay.collider.gameObject.CompareTag("Player"))
@@ -272,7 +276,8 @@ public class KraberEnemy : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.CompareTag("Wall")|| 
+            other.gameObject.CompareTag("Enemy"))
         {
             MoveFlag = false;
             powerFlag = true;

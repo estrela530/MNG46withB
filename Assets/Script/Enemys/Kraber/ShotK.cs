@@ -18,7 +18,7 @@ public class ShotK : MonoBehaviour
     [SerializeField] int ShotCount = 3;
     private float dis;//プレイヤーとの距離
     private GameObject Target;//追尾する相手
-    private List<GameObject> UpBulletList;
+    //private List<GameObject> UpBulletList;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class ShotK : MonoBehaviour
         ss = 1;
         Target = GameObject.FindGameObjectWithTag("Player");//追尾させたいオブジェクトを書く
         Move.GetComponent<KraberEnemy>();
-        UpBulletList = new List<GameObject>();
+        //UpBulletList = new List<GameObject>();
     }
 
     // Update is called once per frame

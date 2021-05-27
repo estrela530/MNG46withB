@@ -25,7 +25,7 @@ public class EnemyShot2 : MonoBehaviour
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
-    int enemyNumber = (1 << 13 | 1 << 8);
+    int enemyNumber = (1 << 13 | 1 << 8| 1 << 9);
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +69,11 @@ public class EnemyShot2 : MonoBehaviour
     void Ray()
     {
         lineRenderer.SetPosition(0, this.transform.position);
-
+        if (!Physics.Raycast(ray, out hitRay, searchRange, enemyNumber))
+        {
+            lineRenderer.enabled = false;
+            ss = 0;
+        }
         //レイの処理
         if (Physics.Raycast(ray, out hitRay, searchRange, enemyNumber))
         {
