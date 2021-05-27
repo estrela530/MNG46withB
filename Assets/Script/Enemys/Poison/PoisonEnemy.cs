@@ -83,15 +83,15 @@ public class PoisonEnemy : MonoBehaviour
     }
 
     //中断できる処理のまとまり
-    IEnumerator Blink()
-    {
-        while (true)
-        {
-            renderComponent.enabled = !renderComponent.enabled;
-            //何フレームとめる
-            yield return new WaitForSeconds(ColorInterval);
-        }
-    }
+    //IEnumerator Blink()
+    //{
+    //    while (true)
+    //    {
+    //        renderComponent.enabled = !renderComponent.enabled;
+    //        //何フレームとめる
+    //        yield return new WaitForSeconds(ColorInterval);
+    //    }
+    //}
 
     // Update is called once per frame
     void FixedUpdate()
@@ -113,11 +113,11 @@ public class PoisonEnemy : MonoBehaviour
             if (DamageFlag)
             {
                 DamageTime += Time.deltaTime;
-                StartCoroutine("Blink");
+               // StartCoroutine("Blink");
                 if (DamageTime > 1)
                 {
                     DamageTime = 0;
-                    StopCoroutine("Blink");
+                    //StopCoroutine("Blink");
                     renderComponent.enabled = true;
                     DamageFlag = false;
                 }
@@ -133,7 +133,8 @@ public class PoisonEnemy : MonoBehaviour
 
         if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
         {
-            gameObject.SetActive(false);//非表示
+            Destroy(this.gameObject);
+            //gameObject.SetActive(false);//非表示
             TimerScript.enemyCounter += 1;
             var sum = Instantiate(DeathEffect,
                           this.transform.position,
