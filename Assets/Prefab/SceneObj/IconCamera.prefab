@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2785210362604779482}
   - component: {fileID: 2785210362604779483}
   - component: {fileID: 3928095992826732257}
+  - component: {fileID: 4845699679281492263}
   m_Layer: 0
   m_Name: IconCamera
   m_TagString: Untagged
@@ -91,3 +92,12 @@ MonoBehaviour:
   offsetPos: {x: 0.5, y: 3, z: -1}
   offsetRot: {x: 60, y: -30, z: 0}
   time: 0.75
+--- !u!45 &4845699679281492263
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2785210362604779481}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 84c9b0db09ba114419590848a06729ba, type: 2}
