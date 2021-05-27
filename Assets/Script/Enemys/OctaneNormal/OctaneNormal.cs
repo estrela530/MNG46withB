@@ -121,7 +121,7 @@ public class OctaneNormal : MonoBehaviour
             MoveFlag = false;
             moveState = 0;
         }
-        this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+       
         switch (moveState)
         {
             case 0:

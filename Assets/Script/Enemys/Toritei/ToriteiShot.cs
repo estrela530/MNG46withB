@@ -77,10 +77,9 @@ public class ToriteiShot : MonoBehaviour
 
         if (Move.GetComponent<ToriteiEnemy>().MoveFlag == false)
         {
-            if (ss >= intarval)
-            {
-                ss = 0;
-            }
+            ss = 0;
+            
+            lineRenderer.enabled = false;
         }
 
         if (Move.GetComponent<ToriteiEnemy>().MoveFlag == true)
@@ -91,28 +90,28 @@ public class ToriteiShot : MonoBehaviour
                 ss = 0;
             }
 
+            //攻撃する前に色を変える
+            if (ss >= intarval - 1)
+            {
+                //ラインレンダラーの色
+                lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+                lineRenderer.startColor = Color.red;//初めの色
+                lineRenderer.endColor = Color.red;//終わりの色
+            }
+
             lineRenderer.SetPosition(0, this.transform.position);
 
-            if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))
+            lineRenderer.enabled = true;
+
+            if (Physics.Raycast(ray, out hitRay, 20, enemyNumber))
             {
-                lineRenderer.enabled = true;
                 hitPosition = hitRay.point;
-                //if (/*hitRay.collider.gameObject.CompareTag("Wall") ||*/
-                //hitRay.collider.gameObject.CompareTag("Player"))
-                //{
-
-
-                //}
-                //else
-                //{
-                //    hitPosition = this.transform.position;
-                //}
-
             }
             else
             {
                 hitPosition = this.transform.position;
             }
+
             lineRenderer.SetPosition(1, hitPosition);
         }
 
@@ -128,8 +127,10 @@ public class ToriteiShot : MonoBehaviour
             //rigidbody.AddForce(transform.forward * shotTime);
             rigidbody.AddForce(ff * shotTime);
 
+            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            lineRenderer.startColor = Color.green;//初めの色
+            lineRenderer.endColor = Color.green;//終わりの色
 
-          
         }
     }
 }
