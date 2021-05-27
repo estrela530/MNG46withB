@@ -66,6 +66,7 @@ public class KraberEnemy : MonoBehaviour
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
+    int enemyNumber = (1 << 13 | 1 << 8);
 
     Renderer renderComponent;
 
@@ -98,6 +99,11 @@ public class KraberEnemy : MonoBehaviour
         lineRenderer.startWidth = 0.5f;
         lineRenderer.endWidth = 0.5f;
         ray.origin = this.transform.position;//自分の位置のレイ
+
+        //ラインレンダラーの色
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.green;//初めの色
+        lineRenderer.endColor = Color.green;//終わりの色
 
         ////////////////
         ray.direction = transform.forward;
@@ -144,7 +150,8 @@ public class KraberEnemy : MonoBehaviour
         //meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
         if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
         {
-            gameObject.SetActive(false);//非表示
+            Destroy(this.gameObject);
+            //gameObject.SetActive(false);//非表示
             TimerScript.enemyCounter += 1;
             renderComponent.enabled = false;
             var sum = Instantiate(DeathEffect,
@@ -158,8 +165,12 @@ public class KraberEnemy : MonoBehaviour
 
         lineRenderer.SetPosition(0, this.transform.position);
 
-        if (Physics.Raycast(ray, out hitRay, 20))
+        if (Physics.Raycast(ray, out hitRay, 40,enemyNumber))
         {
+            if (!hitRay.collider.gameObject.CompareTag("Player"))
+            {
+                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+            }
             if(hitRay.collider.gameObject.CompareTag("Player"))
             {
                 lineRenderer.enabled = true;
@@ -181,7 +192,7 @@ public class KraberEnemy : MonoBehaviour
         
         ray.direction = transform.forward;//自分の向きのレイ
 
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
+        //Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
         
         if (MoveFlag)
         {
