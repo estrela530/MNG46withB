@@ -68,12 +68,19 @@ public class ToriteiEnemy : MonoBehaviour
         ray = new Ray();
         lineRenderer = this.gameObject.GetComponent<LineRenderer>();
 
-        //lineRenderer.enabled = false;
-        lineRenderer.startWidth = 0.5f;
-        lineRenderer.endWidth = 0.5f;
+        //lineRenderer.SetPosition(0, this.transform.position);
+        lineRenderer.enabled = false;
         ray.origin = this.transform.position;//自分の位置のレイ
 
-        ////////////////
+        //ラインレンダラーの色
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.green;//初めの色
+        lineRenderer.endColor = Color.green;//終わりの色
+
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
+
+        //変えるかも?
         ray.direction = transform.forward;
 
     }
@@ -109,23 +116,24 @@ public class ToriteiEnemy : MonoBehaviour
         //常にターゲットにむく
         this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));
 
+        
         if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))
         {
-            //if (!hitRay.collider.gameObject.CompareTag("Player"))
-            //{
-            //    lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
-            //}
+            
+            if (!hitRay.collider.gameObject.CompareTag("Player"))
+            {
+                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+            }
             if (hitRay.collider.gameObject.CompareTag("Player"))
             {
-                lineRenderer.enabled = true;
-                lineRenderer.SetPosition(1, hitRay.point);
-                Debug.Log("あたったーーーーーーーーーー");
                 MoveFlag = true;
+                //lineRenderer.enabled = true;
+                lineRenderer.SetPosition(1, hitRay.point);
             }
             else
             {
-                //lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
-               // MoveFlag = false;
+                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+                MoveFlag = false;
             }
         }
 
