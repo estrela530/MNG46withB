@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class SelectButton : MonoBehaviour
 {
-    [SerializeField] private Button[] buttons;
+    [SerializeField] public Button[] buttons;
     [SerializeField] private int firstSelectButton;
     [SerializeField]
     //　ポーズした時に表示するUIのプレハブ

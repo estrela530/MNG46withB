@@ -51,6 +51,9 @@ public class StageSelectCharaMove : MonoBehaviour
     Vector3 Camera2Pos = new Vector3(231, 0, 0);
     Vector3 Camera3Pos = new Vector3(462, 0, 0);
 
+    GameObject StageSelectManager;
+    SelectButton selectButton;
+
     public bool isMissionImageFlag;
     int moveCount;
 
@@ -73,6 +76,9 @@ public class StageSelectCharaMove : MonoBehaviour
         moveCount = 0;
         mainCamera.transform.position = Camera1Pos;
         sceneSG = sceneSGObj.GetComponent<SceneSG>();
+        //親を取得
+        StageSelectManager = transform.root.gameObject;
+        selectButton = StageSelectManager.GetComponent<SelectButton>();
     }
 
     // Update is called once per frame
@@ -109,6 +115,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s1Image.SetActive(false);
                     s2Image.SetActive(true);
                     nejirin.transform.position = nejirinStage2Pos;
+                    selectButton.buttons[1].Select();
                     isMissionImageFlag = true;
 
                     state = 2;
@@ -122,6 +129,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s2Image.SetActive(false);
                     s1Image.SetActive(true);
                     nejirin.transform.position = nejirinStage1Pos;
+                    selectButton.buttons[0].Select();
                     isMissionImageFlag = true;
 
                     state = 1;
@@ -135,6 +143,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     //s34Canvas.SetActive(true);
                     mainCamera.transform.position = Camera2Pos;
                     nejirin.transform.position = nejirinStage3Pos;
+                    selectButton.buttons[2].Select();
                     isMissionImageFlag = true;
 
                     state = 3;
@@ -150,6 +159,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     //s12Canvas.SetActive(true);
                     mainCamera.transform.position = Camera1Pos;
                     nejirin.transform.position = nejirinStage2Pos;
+                    selectButton.buttons[1].Select();
                     isMissionImageFlag = true;
 
                     state = 2;
@@ -160,6 +170,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s3Image.SetActive(false);
                     s4Image.SetActive(true);
                     nejirin.transform.position = nejirinStage4Pos;
+                    selectButton.buttons[3].Select();
                     isMissionImageFlag = true;
 
                     state = 4;
@@ -172,6 +183,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s4Image.SetActive(false);
                     s3Image.SetActive(true);
                     nejirin.transform.position = nejirinStage3Pos;
+                    selectButton.buttons[2].Select();
                     isMissionImageFlag = true;
 
                     state = 3;
@@ -185,6 +197,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     //s56Canvas.SetActive(true);
                     mainCamera.transform.position = Camera3Pos;
                     nejirin.transform.position = nejirinStage5Pos;
+                    selectButton.buttons[4].Select();
                     isMissionImageFlag = true;
 
                     state = 5;
@@ -200,6 +213,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     //s34Canvas.SetActive(true);
                     mainCamera.transform.position = Camera2Pos;
                     nejirin.transform.position = nejirinStage4Pos;
+                    selectButton.buttons[3].Select();
                     isMissionImageFlag = true;
 
                     state = 4;
@@ -210,6 +224,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s5Image.SetActive(false);
                     s6Image.SetActive(true);
                     nejirin.transform.position = nejirinStage6Pos;
+                    selectButton.buttons[5].Select();
                     isMissionImageFlag = true;
 
                     state = 6;
@@ -222,6 +237,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     s6Image.SetActive(false);
                     s5Image.SetActive(true);
                     nejirin.transform.position = nejirinStage5Pos;
+                    selectButton.buttons[4].Select();
                     isMissionImageFlag = true;
 
                     state = 5;
@@ -237,6 +253,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     //s12Canvas.SetActive(true);
                     mainCamera.transform.position = Camera1Pos;
                     nejirin.transform.position = nejirinStage1Pos;
+                    selectButton.buttons[0].Select();
                     isMissionImageFlag = true;
 
                     state = 1;
