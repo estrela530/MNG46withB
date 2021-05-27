@@ -28,16 +28,37 @@ public class ClearStageUI : MonoBehaviour
     {
         //なんでfalseなん？
 
-        if (SceneNumberData.numberData.referer == "Game2")
+        if (SceneNumberData.numberData.referer == "Game1")
         {
             stageNumber = 1;
 
         }
-        else if (SceneNumberData.numberData.referer == "Game3")
+        else if (SceneNumberData.numberData.referer == "Game2")
         {
             stageNumber = 2;
 
         }
+        else if (SceneNumberData.numberData.referer == "Game3")
+        {
+            stageNumber = 3;
+
+        }
+        else if (SceneNumberData.numberData.referer == "Game4")
+        {
+            stageNumber = 4;
+
+        }
+        else if (SceneNumberData.numberData.referer == "Game5")
+        {
+            stageNumber = 5;
+
+        }
+        else if (SceneNumberData.numberData.referer == "Game6")
+        {
+            stageNumber = 6;
+
+        }
+
 
         if (!sGR.changeOKFlag)
         {
