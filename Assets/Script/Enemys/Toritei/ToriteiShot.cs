@@ -90,7 +90,33 @@ public class ToriteiShot : MonoBehaviour
                 Shot();
                 ss = 0;
             }
+
+            lineRenderer.SetPosition(0, this.transform.position);
+
+            if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))
+            {
+                lineRenderer.enabled = true;
+                hitPosition = hitRay.point;
+                //if (/*hitRay.collider.gameObject.CompareTag("Wall") ||*/
+                //hitRay.collider.gameObject.CompareTag("Player"))
+                //{
+
+
+                //}
+                //else
+                //{
+                //    hitPosition = this.transform.position;
+                //}
+
+            }
+            else
+            {
+                hitPosition = this.transform.position;
+            }
+            lineRenderer.SetPosition(1, hitPosition);
         }
+
+
     }
     void Shot()
     {
@@ -103,27 +129,7 @@ public class ToriteiShot : MonoBehaviour
             rigidbody.AddForce(ff * shotTime);
 
 
-            lineRenderer.SetPosition(0, this.transform.position);
-
-            if (Physics.Raycast(ray, out hitRay, 30,enemyNumber))
-            {
-                if (hitRay.collider.gameObject.CompareTag("Wall") ||
-                hitRay.collider.gameObject.CompareTag("Player"))
-                {
-                    lineRenderer.enabled = true;
-                    hitPosition = hitRay.point;
-                }
-                else
-                {
-                    hitPosition = this.transform.position;
-                }
-
-            }
-            else
-            {
-                hitPosition = this.transform.position;
-            }
-            lineRenderer.SetPosition(1, hitPosition);
+          
         }
     }
 }
