@@ -11,14 +11,26 @@ public class Damage : MonoBehaviour
     [Header("アタッチしたエネミー")]
     public GameObject Enemy;
 
-    private EnemyMove Normal;
-    private OctaneEnemy Octane;
-    private OctaneWand OctaneWand;
-    private KraberEnemy Kraber;
-    private PoisonEnemy Poison;
-    private BossMove Boss;
-    private PawnEnemy Pawn;
-    private ScorpionBoss Scorpion;
+    private EnemyMove Normal;//ノーマル
+
+    private OctaneEnemy Octane;//ボスオクタン
+
+    private OctaneNormal OctaneNormal;//ノーマルオクタン
+
+    private OctaneWand OctaneWand;//徘徊オクタン
+
+    private KraberEnemy Kraber;//クレーバー(亀)
+
+    private ToriteiEnemy Toritei;//トリテ(サボテン)
+
+    private PoisonEnemy Poison;//毒
+
+    private BossMove Boss;//ノーマルボス
+
+    private ScorpionBoss Scorpion;//スコーピオンボス
+
+    private PawnEnemy Pawn;//ザコ(ひよこ)
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,12 +45,35 @@ public class Damage : MonoBehaviour
         if (this.Enemy.GetComponent<OctaneEnemy>())
         {
             Octane = this.Enemy.GetComponent<OctaneEnemy>();
+            flag = Octane.DamageGet();
         }
 
-        //
+        //ノーマルオクタン
+        if (this.Enemy.GetComponent<OctaneNormal>())
+        {
+            OctaneNormal = this.Enemy.GetComponent<OctaneNormal>();
+            flag = OctaneNormal.DamageGet();
+        }
+
+        //徘徊オクタン
+        if (this.Enemy.GetComponent<OctaneWand>())
+        {
+            OctaneWand = this.Enemy.GetComponent<OctaneWand>();
+            flag = OctaneWand.DamageGet();
+        }
+
+        //クレーバー
         if (this.Enemy.GetComponent<KraberEnemy>())
         {
             Kraber = this.Enemy.GetComponent<KraberEnemy>();
+            flag = Kraber.DamageGet();
+        }
+
+        //トリテ
+        if (this.Enemy.GetComponent<ToriteiEnemy>())
+        {
+            Toritei = this.Enemy.GetComponent<ToriteiEnemy>();
+            flag = Toritei.DamageGet();
         }
 
         //ノーマル
@@ -52,20 +87,24 @@ public class Damage : MonoBehaviour
         if (this.Enemy.GetComponent<PoisonEnemy>())
         {
             Poison = this.Enemy.GetComponent<PoisonEnemy>();
-            
+            flag = Poison.DamageGet();
+
         }
 
         //ボス
         if (this.Enemy.GetComponent<BossMove>())
         {
             Boss = this.Enemy.GetComponent<BossMove>();
+            flag = Boss.DamageGet();
         }
 
-        //ザコ
+        //ザコ(ひよこ)
         if (this.Enemy.GetComponent<PawnEnemy>())
         {
             Pawn = this.Enemy.GetComponent<PawnEnemy>();
+            //flag = Pawn.DamageGet();
         }
+
     }
 
     // Update is called once per frame
@@ -75,15 +114,27 @@ public class Damage : MonoBehaviour
         //オクタン
         if (this.Enemy.GetComponent<OctaneEnemy>())
         {
-            
+            flag = Octane.DamageGet();
+        }
+
+        //ノーマルオクタン
+        else if (this.Enemy.GetComponent<OctaneNormal>())
+        {
+            flag = OctaneNormal.DamageGet();
+        }
+
+        //徘徊オクタン
+        else if (this.Enemy.GetComponent<OctaneWand>())
+        {
+            flag = OctaneWand.DamageGet();
         }
 
         //クレーバー
         else if (this.Enemy.GetComponent<KraberEnemy>())
         {
-           
+            flag = Kraber.DamageGet();
         }
-        //ノーマル
+        //スコーピオンボス
         else if (this.Enemy.GetComponent<ScorpionBoss>())
         {
             flagB = Scorpion.DamageGet();
@@ -97,19 +148,25 @@ public class Damage : MonoBehaviour
         //ポイズン
         else if (this.Enemy.GetComponent<PoisonEnemy>())
         {
-           
+            flag = Poison.DamageGet();
+        }
+
+        //トリテ
+        if (this.Enemy.GetComponent<ToriteiEnemy>())
+        {
+            flag = Toritei.DamageGet();
         }
 
         //ボス
         else if (this.Enemy.GetComponent<BossMove>())
         {
-           
+            flag = Boss.DamageGet();
         }
 
-        //ザコ
+        //ザコ(ひよこ)
         else if (this.Enemy.GetComponent<PawnEnemy>())
         {
-            
+            //flag = Pawn.DamageGet();
         }
 
         if (flag)

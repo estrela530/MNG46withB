@@ -283,7 +283,10 @@ public class BossMove : MonoBehaviour
     {
         return (int)enemyHP;
     }
-
+    public bool DamageGet()
+    {
+        return DamageFlag;
+    }
 
     //(仮)指定されたtagに当たると消える
     private void OnTriggerEnter(Collider other)
