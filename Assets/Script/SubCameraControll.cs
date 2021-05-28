@@ -11,6 +11,7 @@ public class SubCameraControll : MonoBehaviour
     [SerializeField] GameObject Boss;
     private BossMove BossEnemy;
     private OctaneEnemy Octane;
+    private ScorpionBoss Scorpion;
     float ObjHp;
     [SerializeField] float speedLoc = 5;
     [SerializeField] int cameraState;
@@ -35,6 +36,13 @@ public class SubCameraControll : MonoBehaviour
         {
             BossEnemy = this.Boss.GetComponent<BossMove>();
             ObjHp = BossEnemy.HpGet();
+        }
+
+        //スコーピオン
+        if (this.Boss.GetComponent<ScorpionBoss>())
+        {
+            Scorpion = this.Boss.GetComponent<ScorpionBoss>();
+            ObjHp = Scorpion.HpGet();
         }
         mainCamera.SetActive(true);
         cameraState = 0;
@@ -62,7 +70,11 @@ public class SubCameraControll : MonoBehaviour
         {
             ObjHp = BossEnemy.HpGet();
         }
-
+        //
+        else if (this.Boss.GetComponent<ScorpionBoss>())
+        {
+            ObjHp = Scorpion.HpGet();
+        }
 
     }
 

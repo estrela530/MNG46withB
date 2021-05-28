@@ -21,6 +21,7 @@ public class EnemyUI : MonoBehaviour
     private PoisonEnemy Poison;
     private BossMove Boss;
     private PawnEnemy Pawn;
+    private ScorpionBoss Scorpion;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,13 @@ public class EnemyUI : MonoBehaviour
         slider = this.gameObject.GetComponent<Slider>();
 
         //Octane = GameObject.Find("OctaneEnemy").GetComponent<OctaneEnemy>();
+        if (this.Enemy.GetComponent<ScorpionBoss>())
+        {
+            Scorpion = this.Enemy.GetComponent<ScorpionBoss>();
+            slider.maxValue = slider.value = Scorpion.HpGet();
+            currHp = (int)Scorpion.HpGet();
+        }
+
         if (this.Enemy.GetComponent<OctaneNormal>())
         {
             OctaneNormal = this.Enemy.GetComponent<OctaneNormal>();
@@ -141,6 +149,12 @@ public class EnemyUI : MonoBehaviour
         {
             slider.value = Pawn.HpGet();
             currHp = (int)Pawn.HpGet();
+        }
+
+        else if (Enemy.GetComponent<ScorpionBoss>())
+        {
+            slider.value = Scorpion.HpGet();
+            currHp = (int)Scorpion.HpGet();
         }
 
         transform.rotation = Camera.main.transform.rotation;
