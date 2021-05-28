@@ -55,8 +55,11 @@ public class StageMove1 : MonoBehaviour
     [SerializeField, Header("ステージBossPrefab")]
     GameObject stageBossPrefab;
 
+    [SerializeField, Header("普通ステージBGM")]
+    GameObject NormalBGM;
+    [SerializeField, Header("ボスステージBGM")]
+    GameObject BossBGM;
 
-    
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +93,9 @@ public class StageMove1 : MonoBehaviour
 
         player = GetComponent<Player>();
         transition = GetComponent<Transition>();
+
+        NormalBGM.SetActive(true);
+        BossBGM.SetActive(false);
     }
 
     //void Update()
@@ -198,6 +204,8 @@ public class StageMove1 : MonoBehaviour
             else if (fadeCount > koko && fadeCount <= koko * 2)
             {
                 bgmSlider.GetComponent<Slider>().normalizedValue = bgmSlider.GetComponent<Slider>().normalizedValue * 1.01f;
+                NormalBGM.SetActive(false);
+                BossBGM.SetActive(true);
             }
             else if (fadeCount > koko * 2)
             {
@@ -207,7 +215,7 @@ public class StageMove1 : MonoBehaviour
                 fadeCount = 0;
                 fadeManager2B.SetActive(false);
                 stage2Prefab.SetActive(false);
-                //0415Playerとのやつができたら削除（デバッグ用）
+
                 nowFlag = false;
 
             }

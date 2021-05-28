@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1422464441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960956031721895056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 518f29d0214f4974cb97ef1d20312056, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stage1Clear: 0
+  stage2Clear: 0
+  bossClear: 0
+  bgmSlider: {fileID: 0}
+  stage1StartPosition: {fileID: 0}
+  stage2StartPosition: {fileID: 0}
+  stageBossStartPosition: {fileID: 0}
+  fadeManager: {fileID: 0}
+  fadeManager2B: {fileID: 0}
+  stage1Prefab: {fileID: 0}
+  stage2Prefab: {fileID: 0}
+  stageBossPrefab: {fileID: 0}
+  NormalBGM: {fileID: 0}
+  BossBGM: {fileID: 0}
 --- !u!1001 &9180757645238958607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -167,5 +193,12 @@ PrefabInstance:
       propertyPath: m_TagString
       value: StageMove
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3301432656656993950, guid: 0c89b037ea857ca4890b31ffc448725d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0c89b037ea857ca4890b31ffc448725d, type: 3}
+--- !u!1 &5960956031721895056 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3301432656656993951, guid: 0c89b037ea857ca4890b31ffc448725d,
+    type: 3}
+  m_PrefabInstance: {fileID: 9180757645238958607}
+  m_PrefabAsset: {fileID: 0}
