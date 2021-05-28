@@ -112,14 +112,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03333675e700b694bbdc7cd506523bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHP: 1
-  speedLoc: 1
-  MoveFlag: 1
-  DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
+  deathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
     type: 3}
-  DeathEffectTime: 1
-  anime: {fileID: 1749030181438451383}
-  DeathTime: 0
+  enemyHP: 1
+  moveSpeed: 1
+  deathEffectTime: 1
+  jumpPower: 18
+  topHeightPoint: 5
 --- !u!1 &8718287026340669308
 GameObject:
   m_ObjectHideFlags: 0

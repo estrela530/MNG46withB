@@ -9,186 +9,173 @@ using UnityEditor;
 
 public class PawnEnemy : MonoBehaviour
 {
-    private GameObject Target;//追尾する相手
-    private float dis;//プレイヤーとの距離
-    //public float area;//この数値以下になったら追う
-
-    Rigidbody rigid;
-
-    private GameObject Enemy;
-
-    [SerializeField, Header("体力")] float enemyHP = 2;
-
-    [SerializeField, Header("スピード")]
-    float speedLoc;
-
-    [Header("追う時のフラグ")]
-    public bool MoveFlag;//追う
-
     [SerializeField, Header("死んだ時のエフェクト")]
-    private GameObject DeathEffect;
-    private ParticleSystem DeathParticle;   //ダメージのパーティクル
+    private GameObject deathEffect;
 
-    [SerializeField, Header("死ぬエフェがでるまでの時間")]
-    float DeathEffectTime = 0.5f;
+    [SerializeField, Tooltip("最大体力")]
+    private float enemyHP = 1;
+    [SerializeField, Tooltip("スピード")]
+    private float moveSpeed = 1;
+    [SerializeField, Tooltip("死亡エフェクトがでるまでの時間")]
+    private float deathEffectTime = 1.0f;
+    //[SerializeField,Tooltip("このオブジェクトが消えるまでの時間")]
+    private float deathTime = 0;
+    [SerializeField, Tooltip("オブジェクトが飛んでいく力")]
+    private float jumpPower = 18.0f;
+    [SerializeField, Tooltip("オブジェクトの最大到達地点")]
+    private float topHeightPoint = 5;
 
-    private int deathState;
+    private GameObject[] child;          //子どもオブジェクト
+    private GameObject stageMove1;       //ステージムーブ
+    private GameObject target;           //追尾する相手
+    private Rigidbody rigid;             //物理演算
+    private ParticleSystem deathParticle;//ダメージのパーティクル
 
-    //[SerializeField] Animation anime;
-    private string animeName;
-    [SerializeField] Animator anime;
-    [SerializeField] private float DeathTime = 0;
+    private float distance;//プレイヤーとの距離
 
-    GameObject stageMove1;
+    private int deathState;//死亡状態
+    private int childCount;//子どもの数
 
-    GameObject[] enemyParts;
-    int partsCount;
+    private bool moveFlag = false;  //プレイヤーを追いかけるか
+    private bool isDeadFlag = false;//死んでいるか？
+    
 
     //Renderer renderComponent;
 
     void Start()
     {
-        DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
+        //オブジェクトを取得
+        target = GameObject.FindGameObjectWithTag("Player");
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+
+        //コンポーネント取得
+        deathParticle = deathEffect.GetComponent<ParticleSystem>();
         stageMove1.GetComponent<StageMove1>();
-        //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
-        Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
-        MoveFlag = true;
 
+        //値初期化
         deathState = 0;
+        moveFlag = true;
+        isDeadFlag = false;
 
-        //renderComponent = GetComponent<Renderer>();
-
-        //anime = gameObject.GetComponent<Animation>();
-        //foreach(AnimationState Astate in anime)
-        //{
-        //    animeName = Astate.name;
-        //}
-        //anime[animeName].normalizedTime = 0f;
-
-
-        anime = GetComponent<Animator>();
-
-        partsCount = gameObject.transform.childCount;
-        enemyParts = new GameObject[partsCount];
-        anime.enabled = false;
-        for (int i = 0; i < partsCount; i++)
+        //子どもの数を取得
+        childCount = gameObject.transform.childCount;
+        //配列を子どもオブジェクトの数で初期化
+        child = new GameObject[childCount];
+        //オブジェクトを代入していく
+        for (int i = 0; i < childCount; i++)
         {
-            enemyParts[i] = gameObject.transform.GetChild(i).gameObject;
-            //enemyParts[i].SetActive(false);
+            child[i] = gameObject.transform.GetChild(i).gameObject;
         }
-    }
-    //優先度 1,エネミー達の死亡エフェクト(アニメーション) 2,ボスの死亡時のカメラズーム 3,ザコ敵召喚された時のエフェクト
-
-    //死亡時 = アニメーション→メッシュ消し→パーティクルを消す
-    //自分のセットアクティブがoffからonになった瞬間
-    private void OnEnable()
-    {
-        
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //anime[animeName].normalizedTime = 1.0f;
-        //anime[animeName].normalizedSpeed = 1
+        Move();       //移動
+        DeathAction();//死んだときの行動
+
+    }
+
+    /// <summary>
+    /// 移動
+    /// </summary>
+    void Move()
+    {
+        if (isDeadFlag) return;
+
+        //移動量を初期化
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
-        switch (deathState)
-        {
-            case 0:
-                //if (enemyHP <= 0)
-                //{
 
-                //    //Destroy(transform.parent);
-                //    var sum = Instantiate(DeathEffect,
-                //                  this.transform.position,
-                //                  Quaternion.identity);
-                //    Destroy(this.gameObject);
-                //}
-
-                if (enemyHP <= 0)
-                {
-                    deathState = 1;
-                }
-
-                break;
-
-            case 1:
-                //アニメーション再生
-                anime.enabled = true;
-                anime.SetTrigger("Death");
-                //anime.Play();
-                //rigid.constraints = 
-                //  RigidbodyConstraints.FreezePositionX|
-                //  RigidbodyConstraints.FreezePositionZ;
-                //Debug.Log("再生ーーーーーーー");
-                DeathTime += Time.deltaTime;
-                if (DeathTime > 1)
-                {
-
-                    DeathTime = 0;
-
-                    deathState = 2;
-                }
-                break;
-
-            case 2:
-                for (int i = 0; i < partsCount; i++)
-                {
-                    enemyParts[i] = gameObject.transform.GetChild(i).gameObject;
-                    enemyParts[i].SetActive(false);
-                }
-
-               // DeathEffectTime -= Time.deltaTime;
-                var sum = Instantiate(DeathEffect,
-                          this.transform.position,
-                          Quaternion.identity);
-                deathState = 3;
-                //if (DeathEffectTime <= 0)
-                //{
-                    
-                //}
-                
-                break;
-
-            case 3:
-                if (!stageMove1.GetComponent<StageMove1>().bossNow)
-                {
-                    TimerScript.enemyCounter += 1;
-                }
-                Destroy(this.gameObject);
-                //gameObject.SetActive(false);//非表示
-                break;
-
-        }
-       
-
-
-        dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
+        //二つの距離を計算して一定以下になれば追尾
+        distance = Vector3.Distance(transform.position, target.transform.position);
 
         //追いかける
-        if (MoveFlag)
+        if (moveFlag)
         {
-            this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-            if (dis >= 1)
+            this.transform.LookAt(new Vector3(target.transform.position.x, this.transform.position.y, target.transform.position.z));//ターゲットにむく
+            if (distance >= 1)
             {
-                transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+                transform.position += transform.forward * moveSpeed * Time.deltaTime;//前進(スピードが変わる)
             }
         }
 
         if (stageMove1.GetComponent<StageMove1>().nowFlag == true)
         {
-            MoveFlag = false;
+            moveFlag = false;
         }
         else if (!stageMove1.GetComponent<StageMove1>().nowFlag)
         {
-            MoveFlag = true;
+            moveFlag = true;
         }
-
     }
 
+    /// <summary>
+    /// 死んだときの状態による行動の遷移
+    /// </summary>
+    void DeathAction()
+    {
+        switch (deathState)
+        {
+            case 0:
+                //体力がなくなったら死亡&状態遷移
+                if (enemyHP <= 0)
+                {
+                    deathState = 1;
+                    isDeadFlag = true;
+                }
+                break;
+
+            case 1:
+                //Y軸にも動けるようにした後、上に移動する
+                rigid.constraints = RigidbodyConstraints.None;
+                rigid.AddForce(Vector3.up * jumpPower);
+
+                if(this.transform.position.y > topHeightPoint)
+                {
+                    this.transform.position = new Vector3(this.transform.position.x, topHeightPoint, this.transform.position.z);
+                }
+
+                //一定時間経過後、状態遷移
+                deathTime += Time.deltaTime;
+                if (deathTime > deathEffectTime)
+                {
+                    deathTime = 0;
+                    deathState = 2;
+                }
+                break;
+
+            case 2:
+                //自身と、自身の子どもを非表示にする
+                for (int i = 0; i < childCount; i++)
+                {
+                    child[i] = gameObject.transform.GetChild(i).gameObject;
+                    child[i].SetActive(false);
+                }
+
+                //パーティクルオブジェクトを生成
+                var sum = Instantiate(deathEffect, this.transform.position, Quaternion.identity);
+
+                //状態遷移
+                deathState = 3;
+                break;
+
+            case 3:
+                //死亡した
+                if (!stageMove1.GetComponent<StageMove1>().bossNow)
+                {
+                    TimerScript.enemyCounter += 1;
+                }
+                Destroy(this.gameObject);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 体力を取得
+    /// </summary>
+    /// <returns></returns>
     public float HpGet()
     {
         return enemyHP;
@@ -202,9 +189,8 @@ public class PawnEnemy : MonoBehaviour
         {
             enemyHP = enemyHP - 1;
         }
-
-
     }
+
     private void OnDestroy()
     {
         Renderer renderer = gameObject.GetComponent<Renderer>();
