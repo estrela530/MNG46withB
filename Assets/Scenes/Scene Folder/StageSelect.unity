@@ -197,7 +197,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 482635bf3fc1e8e4795cb72b8332bdc2, type: 3}
+      objectReference: {fileID: 8300000, guid: 1aacb14522f6e0541a380ea0f0405bce, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb9541192dabc5e4d864c435e4e01a27, type: 3}
 --- !u!1 &34808158
@@ -435,6 +435,11 @@ PrefabInstance:
       propertyPath: _transitionIn
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3480742152128056331, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
+        type: 3}
+      propertyPath: _transitionOut
+      value: 
+      objectReference: {fileID: 2100000, guid: 3096aac04ff063b4b9d1588f84430e5f, type: 2}
     - target: {fileID: 3480742153409580606, guid: 29aa3b7f2d1a869468c49cfc69bb5010,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -710,7 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd72fb46d3f8734aacebd66d30a80cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transitionIn: {fileID: 2100000, guid: 5abe9756004f6694b8b8a562fa5f38cd, type: 2}
+  _transitionIn: {fileID: 2100000, guid: d52259b421e39c54e82967d3bda7d65a, type: 2}
   _transitionOut: {fileID: 0}
   OnTransition:
     m_PersistentCalls:
@@ -1026,7 +1031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee92009c09fb0c418178f379c79a6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transitionIn: {fileID: 2100000, guid: 16c5c1cac7d017f4e973e5669a3dc05f, type: 2}
+  _transitionIn: {fileID: 2100000, guid: 3096aac04ff063b4b9d1588f84430e5f, type: 2}
 --- !u!114 &1978532868 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7226740232292449643, guid: 10b148aaa37c7314b994b6a5689759cb,
