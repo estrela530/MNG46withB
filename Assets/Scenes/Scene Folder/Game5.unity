@@ -302,6 +302,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1037724021}
+    - target: {fileID: 4845699679281492263, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_CustomSkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: 38ef20ef89674784cac634364e05877f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71ba8ac0936c92f4dbb85422e2688ee7, type: 3}
 --- !u!1 &501196651
@@ -471,7 +476,7 @@ PrefabInstance:
     - target: {fileID: 3092343863996537489, guid: 51155a0d729ce8d45ac6a418643a4609,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51155a0d729ce8d45ac6a418643a4609, type: 3}
@@ -1491,6 +1496,7 @@ GameObject:
   - component: {fileID: 1858727165}
   - component: {fileID: 1858727168}
   - component: {fileID: 1858727169}
+  - component: {fileID: 1858727170}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1590,6 +1596,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7cf9f6349c11c94d88af584663051d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!45 &1858727170
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858727164}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 38ef20ef89674784cac634364e05877f, type: 2}
 --- !u!1 &2095311422
 GameObject:
   m_ObjectHideFlags: 0

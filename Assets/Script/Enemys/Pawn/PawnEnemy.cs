@@ -130,6 +130,7 @@ public class PawnEnemy : MonoBehaviour
             case 1:
                 //Y軸にも動けるようにした後、上に移動する
                 rigid.constraints = RigidbodyConstraints.None;
+                rigid.constraints = RigidbodyConstraints.FreezeRotation;
                 rigid.AddForce(Vector3.up * jumpPower);
 
                 if(this.transform.position.y > topHeightPoint)

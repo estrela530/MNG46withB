@@ -718,6 +718,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &836449801
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2785210362604779481, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_Name
+      value: IconCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785210362604779482, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3928095992826732257, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 663087535}
+    - target: {fileID: 4845699679281492263, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_CustomSkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: 38ef20ef89674784cac634364e05877f, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 71ba8ac0936c92f4dbb85422e2688ee7, type: 3}
 --- !u!1001 &1079702854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -804,6 +883,7 @@ GameObject:
   - component: {fileID: 1592134076}
   - component: {fileID: 1592134079}
   - component: {fileID: 1592134080}
+  - component: {fileID: 1592134081}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -903,6 +983,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e7a8dd39850a6e4ea7565924ad7a65a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!45 &1592134081
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592134075}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 38ef20ef89674784cac634364e05877f, type: 2}
 --- !u!1 &1686848051
 GameObject:
   m_ObjectHideFlags: 0
