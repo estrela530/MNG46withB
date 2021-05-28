@@ -74,6 +74,9 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField] Animation anime;
     [SerializeField] private float DeathTime = 0;
 
+    [SerializeField, Header("全ての動きを停止するフラグ")]
+    bool AllMoveFlag;
+
     [SerializeField, Header("次のしーんに行くの開始までの時間")]
     float NextTime;
 
@@ -115,11 +118,13 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField, Header("死ぬエフェがでるまでの時間")]
     float DeathEffectTime = 1;
 
+    int DeathEffectCount =0;
+
     // Start is called before the first frame update
     void Start()
     {
         anime = GetComponent<Animation>();
-        
+        AllMoveFlag = true;
 
         EffectCount = 0;
 
@@ -203,168 +208,162 @@ public class OctaneEnemy : MonoBehaviour
             moveState = 0;
         }
 
-        switch (moveState)
+        //全ての攻撃などの動き
+        if(AllMoveFlag)
         {
-            //召喚、突進どっちか? 1～3が突進、5
-            case 0:
-                if (attackCount >= 3)
-                {
-                    moveState = 5;//召喚
-                }
-                else if(attackCount<3)
-                {
-                    moveState = 1;//突進
-                }
-                break;
-
-            //見てる時
-            case 1:
-                lookTime += Time.deltaTime;
-
-                if (lookTime <= freezeTime)
-                {
-                    this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-
-                    //レイの処理
-                    if (Physics.Raycast(ray, out hitRay, 30,enemyNumber))
+            switch (moveState)
+            {
+                //召喚、突進どっちか? 1～3が突進、5
+                case 0:
+                    if (attackCount >= 3)
                     {
-                        if (hitRay.collider.gameObject.CompareTag("Player"))
+                        moveState = 5;//召喚
+                    }
+                    else if (attackCount < 3)
+                    {
+                        moveState = 1;//突進
+                    }
+                    break;
+
+                //見てる時
+                case 1:
+                    lookTime += Time.deltaTime;
+
+                    if (lookTime <= freezeTime)
+                    {
+                        this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+
+                        //レイの処理
+                        if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))
                         {
-                            lineRenderer.enabled = true;
+                            if (hitRay.collider.gameObject.CompareTag("Player"))
+                            {
+                                lineRenderer.enabled = true;
 
-                            lineRenderer.SetPosition(1, hitRay.point);
-                            //hitRay.point;
+                                lineRenderer.SetPosition(1, hitRay.point);
+                                //hitRay.point;
+                            }
+
                         }
-
                     }
-                }
 
-                if (lookTime >= freezeTime - 0.5f)
-                {
-                    lineRenderer.startColor = Color.red;//初めの色
-                    lineRenderer.endColor = Color.red;//終わりの色
-                }
-
-                if (lookTime >= freezeTime)
-                {
-                    moveState = 2;
-                }
-                break;
-
-            //位置を取得と攻撃カウントを+1する
-            case 2:
-                //playerPos = Target.transform.position;
-                attackCount = attackCount + 1;
-                //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
-                moveState = 3;
-                break;
-            
-                //突進
-            case 3:
-                lineRenderer.startColor = Color.green;//初めの色
-                lineRenderer.endColor = Color.green;//終わりの色
-
-                //transform.position = Vector3.MoveTowards(transform.position, 
-                //    new Vector3(playerPos.x, this.transform.position.y, playerPos.z), 
-                //    speedLoc * Time.deltaTime);
-                transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
-
-                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
-
-                lookTime = 0;
-
-                //if (/*playerPos.x == transform.position.x*/
-                //    /*&&*/ playerPos.z == transform.position.z)
-                //{
-                //    moveState = 4;
-                //}
-                break;
-
-            //戻す
-            case 4:
-                moveState = 0;
-                break;
-
-           
-            case 5:
-                if (EnemyCount == MaxEnemyCount)
-                {
-                    moveState = 6;
-                }
-                //カウントの値まで生成
-                if (EnemyCount < MaxEnemyCount)
-                {
-                    PawnTime -= Time.deltaTime;
-                    if (PawnTime <= 0.0f)
+                    if (lookTime >= freezeTime - 0.5f)
                     {
-                        PawnTime = ResetTime;//1秒沖に生成
-
-                        var sum = Instantiate(SummonEnemy,
-                            new Vector3(
-                                SummonPosObj.transform.position.x,
-                                transform.position.y,
-                                SummonPosObj.transform.position.z),
-                            Quaternion.identity);
-                        EnemyCount++;
-                        //EffectCount = 0;
-                        
+                        lineRenderer.startColor = Color.red;//初めの色
+                        lineRenderer.endColor = Color.red;//終わりの色
                     }
-                    //moveState = 6;
 
-                }
-                //召喚のエフェクト
-                if (EffectCount < 1)
-                {
-                    //エフェクトパーティクル
-                    var eff = Instantiate(SummonEffect,
-                           SummonPosObj.transform.position,
-                           Quaternion.identity);
-                    //SummonEffect.SetActive(true);
+                    if (lookTime >= freezeTime)
+                    {
+                        moveState = 2;
+                    }
+                    break;
 
-                    ////エフェクト画像
-                    //var effM = Instantiate(MagicCircle,
-                    //       SummonPosObj.transform.position,
-                    //       Quaternion.identity);
-                    MagicCircle.SetActive(true);
+                //位置を取得と攻撃カウントを+1する
+                case 2:
+                    //playerPos = Target.transform.position;
+                    attackCount = attackCount + 1;
+                    //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
+                    moveState = 3;
+                    break;
 
-                    //effectChildCount = SummonEffect.transform.childCount;
+                //突進
+                case 3:
+                    lineRenderer.startColor = Color.green;//初めの色
+                    lineRenderer.endColor = Color.green;//終わりの色
 
-                    //childs = new GameObject[effectChildCount];
+                    //transform.position = Vector3.MoveTowards(transform.position, 
+                    //    new Vector3(playerPos.x, this.transform.position.y, playerPos.z), 
+                    //    speedLoc * Time.deltaTime);
+                    transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
 
+                    lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+
+                    lookTime = 0;
+
+                    //if (/*playerPos.x == transform.position.x*/
+                    //    /*&&*/ playerPos.z == transform.position.z)
+                    //{
+                    //    moveState = 4;
+                    //}
+                    break;
+
+                //戻す
+                case 4:
+                    moveState = 0;
+                    break;
+
+
+                case 5:
+                    if (EnemyCount == MaxEnemyCount)
+                    {
+                        moveState = 6;
+                    }
+                    //カウントの値まで生成
+                    if (EnemyCount < MaxEnemyCount)
+                    {
+                        PawnTime -= Time.deltaTime;
+                        if (PawnTime <= 0.0f)
+                        {
+                            PawnTime = ResetTime;//1秒沖に生成
+
+                            var sum = Instantiate(SummonEnemy,
+                                new Vector3(
+                                    SummonPosObj.transform.position.x,
+                                    transform.position.y,
+                                    SummonPosObj.transform.position.z),
+                                Quaternion.identity);
+                            EnemyCount++;
+                            //EffectCount = 0;
+
+                        }
+                        //moveState = 6;
+
+                    }
+                    //召喚のエフェクト
+                    if (EffectCount < 1)
+                    {
+                        //エフェクトパーティクル
+                        var eff = Instantiate(SummonEffect,
+                               SummonPosObj.transform.position,
+                               Quaternion.identity);
+                        
+                        MagicCircle.SetActive(true);
+
+
+                        EffectCount++;
+                    }
+
+
+                    break;
+                //戻す
+                case 6:
                     //for (int i = 0; i < effectChildCount; i++)
                     //{
-                    //    childs[i] = SummonEffect.transform.GetChild(i).gameObject;
+                    //    Destroy(childs[i]);
                     //}
+                    SummonParticle.Stop();//パーティクルを消す
+                                          //Destroy(MagicCircle);//画像を消す
+                    MagicCircle.SetActive(false);
+                    attackCount = 0;
+                    moveState = 0;
+                    EnemyCount = 0;
+                    EffectCount = 0;
+                    break;
 
-                    EffectCount++;
-                }
-                
-
-                break;
-            //戻す
-            case 6:
-                //for (int i = 0; i < effectChildCount; i++)
-                //{
-                //    Destroy(childs[i]);
-                //}
-                SummonParticle.Stop();//パーティクルを消す
-                //Destroy(MagicCircle);//画像を消す
-                MagicCircle.SetActive(false);
-                attackCount = 0;
-                moveState = 0;
-                EnemyCount = 0;
-                EffectCount = 0;
-                break;
-
+            }
+            
         }
-        switch(nextState)
+
+        switch (nextState)
         {
             case 0:
                 if (enemyHP <= 0)
                 {
                     nextState = 1;
+                    AllMoveFlag = false;
                 }
-                
+
                 break;
 
             case 1:
@@ -372,17 +371,11 @@ public class OctaneEnemy : MonoBehaviour
                 anime.Play();
                 DeathEffectTime -= Time.deltaTime;
 
-                if(DeathEffectTime<=0)
+                if (DeathEffectTime <= 0)
                 {
-                    var sum = Instantiate(DeathEffect,
-                          this.transform.position,
-                          Quaternion.identity);
                     nextState = 2;
                 }
-               
                 
-               
-
                 attackCount = 0;
                 moveState = 0;
                 EnemyCount = 5;
@@ -391,7 +384,7 @@ public class OctaneEnemy : MonoBehaviour
                 break;
 
             case 2:
-              
+               
 
                 DeathTime += Time.deltaTime;
                 if (DeathTime > NextTime)
@@ -402,7 +395,19 @@ public class OctaneEnemy : MonoBehaviour
                     nextState = 3;
                 }
 
+                if (DeathTime > NextTime - 0.3f)
+                {
+                    if (DeathEffectCount < 1)
+                    {
+                        var sum = Instantiate(DeathEffect,
+                             this.transform.position,
+                             Quaternion.identity);
+                        DeathEffectCount++;
+                    }
+                }
                 
+
+
                 break;
 
             case 3:
@@ -411,10 +416,10 @@ public class OctaneEnemy : MonoBehaviour
                 break;
 
         }
-        
+
 
         //dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-        
+
         //レイ
         lineRenderer.SetPosition(0, this.transform.position);
 
