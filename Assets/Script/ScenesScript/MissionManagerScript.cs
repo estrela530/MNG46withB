@@ -36,8 +36,10 @@ public class MissionManagerScript : MonoBehaviour
         fadeCount = 0;
         clearSeconds = 0;
         //ミッション用の数値「全滅ミッション」
-        //missionClearCount = 10;     
+        //missionClearCount = 10; 
+        //プレイヤーが生きてるかFlag
         mission1ClearFlag = Player.isDeadFlag;
+        //
         mission3ClearFlag = TimerScript.allDeathMissionClearFlag;
         //もしステージごとにリザルトをさすのであれば変更が必要
         clearSeconds = TimerScript.minute;
@@ -59,10 +61,68 @@ public class MissionManagerScript : MonoBehaviour
             Mission1C.SetActive(true);
         }
 
-        if (fadeCount >= 120 && clearSeconds < 1)
+        if (fadeCount >= 120)
         {
-            Mission2.SetActive(false);
-            Mission2C.SetActive(true);
+            //ステージ1なら
+            if (SceneNumberData.numberData.referer == "Game1")
+            {
+                //？？分以内だったらミッションクリア
+                if (clearSeconds < 1)
+                {
+                    Mission2.SetActive(false);
+                    Mission2C.SetActive(true);
+                }
+            }
+            //ステージ2なら
+            else if (SceneNumberData.numberData.referer == "Game2")
+            {
+                //？？分以内だったらミッションクリア
+                if (clearSeconds < 1)
+                {
+                    Mission2.SetActive(false);
+                    Mission2C.SetActive(true);
+                }
+            }
+            //ステージ3なら
+            else if (SceneNumberData.numberData.referer == "Game3")
+            {
+                //？？分以内だったらミッションクリア
+                if (clearSeconds < 1)
+                {
+                    Mission2.SetActive(false);
+                    Mission2C.SetActive(true);
+                }
+            }
+            //ステージ4なら
+            else if (SceneNumberData.numberData.referer == "Game4")
+            {
+                //？？分以内だったらミッションクリア
+                if (clearSeconds < 1)
+                {
+                    Mission2.SetActive(false);
+                    Mission2C.SetActive(true);
+                }
+            }
+            //ステージ5なら
+            else if (SceneNumberData.numberData.referer == "Game5")
+            {
+                //？？分以内だったらミッションクリア
+                if (clearSeconds < 1)
+                {
+                    Mission2.SetActive(false);
+                    Mission2C.SetActive(true);
+                }
+            }
+            //ステージ6なら
+            else if (SceneNumberData.numberData.referer == "Game6")
+            {
+                //？？分以内だったらミッションクリア
+                if (clearSeconds < 1)
+                {
+                    Mission2.SetActive(false);
+                    Mission2C.SetActive(true);
+                }
+            }
         }
 
         if (fadeCount >= 180 && mission3ClearFlag)
