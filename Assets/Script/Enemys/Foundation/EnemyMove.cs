@@ -118,8 +118,6 @@ public class EnemyMove : MonoBehaviour
         {
             if (DamageFlag)
             {
-                float level = Mathf.Abs(Mathf.Sin(Time.time * 5));
-                gameObject.GetComponent<Renderer>().material.color = new Color(1f, 0f, 0f, level);
                 StartCoroutine("WaitForIt");
             }
             
@@ -273,6 +271,8 @@ public class EnemyMove : MonoBehaviour
         }
 
     }
+
+
 
     //ノックバック処理
     void NockBack(GameObject other, float velocity)

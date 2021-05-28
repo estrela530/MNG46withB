@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 2788742875657165308}
   - component: {fileID: 6473496330624693907}
   - component: {fileID: 5791692928864212339}
+  - component: {fileID: 2011754428530584079}
   m_Layer: 9
   m_Name: ant_9:Mesh
   m_TagString: Untagged
@@ -110,6 +111,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &2011754428530584079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473875604714905516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 8955439827628780024}
 --- !u!1 &865962311251836660
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +135,7 @@ GameObject:
   - component: {fileID: 2356009477510814235}
   - component: {fileID: 1997718409108897995}
   - component: {fileID: 1003791210456112536}
+  - component: {fileID: 1591210601175535202}
   m_Layer: 9
   m_Name: ant_6:Mesh
   m_TagString: Untagged
@@ -189,6 +204,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1591210601175535202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865962311251836660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 8955439827628780024}
 --- !u!1 &3218753794866409405
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,13 +228,14 @@ GameObject:
   - component: {fileID: 1983543368304802819}
   - component: {fileID: 6368368040725391126}
   - component: {fileID: 2412520023768739907}
+  - component: {fileID: 3746513133477371954}
   m_Layer: 9
   m_Name: ant_10:Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1983543368304802819
 Transform:
   m_ObjectHideFlags: 0
@@ -268,6 +297,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3746513133477371954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218753794866409405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 8955439827628780024}
 --- !u!1 &4828393140051878029
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +903,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8955439827628780024}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1083,6 +1125,7 @@ GameObject:
   - component: {fileID: 894034746625682489}
   - component: {fileID: 2831506461295717222}
   - component: {fileID: 4730417072272555685}
+  - component: {fileID: 8502773804614132823}
   m_Layer: 9
   m_Name: ant_7:Mesh
   m_TagString: Untagged
@@ -1151,3 +1194,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8502773804614132823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9044552354614002726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 8955439827628780024}
