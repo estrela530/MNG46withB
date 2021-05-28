@@ -33,7 +33,31 @@ public class TimerScript : MonoBehaviour
         oldSeconds = 0f;
         //timerText = GetComponentInChildren<Text>();
         //ミッション用の数値「全滅ミッション」
-        missionClearCount = 7;
+        if (SceneNumberData.numberData.referer == "Game1")
+        {
+            missionClearCount = 7;
+        }
+        else if (SceneNumberData.numberData.referer == "Game2")
+        {
+            missionClearCount = 7;
+        }
+        else if (SceneNumberData.numberData.referer == "Game3")
+        {
+            missionClearCount = 7;
+        }
+        else if (SceneNumberData.numberData.referer == "Game4")
+        {
+            missionClearCount = 7;
+        }
+        else if (SceneNumberData.numberData.referer == "Game5")
+        {
+            missionClearCount = 7;
+        }
+        else if (SceneNumberData.numberData.referer == "Game6")
+        {
+            missionClearCount = 7;
+        }
+
 
         allDeathMissionClearFlag = false;
     }
