@@ -30,6 +30,7 @@ public class ScorpionBoss : MonoBehaviour
 
     [Header("射撃のフラグ")]
     public bool ShotFlag;
+    float stopTime = 0;
 
     [SerializeField, Header("スコーピオンのボスショット")]
     GameObject scorpionBossShot;
@@ -165,15 +166,15 @@ public class ScorpionBoss : MonoBehaviour
     }
 
     //中断できる処理のまとまり
-    IEnumerator Blink()
-    {
-        while (true)
-        {
-            renderComponent.enabled = !renderComponent.enabled;
-            //何フレームとめる
-            yield return new WaitForSeconds(ColorInterval);
-        }
-    }
+    //IEnumerator Blink()
+    //{
+    //    while (true)
+    //    {
+    //        renderComponent.enabled = !renderComponent.enabled;
+    //        //何フレームとめる
+    //        yield return new WaitForSeconds(ColorInterval);
+    //    }
+    //}
 
     // Update is called once per frame
     void FixedUpdate()
@@ -192,11 +193,11 @@ public class ScorpionBoss : MonoBehaviour
             if (DamageFlag)
             {
                 DamageTime += Time.deltaTime;
-                StartCoroutine("Blink");
+                //StartCoroutine("Blink");
                 if (DamageTime > 1)
                 {
                     DamageTime = 0;
-                    StopCoroutine("Blink");
+                   // StopCoroutine("Blink");
                     renderComponent.enabled = true;
                     DamageFlag = false;
                 }
@@ -215,15 +216,24 @@ public class ScorpionBoss : MonoBehaviour
         {
             //召喚、突進どっちか? 1～3が突進、5～6が召喚、7～が射撃
             case 0:
-                if (attackCount >= 3)
+                if (attackCount >= 4)
                 {
                     moveState = 5;//召喚
                 }
-                else if (attackCount < 1)
+                else if (attackCount <=2/*attackCount  == 0 || attackCount == 1|| attackCount == 2*/)
                 {
                     moveState = 7;//射撃
                 }
-                else if (attackCount < 3)
+                //else if (attackCount == 1)
+                //{
+                //    moveState = 7;//射撃
+                //}
+                //else if (attackCount == 2)
+                //{
+                //    moveState = 7;//射撃
+                //}
+
+                else if (attackCount == 3)
                 {
                     moveState = 1;//突進
                 }
@@ -306,10 +316,7 @@ public class ScorpionBoss : MonoBehaviour
                         PawnTime = ResetTime;//1秒沖に生成
 
                         var sum = Instantiate(SummonEnemy,
-                            new Vector3(
-                                SummonPosObj.transform.position.x,
-                                transform.position.y,
-                                SummonPosObj.transform.position.z),
+                            SummonPosObj.transform.position,
                             Quaternion.identity);
                         EnemyCount++;
                     }
@@ -358,11 +365,30 @@ public class ScorpionBoss : MonoBehaviour
                 EnemyCount = 0;
                 EffectCount = 0;
                 break;
-
+             
+                //射撃
             case 7:
+                this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
                 ShotFlag = true;
-                attackCount += 1;
+                moveState = 8;
+
+                break;
+                
+            case 8:
+                stopTime += Time.deltaTime;
+                if(stopTime>3)
+                {
+                    moveState = 9;
+                }
+                break;
+
+            //戻す（射撃の処理）
+            case 9:
+
+                ShotFlag = false;
+                attackCount = attackCount+ 1;
                 moveState = 0;
+                stopTime = 0;
                 break;
         }
 
@@ -439,6 +465,11 @@ public class ScorpionBoss : MonoBehaviour
     public float HpGet()
     {
         return enemyHP;
+    }
+
+    public bool DamageGet()
+    {
+        return DamageFlag;
     }
 
     //(仮)指定されたtagに当たると消える
