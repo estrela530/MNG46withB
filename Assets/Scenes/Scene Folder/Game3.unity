@@ -398,6 +398,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2022172875}
+    - target: {fileID: 4845699679281492263, guid: 71ba8ac0936c92f4dbb85422e2688ee7,
+        type: 3}
+      propertyPath: m_CustomSkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: e21c7e0987c9680438e0c0d02eb4e5ea, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71ba8ac0936c92f4dbb85422e2688ee7, type: 3}
 --- !u!1 &276670710 stripped
@@ -657,6 +662,7 @@ GameObject:
   - component: {fileID: 803570836}
   - component: {fileID: 803570839}
   - component: {fileID: 803570840}
+  - component: {fileID: 803570841}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -756,6 +762,15 @@ MonoBehaviour:
   player: {fileID: 2022172875}
   offsetPos: {x: 2.5, y: 10, z: -5}
   offsetRot: {x: 60, y: -30, z: 0}
+--- !u!45 &803570841
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803570835}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: e21c7e0987c9680438e0c0d02eb4e5ea, type: 2}
 --- !u!1 &892650455 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1919697651037988905, guid: 51155a0d729ce8d45ac6a418643a4609,
