@@ -80,7 +80,7 @@ public class BossShot : MonoBehaviour
             if (hitRay.collider.gameObject.CompareTag("Player"))
             {
                 lineRenderer.enabled = true;
-                Debug.Log("あたったーーーーーーーーーー");
+               
                 lineRenderer.SetPosition(1, hitRay.point);
                 shotFlag = true;
                 if (Move.GetComponent<BossMove>().AttackFlag == true)

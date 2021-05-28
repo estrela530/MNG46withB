@@ -1,29 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEditor;
 
-//[RequireComponent(typeof(BoxCollider))]
-
-public class OctaneEnemy : MonoBehaviour
+public class ScorpionBoss : MonoBehaviour
 {
     // Start is called before the first frame update
     private GameObject Target;//追尾する相手
     //private float dis;//プレイヤーとの距離
     // public float area;//この数値以下になったら追う
 
-    [Header("体力")]public float enemyHP = 5;
+    [Header("体力")] public float enemyHP = 5;
 
     Rigidbody rigid;
-    
-    Player player;
-    Color color;
-    //Player player;
-    
-    [Header("発見時のスピード")]
+
+    //Color color;
+
+    [Header("突進時のスピード")]
     public float speedLoc;
 
     [Header("この数値まで進む")]
@@ -33,7 +27,12 @@ public class OctaneEnemy : MonoBehaviour
 
     [Header("追う時")]
     public bool MoveFlag = true;//追う
-    //public bool lookFlag = false;
+
+    [Header("射撃のフラグ")]
+    public bool ShotFlag;
+
+    [SerializeField, Header("スコーピオンのボスショット")]
+    GameObject scorpionBossShot;
 
     [SerializeField, Header("何秒止まるか")]
     public float freezeTime;
@@ -42,18 +41,20 @@ public class OctaneEnemy : MonoBehaviour
     //召喚関連
     [SerializeField, Header("召喚したエネミーの数")]
     int EnemyCount;//プレハブの出現数
-    
+
+
     [SerializeField, Header("召喚するオブジェクト")]
     GameObject SummonEnemy;
 
-    [SerializeField,Header("ここに召喚する")]
-     GameObject SummonPosObj;
+    [SerializeField, Header("ここに召喚する")]
+    GameObject SummonPosObj;
 
     //[SerializeField, Header("召喚エフェクトのポジション")]
     //GameObject EffectPosObj;
 
     [SerializeField, Header("召喚のエフェクト")]
-     GameObject SummonEffect;
+    GameObject SummonEffect;
+
     [SerializeField, Header("召喚のエフェクトの魔法陣")]
     GameObject MagicCircle;
 
@@ -69,12 +70,12 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField, Header("召喚するエネミーの上限")]
     int MaxEnemyCount;//プレハブの出現数
 
-    int enemyNumber = (1<<13| 1 << 8);
+    int enemyNumber = (1 << 13 | 1 << 8);
 
     [SerializeField] Animation anime;
     [SerializeField] private float DeathTime = 0;
 
-    [SerializeField, Header("次のしーんに行くの開始までの時間")]
+    [SerializeField, Header("次のシーンに行くの開始までの時間")]
     float NextTime;
 
     [SerializeField, Header("次のシーンに行くフラグ")]
@@ -94,13 +95,13 @@ public class OctaneEnemy : MonoBehaviour
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
-    
+
     Vector3 velocity = Vector3.zero;
 
     public int moveState;
     public int attackCount;//突進した回数
 
-   GameObject stageMove1;
+    GameObject stageMove1;
 
 
     Renderer renderComponent;
@@ -119,7 +120,9 @@ public class OctaneEnemy : MonoBehaviour
     void Start()
     {
         anime = GetComponent<Animation>();
-        
+
+        //ショットを取得
+        scorpionBossShot.GetComponent<ScorpionBossShot>();
 
         EffectCount = 0;
 
@@ -132,14 +135,15 @@ public class OctaneEnemy : MonoBehaviour
 
         attackCount = 0;
         renderComponent = GetComponent<Renderer>();
-        
-        moveState = 0;
 
+
+
+        moveState = 0;
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
         stageMove1.GetComponent<StageMove1>();
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
-        color = GetComponent<Renderer>().material.color;
+        //color = GetComponent<Renderer>().material.color;
 
         ray = new Ray();
         lineRenderer = this.gameObject.GetComponent<LineRenderer>();
@@ -159,6 +163,7 @@ public class OctaneEnemy : MonoBehaviour
         //変えるかも?
         ray.direction = transform.forward;
     }
+
     //中断できる処理のまとまり
     IEnumerator Blink()
     {
@@ -169,12 +174,14 @@ public class OctaneEnemy : MonoBehaviour
             yield return new WaitForSeconds(ColorInterval);
         }
     }
+
     // Update is called once per frame
     void FixedUpdate()
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
-        if(stageMove1.GetComponent<StageMove1>().bossNow)
+
+        if (stageMove1.GetComponent<StageMove1>().bossNow)
         {
             BossHpSlider.SetActive(true);
         }
@@ -203,18 +210,24 @@ public class OctaneEnemy : MonoBehaviour
             moveState = 0;
         }
 
+        //攻撃関連の処理
         switch (moveState)
         {
-            //召喚、突進どっちか? 1～3が突進、5
+            //召喚、突進どっちか? 1～3が突進、5～6が召喚、7～が射撃
             case 0:
                 if (attackCount >= 3)
                 {
                     moveState = 5;//召喚
                 }
-                else if(attackCount<3)
+                else if (attackCount < 1)
+                {
+                    moveState = 7;//射撃
+                }
+                else if (attackCount < 3)
                 {
                     moveState = 1;//突進
                 }
+               
                 break;
 
             //見てる時
@@ -226,7 +239,7 @@ public class OctaneEnemy : MonoBehaviour
                     this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
 
                     //レイの処理
-                    if (Physics.Raycast(ray, out hitRay, 30,enemyNumber))
+                    if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))
                     {
                         if (hitRay.collider.gameObject.CompareTag("Player"))
                         {
@@ -258,26 +271,18 @@ public class OctaneEnemy : MonoBehaviour
                 //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
                 moveState = 3;
                 break;
-            
-                //突進
+
+            //突進
             case 3:
                 lineRenderer.startColor = Color.green;//初めの色
                 lineRenderer.endColor = Color.green;//終わりの色
 
-                //transform.position = Vector3.MoveTowards(transform.position, 
-                //    new Vector3(playerPos.x, this.transform.position.y, playerPos.z), 
-                //    speedLoc * Time.deltaTime);
                 transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
 
                 lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
 
                 lookTime = 0;
 
-                //if (/*playerPos.x == transform.position.x*/
-                //    /*&&*/ playerPos.z == transform.position.z)
-                //{
-                //    moveState = 4;
-                //}
                 break;
 
             //戻す
@@ -285,12 +290,13 @@ public class OctaneEnemy : MonoBehaviour
                 moveState = 0;
                 break;
 
-           
+
             case 5:
                 if (EnemyCount == MaxEnemyCount)
                 {
                     moveState = 6;
                 }
+
                 //カウントの値まで生成
                 if (EnemyCount < MaxEnemyCount)
                 {
@@ -306,12 +312,9 @@ public class OctaneEnemy : MonoBehaviour
                                 SummonPosObj.transform.position.z),
                             Quaternion.identity);
                         EnemyCount++;
-                        //EffectCount = 0;
-                        
                     }
-                    //moveState = 6;
-
                 }
+
                 //召喚のエフェクト
                 if (EffectCount < 1)
                 {
@@ -338,7 +341,7 @@ public class OctaneEnemy : MonoBehaviour
 
                     EffectCount++;
                 }
-                
+
 
                 break;
             //戻す
@@ -356,15 +359,21 @@ public class OctaneEnemy : MonoBehaviour
                 EffectCount = 0;
                 break;
 
+            case 7:
+                ShotFlag = true;
+                attackCount += 1;
+                moveState = 0;
+                break;
         }
-        switch(nextState)
+
+        switch (nextState)
         {
             case 0:
                 if (enemyHP <= 0)
                 {
                     nextState = 1;
                 }
-                
+
                 break;
 
             case 1:
@@ -372,16 +381,16 @@ public class OctaneEnemy : MonoBehaviour
                 anime.Play();
                 DeathEffectTime -= Time.deltaTime;
 
-                if(DeathEffectTime<=0)
+                if (DeathEffectTime <= 0)
                 {
                     var sum = Instantiate(DeathEffect,
                           this.transform.position,
                           Quaternion.identity);
                     nextState = 2;
                 }
-               
-                
-               
+
+
+
 
                 attackCount = 0;
                 moveState = 0;
@@ -391,7 +400,7 @@ public class OctaneEnemy : MonoBehaviour
                 break;
 
             case 2:
-              
+
 
                 DeathTime += Time.deltaTime;
                 if (DeathTime > NextTime)
@@ -402,7 +411,7 @@ public class OctaneEnemy : MonoBehaviour
                     nextState = 3;
                 }
 
-                
+
                 break;
 
             case 3:
@@ -411,10 +420,10 @@ public class OctaneEnemy : MonoBehaviour
                 break;
 
         }
-        
+
 
         //dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-        
+
         //レイ
         lineRenderer.SetPosition(0, this.transform.position);
 
@@ -423,7 +432,7 @@ public class OctaneEnemy : MonoBehaviour
         ray.direction = transform.forward;//自分の向きのレイ
 
         Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
-        
+
     }
 
 
@@ -455,7 +464,7 @@ public class OctaneEnemy : MonoBehaviour
             //MoveFlag = false;
             moveState = 4;
         }
-        
+
 
     }
 
