@@ -40,12 +40,12 @@ public class StageSelectCharaMove : MonoBehaviour
 
     public int state = 1;
 
-    Vector3 nejirinStage1Pos = new Vector3(-40, -23, 80);
-    Vector3 nejirinStage2Pos = new Vector3(5, -9, 80);
-    Vector3 nejirinStage3Pos = new Vector3(190, -23, 80);
-    Vector3 nejirinStage4Pos = new Vector3(235, -9, 80);
-    Vector3 nejirinStage5Pos = new Vector3(420, -23, 80);
-    Vector3 nejirinStage6Pos = new Vector3(466, -9, 80);
+    Vector3 nejirinStage1Pos = new Vector3(-47, -25, 70);
+    Vector3 nejirinStage2Pos = new Vector3(30, -25, 70);
+    Vector3 nejirinStage3Pos = new Vector3(200, -25, 70);
+    Vector3 nejirinStage4Pos = new Vector3(283, -3, 70);
+    Vector3 nejirinStage5Pos = new Vector3(418, 2, 70);
+    Vector3 nejirinStage6Pos = new Vector3(518, 25, 70);
 
     Vector3 Camera1Pos = new Vector3(0, 0, 0);
     Vector3 Camera2Pos = new Vector3(231, 0, 0);
