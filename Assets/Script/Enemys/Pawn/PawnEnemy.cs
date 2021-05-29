@@ -38,7 +38,10 @@ public class PawnEnemy : MonoBehaviour
 
     private bool moveFlag = false;  //プレイヤーを追いかけるか
     private bool isDeadFlag = false;//死んでいるか？
-    
+
+
+    [SerializeField, Header("ダメージ受けた時")]
+    public bool DamageFlag;
 
     //Renderer renderComponent;
 
@@ -124,6 +127,7 @@ public class PawnEnemy : MonoBehaviour
                 {
                     deathState = 1;
                     isDeadFlag = true;
+                    DamageFlag = true;
                 }
                 break;
 
@@ -181,7 +185,10 @@ public class PawnEnemy : MonoBehaviour
     {
         return enemyHP;
     }
-
+    public bool DamageGet()
+    {
+        return DamageFlag;
+    }
 
     //(仮)指定されたtagに当たると消える
     private void OnTriggerEnter(Collider other)
