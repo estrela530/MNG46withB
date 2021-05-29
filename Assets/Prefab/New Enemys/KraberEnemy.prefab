@@ -742,7 +742,7 @@ MonoBehaviour:
   MaxEnemyHP: 0
   freezTime: 0
   stopTime: 8
-  Rspeed: 0
+  startPos: {x: 0, y: 0, z: 0}
   workObj1: {fileID: 116260060639371805}
   speed: 3
   speedLoc: 5
@@ -753,9 +753,12 @@ MonoBehaviour:
   powerFlag: 0
   DamageFlag: 0
   DamageTime: 0
-  DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
+  deathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
     type: 3}
   ColorInterval: 0.1
+  jumpPower: 18
+  topHeightPoint: 5
+  deathEffectTime: 1
 --- !u!135 &7058805063270374044
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1056,7 +1059,6 @@ MonoBehaviour:
   min: 1
   max: 100
   shotTime: 1
-  ShotCount: 3
 --- !u!120 &8574983411007919927
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1239,7 +1241,6 @@ MonoBehaviour:
   min: 1
   max: 100
   shotTime: 1
-  ShotCount: 3
 --- !u!120 &8574983411242828014
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1388,7 +1389,6 @@ MonoBehaviour:
   min: -50
   max: 50
   shotTime: 1
-  ShotCount: 3
 --- !u!1 &8574983411395423866
 GameObject:
   m_ObjectHideFlags: 0

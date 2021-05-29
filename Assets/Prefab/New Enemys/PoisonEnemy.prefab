@@ -177,14 +177,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHP: 3
   MaxEnemyHP: 0
-  speed: 2
-  speedLoc: 2
   MoveFlag: 0
   ColorInterval: 0.1
   DamageTime: 0
   DamageFlag: 0
-  DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
+  deathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
     type: 3}
+  jumpPower: 18
+  topHeightPoint: 5
+  deathEffectTime: 1
 --- !u!120 &435675464604281061
 LineRenderer:
   m_ObjectHideFlags: 0

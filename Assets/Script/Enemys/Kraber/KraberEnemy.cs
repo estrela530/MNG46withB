@@ -57,7 +57,7 @@ public class KraberEnemy : MonoBehaviour
    [SerializeField] float DamageTime;
 
     [SerializeField, Header("死んだ時のエフェクト")]
-    private GameObject DeathEffect;
+    private GameObject deathEffect;
     private ParticleSystem DeathParticle;   //ダメージのパーティクル
 
     Ray ray;
@@ -74,10 +74,23 @@ public class KraberEnemy : MonoBehaviour
 
     GameObject stageMove1;
 
+    //追加
+    private int deathState;//死亡状態
+    private bool isDeadFlag = false;//死んでいるか？
+    [SerializeField, Tooltip("オブジェクトが飛んでいく力")]
+    private float jumpPower = 18.0f;
+    [SerializeField, Tooltip("オブジェクトの最大到達地点")]
+    private float topHeightPoint = 5;
+    private float deathTime = 0;
+    [SerializeField, Tooltip("死亡エフェクトがでるまでの時間")]
+    private float deathEffectTime = 1.0f;
+    private int childCount;//子どもの数
+    private GameObject[] child;          //
+
 
     void Start()
     {
-        DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
+        DeathParticle = deathEffect.GetComponent<ParticleSystem>();
         MaxEnemyHP = enemyHP;
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
         stageMove1.GetComponent<StageMove1>();
@@ -107,7 +120,17 @@ public class KraberEnemy : MonoBehaviour
 
         startPos = GetComponent<Transform>().position;//最初のポジション
 
-       
+        //子どもの数を取得
+        childCount = gameObject.transform.childCount;
+        //配列を子どもオブジェクトの数で初期化
+        child = new GameObject[childCount];
+        //オブジェクトを代入していく
+        for (int i = 0; i < childCount; i++)
+        {
+            child[i] = gameObject.transform.GetChild(i).gameObject;
+        }
+        deathState = 0;
+        isDeadFlag = false;
         //bullet.GetComponent<KraberBallet>();
         //target = Target.transform.position;
 
@@ -130,6 +153,10 @@ public class KraberEnemy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        DeathAction();
+
+        if (isDeadFlag) return;
+
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
@@ -156,16 +183,7 @@ public class KraberEnemy : MonoBehaviour
         }
 
         //meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
-        if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
-        {
-            Destroy(this.gameObject);
-            //gameObject.SetActive(false);//非表示
-            TimerScript.enemyCounter += 1;
-            renderComponent.enabled = false;
-            var sum = Instantiate(DeathEffect,
-                          this.transform.position,
-                          Quaternion.identity);
-        }
+       
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
@@ -273,6 +291,66 @@ public class KraberEnemy : MonoBehaviour
     public bool DamageGet()
     {
         return DamageFlag;
+    }
+
+    void DeathAction()
+    {
+        switch (deathState)
+        {
+            case 0:
+                //体力がなくなったら死亡&状態遷移
+                if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
+                {
+                    deathState = 1;
+                    isDeadFlag = true;
+                    DamageFlag = true;
+                }
+                break;
+
+            case 1:
+                //Y軸にも動けるようにした後、上に移動する
+                rigid.constraints = RigidbodyConstraints.None;
+                rigid.constraints = RigidbodyConstraints.FreezeRotation;
+                rigid.AddForce(Vector3.up * jumpPower);
+
+                if (this.transform.position.y > topHeightPoint)
+                {
+                    this.transform.position = new Vector3(this.transform.position.x, topHeightPoint, this.transform.position.z);
+                }
+
+                //一定時間経過後、状態遷移
+                deathTime += Time.deltaTime;
+                if (deathTime > deathEffectTime)
+                {
+                    deathTime = 0;
+                    deathState = 2;
+                }
+                break;
+
+            case 2:
+                //自身と、自身の子どもを非表示にする
+                for (int i = 0; i < childCount; i++)
+                {
+                    child[i] = gameObject.transform.GetChild(i).gameObject;
+                    child[i].SetActive(false);
+                }
+
+                //パーティクルオブジェクトを生成
+                var sum = Instantiate(deathEffect, this.transform.position, Quaternion.identity);
+
+                //状態遷移
+                deathState = 3;
+                break;
+
+            case 3:
+                //死亡した
+                if (!stageMove1.GetComponent<StageMove1>().bossNow)
+                {
+                    TimerScript.enemyCounter += 1;
+                }
+                Destroy(this.gameObject);
+                break;
+        }
     }
 
     //(仮)指定されたtagに当たると消える

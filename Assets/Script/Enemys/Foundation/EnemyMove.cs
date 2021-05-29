@@ -172,16 +172,7 @@ public class EnemyMove : MonoBehaviour
         switch (deathState)
         {
             case 0:
-                //if (enemyHP <= 0)
-                //{
-
-                //    //Destroy(transform.parent);
-                //    var sum = Instantiate(DeathEffect,
-                //                  this.transform.position,
-                //                  Quaternion.identity);
-                //    Destroy(this.gameObject);
-                //}
-
+               
                 if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
                 {
                     deathState = 1;
@@ -216,11 +207,7 @@ public class EnemyMove : MonoBehaviour
                           this.transform.position,
                           Quaternion.identity);
                 deathState = 3;
-                //if (DeathEffectTime <= 0)
-                //{
-
-                //}
-
+               
                 break;
 
             case 3:
