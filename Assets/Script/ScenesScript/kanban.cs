@@ -33,7 +33,7 @@ public class kanban : MonoBehaviour
     }
 
     //Playerが当たると説明表示
-    public void OnCollisionEnter(Collision other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -41,7 +41,7 @@ public class kanban : MonoBehaviour
         }
     }
 
-    public void OnCollisionExit(Collision other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {

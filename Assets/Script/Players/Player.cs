@@ -989,7 +989,7 @@ public class Player : MonoBehaviour
         //kanban = 持続ダメージ&点滅
 
         //memo : 持続ダメージの処理は仮
-        if (other.gameObject.CompareTag("kanban"))
+        if (other.gameObject.CompareTag("PoisonSmoke"))
         {
             currentHp -= 0.01f;
             saveValue -= 0.01f;
