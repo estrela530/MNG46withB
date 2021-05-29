@@ -86,8 +86,11 @@ namespace Fungus
 
             if (writer != null && writer.IsWriting)
             {
-                if (Input.GetButtonDown(currentStandaloneInputModule.submitButton) ||
-                    (cancelEnabled && Input.GetButton(currentStandaloneInputModule.cancelButton)))
+                //if (Input.GetButtonDown(currentStandaloneInputModule.submitButton) ||
+                //    (cancelEnabled && Input.GetButton(currentStandaloneInputModule.cancelButton)))
+
+                //memo : 親を変更しちゃいました。
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
                 {
                     SetNextLineFlag();
                 }
