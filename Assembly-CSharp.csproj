@@ -62,6 +62,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\EpilogTest.cs" />
+    <Compile Include="Assets\FungusController.cs" />
+    <Compile Include="Assets\FungusTest.cs" />
+    <Compile Include="Assets\ImageMove.cs" />
+    <Compile Include="Assets\ImageOnOff.cs" />
+    <Compile Include="Assets\ImageRotate.cs" />
     <Compile Include="Assets\Script\Enemys\AppearanceEff.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossArea.cs" />
     <Compile Include="Assets\Script\Enemys\Boss\BossBullet.cs" />
@@ -177,6 +183,9 @@
     <Compile Include="Assets\Script\ScenesScript\yajirusi.cs" />
     <Compile Include="Assets\Script\ScenesScript\αScore.cs" />
     <Compile Include="Assets\Script\SubCameraControll.cs" />
+    <Compile Include="Assets\SkipGage.cs" />
+    <Compile Include="Assets\SkiptoScene.cs" />
+    <Compile Include="Assets\VideoSkip.cs" />
     <None Include="Assets\Shader\NoStageTra.shader" />
     <None Include="Assets\Deform\LICENSE.txt" />
     <None Include="Assets\Shader\transition.shader" />
