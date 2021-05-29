@@ -711,11 +711,11 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2139133369}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1072468923 stripped
+--- !u!1 &998813492 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1794050545182486714, guid: 1dec4f9c62f7d9c4c9a735d882f0b4d9,
+  m_CorrespondingSourceObject: {fileID: 2022806039608378296, guid: 5b48280dff0dd8247940e22bb4e50ed8,
     type: 3}
-  m_PrefabInstance: {fileID: 1598886978}
+  m_PrefabInstance: {fileID: 1099816602}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1080762455 stripped
 GameObject:
@@ -733,7 +733,12 @@ PrefabInstance:
     - target: {fileID: 1477925405368392183, guid: 5b48280dff0dd8247940e22bb4e50ed8,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553296690355058472, guid: 5b48280dff0dd8247940e22bb4e50ed8,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5705549012128505915, guid: 5b48280dff0dd8247940e22bb4e50ed8,
         type: 3}
@@ -794,7 +799,12 @@ PrefabInstance:
         type: 3}
       propertyPath: kanbanPrefab
       value: 
-      objectReference: {fileID: 1072468923}
+      objectReference: {fileID: 998813492}
+    - target: {fileID: 7996340219428022966, guid: 5b48280dff0dd8247940e22bb4e50ed8,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8906442900042422142, guid: 5b48280dff0dd8247940e22bb4e50ed8,
         type: 3}
       propertyPath: m_Name

@@ -839,7 +839,7 @@ PrefabInstance:
     - target: {fileID: 3506755208357560025, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_Radius
-      value: 2.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3506755208357560025, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
@@ -859,7 +859,7 @@ PrefabInstance:
     - target: {fileID: 4722257355946703571, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 5204416691150950892, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
@@ -874,7 +874,7 @@ PrefabInstance:
     - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
@@ -884,7 +884,7 @@ PrefabInstance:
     - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.74
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6621399822113545380, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
@@ -1812,6 +1812,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageMove Variant 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5960956031721895056, guid: 95786850950f78b4299d7fec5c5b9906,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5960956031721895057, guid: 95786850950f78b4299d7fec5c5b9906,
         type: 3}
       propertyPath: bgmSlider
@@ -1884,6 +1889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5960956031721895057, guid: 95786850950f78b4299d7fec5c5b9906, type: 3}
+    - {fileID: 1422464441, guid: 95786850950f78b4299d7fec5c5b9906, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 95786850950f78b4299d7fec5c5b9906, type: 3}
 --- !u!1 &2063067700 stripped
 GameObject:
