@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4031976472594517565}
   - component: {fileID: 8363888124966343976}
   - component: {fileID: 939138234285916797}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ant_10:Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8684419058251929574}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SummonPosObj
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 918937946196109349}
   - component: {fileID: 4020537291598000885}
   - component: {fileID: 2422001859892637606}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ant_6:Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 774928978584234946}
   - component: {fileID: 8477174792241595565}
   - component: {fileID: 8940411732121020237}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ant_9:Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 3272220517230581011}
   - component: {fileID: 3272220517230581008}
   - component: {fileID: 3272220517230581009}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Area
   m_TagString: Aria
   m_Icon: {fileID: 0}
@@ -354,9 +354,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3272220517971450210}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boss1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 5781106799401491404}
   - component: {fileID: 5781106799401491405}
   - component: {fileID: 4627413579133153352}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ant
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ GameObject:
   - component: {fileID: 2313368959721922055}
   - component: {fileID: 808689760751589720}
   - component: {fileID: 7914885381594975387}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ant_7:Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 6700221346235190796}
   - component: {fileID: 6700221346235190799}
   - component: {fileID: 5113978840055821389}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 'ShotBoss '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,10 +797,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8684419058251929574}
     m_Modifications:
+    - target: {fileID: 7580074126723102773, guid: 85596f2e29b25eb45b4a6571048fa631,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7580074126908744546, guid: 85596f2e29b25eb45b4a6571048fa631,
         type: 3}
       propertyPath: m_Name
       value: Magic
+      objectReference: {fileID: 0}
+    - target: {fileID: 7580074126908744546, guid: 85596f2e29b25eb45b4a6571048fa631,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7580074126908744546, guid: 85596f2e29b25eb45b4a6571048fa631,
         type: 3}

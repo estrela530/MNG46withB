@@ -119,6 +119,7 @@ MonoBehaviour:
   deathEffectTime: 1
   jumpPower: 18
   topHeightPoint: 5
+  DamageFlag: 0
 --- !u!1 &8718287026340669308
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,9 +129,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8718287026340669309}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pawn
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -23,15 +23,12 @@ public class KraberEnemy : MonoBehaviour
     [SerializeField, Header("いつまで止まるか")] float stopTime;
 
     Rigidbody rigid;
-    [SerializeField]
 
-   // private float workeAria1 = 1;//
+    // private float workeAria1 = 1;//
     //private float workeAria2 = 1;//
-
-    private float Rspeed;
+    [SerializeField, Header("最初の位置")] Vector3 startPos;
 
     private float ww;
-    private float ww2;
     
     [Header("戻る場所")]
     public GameObject workObj1;
@@ -108,7 +105,9 @@ public class KraberEnemy : MonoBehaviour
         ////////////////
         ray.direction = transform.forward;
 
+        startPos = GetComponent<Transform>().position;//最初のポジション
 
+       
         //bullet.GetComponent<KraberBallet>();
         //target = Target.transform.position;
 
@@ -133,6 +132,15 @@ public class KraberEnemy : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+
+        //上に行かない処理
+        if(this.transform.position.y < startPos.y)
+        {
+            Vector3 resetPos = new Vector3(transform.position.x, startPos.y, transform.position.z);
+
+            this.transform.position = resetPos;
+        }
+
         this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
 
         //最大体力以上にはならない。
@@ -168,6 +176,7 @@ public class KraberEnemy : MonoBehaviour
         {
             MoveFlag = false;
             lineRenderer.enabled = false;
+            workFlag = true;
         }
         if (Physics.Raycast(ray, out hitRay, 40,enemyNumber))
         {
@@ -200,9 +209,11 @@ public class KraberEnemy : MonoBehaviour
         
         if (MoveFlag)
         {
+            //Debug.Log("ugoku---------------");
             this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
             if (dis <= keep)
             {
+                
                 transform.position -= transform.forward * speedLoc * Time.deltaTime;//後進(スピードが変わる)
             }
             if (dis <= social)
@@ -259,7 +270,10 @@ public class KraberEnemy : MonoBehaviour
     {
         return enemyHP;
     }
-
+    public bool DamageGet()
+    {
+        return DamageFlag;
+    }
 
     //(仮)指定されたtagに当たると消える
     private void OnTriggerEnter(Collider other)
@@ -279,11 +293,11 @@ public class KraberEnemy : MonoBehaviour
         if (other.gameObject.CompareTag("Wall")|| 
             other.gameObject.CompareTag("Enemy"))
         {
-            MoveFlag = false;
+            //MoveFlag = false;
             powerFlag = true;
         }
 
-        if (other.gameObject.CompareTag("Work"))
+        if (other.gameObject.CompareTag("Wall"))
         {
             workFlag = false;
         }

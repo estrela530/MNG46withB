@@ -1,13 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using UnityEngine.AI;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEditor;
 
-public class BossMove : MonoBehaviour
+public class PoisonBoss : MonoBehaviour
 {
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
@@ -19,14 +15,14 @@ public class BossMove : MonoBehaviour
 
     [SerializeField, Header("体力")]
     float enemyHP = 5;
-    
-    
+
+
     [Header("追う時のフラグ")]
-     public bool MoveFlag = true;//追う
+    public bool MoveFlag = true;//追う
 
     [Header("攻撃のフラグ")]
-     public bool AttackFlag;//
-    
+    public bool AttackFlag;//
+
     [SerializeField, Header("召喚するオブジェクト")]
     GameObject SummonEnemy;
 
@@ -61,8 +57,8 @@ public class BossMove : MonoBehaviour
     bool PawnFalg;
 
     [SerializeField] private float DeathTime = 0;
-    [SerializeField, Header("次のしーんに行くの開始までの時間")]  float NextTime;
-    [SerializeField,Header("次のシーンに行くフラグ")] bool NextFlag;
+    [SerializeField, Header("次のしーんに行くの開始までの時間")] float NextTime;
+    [SerializeField, Header("次のシーンに行くフラグ")] bool NextFlag;
 
     [SerializeField, Header("死んだ時のエフェクト")]
     private GameObject DeathEffect;
@@ -70,7 +66,7 @@ public class BossMove : MonoBehaviour
 
     int nextState = 0;
 
-    
+
 
     Renderer renderComponent;
     [SerializeField] float ColorInterval = 0.1f;
@@ -88,7 +84,7 @@ public class BossMove : MonoBehaviour
         SummonParticle = SummonEffect.GetComponent<ParticleSystem>();
 
         moveState = 0;
-        bossShot.GetComponent<BossShot>();
+        bossShot.GetComponent<PoisonBossShot>();
         PawnFalg = false;
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
@@ -99,7 +95,7 @@ public class BossMove : MonoBehaviour
 
         renderComponent = GetComponent<Renderer>();
 
-       
+
     }
 
     //中断できる処理のまとまり
@@ -139,7 +135,7 @@ public class BossMove : MonoBehaviour
 
         if (MoveFlag)
         {
-            
+
 
             //ターゲットにむく
             this.transform.LookAt(
@@ -151,11 +147,11 @@ public class BossMove : MonoBehaviour
             {
                 //撃つ、召喚どっちか? 1～2が撃つ、3～4が召喚
                 case 0:
-                    if (bossShot.GetComponent<BossShot>().shotCount >= 3)
+                    if (bossShot.GetComponent<PoisonBossShot>().shotCount >= 3)
                     {
                         moveState = 3;//召喚
                     }
-                    else if (bossShot.GetComponent<BossShot>().shotCount < 3)
+                    else if (bossShot.GetComponent<PoisonBossShot>().shotCount < 3)
                     {
                         moveState = 1;//
                     }
@@ -164,18 +160,18 @@ public class BossMove : MonoBehaviour
                 //見てるて撃つ
                 case 1:
                     AttackFlag = true;
-                   
+
                     moveState = 2;
 
                     break;
-                    
+
                 //戻す
                 case 2:
-                    
+
                     moveState = 0;
 
                     break;
-                    
+
                 case 3:
                     if (EnemyCount == MaxEnemyCount)
                     {
@@ -189,15 +185,11 @@ public class BossMove : MonoBehaviour
                         {
                             PawnTime = ResetTime;//1秒沖に生成
                             var sum = Instantiate(SummonEnemy,
-                                new Vector3(
-                                     SummonPosObj.transform.position.x, 
-                                     transform.position.y,
-                                     SummonPosObj.transform.position.z),
+                               SummonPosObj.transform.position,
                                 Quaternion.identity);
-
                             EnemyCount++;
                         }
-                        
+
                     }
 
                     //召喚のエフェクト
@@ -207,30 +199,33 @@ public class BossMove : MonoBehaviour
                         var eff = Instantiate(SummonEffect,
                                SummonPosObj.transform.position,
                                Quaternion.identity);
-                      
+
                         MagicCircle.SetActive(true);
-                        
+
+
                         EffectCount++;
                     }
                     break;
 
                 //戻す
                 case 4:
+                    Debug.Log("でたーーーーーー");
+                    bossShot.GetComponent<PoisonBossShot>().shotCount = 0;
+                    
+                    SummonParticle.Stop();//パーティクルを消す
+                                          
+                    MagicCircle.SetActive(false);
                     moveState = 0;
                     EnemyCount = 0;
-                    bossShot.GetComponent<BossShot>().shotCount = 0;
-
-                    SummonParticle.Stop();//パーティクルを消す
-
-                    MagicCircle.SetActive(false);
+                    EffectCount = 0;
                     break;
-                    
+
 
             }
             //this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-           
+
             dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
-            
+
         }
 
         switch (nextState)
@@ -250,7 +245,7 @@ public class BossMove : MonoBehaviour
 
                 nextState = 2;
 
-                bossShot.GetComponent<BossShot>().shotCount = 0;
+                bossShot.GetComponent<PoisonBossShot>().shotCount = 0;
                 moveState = 0;
                 EnemyCount = 5;
 
@@ -275,9 +270,9 @@ public class BossMove : MonoBehaviour
                 break;
 
         }
-       
+
     }
-    
+
 
     public int HpGet()
     {
@@ -297,7 +292,7 @@ public class BossMove : MonoBehaviour
             DamageFlag = true;
         }
 
-        if (other.gameObject.CompareTag("Player")|| (other.gameObject.CompareTag("Wall")))
+        if (other.gameObject.CompareTag("Player") || (other.gameObject.CompareTag("Wall")))
         {
             MoveFlag = true;
         }
@@ -308,5 +303,4 @@ public class BossMove : MonoBehaviour
         Renderer renderer = gameObject.GetComponent<Renderer>();
         DestroyImmediate(renderer.material); //マテリアルのメモリーを消す
     }
-
 }

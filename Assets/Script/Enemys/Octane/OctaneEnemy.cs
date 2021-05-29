@@ -123,6 +123,8 @@ public class OctaneEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        MagicCircle.SetActive(false);
+        MagicCircle.transform.position = SummonPosObj.transform.position; 
         anime = GetComponent<Animation>();
         AllMoveFlag = true;
 
@@ -317,8 +319,6 @@ public class OctaneEnemy : MonoBehaviour
                             //EffectCount = 0;
 
                         }
-                        //moveState = 6;
-
                     }
                     //召喚のエフェクト
                     if (EffectCount < 1)
@@ -436,7 +436,10 @@ public class OctaneEnemy : MonoBehaviour
     {
         return enemyHP;
     }
-
+    public bool DamageGet()
+    {
+        return DamageFlag;
+    }
     //(仮)指定されたtagに当たると消える
     private void OnTriggerEnter(Collider other)
     {
