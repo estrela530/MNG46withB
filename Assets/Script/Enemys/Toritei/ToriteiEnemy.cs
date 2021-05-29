@@ -123,8 +123,6 @@ public class ToriteiEnemy : MonoBehaviour
 
         if (Physics.Raycast(ray, out hitRay, 20, enemyNumber))
         {
-            
-            
             if (hitRay.collider.gameObject.CompareTag("Player"))
             {
                 MoveFlag = true;

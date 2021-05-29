@@ -80,8 +80,8 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField, Header("次のしーんに行くの開始までの時間")]
     float NextTime;
 
-    [SerializeField, Header("次のシーンに行くフラグ")]
-    bool NextFlag;
+    //[SerializeField, Header("次のシーンに行くフラグ")]
+    //bool NextFlag;
 
     int nextState = 0;
 
@@ -132,7 +132,7 @@ public class OctaneEnemy : MonoBehaviour
 
         BossHpSlider.SetActive(false);
 
-        NextFlag = false;
+        //NextFlag = false;
 
         DeathParticle = DeathEffect.GetComponent<ParticleSystem>();
         SummonParticle = SummonEffect.GetComponent<ParticleSystem>();
