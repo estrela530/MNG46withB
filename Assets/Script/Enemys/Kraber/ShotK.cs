@@ -15,7 +15,6 @@ public class ShotK : MonoBehaviour
 
     public float shotTime;
     private float ss;
-    [SerializeField] int ShotCount = 3;
     private float dis;//プレイヤーとの距離
     private GameObject Target;//追尾する相手
     //private List<GameObject> UpBulletList;
@@ -30,7 +29,7 @@ public class ShotK : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         ss += Time.deltaTime;
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾

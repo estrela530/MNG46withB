@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotPower : MonoBehaviour
+public class KraberBossShot : MonoBehaviour
 {
+    public GameObject Bullet;
     public GameObject powerUpBullet;
 
     public GameObject Move;
@@ -25,12 +26,17 @@ public class ShotPower : MonoBehaviour
     Vector3 direction;
     Vector3 hitPosition;
 
+    public int shotCount;//撃った回数
+
+    [SerializeField, Header("索敵の長さ")] float searchRange = 30;
+    //private List<GameObject> UpBulletList;
+
     // Start is called before the first frame update
     void Start()
     {
         ss = 1;
         Target = GameObject.FindGameObjectWithTag("Player");//追尾させたいオブジェクトを書く
-        Move.GetComponent<KraberEnemy>();
+        Move.GetComponent<KraberBoss>();
 
         //描画距離と方向の乗算
         direction = -transform.forward * 20;
@@ -46,14 +52,15 @@ public class ShotPower : MonoBehaviour
 
         //ラインレンダラーの色
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = Color.red;//初めの色
-        lineRenderer.endColor = Color.red;//終わりの色
+        lineRenderer.startColor = Color.green;//初めの色
+        lineRenderer.endColor = Color.green;//終わりの色
 
         lineRenderer.startWidth = 0.5f;
         lineRenderer.endWidth = 0.5f;
 
         //変えるかも?
         ray.direction = transform.forward;
+        //UpBulletList = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -63,35 +70,23 @@ public class ShotPower : MonoBehaviour
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
         Random.Range(min, max);
-        
 
         ray.origin = this.transform.position;//自分の位置のレイ
 
         ray.direction = transform.forward;//自分の向きのレイ
 
-        
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
+        Ray();
 
-       
-
-        if (Move.GetComponent<KraberEnemy>().MoveFlag == false)
+        if (Move.GetComponent<KraberBoss>().pawerFlag == true)
         {
-            ss = 0;
-            lineRenderer.enabled = false;
-        }
-
-        if (Move.GetComponent<KraberEnemy>().MoveFlag == true)
-        {
+            
             if (ss >= intarval)
             {
-                Power();
                 ss = 0;
+                PowerShot();
+                
             }
 
-        }
-
-        if (Move.GetComponent<KraberEnemy>().powerFlag == true)
-        {
             //攻撃する前に色を変える
             if (ss >= intarval - 1)
             {
@@ -100,30 +95,80 @@ public class ShotPower : MonoBehaviour
                 lineRenderer.startColor = Color.red;//初めの色
                 lineRenderer.endColor = Color.red;//終わりの色
             }
+        }
 
-            lineRenderer.SetPosition(0, this.transform.position);
+        if (Move.GetComponent<KraberBoss>().AttackFlag == true)
+        {
+            if (ss >= intarval)
+            {
+                Shot();
+                ss = 0;
+            }
+
+            //攻撃する前に色を変える
+            if (ss >= intarval - 1)
+            {
+                //ラインレンダラーの色
+                lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+                lineRenderer.startColor = Color.red;//初めの色
+                lineRenderer.endColor = Color.red;//終わりの色
+
+            }
+        }
+      
+
+    }
+    void Ray()
+    {
+        lineRenderer.SetPosition(0, this.transform.position);
+
+        if (!Physics.Raycast(ray, out hitRay, searchRange, enemyNumber))
+        {
+            lineRenderer.enabled = false;
+        }
+        
+        //レイの処理
+        if (Physics.Raycast(ray, out hitRay, searchRange, enemyNumber))
+        {
 
             lineRenderer.enabled = true;
 
-            if (Physics.Raycast(ray, out hitRay, 20, enemyNumber))
-            {
-                hitPosition = hitRay.point;
-            }
-            else
-            {
-                hitPosition = this.transform.position;
-            }
-
-            lineRenderer.SetPosition(1, hitPosition);
-
+            lineRenderer.SetPosition(1, hitRay.point);
         }
-        
+
+        ray.origin = this.transform.position;//自分の位置のレイ
+
+        ray.direction = transform.forward;//自分の向きのレイ
+
+        //Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
     }
-    
-    void Power()
+
+    void Shot()
     {
-        if (Move.GetComponent<KraberEnemy>().powerFlag == true)
+        shotCount = shotCount + 1;
+        if (Move.GetComponent<KraberBoss>().AttackFlag == true)
         {
+            
+            Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
+            GameObject shot = Instantiate(Bullet, transform.position, transform.rotation);
+            Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
+            //rigidbody.AddForce(transform.forward * shotTime);
+            rigidbody.AddForce(ff * shotTime);
+
+            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            lineRenderer.startColor = Color.green;//初めの色
+            lineRenderer.endColor = Color.green;//終わりの色
+        }
+    }
+
+
+
+    void PowerShot()
+    {
+        shotCount = shotCount + 1;
+        if (Move.GetComponent<KraberBoss>().pawerFlag == true)
+        {
+            
             Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
             GameObject shot = Instantiate(powerUpBullet, transform.position, transform.rotation);
             Rigidbody rigidbody = shot.GetComponent<Rigidbody>();
@@ -134,5 +179,6 @@ public class ShotPower : MonoBehaviour
             lineRenderer.startColor = Color.green;//初めの色
             lineRenderer.endColor = Color.green;//終わりの色
         }
+
     }
 }

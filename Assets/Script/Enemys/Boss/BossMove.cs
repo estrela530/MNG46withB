@@ -57,9 +57,7 @@ public class BossMove : MonoBehaviour
     GameObject bossShot;
 
     public int moveState;
-
-    bool PawnFalg;
-
+    
     [SerializeField] private float DeathTime = 0;
     [SerializeField, Header("次のしーんに行くの開始までの時間")]  float NextTime;
     [SerializeField,Header("次のシーンに行くフラグ")] bool NextFlag;
@@ -89,7 +87,6 @@ public class BossMove : MonoBehaviour
 
         moveState = 0;
         bossShot.GetComponent<BossShot>();
-        PawnFalg = false;
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();

@@ -15,7 +15,6 @@ public class ToriteiShot : MonoBehaviour
 
     public float shotTime;
     private float ss;
-    [SerializeField] int ShotCount = 3;
     private float dis;//プレイヤーとの距離
     private GameObject Target;//追尾する相手
 

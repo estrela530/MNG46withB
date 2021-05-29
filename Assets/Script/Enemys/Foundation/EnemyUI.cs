@@ -22,6 +22,9 @@ public class EnemyUI : MonoBehaviour
     private BossMove Boss;
     private PawnEnemy Pawn;
     private ScorpionBoss Scorpion;
+    private ToriteiEnemy Toritei;
+    private ToriteiBoss ToriteiBoss;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +37,20 @@ public class EnemyUI : MonoBehaviour
             Scorpion = this.Enemy.GetComponent<ScorpionBoss>();
             slider.maxValue = slider.value = Scorpion.HpGet();
             currHp = (int)Scorpion.HpGet();
+        }
+
+        if (this.Enemy.GetComponent<ToriteiEnemy>())
+        {
+            Toritei = this.Enemy.GetComponent<ToriteiEnemy>();
+            slider.maxValue = slider.value = Toritei.HpGet();
+            currHp = (int)Toritei.HpGet();
+        }
+
+        if (this.Enemy.GetComponent<ToriteiBoss>())
+        {
+            ToriteiBoss = this.Enemy.GetComponent<ToriteiBoss>();
+            slider.maxValue = slider.value = ToriteiBoss.HpGet();
+            currHp = (int)ToriteiBoss.HpGet();
         }
 
         if (this.Enemy.GetComponent<OctaneNormal>())
@@ -155,6 +172,18 @@ public class EnemyUI : MonoBehaviour
         {
             slider.value = Scorpion.HpGet();
             currHp = (int)Scorpion.HpGet();
+        }
+
+        else if (Enemy.GetComponent<ToriteiEnemy>())
+        {
+            slider.value = Toritei.HpGet();
+            currHp = (int)Toritei.HpGet();
+        }
+
+        else if (Enemy.GetComponent<ToriteiBoss>())
+        {
+            slider.value = ToriteiBoss.HpGet();
+            currHp = (int)ToriteiBoss.HpGet();
         }
 
         transform.rotation = Camera.main.transform.rotation;
