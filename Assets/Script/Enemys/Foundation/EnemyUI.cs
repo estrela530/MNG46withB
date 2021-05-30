@@ -24,6 +24,7 @@ public class EnemyUI : MonoBehaviour
     private ScorpionBoss Scorpion;
     private ToriteiEnemy Toritei;
     private ToriteiBoss ToriteiBoss;
+    private KeyEnemy Key;
 
 
     // Start is called before the first frame update
@@ -109,6 +110,13 @@ public class EnemyUI : MonoBehaviour
             currHp = (int)Pawn.HpGet();
         }
 
+        if (this.Enemy.GetComponent<KeyEnemy>())
+        {
+            Key = this.Enemy.GetComponent<KeyEnemy>();
+            slider.maxValue = slider.value = Key.HpGet();
+            currHp = (int)Key.HpGet();
+        }
+
         //enemy = GameObject.Find("Enemy").GetComponent<BossMove>();
 
         //slider.maxValue = slider.value = enemy.HpGet();
@@ -184,6 +192,12 @@ public class EnemyUI : MonoBehaviour
         {
             slider.value = ToriteiBoss.HpGet();
             currHp = (int)ToriteiBoss.HpGet();
+        }
+
+        else if (Enemy.GetComponent<KeyEnemy>())
+        {
+            slider.value = Key.HpGet();
+            currHp = (int)Key.HpGet();
         }
 
         transform.rotation = Camera.main.transform.rotation;

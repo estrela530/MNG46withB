@@ -99,13 +99,12 @@ public class KeyEnemy : MonoBehaviour
         if(enemyHP >= 1)
         {
             KeyObject.SetActive(false);
-            Debug.Log("kiiiiiiiii");
         }
         //死んだら鍵を出す
         if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
         {
             KeyObject.transform.position = this.transform.position;
-            //KeyObject.SetActive(true);
+            KeyObject.SetActive(true);
             dethTime += Time.deltaTime;
             if (dethTime>2)
             {
@@ -114,7 +113,8 @@ public class KeyEnemy : MonoBehaviour
                 var sum = Instantiate(DeathEffect,
                                this.transform.position,
                                Quaternion.identity);
-                
+
+                Destroy(this.gameObject);
 
                 gameObject.SetActive(false);//非表示
                 dethTime = 0;
