@@ -49,6 +49,12 @@ public class ToriteiEnemy : MonoBehaviour
     LineRenderer lineRenderer;
     int enemyNumber = (1 << 13 | 1 << 8);
 
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,6 +89,7 @@ public class ToriteiEnemy : MonoBehaviour
         //変えるかも?
         ray.direction = transform.forward;
 
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
     IEnumerator WaitForIt()
@@ -178,6 +185,15 @@ public class ToriteiEnemy : MonoBehaviour
                     DeathTime = 0;
 
                     deathState = 2;
+                }
+
+                if (DeathTime > 0.1f)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
                 }
                 break;
 

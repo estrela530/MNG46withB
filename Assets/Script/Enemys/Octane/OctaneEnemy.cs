@@ -119,7 +119,11 @@ public class OctaneEnemy : MonoBehaviour
     float DeathEffectTime = 1;
 
     int DeathEffectCount =0;
-    
+
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
+
     // Start is called before the first frame update
     void Start()
     {
@@ -166,7 +170,8 @@ public class OctaneEnemy : MonoBehaviour
         //変えるかも?
         ray.direction = transform.forward;
 
-       
+        audioSource = GetComponent<AudioSource>();//SE
+
     }
     //中断できる処理のまとまり
     IEnumerator WaitForIt()
@@ -398,6 +403,11 @@ public class OctaneEnemy : MonoBehaviour
                              this.transform.position,
                              Quaternion.identity);
                         DeathEffectCount++;
+                    }
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
                     }
                 }
                 

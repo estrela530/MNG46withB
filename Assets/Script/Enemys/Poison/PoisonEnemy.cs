@@ -58,8 +58,10 @@ public class PoisonEnemy : MonoBehaviour
     private GameObject[] child;
 
     GameObject stageMove1;
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
 
-    
     void Start()
     {
         MaxEnemyHP = enemyHP;
@@ -99,6 +101,7 @@ public class PoisonEnemy : MonoBehaviour
         deathState = 0;
         isDeadFlag = false;
 
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
 
@@ -224,6 +227,14 @@ public class PoisonEnemy : MonoBehaviour
                 {
                     deathTime = 0;
                     deathState = 2;
+                }
+                if (deathTime > deathEffectTime - 0.1f)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
                 }
                 break;
 

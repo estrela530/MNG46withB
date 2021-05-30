@@ -80,6 +80,10 @@ public class ToriteiBoss : MonoBehaviour
 
     [SerializeField] Animation anime;
 
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
+
     void Start()
     {
         anime = GetComponent<Animation>();
@@ -101,6 +105,7 @@ public class ToriteiBoss : MonoBehaviour
 
         BossHP.SetActive(false);
 
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
     void OnEnable()
@@ -249,9 +254,7 @@ public class ToriteiBoss : MonoBehaviour
 
             case 1:
                 anime.Play();
-                var sum = Instantiate(DeathEffect,
-                           this.transform.position,
-                           Quaternion.identity);
+                
 
                 nextState = 2;
 
@@ -270,7 +273,20 @@ public class ToriteiBoss : MonoBehaviour
 
                     nextState = 3;
                 }
-
+                if (DeathTime > NextTime - 1)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
+                    if(EffectCount<1)
+                    {
+                        var sum = Instantiate(DeathEffect,
+                           this.transform.position,
+                           Quaternion.identity);
+                    }
+                }
 
                 break;
 

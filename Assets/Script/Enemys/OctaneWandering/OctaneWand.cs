@@ -88,6 +88,10 @@ public class OctaneWand : MonoBehaviour
     [SerializeField, Header("最初の位置")] Vector3 startPos;
 
     // Start is called before the first frame update
+
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
     void Start()
     {
         MaxEnemyHP = enemyHP;
@@ -137,7 +141,7 @@ public class OctaneWand : MonoBehaviour
 
         startPos = GetComponent<Transform>().position;//最初のポジション
 
-
+        audioSource = GetComponent<AudioSource>();//SE
     }
     IEnumerator Blink()
     {
@@ -388,6 +392,14 @@ public class OctaneWand : MonoBehaviour
                 {
                     deathTime = 0;
                     deathState = 2;
+                }
+                if (deathTime > deathEffectTime - 0.1f)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
                 }
                 break;
 

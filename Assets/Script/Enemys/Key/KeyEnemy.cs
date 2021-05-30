@@ -75,6 +75,11 @@ public class KeyEnemy : MonoBehaviour
     private int childCount;//子どもの数
     private GameObject[] child;          //
 
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
+
+
     void Start()
     {
         //Target = GameObject.Find("Player");//追尾させたいオブジェクトを書く
@@ -100,6 +105,8 @@ public class KeyEnemy : MonoBehaviour
         deathState = 0;
         isDeadFlag = false;
         KeyObject.SetActive(false);
+
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
     IEnumerator WaitForIt()
@@ -252,6 +259,14 @@ public class KeyEnemy : MonoBehaviour
                 {
                     deathTime = 0;
                     deathState = 2;
+                }
+                if (deathTime > deathEffectTime - 0.1f)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
                 }
                 break;
 

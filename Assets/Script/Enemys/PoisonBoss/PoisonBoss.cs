@@ -78,7 +78,9 @@ public class PoisonBoss : MonoBehaviour
 
     [SerializeField] GameObject BossHP;
 
-
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
     void Start()
     {
         anime = GetComponent<Animation>();
@@ -99,7 +101,7 @@ public class PoisonBoss : MonoBehaviour
         renderComponent = GetComponent<Renderer>();
 
         BossHP.SetActive(false);
-
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
     void OnEnable()
@@ -270,7 +272,14 @@ public class PoisonBoss : MonoBehaviour
 
                     nextState = 3;
                 }
-
+                if (DeathTime > NextTime - 1)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
+                }
 
                 break;
 

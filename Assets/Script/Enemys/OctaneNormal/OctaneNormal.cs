@@ -68,6 +68,10 @@ public class OctaneNormal : MonoBehaviour
 
     [SerializeField, Header("最初の位置")] Vector3 startPos;
 
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
+
     // Start is called before the first frame update
     void Start()
     {
@@ -116,6 +120,8 @@ public class OctaneNormal : MonoBehaviour
         isDeadFlag = false;
 
         startPos = GetComponent<Transform>().position;//最初のポジション
+
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
     // Update is called once per frame
@@ -284,6 +290,15 @@ public class OctaneNormal : MonoBehaviour
                 {
                     deathTime = 0;
                     deathState = 2;
+                }
+
+                if (deathTime > deathEffectTime - 0.1f)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
                 }
                 break;
 

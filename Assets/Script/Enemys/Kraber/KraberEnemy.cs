@@ -92,7 +92,12 @@ public class KraberEnemy : MonoBehaviour
     [SerializeField, Tooltip("死亡エフェクトがでるまでの時間")]
     private float deathEffectTime = 1.0f;
     private int childCount;//子どもの数
-    private GameObject[] child;          //
+    private GameObject[] child;
+
+
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
 
 
     void Start()
@@ -151,7 +156,7 @@ public class KraberEnemy : MonoBehaviour
 
         //renderComponent = this.gameObject.transform.GetChild(0).GetComponent<Renderer>();
 
-        
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
    
@@ -338,12 +343,22 @@ public class KraberEnemy : MonoBehaviour
                     this.transform.position = new Vector3(this.transform.position.x, topHeightPoint, this.transform.position.z);
                 }
 
+               
+               
                 //一定時間経過後、状態遷移
                 deathTime += Time.deltaTime;
                 if (deathTime > deathEffectTime)
                 {
                     deathTime = 0;
                     deathState = 2;
+                }
+                if (deathTime > deathEffectTime-0.1f)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
                 }
                 break;
 
@@ -354,8 +369,7 @@ public class KraberEnemy : MonoBehaviour
                     child[i] = gameObject.transform.GetChild(i).gameObject;
                     child[i].SetActive(false);
                 }
-
-                //パーティクルオブジェクトを生成
+               
                 var sum = Instantiate(deathEffect, this.transform.position, Quaternion.identity);
 
                 //状態遷移

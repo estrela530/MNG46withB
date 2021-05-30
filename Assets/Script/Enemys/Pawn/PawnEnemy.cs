@@ -43,6 +43,10 @@ public class PawnEnemy : MonoBehaviour
     [SerializeField, Header("ダメージ受けた時")]
     public bool DamageFlag;
 
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
+
     //Renderer renderComponent;
 
     void Start()
@@ -70,6 +74,8 @@ public class PawnEnemy : MonoBehaviour
         {
             child[i] = gameObject.transform.GetChild(i).gameObject;
         }
+
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
 
@@ -150,6 +156,14 @@ public class PawnEnemy : MonoBehaviour
                 {
                     deathTime = 0;
                     deathState = 2;
+                }
+                if (deathTime > deathEffectTime - 0.1f)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
                 }
                 break;
 

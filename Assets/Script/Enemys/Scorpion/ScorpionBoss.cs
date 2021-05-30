@@ -120,6 +120,9 @@ public class ScorpionBoss : MonoBehaviour
     [SerializeField, Header("死ぬエフェがでるまでの時間")]
     float DeathEffectTime = 1;
 
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
     // Start is called before the first frame update
     void Start()
     {
@@ -147,6 +150,8 @@ public class ScorpionBoss : MonoBehaviour
         stageMove1.GetComponent<StageMove1>();
         Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody>();
+
+        audioSource = GetComponent<AudioSource>();//SE
         //color = GetComponent<Renderer>().material.color;
 
         //ray = new Ray();
@@ -442,6 +447,15 @@ public class ScorpionBoss : MonoBehaviour
                     DeathTime = 0;
 
                     nextState = 3;
+                }
+
+                if (DeathTime > NextTime-1)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
                 }
 
 

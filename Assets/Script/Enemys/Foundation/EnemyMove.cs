@@ -183,6 +183,7 @@ public class EnemyMove : MonoBehaviour
                 if (enemyHP <= 0 )
                 {
                     deathState = 1;
+                    audioSource.PlayOneShot(sibouSE);//SEを鳴らす
                 }
 
                 break;
@@ -195,23 +196,16 @@ public class EnemyMove : MonoBehaviour
                 DeathTime += Time.deltaTime;
                 if (DeathTime > 1)
                 {
-
+                    
                     DeathTime = 0;
 
                     deathState = 2;
                 }
-                break;
 
-            case 2:
-                for (int i = 0; i < partsCount; i++)
-                {
-                    enemyParts[i] = gameObject.transform.GetChild(i).gameObject;
-                    enemyParts[i].SetActive(false);
-                }
-
+                
+                   
                 if (seCount < 1)
                 {
-                    audioSource.PlayOneShot(sibouSE);//SEを鳴らす
                     seCount++;
                 }
 
@@ -223,6 +217,19 @@ public class EnemyMove : MonoBehaviour
                          Quaternion.identity);
                     EffectCount++;
                 }
+
+                break;
+
+            case 2:
+                for (int i = 0; i < partsCount; i++)
+                {
+                    enemyParts[i] = gameObject.transform.GetChild(i).gameObject;
+                    enemyParts[i].SetActive(false);
+                }
+
+                
+
+               
 
                 break;
 

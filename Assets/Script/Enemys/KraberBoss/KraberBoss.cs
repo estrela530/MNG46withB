@@ -82,6 +82,10 @@ public class KraberBoss : MonoBehaviour
 
     [SerializeField] Animation anime;
 
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;//
+
     void Start()
     {
         anime = GetComponent<Animation>();
@@ -102,6 +106,8 @@ public class KraberBoss : MonoBehaviour
         renderComponent = GetComponent<Renderer>();
 
         BossHP.SetActive(false);
+
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
     //中断できる処理のまとまり
@@ -264,10 +270,7 @@ public class KraberBoss : MonoBehaviour
 
             case 1:
                 anime.Play();
-                var sum = Instantiate(DeathEffect,
-                           this.transform.position,
-                           Quaternion.identity);
-
+                
                 nextState = 2;
 
                 bossShot.GetComponent<KraberBossShot>().shotCount = 0;
@@ -284,6 +287,16 @@ public class KraberBoss : MonoBehaviour
                     DeathTime = 0;
 
                     nextState = 3;
+                }
+
+                if (DeathTime > NextTime-0.1f)
+                {
+                    if (seCount < 1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
+
                 }
 
 
