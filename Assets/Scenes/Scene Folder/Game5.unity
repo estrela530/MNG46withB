@@ -683,12 +683,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1037724019}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1200551156 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1271457571477623286, guid: 34d54ffb396266d4ca086a17e8a6c85c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1431334808}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1229159454 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1375273595374159038, guid: 4353200617b2b98419fb5db0ece18422,
@@ -841,7 +835,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Enemy
       value: 
-      objectReference: {fileID: 1200551156}
+      objectReference: {fileID: 0}
     - target: {fileID: 1375273595374159038, guid: 4353200617b2b98419fb5db0ece18422,
         type: 3}
       propertyPath: m_IsActive
@@ -1130,6 +1124,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8048108607317237931, guid: 34d54ffb396266d4ca086a17e8a6c85c,
+        type: 3}
+      propertyPath: BossHP
+      value: 
+      objectReference: {fileID: 1229159454}
     - target: {fileID: 8234174643529653011, guid: 34d54ffb396266d4ca086a17e8a6c85c,
         type: 3}
       propertyPath: m_AnchorMax.x

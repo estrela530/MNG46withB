@@ -76,6 +76,9 @@ public class PoisonBoss : MonoBehaviour
 
     [SerializeField] Animation anime;
 
+    [SerializeField] GameObject BossHP;
+
+
     void Start()
     {
         anime = GetComponent<Animation>();
@@ -95,8 +98,15 @@ public class PoisonBoss : MonoBehaviour
 
         renderComponent = GetComponent<Renderer>();
 
+        BossHP.SetActive(false);
 
     }
+
+    void OnEnable()
+    {
+        BossHP.SetActive(true);
+    }
+
 
     //中断できる処理のまとまり
     //IEnumerator Blink()

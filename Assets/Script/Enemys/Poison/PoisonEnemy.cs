@@ -15,7 +15,6 @@ public class PoisonEnemy : MonoBehaviour
 
     [SerializeField, Header("体力")] float enemyHP;
     [SerializeField, Header("最大体力")] float MaxEnemyHP;
-    [SerializeField] GameObject BossHP;
 
     Rigidbody rigid;
     
@@ -100,14 +99,8 @@ public class PoisonEnemy : MonoBehaviour
         deathState = 0;
         isDeadFlag = false;
 
-        BossHP.SetActive(false);
-
     }
 
-    void OnEnable()
-    {
-        BossHP.SetActive(true);
-    }
 
     //中断できる処理のまとまり
     //IEnumerator Blink()
