@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class FungusController
+public class FungusController : MonoBehaviour
 {
     void LoadScene()
     {
