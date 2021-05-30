@@ -14,7 +14,7 @@ public class ShotK : MonoBehaviour
     public float max = 100;
 
     public float shotTime;
-    private float ss;
+    public float ss;
     private float dis;//プレイヤーとの距離
     private GameObject Target;//追尾する相手
     //private List<GameObject> UpBulletList;
@@ -76,22 +76,7 @@ public class ShotK : MonoBehaviour
             rigidbody.AddForce(ff * shotTime);
         }
 
-        //if (Move.GetComponent<KraberEnemy>().MoveFlag == true)
-        //{
-        //    Vector3 ff = new Vector3(dis, 0, dis);
-        //    if (1 < ShotCount)
-        //    {
-        //        for (int i = 0; i < ShotCount; i++)
-        //        {
-
-        //            //Rigidbody rigidbody = ShotUp.GetComponent<Rigidbody>();
-        //            //rigidbody.AddForce(ff * shotTime);
-        //        }
-        //    }
-
-
-        //    //rigidbody.AddForce(transform.forward * shotTime);
-        //}
+      
     }
 
 

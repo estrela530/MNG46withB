@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8124408390823980411}
   - component: {fileID: 5639378911248524715}
   - component: {fileID: 5391894504026093183}
-  m_Layer: 0
+  - component: {fileID: 729259184224516657}
+  m_Layer: 9
   m_Name: ChickenEnemy_4:Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &729259184224516657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368028149086919171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 7952009890456609390}
 --- !u!1 &2296022552568414697
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +104,7 @@ GameObject:
   - component: {fileID: 8736107127158518338}
   - component: {fileID: 5980659332566570196}
   - component: {fileID: 4366655857558077115}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: drop2:Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -554,7 +568,8 @@ GameObject:
   - component: {fileID: 3206497785440544270}
   - component: {fileID: 4794454007194949987}
   - component: {fileID: 2980394144321870302}
-  m_Layer: 0
+  - component: {fileID: 4721900144492663276}
+  m_Layer: 9
   m_Name: ChickenEnemy_1:Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -622,6 +637,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &4721900144492663276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4315842048885689277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 7952009890456609390}
 --- !u!1 &5093547983265885486
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,9 +659,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4822329938400648186}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: KeyEnemys
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -665,7 +693,7 @@ GameObject:
   - component: {fileID: 4999369241218193629}
   - component: {fileID: 3064292985118727559}
   - component: {fileID: 537752257672960623}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -723,7 +751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7752603265275901889}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Parts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -761,7 +789,7 @@ GameObject:
   - component: {fileID: 9091954362273311305}
   - component: {fileID: 603841404619492289}
   - component: {fileID: 1101410835245783923}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ChickenEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -849,8 +877,12 @@ MonoBehaviour:
   PawnCount: 0
   MaxPawnCount: 1
   KeyObject: {fileID: 5632458847502418535}
-  DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
+  DamageFlag: 0
+  deathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
     type: 3}
+  jumpPower: 18
+  topHeightPoint: 5
+  deathEffectTime: 1
 --- !u!23 &1101410835245783923
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -901,7 +933,8 @@ GameObject:
   - component: {fileID: 6154575962928257724}
   - component: {fileID: 7622407473583490615}
   - component: {fileID: 6282377718990497009}
-  m_Layer: 0
+  - component: {fileID: 5583759863839709150}
+  m_Layer: 9
   m_Name: ChickenEnemy_0:Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -969,3 +1002,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5583759863839709150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888135188940363846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 7952009890456609390}
