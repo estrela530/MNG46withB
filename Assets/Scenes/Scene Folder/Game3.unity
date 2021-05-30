@@ -583,7 +583,7 @@ PrefabInstance:
     - target: {fileID: 1375273595374159038, guid: 4353200617b2b98419fb5db0ece18422,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5032999031589378611, guid: 4353200617b2b98419fb5db0ece18422,
         type: 3}
@@ -597,6 +597,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4353200617b2b98419fb5db0ece18422, type: 3}
+--- !u!1 &422605062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1375273595374159038, guid: 4353200617b2b98419fb5db0ece18422,
+    type: 3}
+  m_PrefabInstance: {fileID: 422605061}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &633953031
 GameObject:
   m_ObjectHideFlags: 0
@@ -2052,6 +2058,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7836392302394334428, guid: 108e4018dc927254cbfe5a84575a9d22,
+        type: 3}
+      propertyPath: BossHP
+      value: 
+      objectReference: {fileID: 422605062}
     - target: {fileID: 7927410786150424930, guid: 108e4018dc927254cbfe5a84575a9d22,
         type: 3}
       propertyPath: m_AnchorMax.x

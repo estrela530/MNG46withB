@@ -17,6 +17,8 @@ public class ToriteiBoss : MonoBehaviour
     [SerializeField, Header("体力")]
     float enemyHP = 5;
 
+    [SerializeField] GameObject BossHP;
+
 
     [Header("追う時のフラグ")]
     public bool MoveFlag = true;//追う
@@ -97,7 +99,13 @@ public class ToriteiBoss : MonoBehaviour
 
         renderComponent = GetComponent<Renderer>();
 
+        BossHP.SetActive(false);
 
+    }
+
+    void OnEnable()
+    {
+        BossHP.SetActive(true);
     }
 
     //中断できる処理のまとまり
