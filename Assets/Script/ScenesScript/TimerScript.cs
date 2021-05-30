@@ -49,11 +49,11 @@ public class TimerScript : MonoBehaviour
         }
         else if (SceneNumberData.numberData.referer == "Game3")
         {
-            missionClearCount = 7;
+            missionClearCount = 19;
         }
         else if (SceneNumberData.numberData.referer == "Game4")
         {
-            missionClearCount = 7;
+            missionClearCount = 27;
         }
         else if (SceneNumberData.numberData.referer == "Game5")
         {

@@ -86,8 +86,8 @@ public class MissionManagerScript : MonoBehaviour
             //ステージ3なら
             else if (SceneNumberData.numberData.referer == "Game3")
             {
-                //？？分以内だったらミッションクリア
-                if (clearSeconds < 1)
+                //4分以内だったらミッションクリア
+                if (clearSeconds < 4)
                 {
                     Mission2.SetActive(false);
                     Mission2C.SetActive(true);
@@ -96,8 +96,8 @@ public class MissionManagerScript : MonoBehaviour
             //ステージ4なら
             else if (SceneNumberData.numberData.referer == "Game4")
             {
-                //？？分以内だったらミッションクリア
-                if (clearSeconds < 1)
+                //7分以内だったらミッションクリア
+                if (clearSeconds < 7)
                 {
                     Mission2.SetActive(false);
                     Mission2C.SetActive(true);
