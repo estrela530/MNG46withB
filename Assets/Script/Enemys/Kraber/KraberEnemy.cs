@@ -291,7 +291,7 @@ public class KraberEnemy : MonoBehaviour
         {
             case 0:
                 //体力がなくなったら死亡&状態遷移
-                if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
+                if (enemyHP <= 0 )
                 {
                     deathState = 1;
                     isDeadFlag = true;

@@ -173,7 +173,7 @@ public class EnemyMove : MonoBehaviour
         {
             case 0:
                
-                if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
+                if (enemyHP <= 0 )
                 {
                     deathState = 1;
                 }
