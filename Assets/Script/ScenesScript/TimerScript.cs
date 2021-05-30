@@ -57,11 +57,11 @@ public class TimerScript : MonoBehaviour
         }
         else if (SceneNumberData.numberData.referer == "Game5")
         {
-            missionClearCount = 7;
+            missionClearCount = 15;
         }
         else if (SceneNumberData.numberData.referer == "Game6")
         {
-            missionClearCount = 7;
+            missionClearCount = 44;
         }
 
         seconds += Time.deltaTime;
