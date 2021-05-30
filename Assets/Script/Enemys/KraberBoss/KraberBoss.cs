@@ -103,14 +103,14 @@ public class KraberBoss : MonoBehaviour
     }
 
     //中断できる処理のまとまり
-    IEnumerator Blink()
+    IEnumerator WaitForIt()
     {
-        while (true)
-        {
-            renderComponent.enabled = !renderComponent.enabled;
-            //何フレームとめる
-            yield return new WaitForSeconds(ColorInterval);
-        }
+        // 1秒間処理を止める
+        yield return new WaitForSeconds(1);
+
+        // １秒後ダメージフラグをfalseにして点滅を戻す
+        DamageFlag = false;
+        gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
     }
 
     // Update is called once per frame
@@ -119,21 +119,11 @@ public class KraberBoss : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
-        //ダメージ演出
         if (enemyHP > 0)
         {
-            //ダメージ
             if (DamageFlag)
             {
-                DamageTime += Time.deltaTime;
-                StartCoroutine("Blink");
-                if (DamageTime > 1)
-                {
-                    DamageTime = 0;
-                    StopCoroutine("Blink");
-                    renderComponent.enabled = true;
-                    DamageFlag = false;
-                }
+                StartCoroutine("WaitForIt");
             }
         }
 

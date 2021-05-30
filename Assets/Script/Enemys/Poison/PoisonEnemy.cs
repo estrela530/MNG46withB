@@ -139,7 +139,7 @@ public class PoisonEnemy : MonoBehaviour
                 {
                     DamageTime = 0;
                     //StopCoroutine("Blink");
-                    renderComponent.enabled = true;
+                    //renderComponent.enabled = true;
                     DamageFlag = false;
                 }
             }

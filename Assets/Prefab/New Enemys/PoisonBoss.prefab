@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 363008778441302016}
   - component: {fileID: 7706584493419559567}
   - component: {fileID: 6437091448463531127}
+  - component: {fileID: 2741900045353142850}
   m_Layer: 9
   m_Name: BirdEnemy_12:Mesh
   m_TagString: Untagged
@@ -421,6 +422,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &2741900045353142850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3697676393078412929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 1923690335242985999}
 --- !u!1 &3853469636579898733
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +446,7 @@ GameObject:
   - component: {fileID: 7385945998362186768}
   - component: {fileID: 8480798247919680288}
   - component: {fileID: 1660664541984200626}
+  - component: {fileID: 4465707669305901166}
   m_Layer: 9
   m_Name: BirdEnemy_13:Mesh
   m_TagString: Untagged
@@ -500,6 +515,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &4465707669305901166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3853469636579898733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 1923690335242985999}
 --- !u!1 &6424849013296061809
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +539,7 @@ GameObject:
   - component: {fileID: 2800362839436285046}
   - component: {fileID: 9089155854225056559}
   - component: {fileID: 2873938451081312591}
+  - component: {fileID: 8741262339997427131}
   m_Layer: 9
   m_Name: BirdEnemy_2:Mesh
   m_TagString: Untagged
@@ -579,6 +608,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8741262339997427131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6424849013296061809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 1923690335242985999}
 --- !u!1 &6843776805240587943
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,15 +926,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cc0ef6f84c3d5247a107097a5d48b20, type: 3}
---- !u!224 &6265961783871496037 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1057780151830020636, guid: 6cc0ef6f84c3d5247a107097a5d48b20,
-    type: 3}
-  m_PrefabInstance: {fileID: 6366073895574625657}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6265961783871496033 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1057780151830020632, guid: 6cc0ef6f84c3d5247a107097a5d48b20,
+    type: 3}
+  m_PrefabInstance: {fileID: 6366073895574625657}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6265961783871496037 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1057780151830020636, guid: 6cc0ef6f84c3d5247a107097a5d48b20,
     type: 3}
   m_PrefabInstance: {fileID: 6366073895574625657}
   m_PrefabAsset: {fileID: 0}

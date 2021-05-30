@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 6658758505183363300}
   - component: {fileID: 347215891594654285}
   - component: {fileID: 4202604678160820801}
+  - component: {fileID: 7664802291282631460}
   m_Layer: 9
   m_Name: SaboEnemy_1:Mesh
   m_TagString: Untagged
@@ -111,6 +112,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &7664802291282631460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437006785736202771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 1529851805037819634}
 --- !u!1 &1529851805037819634
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,6 +400,7 @@ GameObject:
   - component: {fileID: 3117206161357977638}
   - component: {fileID: 2434523759351205975}
   - component: {fileID: 8009619115803975255}
+  - component: {fileID: 8403733680100986631}
   m_Layer: 9
   m_Name: SaboEnemy_5:Mesh
   m_TagString: Untagged
@@ -454,6 +469,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8403733680100986631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3710633380881051810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 1529851805037819634}
 --- !u!1 &6013537281642500892
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +524,7 @@ GameObject:
   - component: {fileID: 5560944233341276056}
   - component: {fileID: 7013105200216151828}
   - component: {fileID: 7414208878665970586}
+  - component: {fileID: 8949427144387205731}
   m_Layer: 9
   m_Name: SaboEnemy_2:Mesh
   m_TagString: Untagged
@@ -564,6 +593,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8949427144387205731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8629812329849094516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 1529851805037819634}
 --- !u!1 &8655607587963690528
 GameObject:
   m_ObjectHideFlags: 0

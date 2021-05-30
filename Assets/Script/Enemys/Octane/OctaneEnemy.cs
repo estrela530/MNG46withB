@@ -110,7 +110,7 @@ public class OctaneEnemy : MonoBehaviour
     [SerializeField] float ColorInterval = 0.1f;
     [SerializeField] float DamageTime;
     [SerializeField, Header("ダメージ受けた時")]
-    bool DamageFlag = false;
+    bool DamageFlag;
 
     [SerializeField, Header("死んだ時のエフェクト")]
     private GameObject DeathEffect;
@@ -119,7 +119,7 @@ public class OctaneEnemy : MonoBehaviour
     float DeathEffectTime = 1;
 
     int DeathEffectCount =0;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -165,17 +165,20 @@ public class OctaneEnemy : MonoBehaviour
 
         //変えるかも?
         ray.direction = transform.forward;
+
+       
     }
     //中断できる処理のまとまり
-    IEnumerator Blink()
+    IEnumerator WaitForIt()
     {
-        while (true)
-        {
-            renderComponent.enabled = !renderComponent.enabled;
-            //何フレームとめる
-            yield return new WaitForSeconds(ColorInterval);
-        }
+        // 1秒間処理を止める
+        yield return new WaitForSeconds(1);
+        
+        // １秒後ダメージフラグをfalseにして点滅を戻す
+        DamageFlag = false;
+        gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
     }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -185,21 +188,13 @@ public class OctaneEnemy : MonoBehaviour
         {
             BossHpSlider.SetActive(true);
         }
-        //ダメージ演出
+       
+
         if (enemyHP > 0)
         {
-            //ダメージ
             if (DamageFlag)
             {
-                DamageTime += Time.deltaTime;
-                StartCoroutine("Blink");
-                if (DamageTime > 1)
-                {
-                    DamageTime = 0;
-                    StopCoroutine("Blink");
-                    renderComponent.enabled = true;
-                    DamageFlag = false;
-                }
+                StartCoroutine("WaitForIt");
             }
         }
 
