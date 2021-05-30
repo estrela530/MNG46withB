@@ -18,7 +18,9 @@ public class EnemyUI : MonoBehaviour
     private OctaneNormal OctaneNormal;
     private OctaneWand OctaneWand;
     private KraberEnemy Kraber;
+    private KraberBoss KraberBoss;
     private PoisonEnemy Poison;
+    private PoisonBoss PoisonBoss;
     private BossMove Boss;
     private PawnEnemy Pawn;
     private ScorpionBoss Scorpion;
@@ -117,6 +119,20 @@ public class EnemyUI : MonoBehaviour
             currHp = (int)Key.HpGet();
         }
 
+        if (this.Enemy.GetComponent<KraberBoss>())
+        {
+            KraberBoss = this.Enemy.GetComponent<KraberBoss>();
+            slider.maxValue = slider.value = KraberBoss.HpGet();
+            currHp = (int)KraberBoss.HpGet();
+        }
+
+        if (this.Enemy.GetComponent<PoisonBoss>())
+        {
+            PoisonBoss = this.Enemy.GetComponent<PoisonBoss>();
+            slider.maxValue = slider.value = PoisonBoss.HpGet();
+            currHp = (int)PoisonBoss.HpGet();
+        }
+
         //enemy = GameObject.Find("Enemy").GetComponent<BossMove>();
 
         //slider.maxValue = slider.value = enemy.HpGet();
@@ -199,7 +215,11 @@ public class EnemyUI : MonoBehaviour
             slider.value = Key.HpGet();
             currHp = (int)Key.HpGet();
         }
-
+        else if (Enemy.GetComponent<PoisonBoss>())
+        {
+            slider.value = PoisonBoss.HpGet();
+            currHp = (int)PoisonBoss.HpGet();
+        }
         transform.rotation = Camera.main.transform.rotation;
         //Debug.Log(currHp);
 

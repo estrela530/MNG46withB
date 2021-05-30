@@ -974,7 +974,7 @@ PrefabInstance:
     - target: {fileID: 1375273595374159038, guid: 4353200617b2b98419fb5db0ece18422,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5032999031589378611, guid: 4353200617b2b98419fb5db0ece18422,
         type: 3}
@@ -1968,6 +1968,11 @@ PrefabInstance:
     - target: {fileID: 4194915191241238786, guid: 47c27512735baf0478c03383c6960bc4,
         type: 3}
       propertyPath: BossHP
+      value: 
+      objectReference: {fileID: 2063067700}
+    - target: {fileID: 5144386328648951769, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: BossHpSlider
       value: 
       objectReference: {fileID: 2063067700}
     m_RemovedComponents: []

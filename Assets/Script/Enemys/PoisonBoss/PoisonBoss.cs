@@ -76,7 +76,8 @@ public class PoisonBoss : MonoBehaviour
 
     [SerializeField] Animation anime;
 
-    [SerializeField] GameObject BossHP;
+    [SerializeField] GameObject BossHpSlider;
+    GameObject stageMove1;
 
     private AudioSource audioSource;
     public AudioClip sibouSE;
@@ -100,16 +101,13 @@ public class PoisonBoss : MonoBehaviour
 
         renderComponent = GetComponent<Renderer>();
 
-        BossHP.SetActive(false);
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
+        BossHpSlider.SetActive(false);
+
         audioSource = GetComponent<AudioSource>();//SE
     }
-
-    void OnEnable()
-    {
-        BossHP.SetActive(true);
-    }
-
-
+    
     //中断できる処理のまとまり
     //IEnumerator Blink()
     //{
@@ -126,6 +124,11 @@ public class PoisonBoss : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+
+        if (stageMove1.GetComponent<StageMove1>().bossNow)
+        {
+            BossHpSlider.SetActive(true);
+        }
 
         //ダメージ演出
         if (enemyHP > 0)

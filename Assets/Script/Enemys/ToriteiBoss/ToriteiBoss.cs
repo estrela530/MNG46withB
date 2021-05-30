@@ -16,9 +16,7 @@ public class ToriteiBoss : MonoBehaviour
 
     [SerializeField, Header("体力")]
     float enemyHP = 5;
-
-    [SerializeField] GameObject BossHP;
-
+    
 
     [Header("追う時のフラグ")]
     public bool MoveFlag = true;//追う
@@ -70,6 +68,8 @@ public class ToriteiBoss : MonoBehaviour
 
     int nextState = 0;
 
+    [SerializeField] GameObject BossHpSlider;
+    GameObject stageMove1;
 
 
     Renderer renderComponent;
@@ -101,17 +101,18 @@ public class ToriteiBoss : MonoBehaviour
         NextFlag = false;
         AttackFlag = true;
 
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
+
         renderComponent = GetComponent<Renderer>();
 
-        BossHP.SetActive(false);
+        //BossHP.SetActive(false);
+
+        BossHpSlider.SetActive(false);
 
         audioSource = GetComponent<AudioSource>();//SE
     }
 
-    void OnEnable()
-    {
-        BossHP.SetActive(true);
-    }
 
     //中断できる処理のまとまり
     IEnumerator Blink()
@@ -129,6 +130,11 @@ public class ToriteiBoss : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+
+        if (stageMove1.GetComponent<StageMove1>().bossNow)
+        {
+            BossHpSlider.SetActive(true);
+        }
 
         //ダメージ演出
         if (enemyHP > 0)

@@ -72,7 +72,8 @@ public class BossMove : MonoBehaviour
 
     int nextState = 0;
 
-    
+    [SerializeField] GameObject BossHpSlider;
+    GameObject stageMove1;
 
     Renderer renderComponent;
     [SerializeField] float ColorInterval = 0.1f;
@@ -100,8 +101,11 @@ public class BossMove : MonoBehaviour
 
         renderComponent = GetComponent<Renderer>();
 
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
 
         audioSource = GetComponent<AudioSource>();//SE
+        BossHpSlider.SetActive(false);
     }
 
     //中断できる処理のまとまり
@@ -120,6 +124,11 @@ public class BossMove : MonoBehaviour
     {
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
+
+        if (stageMove1.GetComponent<StageMove1>().bossNow)
+        {
+            BossHpSlider.SetActive(true);
+        }
 
         //ダメージ演出
         if (enemyHP > 0)

@@ -89,9 +89,7 @@ public class OctaneEnemy : MonoBehaviour
 
     GameObject[] childs;
 
-
     [SerializeField] GameObject BossHpSlider;
-
 
     //レイ関連
     Ray ray;
