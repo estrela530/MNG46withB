@@ -6,6 +6,7 @@ public class Damage : MonoBehaviour
 {
     bool flag;
     bool flagB;
+    bool flagBL;
 
     //[SerializeField] BossMove enemy;
     [Header("アタッチしたエネミー")]
@@ -36,6 +37,8 @@ public class Damage : MonoBehaviour
     private PoisonBoss PoisonBoss;//毒のボス
 
     private PawnEnemy Pawn;//ザコ(ひよこ)
+
+    private KeyEnemy Key;
 
     // Start is called before the first frame update
     void Start()
@@ -132,6 +135,13 @@ public class Damage : MonoBehaviour
             flag = Pawn.DamageGet();
         }
 
+        //キー
+        if (this.Enemy.GetComponent<KeyEnemy>())
+        {
+            Key = this.Enemy.GetComponent<KeyEnemy>();
+            flag = Key.DamageGet();
+        }
+
     }
 
     // Update is called once per frame
@@ -213,6 +223,12 @@ public class Damage : MonoBehaviour
             flag = Pawn.DamageGet();
         }
 
+        //キー
+        else if(this.Enemy.GetComponent<KeyEnemy>())
+        {
+            flagBL = Key.DamageGet();
+        }
+
         if (flag)
         {
             Eff();
@@ -221,6 +237,11 @@ public class Damage : MonoBehaviour
         if (flagB)
         {
             Eff2();
+        }
+
+        if (flagBL)
+        {
+            Eff3();
         }
 
     }
@@ -236,6 +257,13 @@ public class Damage : MonoBehaviour
     {
         float level = Mathf.Abs(Mathf.Sin(Time.time * 0.5f));
         gameObject.GetComponent<Renderer>().material.color = new Color(125f, 125f, 255f, level);
+        StartCoroutine("WaitForIt");
+    }
+
+    void Eff3()
+    {
+        float level = Mathf.Abs(Mathf.Sin(Time.time * 0.5f));
+        gameObject.GetComponent<Renderer>().material.color = new Color(125f, 0f, 0f, level);
         StartCoroutine("WaitForIt");
     }
 

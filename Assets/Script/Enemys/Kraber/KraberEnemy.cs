@@ -60,6 +60,11 @@ public class KraberEnemy : MonoBehaviour
     private GameObject deathEffect;
     private ParticleSystem DeathParticle;   //ダメージのパーティクル
 
+    [Header("shotKを入れる")]
+    public GameObject ShotKobj;
+
+    private ShotK shotK;
+
     Ray ray;
     RaycastHit hitRay;
     LineRenderer lineRenderer;
@@ -90,6 +95,12 @@ public class KraberEnemy : MonoBehaviour
 
     void Start()
     {
+
+        if (ShotKobj.GetComponent<ShotK>())
+        {
+            shotK = ShotKobj.GetComponent<ShotK>();
+        }
+
         DeathParticle = deathEffect.GetComponent<ParticleSystem>();
         MaxEnemyHP = enemyHP;
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
@@ -149,6 +160,11 @@ public class KraberEnemy : MonoBehaviour
 
         if (isDeadFlag) return;
 
+        if (ShotKobj.GetComponent<ShotK>())
+        {
+            shotK = ShotKobj.GetComponent<ShotK>();
+        }
+
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
 
@@ -174,8 +190,17 @@ public class KraberEnemy : MonoBehaviour
             powerFlag = false;
         }
 
-        //meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
-       
+        ///meshRenderer.transform.GetChild(0).GetComponent<MeshRenderer>();
+        if (shotK.ss > shotK.intarval - 1)
+        {
+            lineRenderer.startColor = Color.red;//初めの色
+            lineRenderer.endColor = Color.red;//終わりの色
+        }
+        if (shotK.ss <= 0)
+        {
+            lineRenderer.startColor = Color.green;//初めの色
+            lineRenderer.endColor = Color.green;//終わりの色
+        }
 
         dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
