@@ -1106,6 +1106,8 @@ MonoBehaviour:
   scorpionBossShot: {fileID: 2227396691259798829}
   freezeTime: 3
   lookTime: 0
+  lifeDroplifeObj: {fileID: 4266613709057405151, guid: 24334be6bfad9d6439c3604a9e60d236,
+    type: 3}
   EnemyCount: 0
   SummonEnemy: {fileID: 5638147028629832536, guid: 1bb77b95969511b42816e12dcad6b0f6,
     type: 3}
@@ -1122,6 +1124,7 @@ MonoBehaviour:
   NextTime: 2
   NextFlag: 0
   BossHpSlider: {fileID: 826692553598151536}
+  changeColorFlag: 0
   moveState: 0
   attackCount: 0
   ColorInterval: 0.1

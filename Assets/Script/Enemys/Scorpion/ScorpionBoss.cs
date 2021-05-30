@@ -40,7 +40,7 @@ public class ScorpionBoss : MonoBehaviour
     public float lookTime;
 
     [SerializeField, Header("命の雫")]
-    GameObject lifeDroplife;
+    GameObject lifeDroplifeObj;
 
     //召喚関連
     [SerializeField, Header("召喚したエネミーの数")]
@@ -448,7 +448,11 @@ public class ScorpionBoss : MonoBehaviour
                 break;
 
             case 3:
-                SceneManager.LoadScene("GameClear");
+                //SceneManager.LoadScene("GameClear");
+
+                Instantiate(lifeDroplifeObj,this.transform.position,Quaternion.identity
+                    );
+
                 gameObject.SetActive(false);//非表示
                 break;
 
