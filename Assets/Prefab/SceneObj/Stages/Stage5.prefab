@@ -1898,7 +1898,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4122942161549473160}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 50, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3271041254194141949}
@@ -1935,7 +1935,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4122942161552067546}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 100, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4798065222160297156}
@@ -1961,7 +1961,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4122942161667708625
 Transform:
   m_ObjectHideFlags: 0
@@ -4762,12 +4762,12 @@ PrefabInstance:
     - target: {fileID: 4328633014059660589, guid: 36366eaf823a15d469fc234b95c4d760,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4328633014059660589, guid: 36366eaf823a15d469fc234b95c4d760,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36366eaf823a15d469fc234b95c4d760, type: 3}
@@ -4993,6 +4993,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PawnPointFF3
       objectReference: {fileID: 0}
+    - target: {fileID: 2445980967581088729, guid: d041bc29fbb7a024d96d81eb44eeb4a1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3696980877436162171, guid: d041bc29fbb7a024d96d81eb44eeb4a1,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -5157,12 +5162,12 @@ PrefabInstance:
     - target: {fileID: 7962225397790733276, guid: b351c833dbdf55842a5e59844456371e,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7962225397790733276, guid: b351c833dbdf55842a5e59844456371e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8117154740894535583, guid: b351c833dbdf55842a5e59844456371e,
         type: 3}
@@ -6212,12 +6217,12 @@ PrefabInstance:
     - target: {fileID: 116260061381757179, guid: 9fe7ef08903889044b663629282510c4,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 116260061381757179, guid: 9fe7ef08903889044b663629282510c4,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7058805063270374046, guid: 9fe7ef08903889044b663629282510c4,
         type: 3}
@@ -7210,12 +7215,12 @@ PrefabInstance:
     - target: {fileID: 5998551923040341179, guid: c2396e8598480dc45acfcd512883d845,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5998551923040341179, guid: c2396e8598480dc45acfcd512883d845,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5998551923537046692, guid: c2396e8598480dc45acfcd512883d845,
         type: 3}
@@ -7394,17 +7399,22 @@ PrefabInstance:
     - target: {fileID: 116260061381757179, guid: 9fe7ef08903889044b663629282510c4,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 116260061381757179, guid: 9fe7ef08903889044b663629282510c4,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7058805063270374046, guid: 9fe7ef08903889044b663629282510c4,
         type: 3}
       propertyPath: m_Name
       value: KraberEnemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058805063270374046, guid: 9fe7ef08903889044b663629282510c4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7691648310226305060, guid: 9fe7ef08903889044b663629282510c4,
         type: 3}
