@@ -64,13 +64,15 @@ public class ScorpionBossShot : MonoBehaviour
         Random.Range(min, max);
 
         //突進の時lineを非表示
-        if(Move.GetComponent<ScorpionBoss>().moveState ==3)
+        if(Move.GetComponent<ScorpionBoss>().changeColorFlag ==true)
         {
-            lineRenderer.enabled = false;
+            lineRenderer.startColor = Color.red;//初めの色
+            lineRenderer.endColor = Color.red;//終わりの色
         }
         else
         {
-            lineRenderer.enabled = true;
+            lineRenderer.startColor = Color.green;//初めの色
+            lineRenderer.endColor = Color.green;//終わりの色
         }
 
         Ray();
@@ -146,9 +148,6 @@ public class ScorpionBossShot : MonoBehaviour
     //撃つ処理
     void Shot()
     {
-        //shotCount = shotCount + 1;
-
-        
         if (shotFlag)
         {
             Vector3 ff = new Vector3(dis + Random.Range(min, max), 0, dis);
@@ -158,6 +157,7 @@ public class ScorpionBossShot : MonoBehaviour
 
             //ラインレンダラーの色
             lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+
             lineRenderer.startColor = Color.green;//初めの色
             lineRenderer.endColor = Color.green;//終わりの色
         }

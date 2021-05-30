@@ -9,10 +9,15 @@ public class SubCameraControll : MonoBehaviour
     [SerializeField] GameObject subCamera2;
     [SerializeField] GameObject subCamera3;
     [SerializeField] GameObject Boss;
+
     private BossMove BossEnemy;
     private OctaneEnemy Octane;
     private ScorpionBoss Scorpion;
-    float ObjHp;
+    private KraberBoss Kraber;
+    private ToriteiBoss Toritei;
+    private PoisonBoss Poison;
+
+    private float ObjHp;
     [SerializeField] float speedLoc = 5;
     [SerializeField] int cameraState;
     [SerializeField] float transitionTime1;
@@ -24,7 +29,12 @@ public class SubCameraControll : MonoBehaviour
     {
         //mainCamera = GameObject.Find("Main Camera");
         //subCamera = GameObject.Find("SubCamera");
-
+        //スコーピオン
+        if (this.Boss.GetComponent<ScorpionBoss>())
+        {
+            Scorpion = this.Boss.GetComponent<ScorpionBoss>();
+            ObjHp = Scorpion.HpGet();
+        }
         //オクタン
         if (this.Boss.GetComponent<OctaneEnemy>())
         {
@@ -32,18 +42,33 @@ public class SubCameraControll : MonoBehaviour
             ObjHp = Octane.HpGet();
         }
         //ボス
-        if (this.Boss.GetComponent<BossMove>())
+        else if (this.Boss.GetComponent<BossMove>())
         {
             BossEnemy = this.Boss.GetComponent<BossMove>();
             ObjHp = BossEnemy.HpGet();
         }
 
-        //スコーピオン
-        if (this.Boss.GetComponent<ScorpionBoss>())
+       
+
+        else if(this.Boss.GetComponent<ToriteiBoss>())
         {
-            Scorpion = this.Boss.GetComponent<ScorpionBoss>();
-            ObjHp = Scorpion.HpGet();
+            Toritei = this.Boss.GetComponent<ToriteiBoss>();
+            ObjHp = Octane.HpGet();
         }
+
+        else if(this.Boss.GetComponent<KraberBoss>())
+        {
+            Kraber = this.Boss.GetComponent<KraberBoss>();
+            ObjHp = Octane.HpGet();
+        }
+
+        else if(this.Boss.GetComponent<PoisonBoss>())
+        {
+            Poison = this.Boss.GetComponent<PoisonBoss>();
+            ObjHp = Octane.HpGet();
+        }
+
+
         mainCamera.SetActive(true);
         cameraState = 0;
         subCamera1.SetActive(false);
@@ -60,6 +85,11 @@ public class SubCameraControll : MonoBehaviour
             CameraMove();
         }
 
+        if (this.Boss.GetComponent<ScorpionBoss>())
+        {
+            ObjHp = Scorpion.HpGet();
+        }
+
         //オクタン
         if (this.Boss.GetComponent<OctaneEnemy>())
         {
@@ -71,11 +101,22 @@ public class SubCameraControll : MonoBehaviour
             ObjHp = BossEnemy.HpGet();
         }
         //
-        else if (this.Boss.GetComponent<ScorpionBoss>())
+        
+
+        else if (this.Boss.GetComponent<KraberBoss>())
         {
-            ObjHp = Scorpion.HpGet();
+            ObjHp = Kraber.HpGet();
         }
 
+        else if (this.Boss.GetComponent<ToriteiBoss>())
+        {
+            ObjHp = Toritei.HpGet();
+        }
+
+        else if (this.Boss.GetComponent<PoisonBoss>())
+        {
+            ObjHp = Poison.HpGet();
+        }
     }
 
     void CameraMove()

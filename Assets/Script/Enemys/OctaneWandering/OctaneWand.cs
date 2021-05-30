@@ -85,6 +85,8 @@ public class OctaneWand : MonoBehaviour
     private int childCount;//子どもの数
     private GameObject[] child;          //子どもオブジェクト
 
+    [SerializeField, Header("最初の位置")] Vector3 startPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -108,6 +110,8 @@ public class OctaneWand : MonoBehaviour
         lineRenderer.enabled = false;
         ray.origin = this.transform.position;//自分の位置のレイ
 
+        
+
         //ラインレンダラーの色
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.startColor = Color.green;//初めの色
@@ -130,6 +134,10 @@ public class OctaneWand : MonoBehaviour
         }
         deathState = 0;
         isDeadFlag = false;
+
+        startPos = GetComponent<Transform>().position;//最初のポジション
+
+
     }
     IEnumerator Blink()
     {
@@ -144,6 +152,14 @@ public class OctaneWand : MonoBehaviour
     void FixedUpdate()
     {
         DeathAction();
+
+        //上に行かない処理
+        if (this.transform.position.y < startPos.y)
+        {
+            Vector3 resetPos = new Vector3(transform.position.x, startPos.y, transform.position.z);
+
+            this.transform.position = resetPos;
+        }
 
         if (isDeadFlag) return;
 
@@ -202,13 +218,11 @@ public class OctaneWand : MonoBehaviour
                     //レイの処理
                     if (Physics.Raycast(ray, out hitRay, 15,enemyNumber))
                     {
-                        if (hitRay.collider.gameObject.CompareTag("Player"))
-                        {
-                            lineRenderer.enabled = true;
 
-                            lineRenderer.SetPosition(1, hitRay.point);
-                            //hitRay.point;
-                        }
+                        lineRenderer.enabled = true;
+                        
+                        lineRenderer.SetPosition(1, hitRay.point- new Vector3(0,0.8f,0));
+                       
 
                     }
                 }
@@ -231,6 +245,9 @@ public class OctaneWand : MonoBehaviour
                 playerPos = Target.transform.position;
                 //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
                 moveState = 3;
+
+                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+                lookTime = 0;
                 break;
 
 
@@ -240,8 +257,7 @@ public class OctaneWand : MonoBehaviour
 
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(playerPos.x, this.transform.position.y, playerPos.z), speedLoc * Time.deltaTime);
 
-                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
-                lookTime = 0;
+                
                 if ( playerPos.z == transform.position.z)
                 {
                     moveState = 0;
@@ -261,7 +277,7 @@ public class OctaneWand : MonoBehaviour
         ww = Vector3.Distance(transform.position, workObj1.transform.position);//二つの距離を計算
         ww2 = Vector3.Distance(transform.position, workObj2.transform.position);//二つの距離を計算
 
-        lineRenderer.SetPosition(0, this.transform.position);
+        lineRenderer.SetPosition(0, this.transform.position - new Vector3(0, 0.8f, 0));
 
 
 
@@ -435,6 +451,8 @@ public class OctaneWand : MonoBehaviour
             workFlag = true;
             MoveFlag = false;
             moveState = 0;
+
+            lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
         }
 
     }

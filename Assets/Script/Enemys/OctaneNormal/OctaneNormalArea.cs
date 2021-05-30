@@ -43,14 +43,14 @@ public class OctaneNormalArea : MonoBehaviour
         }
 
     }
-    public void OnTriggerEnter(Collider other)
-    {
-        //サーチする角度の範囲外だったら索敵
-        if (!other.gameObject.CompareTag("Player"))
-        {
-            Octane.GetComponent<OctaneNormal>().MoveFlag = false;
-        }
-    }
+    //public void OnTriggerEnter(Collider other)
+    //{
+    //    //サーチする角度の範囲外だったら索敵
+    //    if (!other.gameObject.CompareTag("Player"))
+    //    {
+    //        Octane.GetComponent<OctaneNormal>().MoveFlag = false;
+    //    }
+    //}
 
 
 #if UNITY_EDITOR

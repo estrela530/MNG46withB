@@ -39,7 +39,7 @@ public class OctaneNormal : MonoBehaviour
     Vector3 EnemyPos;
     Vector3 velocity = Vector3.zero;
 
-    int moveState;
+    public int moveState;
 
     GameObject stageMove1;
 
@@ -65,6 +65,8 @@ public class OctaneNormal : MonoBehaviour
     private float deathEffectTime = 1.0f;
     private int childCount;//子どもの数
     private GameObject[] child;          //子どもオブジェクト
+
+    [SerializeField, Header("最初の位置")] Vector3 startPos;
 
     // Start is called before the first frame update
     void Start()
@@ -112,6 +114,8 @@ public class OctaneNormal : MonoBehaviour
         }
         deathState = 0;
         isDeadFlag = false;
+
+        startPos = GetComponent<Transform>().position;//最初のポジション
     }
 
     // Update is called once per frame
@@ -120,6 +124,14 @@ public class OctaneNormal : MonoBehaviour
         DeathAction();
 
         if (isDeadFlag) return;
+
+        //上に行かない処理
+        if (this.transform.position.y < startPos.y)
+        {
+            Vector3 resetPos = new Vector3(transform.position.x, startPos.y, transform.position.z);
+
+            this.transform.position = resetPos;
+        }
 
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
@@ -171,14 +183,9 @@ public class OctaneNormal : MonoBehaviour
                     //レイの処理
                     if (Physics.Raycast(ray, out hitRay, 15, enemyNumber))
                     {
-                        if (hitRay.collider.gameObject.CompareTag("Player"))
-                        {
-                            lineRenderer.enabled = true;
+                        lineRenderer.enabled = true;
 
-                            lineRenderer.SetPosition(1, hitRay.point);
-                            //hitRay.point;
-                        }
-
+                        lineRenderer.SetPosition(1, hitRay.point);
                     }
                 }
 
@@ -200,17 +207,18 @@ public class OctaneNormal : MonoBehaviour
                 playerPos = Target.transform.position;
                 //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
                 moveState = 3;
+                lookTime = 0;
+                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
                 break;
 
 
             case 3:
+
                 lineRenderer.startColor = Color.green;//初めの色
                 lineRenderer.endColor = Color.green;//終わりの色
 
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(playerPos.x, this.transform.position.y, playerPos.z), speedLoc * Time.deltaTime);
-
-                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
-                lookTime = 0;
+                
                 if (playerPos.z == transform.position.z)
                 {
                     moveState = 0;
@@ -328,7 +336,10 @@ public class OctaneNormal : MonoBehaviour
             other.gameObject.CompareTag("Wall"))
         {
             MoveFlag = false;
+           
             moveState = 0;
+
+            lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
         }
 
     }

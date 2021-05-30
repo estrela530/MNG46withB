@@ -39,6 +39,9 @@ public class ScorpionBoss : MonoBehaviour
     public float freezeTime;
     public float lookTime;
 
+    [SerializeField, Header("命の雫")]
+    GameObject lifeDroplife;
+
     //召喚関連
     [SerializeField, Header("召喚したエネミーの数")]
     int EnemyCount;//プレハブの出現数
@@ -91,11 +94,11 @@ public class ScorpionBoss : MonoBehaviour
 
     [SerializeField] GameObject BossHpSlider;
 
-
+    [ Header("色変更のフラグ")]public bool changeColorFlag;
     //レイ関連
-    Ray ray;
-    RaycastHit hitRay;
-    LineRenderer lineRenderer;
+    //Ray ray;
+    //RaycastHit hitRay;
+    //LineRenderer lineRenderer;
 
     Vector3 velocity = Vector3.zero;
 
@@ -137,7 +140,7 @@ public class ScorpionBoss : MonoBehaviour
         attackCount = 0;
         renderComponent = GetComponent<Renderer>();
 
-
+        changeColorFlag = false;
 
         moveState = 0;
         stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
@@ -146,23 +149,23 @@ public class ScorpionBoss : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         //color = GetComponent<Renderer>().material.color;
 
-        ray = new Ray();
-        lineRenderer = this.gameObject.GetComponent<LineRenderer>();
+        //ray = new Ray();
+        //lineRenderer = this.gameObject.GetComponent<LineRenderer>();
 
-        //lineRenderer.SetPosition(0, this.transform.position);
-        lineRenderer.enabled = false;
-        ray.origin = this.transform.position;//自分の位置のレイ
+        ////lineRenderer.SetPosition(0, this.transform.position);
+        ////lineRenderer.enabled = false;
+        //ray.origin = this.transform.position;//自分の位置のレイ
 
-        //ラインレンダラーの色
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = Color.green;//初めの色
-        lineRenderer.endColor = Color.green;//終わりの色
+        ////ラインレンダラーの色
+        //lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        //lineRenderer.startColor = Color.green;//初めの色
+        //lineRenderer.endColor = Color.green;//終わりの色
 
-        lineRenderer.startWidth = 0.5f;
-        lineRenderer.endWidth = 0.5f;
+        //lineRenderer.startWidth = 0.5f;
+        //lineRenderer.endWidth = 0.5f;
 
-        //変えるかも?
-        ray.direction = transform.forward;
+        ////変えるかも?
+        //ray.direction = transform.forward;
     }
 
     //中断できる処理のまとまり
@@ -210,6 +213,7 @@ public class ScorpionBoss : MonoBehaviour
             MoveFlag = false;
             moveState = 0;
         }
+        
 
         //攻撃関連の処理
         switch (moveState)
@@ -249,23 +253,25 @@ public class ScorpionBoss : MonoBehaviour
                     this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
 
                     //レイの処理
-                    if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))
-                    {
-                        if (hitRay.collider.gameObject.CompareTag("Player"))
-                        {
-                            lineRenderer.enabled = true;
+                    //if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))
+                    //{
+                    //    if (hitRay.collider.gameObject.CompareTag("Player"))
+                    //    {
+                    //        lineRenderer.enabled = true;
 
-                            lineRenderer.SetPosition(1, hitRay.point);
-                            //hitRay.point;
-                        }
+                            
+                    //        //hitRay.point;
+                    //    }
 
-                    }
+                    //}
                 }
 
                 if (lookTime >= freezeTime - 0.5f)
                 {
-                    lineRenderer.startColor = Color.red;//初めの色
-                    lineRenderer.endColor = Color.red;//終わりの色
+                    //lineRenderer.startColor = Color.red;//初めの色
+                    //lineRenderer.endColor = Color.red;//終わりの色
+
+                    changeColorFlag = true;
                 }
 
                 if (lookTime >= freezeTime)
@@ -284,12 +290,13 @@ public class ScorpionBoss : MonoBehaviour
 
             //突進
             case 3:
-                lineRenderer.startColor = Color.green;//初めの色
-                lineRenderer.endColor = Color.green;//終わりの色
+                //lineRenderer.startColor = Color.green;//初めの色
+                //lineRenderer.endColor = Color.green;//終わりの色
+                changeColorFlag = false;
 
                 transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
 
-                lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+                //lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
 
                 lookTime = 0;
 
@@ -450,14 +457,15 @@ public class ScorpionBoss : MonoBehaviour
 
         //dis = Vector3.Distance(transform.position, Target.transform.position);//二つの距離を計算して一定以下になれば追尾
 
-        //レイ
-        lineRenderer.SetPosition(0, this.transform.position);
+        //lineRenderer.SetPosition(1, hitRay.point );
+        ////レイ
+        //lineRenderer.SetPosition(0, this.transform.position );
 
-        ray.origin = this.transform.position;//自分の位置のレイ
+        //ray.origin = this.transform.position;//自分の位置のレイ
 
-        ray.direction = transform.forward;//自分の向きのレイ
+        //ray.direction = transform.forward;//自分の向きのレイ
 
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
+        //Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
 
     }
 
