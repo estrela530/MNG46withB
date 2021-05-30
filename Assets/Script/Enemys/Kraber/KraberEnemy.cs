@@ -63,6 +63,8 @@ public class KraberEnemy : MonoBehaviour
     [Header("shotKを入れる")]
     public GameObject ShotKobj;
 
+    [SerializeField] GameObject BossHP;
+
     private ShotK shotK;
 
     Ray ray;
@@ -148,10 +150,15 @@ public class KraberEnemy : MonoBehaviour
         //StartCoroutine("Blink");
 
         //renderComponent = this.gameObject.transform.GetChild(0).GetComponent<Renderer>();
+
+        BossHP.SetActive(false);
     }
 
     //中断できる処理のまとまり
-    
+    private void OnEnable()
+    {
+        BossHP.SetActive(true);
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -316,7 +323,7 @@ public class KraberEnemy : MonoBehaviour
         {
             case 0:
                 //体力がなくなったら死亡&状態遷移
-                if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
+                if (enemyHP <= 0)
                 {
                     deathState = 1;
                     isDeadFlag = true;
