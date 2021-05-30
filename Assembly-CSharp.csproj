@@ -55,12 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\EpilogTest.cs" />
-     <Compile Include="Assets\FungusController.cs" />
-     <Compile Include="Assets\FungusTest.cs" />
-     <Compile Include="Assets\ImageMove.cs" />
-     <Compile Include="Assets\ImageOnOff.cs" />
-     <Compile Include="Assets\ImageRotate.cs" />
      <Compile Include="Assets\Script\Enemys\AppearanceEff.cs" />
      <Compile Include="Assets\Script\Enemys\Boss\BossArea.cs" />
      <Compile Include="Assets\Script\Enemys\Boss\BossBullet.cs" />
@@ -139,9 +133,15 @@
      <Compile Include="Assets\Script\ScenesScript\ClearStageUI.cs" />
      <Compile Include="Assets\Script\ScenesScript\CountTest.cs" />
      <Compile Include="Assets\Script\ScenesScript\DOTweenTest.cs" />
+     <Compile Include="Assets\Script\ScenesScript\EpilogTest.cs" />
      <Compile Include="Assets\Script\ScenesScript\Escape.cs" />
+     <Compile Include="Assets\Script\ScenesScript\FungusController.cs" />
+     <Compile Include="Assets\Script\ScenesScript\FungusTest.cs" />
      <Compile Include="Assets\Script\ScenesScript\GoSSButton.cs" />
      <Compile Include="Assets\Script\ScenesScript\GoalFlag.cs" />
+     <Compile Include="Assets\Script\ScenesScript\ImageMove.cs" />
+     <Compile Include="Assets\Script\ScenesScript\ImageOnOff.cs" />
+     <Compile Include="Assets\Script\ScenesScript\ImageRotate.cs" />
      <Compile Include="Assets\Script\ScenesScript\KeyDoor.cs" />
      <Compile Include="Assets\Script\ScenesScript\MissionManagerScript.cs" />
      <Compile Include="Assets\Script\ScenesScript\NotCursor.cs" />
@@ -154,6 +154,8 @@
      <Compile Include="Assets\Script\ScenesScript\SceneTS.cs" />
      <Compile Include="Assets\Script\ScenesScript\SelectButton.cs" />
      <Compile Include="Assets\Script\ScenesScript\SetumeiButton.cs" />
+     <Compile Include="Assets\Script\ScenesScript\SkipGage.cs" />
+     <Compile Include="Assets\Script\ScenesScript\SkiptoScene.cs" />
      <Compile Include="Assets\Script\ScenesScript\SpawnPoint.cs" />
      <Compile Include="Assets\Script\ScenesScript\Stage1.cs" />
      <Compile Include="Assets\Script\ScenesScript\Stage2.cs" />
@@ -169,6 +171,7 @@
      <Compile Include="Assets\Script\ScenesScript\Transition.cs" />
      <Compile Include="Assets\Script\ScenesScript\TransitionIn.cs" />
      <Compile Include="Assets\Script\ScenesScript\TransitionOut.cs" />
+     <Compile Include="Assets\Script\ScenesScript\VideoSkip.cs" />
      <Compile Include="Assets\Script\ScenesScript\VloumeSlider.cs" />
      <Compile Include="Assets\Script\ScenesScript\byebyeFade.cs" />
      <Compile Include="Assets\Script\ScenesScript\kanban.cs" />
@@ -177,9 +180,6 @@
      <Compile Include="Assets\Script\ScenesScript\αScore.cs" />
      <Compile Include="Assets\Script\SubCameraControll.cs" />
      <Compile Include="Assets\Script\lifeDroplife.cs" />
-     <Compile Include="Assets\SkipGage.cs" />
-     <Compile Include="Assets\SkiptoScene.cs" />
-     <Compile Include="Assets\VideoSkip.cs" />
      <None Include="Assets\Shader\NoStageTra.shader" />
      <None Include="Assets\Deform\LICENSE.txt" />
      <None Include="Assets\Shader\transition.shader" />
