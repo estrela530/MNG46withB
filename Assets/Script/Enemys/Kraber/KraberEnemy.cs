@@ -63,7 +63,7 @@ public class KraberEnemy : MonoBehaviour
     [Header("shotKを入れる")]
     public GameObject ShotKobj;
 
-    [SerializeField] GameObject BossHP;
+    
 
     private ShotK shotK;
 
@@ -151,14 +151,10 @@ public class KraberEnemy : MonoBehaviour
 
         //renderComponent = this.gameObject.transform.GetChild(0).GetComponent<Renderer>();
 
-        BossHP.SetActive(false);
+        
     }
 
-    //中断できる処理のまとまり
-    private void OnEnable()
-    {
-        BossHP.SetActive(true);
-    }
+   
 
     // Update is called once per frame
     void FixedUpdate()

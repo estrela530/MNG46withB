@@ -57,7 +57,11 @@ public class BossMove : MonoBehaviour
     GameObject bossShot;
 
     public int moveState;
-    
+
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;
+
     [SerializeField] private float DeathTime = 0;
     [SerializeField, Header("次のしーんに行くの開始までの時間")]  float NextTime;
     [SerializeField,Header("次のシーンに行くフラグ")] bool NextFlag;
@@ -96,7 +100,8 @@ public class BossMove : MonoBehaviour
 
         renderComponent = GetComponent<Renderer>();
 
-       
+
+        audioSource = GetComponent<AudioSource>();//SE
     }
 
     //中断できる処理のまとまり
@@ -242,28 +247,43 @@ public class BossMove : MonoBehaviour
 
             case 1:
                 anime.Play();
-                var sum = Instantiate(DeathEffect,
-                           this.transform.position,
-                           Quaternion.identity);
-
+                
                 nextState = 2;
 
                 bossShot.GetComponent<BossShot>().shotCount = 0;
                 moveState = 0;
                 EnemyCount = 5;
-
+                
                 break;
 
             case 2:
                 DeathTime += Time.deltaTime;
+                
                 if (DeathTime > NextTime)
                 {
-
+                    
                     DeathTime = 0;
 
                     nextState = 3;
                 }
 
+                if (DeathTime > NextTime-1)
+                {
+                    if(seCount<1)
+                    {
+                        audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                        seCount++;
+                    }
+
+                    //召喚のエフェクト
+                    if (EffectCount < 1)
+                    {
+                        var sum = Instantiate(DeathEffect,
+                             this.transform.position,
+                             Quaternion.identity);
+                        EffectCount++;
+                    }
+                }
 
                 break;
 

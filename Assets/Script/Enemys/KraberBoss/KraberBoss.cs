@@ -61,7 +61,9 @@ public class KraberBoss : MonoBehaviour
     GameObject bossShot;
 
     public int moveState;
-    
+
+    [SerializeField] GameObject BossHP;
+
     [SerializeField] private float DeathTime = 0;
     [SerializeField, Header("次のしーんに行くの開始までの時間")] float NextTime;
     [SerializeField, Header("次のシーンに行くフラグ")] bool NextFlag;
@@ -99,7 +101,7 @@ public class KraberBoss : MonoBehaviour
 
         renderComponent = GetComponent<Renderer>();
 
-
+        BossHP.SetActive(false);
     }
 
     //中断できる処理のまとまり
@@ -112,7 +114,11 @@ public class KraberBoss : MonoBehaviour
         DamageFlag = false;
         gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
     }
-
+    //中断できる処理のまとまり
+    private void OnEnable()
+    {
+        BossHP.SetActive(true);
+    }
     // Update is called once per frame
     void FixedUpdate()
     {

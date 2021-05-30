@@ -7,6 +7,7 @@ public class ScorpionMini : MonoBehaviour
     //SE
     private AudioSource audioSource;
     public AudioClip sibouSE;
+    private int seCount;
 
     private GameObject Target;//追尾する相手
     private float dis;//プレイヤーとの距離
