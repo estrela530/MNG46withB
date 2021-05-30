@@ -29,6 +29,12 @@ public class Damage : MonoBehaviour
 
     private ScorpionBoss Scorpion;//スコーピオンボス
 
+    private KraberBoss KraberBoss;//クレーバー(ボス)
+
+    private ToriteiBoss ToriteiBoss;//トリテ(ボス)
+
+    private PoisonBoss PoisonBoss;//毒のボス
+
     private PawnEnemy Pawn;//ザコ(ひよこ)
 
     // Start is called before the first frame update
@@ -98,11 +104,32 @@ public class Damage : MonoBehaviour
             flag = Boss.DamageGet();
         }
 
+        //クレーバーのボス
+        if (this.Enemy.GetComponent<KraberBoss>())
+        {
+            KraberBoss = this.Enemy.GetComponent<KraberBoss>();
+            flag = KraberBoss.DamageGet();
+        }
+
+        //トリテのボス
+        if (this.Enemy.GetComponent<ToriteiBoss>())
+        {
+            ToriteiBoss = this.Enemy.GetComponent<ToriteiBoss>();
+            flag = ToriteiBoss.DamageGet();
+        }
+
+        //ポイズンのボス
+        if (this.Enemy.GetComponent<PoisonBoss>())
+        {
+            PoisonBoss = this.Enemy.GetComponent<PoisonBoss>();
+            flag = PoisonBoss.DamageGet();
+        }
+
         //ザコ(ひよこ)
         if (this.Enemy.GetComponent<PawnEnemy>())
         {
             Pawn = this.Enemy.GetComponent<PawnEnemy>();
-            //flag = Pawn.DamageGet();
+            flag = Pawn.DamageGet();
         }
 
     }
@@ -111,18 +138,17 @@ public class Damage : MonoBehaviour
     void FixedUpdate()
     {
        
-        //オクタン
-        if (this.Enemy.GetComponent<OctaneEnemy>())
-        {
-            flag = Octane.DamageGet();
-        }
-
         //ノーマルオクタン
-        else if (this.Enemy.GetComponent<OctaneNormal>())
+        if (this.Enemy.GetComponent<OctaneNormal>())
         {
             flag = OctaneNormal.DamageGet();
         }
 
+        //オクタン
+        else if (this.Enemy.GetComponent<OctaneEnemy>())
+        {
+            flag = Octane.DamageGet();
+        }
         //徘徊オクタン
         else if (this.Enemy.GetComponent<OctaneWand>())
         {
@@ -163,10 +189,28 @@ public class Damage : MonoBehaviour
             flag = Boss.DamageGet();
         }
 
+        //クレーバーのボス
+        else if (this.Enemy.GetComponent<KraberBoss>())
+        {
+            flag = KraberBoss.DamageGet();
+        }
+
+        //トリテのボス
+        else if (this.Enemy.GetComponent<ToriteiBoss>())
+        {
+            flag = ToriteiBoss.DamageGet();
+        }
+        
+        //ポイズンのボス
+        else if (this.Enemy.GetComponent<PoisonBoss>())
+        {
+            flag = PoisonBoss.DamageGet();
+        }
+
         //ザコ(ひよこ)
         else if (this.Enemy.GetComponent<PawnEnemy>())
         {
-            //flag = Pawn.DamageGet();
+            flag = Pawn.DamageGet();
         }
 
         if (flag)
@@ -190,7 +234,7 @@ public class Damage : MonoBehaviour
 
     void Eff2()
     {
-        float level = Mathf.Abs(Mathf.Sin(Time.time * 3f));
+        float level = Mathf.Abs(Mathf.Sin(Time.time * 0.5f));
         gameObject.GetComponent<Renderer>().material.color = new Color(125f, 125f, 255f, level);
         StartCoroutine("WaitForIt");
     }

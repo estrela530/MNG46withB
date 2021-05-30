@@ -95,7 +95,7 @@ public class EnemyMove : MonoBehaviour
     {
         // 1秒間処理を止める
         yield return new WaitForSeconds(1);
-
+        
         // １秒後ダメージフラグをfalseにして点滅を戻す
         DamageFlag = false;
         gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);

@@ -140,15 +140,7 @@ public class KraberEnemy : MonoBehaviour
     }
 
     //中断できる処理のまとまり
-    IEnumerator Blink()
-    {
-        while(true)
-        {
-            renderComponent.enabled = !renderComponent.enabled;
-            //何フレームとめる
-            yield return new WaitForSeconds(ColorInterval);
-        }
-    }
+    
 
     // Update is called once per frame
     void FixedUpdate()
@@ -270,12 +262,12 @@ public class KraberEnemy : MonoBehaviour
             if (DamageFlag)
             {
                 DamageTime += Time.deltaTime;
-                StartCoroutine("Blink");
+                //StartCoroutine("Blink");
                 if (DamageTime > 1)
                 {
                     DamageTime = 0;
-                    StopCoroutine("Blink");
-                    renderComponent.enabled = true;
+                    //StopCoroutine("Blink");
+                    //renderComponent.enabled = true;
                     DamageFlag = false;
                 }
             }

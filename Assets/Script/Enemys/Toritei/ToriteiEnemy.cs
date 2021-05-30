@@ -85,6 +85,16 @@ public class ToriteiEnemy : MonoBehaviour
 
     }
 
+    IEnumerator WaitForIt()
+    {
+        // 1秒間処理を止める
+        yield return new WaitForSeconds(1);
+
+        // １秒後ダメージフラグをfalseにして点滅を戻す
+        DamageFlag = false;
+        gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -102,9 +112,7 @@ public class ToriteiEnemy : MonoBehaviour
         {
             if (DamageFlag)
             {
-                float level = Mathf.Abs(Mathf.Sin(Time.time * 5));
-                gameObject.GetComponent<Renderer>().material.color = new Color(1f, 0f, 0f, level);
-                //StartCoroutine("WaitForIt");
+                StartCoroutine("WaitForIt");
             }
 
         }

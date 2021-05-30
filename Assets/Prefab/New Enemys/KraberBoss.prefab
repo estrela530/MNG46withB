@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4817174521957474993}
   - component: {fileID: 1435936329822772487}
   - component: {fileID: 7213641354953185301}
+  - component: {fileID: 5430253375352811941}
   m_Layer: 9
   m_Name: kataturtle_2:Mesh
   m_TagString: Untagged
@@ -79,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5430253375352811941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370569824139802806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 7857829569808084810}
 --- !u!1 &934909868027634252
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +136,7 @@ GameObject:
   - component: {fileID: 293216823852851076}
   - component: {fileID: 1261979179487066320}
   - component: {fileID: 4099131683937493314}
+  - component: {fileID: 7007251911424934371}
   m_Layer: 9
   m_Name: kataturtle_3:Mesh
   m_TagString: Untagged
@@ -190,6 +205,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &7007251911424934371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913294418531687681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 7857829569808084810}
 --- !u!1 &1978078535952960596
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +260,7 @@ GameObject:
   - component: {fileID: 8141282136807270917}
   - component: {fileID: 5195439015602550539}
   - component: {fileID: 6001362939575191359}
+  - component: {fileID: 6229320108895996528}
   m_Layer: 9
   m_Name: kataturtle_4:Mesh
   m_TagString: Untagged
@@ -300,6 +329,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6229320108895996528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3244329293004186807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 7857829569808084810}
 --- !u!1 &7857829569808084810
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,6 +635,7 @@ GameObject:
   - component: {fileID: 3920165594911396329}
   - component: {fileID: 2187377505676182624}
   - component: {fileID: 4629182786758192443}
+  - component: {fileID: 8728436995382171918}
   m_Layer: 9
   m_Name: kataturtle_1:Mesh
   m_TagString: Untagged
@@ -661,6 +704,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8728436995382171918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000725957914353862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4c3f65b538814885ea6719503a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 7857829569808084810}
 --- !u!1 &8933173984794278851
 GameObject:
   m_ObjectHideFlags: 0
