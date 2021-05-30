@@ -66,8 +66,8 @@ public class MissionManagerScript : MonoBehaviour
             //ステージ1なら
             if (SceneNumberData.numberData.referer == "Game1")
             {
-                //？？分以内だったらミッションクリア
-                if (clearSeconds < 1)
+                //2分以内だったらミッションクリア
+                if (clearSeconds < 2)
                 {
                     Mission2.SetActive(false);
                     Mission2C.SetActive(true);
@@ -76,8 +76,8 @@ public class MissionManagerScript : MonoBehaviour
             //ステージ2なら
             else if (SceneNumberData.numberData.referer == "Game2")
             {
-                //？？分以内だったらミッションクリア
-                if (clearSeconds < 1)
+                //4分以内だったらミッションクリア
+                if (clearSeconds < 4)
                 {
                     Mission2.SetActive(false);
                     Mission2C.SetActive(true);
@@ -124,7 +124,6 @@ public class MissionManagerScript : MonoBehaviour
                 }
             }
         }
-
         if (fadeCount >= 180 && mission3ClearFlag)
         {
             Mission3.SetActive(false);

@@ -31,15 +31,21 @@ public class TimerScript : MonoBehaviour
         enemyCounter = 0;
         //sendCounter = 0;
         oldSeconds = 0f;
-        //timerText = GetComponentInChildren<Text>();
+
+
+        allDeathMissionClearFlag = false;
+    }
+
+    void FixedUpdate()
+    {
         //ミッション用の数値「全滅ミッション」
         if (SceneNumberData.numberData.referer == "Game1")
         {
-            missionClearCount = 7;
+            missionClearCount = 9;
         }
         else if (SceneNumberData.numberData.referer == "Game2")
         {
-            missionClearCount = 7;
+            missionClearCount = 14;
         }
         else if (SceneNumberData.numberData.referer == "Game3")
         {
@@ -58,12 +64,6 @@ public class TimerScript : MonoBehaviour
             missionClearCount = 7;
         }
 
-
-        allDeathMissionClearFlag = false;
-    }
-
-    void FixedUpdate()
-    {
         seconds += Time.deltaTime;
         if (seconds >= 60f)
         {
@@ -82,7 +82,6 @@ public class TimerScript : MonoBehaviour
             allDeathMissionClearFlag = true;
         }
 
-        //Debug.Log("seconds" + seconds);
     }
 
     public float GetClearSeconds()
