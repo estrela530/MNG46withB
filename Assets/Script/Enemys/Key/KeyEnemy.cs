@@ -154,14 +154,12 @@ public class KeyEnemy : MonoBehaviour
 
             
             this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-
             
-
             //背を向く
             //myTransform.Rotate(0, 180, 0);
 
             //前進
-            transform.position -= transform.forward * RunSpeed * Time.deltaTime;//前進(スピードが変わる)
+            transform.position += -transform.forward * RunSpeed * Time.deltaTime;//前進(スピードが変わる)
            
         }
         if(enemyHP >= 1)

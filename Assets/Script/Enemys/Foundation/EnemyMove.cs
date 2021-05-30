@@ -50,6 +50,12 @@ public class EnemyMove : MonoBehaviour
 
     private int deathState;
 
+    private AudioSource audioSource;
+    public AudioClip sibouSE;
+    private int seCount;
+
+    private int EffectCount;
+
     [SerializeField] Animation anime;
     [SerializeField] private float DeathTime = 0;
 
@@ -76,8 +82,9 @@ public class EnemyMove : MonoBehaviour
             enemyParts[i].GetComponent<Renderer>();
         }
 
-        
 
+
+        audioSource = GetComponent<AudioSource>();//SE
     }
     //IEnumerator Blink()
     //{
@@ -202,12 +209,21 @@ public class EnemyMove : MonoBehaviour
                     enemyParts[i].SetActive(false);
                 }
 
-                // DeathEffectTime -= Time.deltaTime;
-                var sum = Instantiate(DeathEffect,
-                          this.transform.position,
-                          Quaternion.identity);
-                deathState = 3;
-               
+                if (seCount < 1)
+                {
+                    audioSource.PlayOneShot(sibouSE);//SEを鳴らす
+                    seCount++;
+                }
+
+                //召喚のエフェクト
+                if (EffectCount < 1)
+                {
+                    var sum = Instantiate(DeathEffect,
+                         this.transform.position,
+                         Quaternion.identity);
+                    EffectCount++;
+                }
+
                 break;
 
             case 3:
