@@ -227,7 +227,7 @@ public class EnemyMove : MonoBehaviour
                     enemyParts[i].SetActive(false);
                 }
 
-                
+                deathState = 3;
 
                
 

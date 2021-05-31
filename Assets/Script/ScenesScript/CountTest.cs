@@ -46,8 +46,6 @@ public class CountTest : MonoBehaviour
         {
             allDeathFlag = false;
         }
-
-        //Debug.Log(enemys.Count);
     }
 
 

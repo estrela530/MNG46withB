@@ -13,6 +13,6 @@ public class Stage2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("number"+SceneNumberData.numberData.referer);
+        //Debug.Log("number"+SceneNumberData.numberData.referer);
     }
 }
