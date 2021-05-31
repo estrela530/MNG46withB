@@ -400,7 +400,7 @@ public class Player : MonoBehaviour
             //ねじっているor解放中なら動けない
             if (isTwisted || isRelease || isNockBack) return;
 
-            MoveSE(0.5f, 0.2f);//足音を鳴らす
+            MoveSE(releaseSE, 0.5f, 0.2f);//足音を鳴らす
             animator.SetFloat("Speed", velocity.magnitude);
 
             velocity.Normalize();
@@ -420,12 +420,12 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="interval">間隔</param>
     /// <param name="volume">音量</param>
-    private void MoveSE(float interval, float volume)
+    private void MoveSE(AudioClip soundSE, float interval, float volume)
     {
-        //一定時間ごとに音を鳴らす
+        //一定時間ごとにSE音を鳴らす
         if (moveCount > interval)
         {
-            audioSource.PlayOneShot(releaseSE, volume);
+            audioSource.PlayOneShot(soundSE, volume);
             moveCount = 0f;
         }
 
@@ -492,7 +492,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 5")/* || GetKeyDown(Keys.R_Trigger)*/)
         {
             //ねじってる音を鳴らす
-            audioSource.PlayOneShot(twistedSE, 1f);
+            audioSource.PlayOneShot(twistedSE, 0.8f);
             TwistedAccumulate();//ねじねじ
         }
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 5")/* || GetKeyUP(Keys.R_Trigger)*/)//離したら解放する
@@ -620,7 +620,7 @@ public class Player : MonoBehaviour
         }
 
         //解放した音を鳴らす
-        audioSource.PlayOneShot(releaseSE, 2.0f);
+        audioSource.PlayOneShot(releaseSE, 1.0f);
     }
 
     /// <summary>
@@ -994,9 +994,11 @@ public class Player : MonoBehaviour
             currentHp -= 0.01f;
             saveValue -= 0.01f;
 
+            MoveSE(damageSE, 0.5f, 0.5f);//音を鳴らす
+
             if (currentHp <= 1)
             {
-                //ねじりすぎて死なないようにする。
+                //毒では死なない
                 currentHp = 1.0f;
             }
 
