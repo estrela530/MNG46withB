@@ -63,6 +63,7 @@ public class KraberBoss : MonoBehaviour
     public int moveState;
 
     [SerializeField] GameObject BossHP;
+    GameObject stageMove1;
 
     [SerializeField] private float DeathTime = 0;
     [SerializeField, Header("次のしーんに行くの開始までの時間")] float NextTime;
@@ -106,6 +107,8 @@ public class KraberBoss : MonoBehaviour
         renderComponent = GetComponent<Renderer>();
 
         BossHP.SetActive(false);
+        stageMove1 = GameObject.FindGameObjectWithTag("StageMove");
+        stageMove1.GetComponent<StageMove1>();
 
         audioSource = GetComponent<AudioSource>();//SE
     }
@@ -121,10 +124,7 @@ public class KraberBoss : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 1f);
     }
     //中断できる処理のまとまり
-    private void OnEnable()
-    {
-        BossHP.SetActive(true);
-    }
+   
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -137,6 +137,11 @@ public class KraberBoss : MonoBehaviour
             {
                 StartCoroutine("WaitForIt");
             }
+        }
+
+        if (stageMove1.GetComponent<StageMove1>().bossNow)
+        {
+            BossHP.SetActive(true);
         }
 
         if (MoveFlag)
