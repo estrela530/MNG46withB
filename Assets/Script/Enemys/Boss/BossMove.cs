@@ -283,8 +283,7 @@ public class BossMove : MonoBehaviour
                         audioSource.PlayOneShot(sibouSE);//SEを鳴らす
                         seCount++;
                     }
-
-                    //召喚のエフェクト
+                    
                     if (EffectCount < 1)
                     {
                         var sum = Instantiate(DeathEffect,
@@ -299,6 +298,7 @@ public class BossMove : MonoBehaviour
             case 3:
                 SceneManager.LoadScene("GameClear");
                 gameObject.SetActive(false);//非表示
+                EffectCount = 0;
                 break;
 
         }

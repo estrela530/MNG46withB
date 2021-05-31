@@ -301,6 +301,13 @@ public class KraberBoss : MonoBehaviour
                         audioSource.PlayOneShot(sibouSE);//SEを鳴らす
                         seCount++;
                     }
+                    if(EffectCount<1)
+                    {
+                        var sum = Instantiate(DeathEffect,
+                           this.transform.position,
+                           Quaternion.identity);
+                        EffectCount++;
+                    }
 
                 }
 
