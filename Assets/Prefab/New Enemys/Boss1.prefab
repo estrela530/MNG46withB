@@ -527,6 +527,7 @@ MonoBehaviour:
   NextFlag: 0
   DeathEffect: {fileID: 562142305253418879, guid: 1a389070c90322c4786943f3aa22944f,
     type: 3}
+  BossHpSlider: {fileID: 0}
   ColorInterval: 0.1
   DamageTime: 0
   DamageFlag: 0
@@ -546,7 +547,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5781106799401491398}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
