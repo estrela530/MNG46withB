@@ -25,7 +25,6 @@ public class Transition : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("fade");
         //fm = FadeMaanagerPrefab.GetComponent<GameObject>();
 
     }
