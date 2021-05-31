@@ -647,7 +647,7 @@ PrefabInstance:
     - target: {fileID: 4722257355946703571, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 5204416691150950892, guid: d2452e8e62ee4a1448f0f3bb9ee4b020,
         type: 3}
@@ -2064,6 +2064,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 513076583250317594, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3474365819694576604, guid: 47c27512735baf0478c03383c6960bc4,
         type: 3}
       propertyPath: m_Name
@@ -2134,6 +2139,11 @@ PrefabInstance:
       propertyPath: BossHpSlider
       value: 
       objectReference: {fileID: 2063067700}
+    - target: {fileID: 8832433596654922179, guid: 47c27512735baf0478c03383c6960bc4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47c27512735baf0478c03383c6960bc4, type: 3}
 --- !u!1 &919132149584855379 stripped
