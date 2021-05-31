@@ -8,6 +8,6 @@ public class FungusController : MonoBehaviour
 {
     void LoadScene()
     {
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("GameClear");
     }
 }

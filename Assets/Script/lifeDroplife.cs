@@ -96,7 +96,7 @@ public class lifeDroplife : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("GameClear");
+            SceneManager.LoadScene("Epilogue");
         }
         
     }
