@@ -299,6 +299,7 @@ public class ToriteiBoss : MonoBehaviour
             case 3:
                 SceneManager.LoadScene("GameClear");
                 gameObject.SetActive(false);//非表示
+                EffectCount = 0;
                 break;
 
         }

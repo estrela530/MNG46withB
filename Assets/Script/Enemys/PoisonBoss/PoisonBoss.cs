@@ -254,9 +254,7 @@ public class PoisonBoss : MonoBehaviour
 
             case 1:
                 anime.Play();
-                var sum = Instantiate(DeathEffect,
-                           this.transform.position,
-                           Quaternion.identity);
+               
 
                 nextState = 2;
 
@@ -282,6 +280,14 @@ public class PoisonBoss : MonoBehaviour
                         audioSource.PlayOneShot(sibouSE);//SEを鳴らす
                         seCount++;
                     }
+                    if(EffectCount<1)
+                    {
+                        var sum = Instantiate(DeathEffect,
+                         this.transform.position,
+                         Quaternion.identity);
+                        EffectCount++;
+                    }
+                   
                 }
 
                 break;
@@ -289,6 +295,7 @@ public class PoisonBoss : MonoBehaviour
             case 3:
                 SceneManager.LoadScene("GameClear");
                 gameObject.SetActive(false);//非表示
+                EffectCount = 0;
                 break;
 
         }

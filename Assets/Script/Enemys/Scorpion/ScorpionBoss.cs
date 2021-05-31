@@ -90,7 +90,7 @@ public class ScorpionBoss : MonoBehaviour
     int effectChildCount;
 
     GameObject[] childs;
-
+    
 
     [SerializeField] GameObject BossHpSlider;
 
@@ -421,9 +421,7 @@ public class ScorpionBoss : MonoBehaviour
 
                 if (DeathEffectTime <= 0)
                 {
-                    var sum = Instantiate(DeathEffect,
-                          this.transform.position,
-                          Quaternion.identity);
+                    
                     nextState = 2;
                 }
 
@@ -456,6 +454,16 @@ public class ScorpionBoss : MonoBehaviour
                         audioSource.PlayOneShot(sibouSE);//SEを鳴らす
                         seCount++;
                     }
+                    
+                    if(EffectCount<1)
+                    {
+                        var sum = Instantiate(DeathEffect,
+                          this.transform.position,
+                          Quaternion.identity);
+
+                        EffectCount++;
+                    }
+                    
                 }
 
 
@@ -466,7 +474,7 @@ public class ScorpionBoss : MonoBehaviour
 
                 Instantiate(lifeDroplifeObj,this.transform.position,Quaternion.identity
                     );
-
+                EffectCount = 0;
                 gameObject.SetActive(false);//非表示
                 break;
 
