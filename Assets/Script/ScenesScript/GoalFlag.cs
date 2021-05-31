@@ -20,7 +20,6 @@ public class GoalFlag : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("ハタハタ");
             stageMove. nowFlag = true;
 
         }

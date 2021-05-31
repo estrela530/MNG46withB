@@ -92,7 +92,6 @@ public class StageSelectCharaMove : MonoBehaviour
         //L Stick
         lsh = Input.GetAxisRaw("Horizontal");
         isSceneMoveFlag = sceneSG.GetIsMoveFlag();
-        Debug.Log("呼ばれた！");
         //1->2
 
         //関数を読んでいます。
@@ -139,8 +138,6 @@ public class StageSelectCharaMove : MonoBehaviour
                 {
                     s2Image.SetActive(false);
                     s3Image.SetActive(true);
-                    //s12Canvas.SetActive(false);
-                    //s34Canvas.SetActive(true);
                     mainCamera.transform.position = Camera2Pos;
                     nejirin.transform.position = nejirinStage3Pos;
                     selectButton.buttons[2].Select();
@@ -155,8 +152,6 @@ public class StageSelectCharaMove : MonoBehaviour
                 {
                     s3Image.SetActive(false);
                     s2Image.SetActive(true);
-                    //s34Canvas.SetActive(false);
-                    //s12Canvas.SetActive(true);
                     mainCamera.transform.position = Camera1Pos;
                     nejirin.transform.position = nejirinStage2Pos;
                     selectButton.buttons[1].Select();
@@ -193,8 +188,6 @@ public class StageSelectCharaMove : MonoBehaviour
                 {
                     s4Image.SetActive(false);
                     s5Image.SetActive(true);
-                    //s34Canvas.SetActive(false);
-                    //s56Canvas.SetActive(true);
                     mainCamera.transform.position = Camera3Pos;
                     nejirin.transform.position = nejirinStage5Pos;
                     selectButton.buttons[4].Select();
@@ -209,8 +202,6 @@ public class StageSelectCharaMove : MonoBehaviour
                 {
                     s5Image.SetActive(false);
                     s4Image.SetActive(true);
-                    //s56Canvas.SetActive(false);
-                    //s34Canvas.SetActive(true);
                     mainCamera.transform.position = Camera2Pos;
                     nejirin.transform.position = nejirinStage4Pos;
                     selectButton.buttons[3].Select();
@@ -245,12 +236,6 @@ public class StageSelectCharaMove : MonoBehaviour
                 //クリックしたらButton1へ
                 else if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
                 {
-                    //s12Canvas.SetActive(true);
-                    //s34Canvas.SetActive(false);
-                    //s56Canvas.SetActive(false);
-                    //s34Canvas.SetActive(false);
-                    //s56Canvas.SetActive(false);
-                    //s12Canvas.SetActive(true);
                     mainCamera.transform.position = Camera1Pos;
                     nejirin.transform.position = nejirinStage1Pos;
                     selectButton.buttons[0].Select();

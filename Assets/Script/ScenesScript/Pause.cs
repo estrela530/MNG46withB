@@ -51,8 +51,6 @@ public class Pause : MonoBehaviour
         {        
             if (!isPause)
             {
-                Debug.Log("押された");
-
                 Time.timeScale = 0f;
                 PauseUIPrefab.SetActive(true);
                 isPause = true;
