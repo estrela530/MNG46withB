@@ -14,6 +14,10 @@ public class SpawnPoint : MonoBehaviour
     CountTest countTest;
     bool allDeathFlag;
 
+    AudioSource audioSource;
+    [SerializeField,Header("召喚SE")]
+    AudioClip summonSE;
+
     
     // Start is called before the first frame update
     void Start()
@@ -35,6 +39,8 @@ public class SpawnPoint : MonoBehaviour
         }
         //enemys[2].SetActive(true);
         countTest = enemys[2].GetComponent<CountTest>();
+
+        audioSource = gameObject.GetComponent<AudioSource>();
 
         this.allDeathFlag = countTest.allDeathFlag;
         allDeathFlag = false;
@@ -72,6 +78,9 @@ public class SpawnPoint : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //SpawnEnemys.SetActive(true);
+
+            //召喚SEを鳴らす
+            audioSource.PlayOneShot(summonSE, 0.5f);
 
             for (int i = 0; i < enemysCount; i++)
             {
