@@ -53,19 +53,19 @@ public class SubCameraControll : MonoBehaviour
         else if(this.Boss.GetComponent<ToriteiBoss>())
         {
             Toritei = this.Boss.GetComponent<ToriteiBoss>();
-            ObjHp = Octane.HpGet();
+            ObjHp = Toritei.HpGet();
         }
 
         else if(this.Boss.GetComponent<KraberBoss>())
         {
             Kraber = this.Boss.GetComponent<KraberBoss>();
-            ObjHp = Octane.HpGet();
+            ObjHp = Kraber.HpGet();
         }
 
         else if(this.Boss.GetComponent<PoisonBoss>())
         {
             Poison = this.Boss.GetComponent<PoisonBoss>();
-            ObjHp = Octane.HpGet();
+            ObjHp = Poison.HpGet();
         }
 
 
