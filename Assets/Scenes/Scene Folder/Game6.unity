@@ -728,12 +728,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 663087533}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &748235281 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8331724822638924987, guid: 1dafbdc5f8138ff44a59333f03ce96c5,
-    type: 3}
-  m_PrefabInstance: {fileID: 2105776928}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &773019802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -905,6 +899,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5895912383016804938, guid: 3ce81c8ba417b4349b38b18747e9f0bd,
     type: 3}
   m_PrefabInstance: {fileID: 421988315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &892309267 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8686197217928391539, guid: 1dafbdc5f8138ff44a59333f03ce96c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 2105776928}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1079702854
 PrefabInstance:
@@ -1093,6 +1093,12 @@ MonoBehaviour:
   min: 1
   max: 100
   shotTime: 1
+--- !u!1 &1558262611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4929548635149990007, guid: 1dafbdc5f8138ff44a59333f03ce96c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 2105776928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1592134075
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,7 +1642,7 @@ PrefabInstance:
         type: 3}
       propertyPath: keyObj
       value: 
-      objectReference: {fileID: 748235281}
+      objectReference: {fileID: 892309267}
     - target: {fileID: 1382707256692382792, guid: 1dafbdc5f8138ff44a59333f03ce96c5,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1657,6 +1663,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1511997167778869388, guid: 1dafbdc5f8138ff44a59333f03ce96c5,
+        type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 1558262611}
     - target: {fileID: 1544954719984672652, guid: 1dafbdc5f8138ff44a59333f03ce96c5,
         type: 3}
       propertyPath: m_Enabled
@@ -1928,6 +1939,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456164703636652275, guid: 1dafbdc5f8138ff44a59333f03ce96c5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580542074093776157, guid: 1dafbdc5f8138ff44a59333f03ce96c5,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580542074093776157, guid: 1dafbdc5f8138ff44a59333f03ce96c5,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
