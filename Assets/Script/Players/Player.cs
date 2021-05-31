@@ -811,7 +811,7 @@ public class Player : MonoBehaviour
         int healAmounst = healBall.GetComponent<HealBall>().GetHealLevel();
 
         //回復の音
-        audioSource.PlayOneShot(healSE, 0.5f);
+        audioSource.PlayOneShot(healSE, 0.3f);
 
         //受け取ったレベルによって回復量を変化させる。
         switch (healAmounst)
@@ -994,7 +994,7 @@ public class Player : MonoBehaviour
             currentHp -= 0.01f;
             saveValue -= 0.01f;
 
-            MoveSE(damageSE, 0.5f, 0.5f);//音を鳴らす
+            MoveSE(damageSE, 1f, 0.5f);//音を鳴らす
 
             if (currentHp <= 1)
             {
