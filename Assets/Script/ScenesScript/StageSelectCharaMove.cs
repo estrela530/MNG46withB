@@ -130,7 +130,7 @@ public class StageSelectCharaMove : MonoBehaviour
         }
 
         houtiGoTitleCount += Time.deltaTime;
-        if (houtiGoTitleCount >= 10)
+        if (houtiGoTitleCount >= 60)
         {
             SceneManager.LoadScene("Prologue");
         }
