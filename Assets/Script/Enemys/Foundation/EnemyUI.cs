@@ -220,6 +220,12 @@ public class EnemyUI : MonoBehaviour
             slider.value = PoisonBoss.HpGet();
             currHp = (int)PoisonBoss.HpGet();
         }
+
+        else if (Enemy.GetComponent<KraberBoss>())
+        {
+            slider.value = KraberBoss.HpGet();
+            currHp = (int)KraberBoss.HpGet();
+        }
         transform.rotation = Camera.main.transform.rotation;
         //Debug.Log(currHp);
 
