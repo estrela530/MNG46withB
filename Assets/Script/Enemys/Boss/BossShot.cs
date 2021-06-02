@@ -86,12 +86,13 @@ public class BossShot : MonoBehaviour
             if (Move.GetComponent<BossMove>().AttackFlag == true)
             {
                 ss += Time.deltaTime;
+
                 if (ss >= intarval)
                 {
                     Shot();
                     ss = 0;
-
                 }
+
                 //攻撃する前に色を変える
                 if (ss >= intarval - 1)
                 {
