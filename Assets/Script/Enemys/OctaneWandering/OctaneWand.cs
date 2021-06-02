@@ -288,8 +288,7 @@ public class OctaneWand : MonoBehaviour
         ray.origin = this.transform.position;//自分の位置のレイ
 
         ray.direction = transform.forward;//自分の向きのレイ
-
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 0.1f);
+        
 
         //if (MoveFlag)
         //{
@@ -330,6 +329,8 @@ public class OctaneWand : MonoBehaviour
         //徘徊
         if (workFlag)
         {
+            lineRenderer.enabled = false;
+
             lookTime = 0;
             if (ww < workeAria1)
             {
@@ -369,6 +370,7 @@ public class OctaneWand : MonoBehaviour
                 //体力がなくなったら死亡&状態遷移
                 if (enemyHP <= 0 && !stageMove1.GetComponent<StageMove1>().bossNow)
                 {
+                    lineRenderer.enabled = false;
                     deathState = 1;
                     isDeadFlag = true;
                     DamageFlag = true;
