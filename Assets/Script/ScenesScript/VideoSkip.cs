@@ -40,7 +40,7 @@ public class VideoSkip : MonoBehaviour
 
     void FinishVideo(VideoPlayer videoPlayer)
     {
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("Prologue");
     }
 
 }
