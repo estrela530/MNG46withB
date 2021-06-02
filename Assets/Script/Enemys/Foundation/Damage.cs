@@ -208,7 +208,7 @@ public class Damage : MonoBehaviour
         //トリテのボス
         else if (this.Enemy.GetComponent<ToriteiBoss>())
         {
-            flag = ToriteiBoss.DamageGet();
+            flagBL = ToriteiBoss.DamageGet();
         }
         
         //ポイズンのボス
