@@ -250,7 +250,7 @@ public class BossMove : MonoBehaviour
                 if (enemyHP <= 0)
                 {
                     nextState = 1;
-                    Debug.Log("死んだ");
+                    MoveFlag = false;
                 }
                 break;
 

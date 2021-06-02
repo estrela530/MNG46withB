@@ -255,6 +255,7 @@ public class ToriteiBoss : MonoBehaviour
                 if (enemyHP <= 0)
                 {
                     nextState = 1;
+                    MoveFlag = false;
                 }
                 break;
 

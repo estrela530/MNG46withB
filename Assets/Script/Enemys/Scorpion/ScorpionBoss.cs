@@ -127,7 +127,7 @@ public class ScorpionBoss : MonoBehaviour
     void Start()
     {
         anime = GetComponent<Animation>();
-
+        MoveFlag = true;
         //ショットを取得
         scorpionBossShot.GetComponent<ScorpionBossShot>();
 
@@ -218,190 +218,192 @@ public class ScorpionBoss : MonoBehaviour
             MoveFlag = false;
             moveState = 0;
         }
-        
-
-        //攻撃関連の処理
-        switch (moveState)
+        if(MoveFlag)
         {
-            //召喚、突進どっちか? 1～3が突進、5～6が召喚、7～が射撃
-            case 0:
-                if (attackCount >= 4)
-                {
-                    moveState = 5;//召喚
-                }
-                else if (attackCount <=2/*attackCount  == 0 || attackCount == 1|| attackCount == 2*/)
-                {
-                    moveState = 7;//射撃
-                }
-                //else if (attackCount == 1)
-                //{
-                //    moveState = 7;//射撃
-                //}
-                //else if (attackCount == 2)
-                //{
-                //    moveState = 7;//射撃
-                //}
 
-                else if (attackCount == 3)
-                {
-                    moveState = 1;//突進
-                }
-               
-                break;
-
-            //見てる時
-            case 1:
-                lookTime += Time.deltaTime;
-
-                if (lookTime <= freezeTime)
-                {
-                    this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-
-                    //レイの処理
-                    //if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))
-                    //{
-                    //    if (hitRay.collider.gameObject.CompareTag("Player"))
-                    //    {
-                    //        lineRenderer.enabled = true;
-
-                            
-                    //        //hitRay.point;
-                    //    }
-
-                    //}
-                }
-
-                if (lookTime >= freezeTime - 0.5f)
-                {
-                    //lineRenderer.startColor = Color.red;//初めの色
-                    //lineRenderer.endColor = Color.red;//終わりの色
-
-                    changeColorFlag = true;
-                }
-
-                if (lookTime >= freezeTime)
-                {
-                    moveState = 2;
-                }
-                break;
-
-            //位置を取得と攻撃カウントを+1する
-            case 2:
-                //playerPos = Target.transform.position;
-                attackCount = attackCount + 1;
-                //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
-                moveState = 3;
-                break;
-
-            //突進
-            case 3:
-                //lineRenderer.startColor = Color.green;//初めの色
-                //lineRenderer.endColor = Color.green;//終わりの色
-                changeColorFlag = false;
-
-                transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
-
-                //lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
-
-                lookTime = 0;
-
-                break;
-
-            //戻す
-            case 4:
-                moveState = 0;
-                break;
-
-
-            case 5:
-                if (EnemyCount == MaxEnemyCount)
-                {
-                    moveState = 6;
-                }
-
-                //カウントの値まで生成
-                if (EnemyCount < MaxEnemyCount)
-                {
-                    PawnTime -= Time.deltaTime;
-                    if (PawnTime <= 0.0f)
+            //攻撃関連の処理
+            switch (moveState)
+            {
+                //召喚、突進どっちか? 1～3が突進、5～6が召喚、7～が射撃
+                case 0:
+                    if (attackCount >= 4)
                     {
-                        PawnTime = ResetTime;//1秒沖に生成
-
-                        var sum = Instantiate(SummonEnemy,
-                            SummonPosObj.transform.position,
-                            Quaternion.identity);
-                        EnemyCount++;
+                        moveState = 5;//召喚
                     }
-                }
+                    else if (attackCount <= 2/*attackCount  == 0 || attackCount == 1|| attackCount == 2*/)
+                    {
+                        moveState = 7;//射撃
+                    }
+                    //else if (attackCount == 1)
+                    //{
+                    //    moveState = 7;//射撃
+                    //}
+                    //else if (attackCount == 2)
+                    //{
+                    //    moveState = 7;//射撃
+                    //}
 
-                //召喚のエフェクト
-                if (EffectCount < 1)
-                {
-                    //エフェクトパーティクル
-                    var eff = Instantiate(SummonEffect,
-                           SummonPosObj.transform.position,
-                           Quaternion.identity);
-                    //SummonEffect.SetActive(true);
+                    else if (attackCount == 3)
+                    {
+                        moveState = 1;//突進
+                    }
 
-                    ////エフェクト画像
-                    //var effM = Instantiate(MagicCircle,
-                    //       SummonPosObj.transform.position,
-                    //       Quaternion.identity);
-                    MagicCircle.SetActive(true);
+                    break;
 
-                    //effectChildCount = SummonEffect.transform.childCount;
+                //見てる時
+                case 1:
+                    lookTime += Time.deltaTime;
 
-                    //childs = new GameObject[effectChildCount];
+                    if (lookTime <= freezeTime)
+                    {
+                        this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
 
+                        //レイの処理
+                        //if (Physics.Raycast(ray, out hitRay, 30, enemyNumber))
+                        //{
+                        //    if (hitRay.collider.gameObject.CompareTag("Player"))
+                        //    {
+                        //        lineRenderer.enabled = true;
+
+
+                        //        //hitRay.point;
+                        //    }
+
+                        //}
+                    }
+
+                    if (lookTime >= freezeTime - 0.5f)
+                    {
+                        //lineRenderer.startColor = Color.red;//初めの色
+                        //lineRenderer.endColor = Color.red;//終わりの色
+
+                        changeColorFlag = true;
+                    }
+
+                    if (lookTime >= freezeTime)
+                    {
+                        moveState = 2;
+                    }
+                    break;
+
+                //位置を取得と攻撃カウントを+1する
+                case 2:
+                    //playerPos = Target.transform.position;
+                    attackCount = attackCount + 1;
+                    //this.transform.LookAt(new Vector3(playerPos.x, this.transform.position.y, playerPos.z));//ターゲットにむく
+                    moveState = 3;
+                    break;
+
+                //突進
+                case 3:
+                    //lineRenderer.startColor = Color.green;//初めの色
+                    //lineRenderer.endColor = Color.green;//終わりの色
+                    changeColorFlag = false;
+
+                    transform.position += transform.forward * speedLoc * Time.deltaTime;//前進(スピードが変わる)
+
+                    //lineRenderer.enabled = false;//(弾が間にいると点滅みたいになる)
+
+                    lookTime = 0;
+
+                    break;
+
+                //戻す
+                case 4:
+                    moveState = 0;
+                    break;
+
+
+                case 5:
+                    if (EnemyCount == MaxEnemyCount)
+                    {
+                        moveState = 6;
+                    }
+
+                    //カウントの値まで生成
+                    if (EnemyCount < MaxEnemyCount)
+                    {
+                        PawnTime -= Time.deltaTime;
+                        if (PawnTime <= 0.0f)
+                        {
+                            PawnTime = ResetTime;//1秒沖に生成
+
+                            var sum = Instantiate(SummonEnemy,
+                                SummonPosObj.transform.position,
+                                Quaternion.identity);
+                            EnemyCount++;
+                        }
+                    }
+
+                    //召喚のエフェクト
+                    if (EffectCount < 1)
+                    {
+                        //エフェクトパーティクル
+                        var eff = Instantiate(SummonEffect,
+                               SummonPosObj.transform.position,
+                               Quaternion.identity);
+                        //SummonEffect.SetActive(true);
+
+                        ////エフェクト画像
+                        //var effM = Instantiate(MagicCircle,
+                        //       SummonPosObj.transform.position,
+                        //       Quaternion.identity);
+                        MagicCircle.SetActive(true);
+
+                        //effectChildCount = SummonEffect.transform.childCount;
+
+                        //childs = new GameObject[effectChildCount];
+
+                        //for (int i = 0; i < effectChildCount; i++)
+                        //{
+                        //    childs[i] = SummonEffect.transform.GetChild(i).gameObject;
+                        //}
+
+                        EffectCount++;
+                    }
+
+
+                    break;
+                //戻す
+                case 6:
                     //for (int i = 0; i < effectChildCount; i++)
                     //{
-                    //    childs[i] = SummonEffect.transform.GetChild(i).gameObject;
+                    //    Destroy(childs[i]);
                     //}
+                    SummonParticle.Stop();//パーティクルを消す
+                                          //Destroy(MagicCircle);//画像を消す
+                    MagicCircle.SetActive(false);
+                    attackCount = 0;
+                    moveState = 0;
+                    EnemyCount = 0;
+                    EffectCount = 0;
+                    break;
 
-                    EffectCount++;
-                }
-
-
-                break;
-            //戻す
-            case 6:
-                //for (int i = 0; i < effectChildCount; i++)
-                //{
-                //    Destroy(childs[i]);
-                //}
-                SummonParticle.Stop();//パーティクルを消す
-                //Destroy(MagicCircle);//画像を消す
-                MagicCircle.SetActive(false);
-                attackCount = 0;
-                moveState = 0;
-                EnemyCount = 0;
-                EffectCount = 0;
-                break;
-             
                 //射撃
-            case 7:
-                this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
-                ShotFlag = true;
-                moveState = 8;
+                case 7:
+                    this.transform.LookAt(new Vector3(Target.transform.position.x, this.transform.position.y, Target.transform.position.z));//ターゲットにむく
+                    ShotFlag = true;
+                    moveState = 8;
 
-                break;
-                
-            case 8:
-                stopTime += Time.deltaTime;
-                if(stopTime>3)
-                {
-                    moveState = 9;
-                }
-                break;
+                    break;
 
-            //戻す（射撃の処理）
-            case 9:
+                case 8:
+                    stopTime += Time.deltaTime;
+                    if (stopTime > 3)
+                    {
+                        moveState = 9;
+                    }
+                    break;
 
-                ShotFlag = false;
-                attackCount = attackCount+ 1;
-                moveState = 0;
-                stopTime = 0;
-                break;
+                //戻す（射撃の処理）
+                case 9:
+
+                    ShotFlag = false;
+                    attackCount = attackCount + 1;
+                    moveState = 0;
+                    stopTime = 0;
+                    break;
+            }
         }
 
         switch (nextState)
@@ -410,6 +412,7 @@ public class ScorpionBoss : MonoBehaviour
                 if (enemyHP <= 0)
                 {
                     nextState = 1;
+                    MoveFlag = false;
                 }
 
                 break;
