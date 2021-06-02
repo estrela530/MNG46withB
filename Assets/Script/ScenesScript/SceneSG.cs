@@ -47,7 +47,7 @@ public class SceneSG : MonoBehaviour
 
     public void OnClickStartStage2Button()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) && thisIsAlreadyStage1ClearFlag || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
         {
             isScene2ChangeFlag = true;
         }
@@ -55,7 +55,7 @@ public class SceneSG : MonoBehaviour
 
     public void OnClickStartStage3Button()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) && thisIsAlreadyStage1ClearFlag || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
         {
             isScene3ChangeFlag = true;
         }
@@ -63,14 +63,14 @@ public class SceneSG : MonoBehaviour
 
     public void OnClickStartStage4Button()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) && thisIsAlreadyStage1ClearFlag || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
         {
             isScene4ChangeFlag = true;
         }
     }
     public void OnClickStartStage5Button()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) && thisIsAlreadyStage1ClearFlag || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
         {
             isScene5ChangeFlag = true;
         }
@@ -78,7 +78,7 @@ public class SceneSG : MonoBehaviour
 
     public void OnClickStartStage6Button()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) && thisIsAlreadyStage1ClearFlag || (Input.GetKeyDown(KeyCode.Return)) && thisIsAlreadyStage1ClearFlag)
         {
             isScene6ChangeFlag = true;
         }
