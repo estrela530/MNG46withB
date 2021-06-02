@@ -271,6 +271,7 @@ public class KraberBoss : MonoBehaviour
                 {
                     nextState = 1;
                     MoveFlag = false;
+                    moveState = 0;
                 }
                 break;
 
