@@ -250,6 +250,7 @@ public class PoisonBoss : MonoBehaviour
                 {
                     nextState = 1;
                     MoveFlag = false;
+                    AttackFlag = false;
                     moveState = 0;
                 }
                 break;
