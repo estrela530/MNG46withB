@@ -8,6 +8,7 @@ public class SceneTS : MonoBehaviour
     int fadeCount;
     int fadeMax;
     bool isSceneChangeFlag;
+    float houtiGoTitleCount;
 
     [SerializeField, Header("フェードPrefab")]
     GameObject fadeManager;
@@ -33,6 +34,13 @@ public class SceneTS : MonoBehaviour
         {
             SceneChange();
         }
+
+        houtiGoTitleCount += Time.deltaTime;
+        if (houtiGoTitleCount >= 10)
+        {
+            SceneManager.LoadScene("Prologue");
+        }
+
     }
 
     //シーン切り替え用

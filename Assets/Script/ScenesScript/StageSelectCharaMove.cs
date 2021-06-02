@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class StageSelectCharaMove : MonoBehaviour
 {
@@ -34,6 +36,24 @@ public class StageSelectCharaMove : MonoBehaviour
     [SerializeField, Header("メインカメラ")]
     GameObject mainCamera;
 
+    [SerializeField, Header("ボタン2")]
+    GameObject button2Obj;
+    [SerializeField, Header("ボタン3")]
+    GameObject button3Obj;
+    [SerializeField, Header("ボタン4")]
+    GameObject button4Obj;
+    [SerializeField, Header("ボタン5")]
+    GameObject button5Obj;
+    [SerializeField, Header("ボタン6")]
+    GameObject button6Obj;
+
+    Material button2Material;
+    Material button3Material;
+    Material button4Material;
+    Material button5Material;
+    Material button6Material;
+    Color notClearButtonColor = new Color(0.3f,0.3f,0.3f,1);
+    float houtiGoTitleCount;
 
     SceneSG sceneSG;
     bool isSceneMoveFlag;
@@ -61,8 +81,7 @@ public class StageSelectCharaMove : MonoBehaviour
 
     float preStick = 0;//Horizontalトリガーの保存用キー
     float nowStick = 0;//Horizontalトリガーの取得用キー
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -79,6 +98,7 @@ public class StageSelectCharaMove : MonoBehaviour
         //親を取得
         StageSelectManager = transform.root.gameObject;
         selectButton = StageSelectManager.GetComponent<SelectButton>();
+        houtiGoTitleCount = 0;
     }
 
     // Update is called once per frame
@@ -100,6 +120,21 @@ public class StageSelectCharaMove : MonoBehaviour
         //現在のキーの状態をコピーする
         preStick = nowStick;
 
+        if (!IsAlreadyStage1.isAlreadyStage1ClearFlag)
+        {
+            button2Obj.GetComponent<Image>().color = notClearButtonColor;
+            button3Obj.GetComponent<Image>().color = notClearButtonColor;
+            button4Obj.GetComponent<Image>().color = notClearButtonColor;
+            button5Obj.GetComponent<Image>().color = notClearButtonColor;
+            button6Obj.GetComponent<Image>().color = notClearButtonColor;
+        }
+
+        houtiGoTitleCount += Time.deltaTime;
+        if (houtiGoTitleCount >= 10)
+        {
+            SceneManager.LoadScene("Prologue");
+        }
+
     }
 
     void Test()
@@ -116,7 +151,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage2Pos;
                     selectButton.buttons[1].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 2;
                 }
 
@@ -130,7 +165,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage1Pos;
                     selectButton.buttons[0].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 1;
                 }
                 //2->3
@@ -142,7 +177,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage3Pos;
                     selectButton.buttons[2].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 3;
                 }
                 break;
@@ -156,7 +191,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage2Pos;
                     selectButton.buttons[1].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 2;
                 }
                 //3->4
@@ -167,7 +202,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage4Pos;
                     selectButton.buttons[3].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 4;
                 }
                 break;
@@ -180,7 +215,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage3Pos;
                     selectButton.buttons[2].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 3;
                 }
                 //4->5
@@ -192,7 +227,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage5Pos;
                     selectButton.buttons[4].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 5;
                 }
                 break;
@@ -206,7 +241,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage4Pos;
                     selectButton.buttons[3].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 4;
                 }
                 //5->6
@@ -217,7 +252,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage6Pos;
                     selectButton.buttons[5].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 6;
                 }
                 break;
@@ -230,7 +265,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage5Pos;
                     selectButton.buttons[4].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 5;
                 }
                 //クリックしたらButton1へ
@@ -240,7 +275,7 @@ public class StageSelectCharaMove : MonoBehaviour
                     nejirin.transform.position = nejirinStage1Pos;
                     selectButton.buttons[0].Select();
                     isMissionImageFlag = true;
-
+                    houtiGoTitleCount = 0;
                     state = 1;
                 }
                 break;

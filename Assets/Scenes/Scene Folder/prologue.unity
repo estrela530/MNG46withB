@@ -893,7 +893,7 @@ GameObject:
   - component: {fileID: 1698501664}
   - component: {fileID: 1698501663}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: IsAlreadyClear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -906,12 +906,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698501662}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da61ca681e97c4048b086b4d79d4eced, type: 3}
+  m_Script: {fileID: 11500000, guid: d60af8da8d0152946a5ea0d2527f6efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zouka: 0
 --- !u!4 &1698501664
 Transform:
   m_ObjectHideFlags: 0

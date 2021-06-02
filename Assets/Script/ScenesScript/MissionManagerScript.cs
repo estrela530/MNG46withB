@@ -47,6 +47,8 @@ public class MissionManagerScript : MonoBehaviour
         Mission1C.SetActive(false);
         Mission2C.SetActive(false);
         Mission3C.SetActive(false);
+
+        IsAlreadyStage1.isAlreadyStage1ClearFlag = true;
     }
 
     // Update is called once per frame
@@ -72,6 +74,7 @@ public class MissionManagerScript : MonoBehaviour
                     Mission2.SetActive(false);
                     Mission2C.SetActive(true);
                 }
+
             }
             //ステージ2なら
             else if (SceneNumberData.numberData.referer == "Game2")
