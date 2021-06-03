@@ -72,6 +72,8 @@ public class EnemyShot2 : MonoBehaviour
         if (!Physics.Raycast(ray, out hitRay, searchRange, enemyNumber))
         {
             lineRenderer.enabled = false;
+            lineRenderer.startColor = Color.green;//初めの色
+            lineRenderer.endColor = Color.green;//終わりの色
             ss = 0;
         }
         //レイの処理

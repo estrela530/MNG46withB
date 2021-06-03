@@ -15,7 +15,7 @@ public class BalletP : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.position += transform.forward * bullteSpeed * Time.deltaTime;
         //Destroy(this.gameObject, desthTime);
@@ -23,13 +23,15 @@ public class BalletP : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Wall")
-            || other.gameObject.CompareTag("Player")
-            || other.gameObject.CompareTag("Fragment")
-            )
+        if (other.gameObject.CompareTag("Player")|| other.gameObject.CompareTag("Fragment"))
         {
             Destroy(this.gameObject);
-            Instantiate(poisonBullet,this.transform.position,Quaternion.identity);
+        }
+
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Destroy(this.gameObject);
+            Instantiate(poisonBullet, this.transform.position, Quaternion.identity);
         }
     }
 
