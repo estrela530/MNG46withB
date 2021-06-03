@@ -429,10 +429,7 @@ public class ScorpionBoss : MonoBehaviour
                     
                     nextState = 2;
                 }
-
-
-
-
+                
                 attackCount = 0;
                 moveState = 0;
                 EnemyCount = 5;
@@ -523,7 +520,6 @@ public class ScorpionBoss : MonoBehaviour
             /*|| other.gameObject.CompareTag("Enemy")*/)
         {
             moveState = 4;
-            MoveFlag = false;
         }
     }
 
@@ -531,11 +527,9 @@ public class ScorpionBoss : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //MoveFlag = false;
             moveState = 4;
         }
-
-
+        
     }
 
     private void OnDestroy()

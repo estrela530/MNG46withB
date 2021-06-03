@@ -23,7 +23,9 @@ public class BalletP : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")|| other.gameObject.CompareTag("Fragment"))
+        if (other.gameObject.CompareTag("Player")
+            || other.gameObject.CompareTag("Fragment")
+            || other.gameObject.CompareTag("HealBall"))
         {
             Destroy(this.gameObject);
         }
