@@ -18,6 +18,8 @@ public class Pause : MonoBehaviour
     public AudioClip buttonSE;
     //AudioSource audioSource;
 
+    public int state = 1;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -47,24 +49,81 @@ public class Pause : MonoBehaviour
     {
         //Debug.Log("timeScale" + Time.timeScale);
 
-        if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.P))
-        {        
-            if (!isPause)
-            {
-                Time.timeScale = 0f;
-                PauseUIPrefab.SetActive(true);
-                isPause = true;
-                //audioSource.PlayOneShot(buttonSE);
+        //if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.P))
+        //{        
+        //    if (!isPause)
+        //    {
+        //        Time.timeScale = 0f;
+        //        PauseUIPrefab.SetActive(true);
+        //        isPause = true;
+        //        //audioSource.PlayOneShot(buttonSE);
 
-                selectButton.Wasshoi();
-            }
-            else
-            {
-                PauseUIPrefab.SetActive(false);
-                Time.timeScale = 1f;
-                //audioSource.PlayOneShot(buttonSE);
-                isPause = false;
-            }
+        //        selectButton.Wasshoi();
+        //    }
+        //    else
+        //    {
+        //        PauseUIPrefab.SetActive(false);
+        //        Time.timeScale = 1f;
+        //        //audioSource.PlayOneShot(buttonSE);
+        //        isPause = false;
+        //    }
+        //}
+
+        //if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        //{
+        //    PauseUIPrefab.SetActive(false);
+        //    Time.timeScale = 1f;
+        //    //audioSource.PlayOneShot(buttonSE);
+        //    isPause = false;
+        //}
+
+        GoPause();
+    }
+
+    public bool GetPause()
+    {
+        return isPause;
+    }
+
+    void GoPause()
+    {
+        switch (state)
+        {
+            case 1:
+
+                if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.P))
+                {
+                    if (!isPause)
+                    {
+                        Time.timeScale = 0f;
+                        PauseUIPrefab.SetActive(true);
+                        isPause = true;
+                        //audioSource.PlayOneShot(buttonSE);
+
+                        selectButton.Wasshoi();
+                        state = 2;
+                    }
+
+                }
+                break;
+
+            case 2:
+                if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.P))
+                {
+                    if (isPause)
+                    {
+                        PauseUIPrefab.SetActive(false);
+                        Time.timeScale = 1f;
+                        //audioSource.PlayOneShot(buttonSE);
+                        isPause = false;
+
+                        state = 1;
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
@@ -74,11 +133,7 @@ public class Pause : MonoBehaviour
             //audioSource.PlayOneShot(buttonSE);
             isPause = false;
         }
-    }
 
-    public bool GetPause()
-    {
-        return isPause;
     }
 
     public void OnClick()
