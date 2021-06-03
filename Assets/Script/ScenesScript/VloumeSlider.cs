@@ -19,6 +19,7 @@ public class VloumeSlider : MonoBehaviour
    　public void VolumeMove()
     {
         //audioSource.volume = bgmSlider.value;
+        
     }
 
     // Update is called once per frame
